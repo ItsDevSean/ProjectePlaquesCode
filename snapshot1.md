@@ -14,4 +14,5 @@ El logo de l'empresa
 
 ### Planificació de l'aplicació
 Hem planificat les posibles funcionalitats que podria tenir la aplicació web.
-.[Arxiu](https://docs.google.com/document/d/1iuKt84gBdYWXa9mNcB1RLOXLNgnuL0U6j2jld54H1oY/edit?tab=t.0)
+
+[Arxiu](https://docs.google.com/document/d/1iuKt84gBdYWXa9mNcB1RLOXLNgnuL0U6j2jld54H1oY/edit?tab=t.0)
