@@ -28,3 +28,4 @@
 
 
 ## Sprints Snapshots
+[Snapsot](https://github.com/ITEC-BCN/projecte-2-dam-24-25-plaques/blob/master/snapshot1.md)
