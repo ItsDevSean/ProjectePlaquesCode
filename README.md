@@ -13,7 +13,7 @@
 |[![Marc](https://github.com/marcSantolayaSanchez.png?size=30)](https://github.com/marcSantolayaSanchez) | Marc Santolaya Sànchez |[@marcSantolayaSanchez](https://github.com/marcSantolayaSanchez)||
 [![Thalia]()]() | Lua Trevín Hernaiz |[]()|
 [![Miguel]()]() | Lua Trevín Hernaiz |[]()|
-[![Teo]()]() | Lua Trevín Hernaiz |[]()|
+[![Teo](https://avatars.githubusercontent.com/u/146827242?s=400&u=6df2f942506f32e459ccb23f2397be639fff5633&v=4)]() | Teo Castellví Montañés |[]()|
 |[![Seán](https://github.com/SeanITB.png?size=30)](https://github.com/SeanITB)| Seán Costelloe Cacho |[@SeanITB](https://github.com/SeanITB)|
 
 # 📂 Estructura del repositiori
