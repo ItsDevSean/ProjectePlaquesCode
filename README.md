@@ -19,7 +19,7 @@
 # 📂 Estructura del repositiori
 
 # 📑 Documentació Scrum
-[proofhub](https://itecbcn.proofhub.com/bapplite/#app/todos/project-8901747152/list-268270448035)
+[ProofHub](https://itecbcn.proofhub.com/bapplite/#app/todos/project-8901747152/list-268270448035)
 
 ## Actes dialys
 
