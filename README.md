@@ -19,10 +19,10 @@
 # 📂 Estructura del repositiori
 ```sh
 └── docs/
-    └── img/ # imatges de la documentació 
-    └── actesDialys/ # Actes de les reunions diàries
-    └── sprintSnapshot/ # Review del treball fet a cada sprint
-└── aprenentatge/ # Cada carpeta conte l'aeprenenatatge que esta fent cada escun sobre larabel, php, vue
+    └── img/ # imatges de la documentació.
+    └── actesDialys/ # Actes de les reunions diàries.
+    └── sprintSnapshot/ # Review del treball fet a cada sprint.
+└── aprenentatge/ # Cada carpeta conte l'aprenentatge que està fent cadascun sobre Laravel, PHP, Vue.
     └── Ana/
     └── Marc/ 
     └── Miguel/
