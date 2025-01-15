@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="fotoboltaica_feleiz.jpeg" alt="Banner" width="600" />
+  <img src="docs/img/fotoboltaica_feleiz.jpeg" alt="Banner" width="600" />
 </p>
 <p align="center">
 	 Fotovoltaica fàcil!
