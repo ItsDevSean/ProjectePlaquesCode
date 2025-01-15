@@ -12,7 +12,7 @@
 [![Ana Gómez Pastor](https://github.com/AnaGmzPstr.png?size=30)](https://github.com/AnaGmzPstr) |Ana Gómez Pastor|[@AnaGmzPstr](https://github.com/AnaGmzPstr)|
 |[![Marc](https://github.com/marcSantolayaSanchez.png?size=30)](https://github.com/marcSantolayaSanchez) | Marc Santolaya Sànchez |[@marcSantolayaSanchez](https://github.com/marcSantolayaSanchez)||
 [![Thalia]()]() | Lua Trevín Hernaiz |[]()|
-[![Miguel](https://github.com/GarzonMiguelA.png?size=3)](https://github.com/GarzonMiguelA) | Miguel Angel Garzón Huerta |[@GarzonMiguelA](https://github.com/GarzonMiguelA)|
+[![Miguel](https://github.com/GarzonMiguelA.png?size=30)](https://github.com/GarzonMiguelA) | Miguel Angel Garzón Huerta |[@GarzonMiguelA](https://github.com/GarzonMiguelA)|
 [![Teo](https://github.com/TeoCastellvi.png?size=30)]() | Teo Castellví Montañés |[@TeoCastellvi](https://github.com/TeoCastellvi)||
 |[![Seán](https://github.com/SeanITB.png?size=30)](https://github.com/SeanITB)| Seán Costelloe Cacho |[@SeanITB](https://github.com/SeanITB)|
 
