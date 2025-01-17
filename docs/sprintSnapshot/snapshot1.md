@@ -33,3 +33,6 @@ El logo de l'empresa
 Hem planificat les posibles funcionalitats que podria tenir la aplicació web.
 
 [Arxiu](https://docs.google.com/document/d/1iuKt84gBdYWXa9mNcB1RLOXLNgnuL0U6j2jld54H1oY/edit?tab=t.0)
+
+## Treball restant
+Ens falta per pujar el treball que fem diari el cual el pujarem dilluns ja que ho tenim al portatil del ihub.
