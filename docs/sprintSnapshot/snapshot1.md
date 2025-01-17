@@ -26,13 +26,13 @@ Pel projecte utilitzarem tant pel backend com pel frontend **PHP** i **Laravel**
 ## Disseny de les pàgines
 Crear amb l'aplicació Figma els mockups de com será l'estética de les págines.
 
-## Logo
-El logo de l'empresa
-
 ## Planificació de l'aplicació
 Hem planificat les posibles funcionalitats que podria tenir la aplicació web.
 
 [Arxiu](https://docs.google.com/document/d/1iuKt84gBdYWXa9mNcB1RLOXLNgnuL0U6j2jld54H1oY/edit?tab=t.0)
+
+### Profhub
+Com que encara no estem fent el projecte, sinó que estem estudiant les tecnologies que utilitzarem, el profhub té un funcionament peculiar. El que hem fet, és per cada mòdul del curs estem fent una tasca del profhub on ens assignem tots nosaltres. Aquesta tasca no la posarem com a feta fins que no l'hem feta tots nosaltres, de metres, cada cop que l'acaba un es va eliminant a ell mateix de la tasca assignada.
 
 ### Treball restant
 Ens falta per pujar el treball que fem diari el cual el pujarem dilluns ja que ho tenim al portatil del ihub.
