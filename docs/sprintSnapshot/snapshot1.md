@@ -2,8 +2,8 @@
 
 ## Formació
 Comencem amb els cursos de PHP i Laravel per poder utilitzar aquestes tecnologies en el nostre projecte. Cada integrant del grup ha de finalitzar-los.
-Hem estat fent els cursos per de PHP de Open Webinars fins que ens van aconseguir els cursos de Udemy, on prioritzen més l'ús i el maneix de Laravel un framework de PHP. 
-Per mostrar una mica que hem pogut veure de primeres amb el curs, posarem unes imatges introductories on veurem Laravel, Laragon, Visual Studio Code i com es mostra la web una vegada instalat Laravel.
+Hem estat fent els cursos de PHP d'Open Webinars fins que ens van aconseguir els cursos d'Udemy, on prioritzen més l'ús i el mateix en Laravel un framework de PHP. 
+Per mostrar una mica que hem pogut veure de primeres amb el curs, posarem unes imatges introductòries on veurem Laravel, Laragon, Visual Studio Code i com es mostra la web una vegada instal·lat Laravel.
 
 Començarem mostrant Laragon, que seria el nostre servidor local i el encarregat de fer funcionar tant la BD com el servidor Apache:
 [Foto](../img/laragon.PNG) 
