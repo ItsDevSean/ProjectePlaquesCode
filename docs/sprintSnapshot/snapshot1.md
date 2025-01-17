@@ -9,16 +9,16 @@ Començarem mostrant Laragon, que seria el nostre servidor local i el encarregat
 ![Foto](../img/laragon.PNG) 
 
 Aquest seria el terminal de Laragon, on podem fer l'instalació del Laravel:
-[Foto](../img/terminalLaragon.PNG) 
+![Foto](../img/terminalLaragon.PNG) 
 
 Com hem dit abans, Laragon també ens otorga una BD, que en aquest cas, fent l'instalació del Laravel pots elegir quina usar, en aquest cas hem escollit MySQL:
-[Foto](../img/BDLaragon.PNG) 
+![Foto](../img/BDLaragon.PNG) 
 
 Una vegada ja vist el Laragon, ja començem indagant en Laravel, on el veurem i treballarem amb el Visual Studio Code. Laravel es composa en diferents archius/carpetes que estan dividies tant en view, routes, configuració, entre altres. Es bastant intiutiu una vegada ja saps com estan organitzades les carpetes. En aquesta imatge, podrem veure un petit exemple de les routes que hem probat:
-[Foto](../img/ejemploLaravel.PNG)  
+![Foto](../img/ejemploLaravel.PNG)  
 
 Per terminar aquest petit tutorial de presentació, mostrarem com Laravel crea un petit "Home" on ens mostra informació seva:
-[Foto](../img/webLaragon.PNG) 
+![Foto](../img/webLaragon.PNG) 
 
 ## Tecnologies utilitzades
 Pel projecte utilitzarem tant pel backend com pel frontend **PHP** i **Laravel**. A més, pel frontend utilitzarem un altre framework, **Vue**.
@@ -29,7 +29,7 @@ Crear amb l'aplicació Figma els mockups de com será l'estética de les págine
 ## Planificació de l'aplicació
 Hem planificat les posibles funcionalitats que podria tenir la aplicació web.
 
-[Arxiu](https://docs.google.com/document/d/1iuKt84gBdYWXa9mNcB1RLOXLNgnuL0U6j2jld54H1oY/edit?tab=t.0)
+![Arxiu](https://docs.google.com/document/d/1iuKt84gBdYWXa9mNcB1RLOXLNgnuL0U6j2jld54H1oY/edit?tab=t.0)
 
 ### Profhub
 Com que encara no estem fent el projecte, sinó que estem estudiant les tecnologies que utilitzarem, el profhub té un funcionament peculiar. El que hem fet, és per cada mòdul del curs estem fent una tasca del profhub on ens assignem tots nosaltres. Aquesta tasca no la posarem com a feta fins que no l'hem feta tots nosaltres, de metres, cada cop que l'acaba un es va eliminant a ell mateix de la tasca assignada.
