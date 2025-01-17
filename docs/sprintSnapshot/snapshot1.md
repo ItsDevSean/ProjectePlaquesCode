@@ -6,7 +6,7 @@ Hem estat fent els cursos de PHP d'Open Webinars fins que ens van aconseguir els
 Per mostrar una mica que hem pogut veure de primeres amb el curs, posarem unes imatges introductòries on veurem Laravel, Laragon, Visual Studio Code i com es mostra la web una vegada instal·lat Laravel.
 
 Començarem mostrant Laragon, que seria el nostre servidor local i el encarregat de fer funcionar tant la BD com el servidor Apache:
-[Foto](../img/laragon.PNG) 
+![Foto](../img/laragon.PNG) 
 
 Aquest seria el terminal de Laragon, on podem fer l'instalació del Laravel:
 [Foto](../img/terminalLaragon.PNG) 
