@@ -12,7 +12,7 @@ Aquest seria el terminal de Laragon, on podem fer l'instalació del Laravel:
 (img/terminalLaragon.png) 
 
 Com hem dit abans, Laragon també ens otorga una BD, que en aquest cas, fent l'instalació del Laravel pots elegir quina usar, en aquest cas hem escollit MySQL:
-(img/BDLaragon.png) 
+(docs/img/BDLaragon.PNG) 
 
 Una vegada ja vist el Laragon, ja començem indagant en Laravel, on el veurem i treballarem amb el Visual Studio Code. Laravel es composa en diferents archius/carpetes que estan dividies tant en view, routes, configuració, entre altres. Es bastant intiutiu una vegada ja saps com estan organitzades les carpetes. En aquesta imatge, podrem veure un petit exemple de les routes que hem probat:
 [Arxiu](img/ejemploLaravel.PNG)  
