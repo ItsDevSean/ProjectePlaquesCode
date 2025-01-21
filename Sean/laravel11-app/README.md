@@ -56,3 +56,16 @@ Schema::create('users', function (Blueprint $table) {
 In the MySQL database:
 
 ![image](https://github.com/user-attachments/assets/aa2720ad-5a4f-4a9b-8d62-94e1d4c8190a)
+
+### Tryng the web
+I open the web server, in the terminal, inside my project, with the command `php artisan serve`.
+
+![image](https://github.com/user-attachments/assets/51d9adc9-d033-48fa-9edf-8c32924c0b0f)
+
+And in the browser I search for the localhost: `http://localhost:8000/` and, if works, it shows this:
+
+![image](https://github.com/user-attachments/assets/29b58424-2d12-4518-a77e-d788d8dbf912)
+
+That is the page that is in the `Sean/laravel11-app/resources/views/welcome.blade.php`
+
+
