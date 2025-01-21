@@ -7,60 +7,52 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## What I have done fore the moment
+Laravel 11 is the framework that we will use to develop with PHP. In this README I will do a snapshot of all that I'm learning during my first experience with this technology.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Installation
+I have install all the resources that I need for use Laravel 11 in Linux:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1st [PHP](https://www.php.net/downloads) the program language.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+2nd [composer](https://getcomposer.org/download/) the dependency manager for PHP.
 
-## Learning Laravel
+3rt [MySQL](https://www.geeksforgeeks.org/how-to-install-mysql-on-linux/) the Database.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+4th [Apache](https://ubuntu.com/server/docs/how-to-install-apache2) the Web Server.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+5th [Laravell11](https://laravel.com/docs/11.x#sail-on-linux) the framework for PHP.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Fore this process, I have used this tutorial; [Installing Laravel 11: A Step-by-Step Guide](https://dev.to/jsandaruwan/-installing-laravel-11-a-step-by-step-guide-2mkj)
 
-## Laravel Sponsors
+### MySQL database configuration and migration
+I had to edit the `.env` file to configure the connection between the Laravel project and the database. Something like this:
+```sh
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=test_laravel11
+DB_USERNAME=root
+DB_PASSWORD=your_root_password
+```
+Secondly, I migrate with the command:
+```sh
+php artisan migrate
+```
+After this, the tables that I have in the `laravel11-app/database/migrations/0001_01_01_000000_create_users_table.php` are now in the database:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+In the Laravel project:
+```php
+Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
+        });
+```
+In the MySQL database:
 
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+![image](https://github.com/user-attachments/assets/aa2720ad-5a4f-4a9b-8d62-94e1d4c8190a)
