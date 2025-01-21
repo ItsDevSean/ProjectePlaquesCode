@@ -68,4 +68,16 @@ And in the browser I search for the localhost: `http://localhost:8000/` and, if 
 
 That is the page that is in the `Sean/laravel11-app/resources/views/welcome.blade.php`
 
+In some cases, when you are trying to show the `whelcome` page, it shows this error *welcome not found*. To solve this, I asked my friend *ChatGPT* and she told me that I had to clean my views and routes with the following commands:
+
+```bash
+php artisan view:clear 
+php artisan cache:clear
+php artisan config:clear 
+php artisan route:clear
+```
+
+And as easy as that, it works!
+
+
 
