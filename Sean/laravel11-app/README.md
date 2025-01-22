@@ -7,60 +7,82 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## What I have done fore the moment
+Laravel 11 is the framework that we will use to develop with PHP. In this README I will do a snapshot of all that I'm learning during my first experience with this technology.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Installation
+I have install all the resources that I need for use Laravel 11 in Linux:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1st [PHP](https://www.php.net/downloads) the program language.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+2nd [composer](https://getcomposer.org/download/) the dependency manager for PHP.
 
-## Learning Laravel
+3rt [MySQL](https://www.geeksforgeeks.org/how-to-install-mysql-on-linux/) the Database.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+4th [Apache](https://ubuntu.com/server/docs/how-to-install-apache2) the Web Server.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+5th [Laravell11](https://laravel.com/docs/11.x#sail-on-linux) the framework for PHP.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Fore this process, I have used this tutorial; [Installing Laravel 11: A Step-by-Step Guide](https://dev.to/jsandaruwan/-installing-laravel-11-a-step-by-step-guide-2mkj)
 
-## Laravel Sponsors
+### MySQL database configuration and migration
+I had to edit the `.env` file to configure the connection between the Laravel project and the database. Something like this:
+```sh
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=test_laravel11
+DB_USERNAME=root
+DB_PASSWORD=your_root_password
+```
+Secondly, I migrate with the command:
+```sh
+php artisan migrate
+```
+After this, the tables that I have in the `laravel11-app/database/migrations/0001_01_01_000000_create_users_table.php` are now in the database:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+In the Laravel project:
+```php
+Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
+        });
+```
+In the MySQL database:
 
-### Premium Partners
+![image](https://github.com/user-attachments/assets/aa2720ad-5a4f-4a9b-8d62-94e1d4c8190a)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Trying the web
+I open the web server, in the terminal, inside my project, with the command `php artisan serve`.
 
-## Contributing
+![image](https://github.com/user-attachments/assets/51d9adc9-d033-48fa-9edf-8c32924c0b0f)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+And in the browser I search for the localhost: `http://localhost:8000/` and, if works, it shows this:
 
-## Code of Conduct
+![image](https://github.com/user-attachments/assets/29b58424-2d12-4518-a77e-d788d8dbf912)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+That is the page that is in the `Sean/laravel11-app/resources/views/welcome.blade.php`
 
-## Security Vulnerabilities
+In some cases, when you are trying to show the `whelcome` page, it shows this error *welcome not found*. 
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+![image](https://github.com/user-attachments/assets/a1c9f7a3-f8e7-44c8-951f-cc9b2538b820)
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+To solve this, I asked my friend *ChatGPT* and she told me that I had to clean my views and routes with the following commands:
+
+```bash
+php artisan view:clear 
+php artisan cache:clear
+php artisan config:clear 
+php artisan route:clear
+```
+
+And as easy as that, it works!
+
+
+
