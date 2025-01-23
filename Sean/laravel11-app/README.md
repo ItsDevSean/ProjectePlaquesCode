@@ -55,22 +55,22 @@ Schema::create('users', function (Blueprint $table) {
 ```
 In the MySQL database:
 
-![image](https://github.com/user-attachments/assets/aa2720ad-5a4f-4a9b-8d62-94e1d4c8190a)
+![image](docs/img/sean_img/MySQL_table_example.png)
 
 ### Trying the web
 I open the web server, in the terminal, inside my project, with the command `php artisan serve`.
 
-![image](https://github.com/user-attachments/assets/51d9adc9-d033-48fa-9edf-8c32924c0b0f)
+![image](docs/img/sean_img/Run_server.png)
 
 And in the browser I search for the localhost: `http://localhost:8000/` and, if works, it shows this:
 
-![image](https://github.com/user-attachments/assets/29b58424-2d12-4518-a77e-d788d8dbf912)
+![image](docs/img/sean_img/web_runing.png)
 
 That is the page that is in the `Sean/laravel11-app/resources/views/welcome.blade.php`
 
 In some cases, when you are trying to show the `whelcome` page, it shows this error *welcome not found*. 
 
-![image](https://github.com/user-attachments/assets/a1c9f7a3-f8e7-44c8-951f-cc9b2538b820)
+![image](docs/img/sean_img/web_runing_error.png)
 
 
 To solve this, I asked my friend *ChatGPT* and she told me that I had to clean my views and routes with the following commands:
