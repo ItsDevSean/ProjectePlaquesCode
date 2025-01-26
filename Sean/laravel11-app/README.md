@@ -86,9 +86,26 @@ And as easy as that, it works!
 
 
 ### MVC & CRUD
-Resource Controller with the command `php artisan make:controller [nameFolder/][nameController] -r -m`.
+#### Ep 31.
+Resource Controller with the command `php artisan make:controller [nameFolder/][nameController] -r -m [NameModel]`.
 * `-r` => create a resource class.
 * `-m` => create a model related to this class.
+
+#### Ep 32. 
+Creating my first *ORM* (Object Relational Mapping). It's the relation between a method of an object and a SQL sentence. 
+
+![image](https://github.com/user-attachments/assets/7f750dc2-3a52-449f-b825-9429f69f2179)
+
+We have to type all the attributes that we want to insert in an instance. Similar as `INSERT INTO nameTable (...)`.
+
+![image](https://github.com/user-attachments/assets/30d7ed9e-2dd2-496d-ad09-a227a84ecea0)
+
+Is the method that inserts the values. Similar to when we do `VALUES (...);`.
+
+![image](https://github.com/user-attachments/assets/6ef98cc7-4943-44c2-a841-7de56aa51fd4)
+
+In the *DB*, after executing this method, searching the *URL* `http://localhost:8000/post`, we see the new instance in the table.
+
 
 
 
