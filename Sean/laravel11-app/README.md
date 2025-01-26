@@ -74,7 +74,7 @@ In some cases, when you are trying to show the `whelcome` page, it shows this er
 
 
 To solve this, I asked my friend *ChatGPT* and she told me that I had to clean my views and routes with the following commands:
-
+ 
 ```bash
 php artisan view:clear 
 php artisan cache:clear
@@ -83,6 +83,14 @@ php artisan route:clear
 ```
 
 And as easy as that, it works!
+
+
+### MVC & CRUD
+Resource Controller with the command `php artisan make:controller [nameFolder/][nameController] -r -m`.
+* `-r` => create a resource class.
+* `-m` => create a model related to this class.
+
+
 
 
 
