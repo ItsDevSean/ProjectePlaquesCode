@@ -94,7 +94,7 @@ Resource Controller with the command `php artisan make:controller [nameFolder/][
 #### Ep 32. 
 Creating my first *ORM* (Object Relational Mapping). It's the relation between a method of an object and a SQL sentence. 
 
-![image](https://github.com/user-attachments/assets/7f750dc2-3a52-449f-b825-9429f69f2179)
+![image](../docs/img/sean_img/model_post.png)
 
 We have to type all the attributes that we want to insert in an instance. Similar as `INSERT INTO nameTable (...)`.
 
