@@ -107,6 +107,32 @@ Is the method that inserts the values. Similar to when we do `VALUES (...);`.
 
 In the *DB*, after executing this method, searching the *URL* `http://localhost:8000/post`, we see the new instance in the table.
 
+#### Ep 33.
+
+Now I'm updating instances of tables. 
+
+```php
+public function index()
+    {
+        $post = Post::find(2); //The filter.
+
+        $post -> update( //The values to chnage.
+            [
+                'title' => 'aaa',
+                'slug' => 'test slug',
+                'image' => 'test image',
+            ]
+        ); 
+
+        return 'Index';
+    }
+```
+
+![image](https://github.com/user-attachments/assets/5f2d4c3f-b724-4705-87c0-1bab0a723396)
+
+This is the change after the execution of the query.
+
+
 
 
 
