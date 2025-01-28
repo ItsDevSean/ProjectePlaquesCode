@@ -150,6 +150,9 @@ public function index()
 
 Before and afther the execution of the query.
 
+#### Ep 39.
+min 7:25
+
 
 
 
