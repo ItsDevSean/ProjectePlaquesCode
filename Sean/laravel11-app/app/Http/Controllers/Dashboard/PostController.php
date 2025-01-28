@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Categories;
 use Illuminate\Http\Request;
 
 use App\Models\Post;
+use Illuminate\Http\Response;
 
 class PostController extends Controller
 {
@@ -14,18 +16,26 @@ class PostController extends Controller
      */
     public function index()
     {
-        Post::create(
-            [
-                'title' => 'test title',
-                'slug' => 'test slug',
-                'content' => 'test content',
-                'category_id' => 1,
-                'desciption' => 'test description',
-                'posted' => 'not',
-                'image' => 'test image',
-            ]
-        ); 
-        
+    
+        //dd($post -> title);
+
+        $post = Post::find(3);
+        $category = Categories::find(3);
+        //->delete();
+        dd($category->post[0]->title);
+
+        // Post::create(
+        //     [
+        //         'title' => 'test title',
+        //         'slug' => 'test slug',
+        //         'content' => 'test content',
+        //         'category_id' => 1,
+        //         'desciption' => 'test description',
+        //         'posted' => 'not',
+        //         'image' => 'test image',
+        //     ]
+        // ); 
+
         return 'Index';
     }
 
@@ -34,7 +44,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.post.create'); 
     }
 
     /**
