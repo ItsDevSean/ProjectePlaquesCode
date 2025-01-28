@@ -130,7 +130,27 @@ public function index()
 
 ![image](https://github.com/user-attachments/assets/5f2d4c3f-b724-4705-87c0-1bab0a723396)
 
-This is the change after the execution of the query.
+Before and afther the execution of the query.
+
+#### Ep 34.
+
+Delete an instance:
+
+```php
+public function index()
+    {
+        $post = Post::find(2);
+        $post->delete();
+
+        return 'Index';
+    }
+```
+
+![image](https://github.com/user-attachments/assets/ba27d605-a9a0-4a02-843f-0f35d0ae8319)
+
+Before and afther the execution of the query.
+
+
 
 
 
