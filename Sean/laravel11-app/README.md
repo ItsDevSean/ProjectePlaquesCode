@@ -55,22 +55,22 @@ Schema::create('users', function (Blueprint $table) {
 ```
 In the MySQL database:
 
-![image](docs/img/sean_img/MySQL_table_example.png)
+![image](/docs/img/sean_img/MySQL_table_example.png)
 
 ### Trying the web
 I open the web server, in the terminal, inside my project, with the command `php artisan serve`.
 
-![image](docs/img/sean_img/Run_server.png)
+![image](/docs/img/sean_img/Run_server.png)
 
 And in the browser I search for the localhost: `http://localhost:8000/` and, if works, it shows this:
 
-![image](docs/img/sean_img/web_runing.png)
+![image](/docs/img/sean_img/web_runing.png)
 
 That is the page that is in the `Sean/laravel11-app/resources/views/welcome.blade.php`
 
 In some cases, when you are trying to show the `whelcome` page, it shows this error *welcome not found*. 
 
-![image](docs/img/sean_img/web_runing_error.png)
+![image](/docs/img/sean_img/web_runing_error.png)
 
 
 To solve this, I asked my friend *ChatGPT* and she told me that I had to clean my views and routes with the following commands:
@@ -94,15 +94,16 @@ Resource Controller with the command `php artisan make:controller [nameFolder/][
 #### Ep 32. 
 Creating my first *ORM* (Object Relational Mapping). It's the relation between a method of an object and a SQL sentence. 
 
-![image](https://github.com/user-attachments/assets/7f750dc2-3a52-449f-b825-9429f69f2179)
+![image](/docs/img/sean_img/model_post.png)
+
 
 We have to type all the attributes that we want to insert in an instance. Similar as `INSERT INTO nameTable (...)`.
 
-![image](https://github.com/user-attachments/assets/30d7ed9e-2dd2-496d-ad09-a227a84ecea0)
+![image](/docs/img/sean_img/controller_resource.png)
 
 Is the method that inserts the values. Similar to when we do `VALUES (...);`.
 
-![image](https://github.com/user-attachments/assets/6ef98cc7-4943-44c2-a841-7de56aa51fd4)
+![image](/docs/img/sean_img/db_instance.png)
 
 In the *DB*, after executing this method, searching the *URL* `http://localhost:8000/post`, we see the new instance in the table.
 
