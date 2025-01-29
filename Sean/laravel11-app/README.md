@@ -232,7 +232,40 @@ Now, in the view, shows the values from the DB.
 ```
 
 In the Categories field, shows the values from the DB:
+![image](https://github.com/user-attachments/assets/77805d9c-d1b5-4278-b208-c5bbd4447436)
+
+#### Ep 41.
+
+Share the form.
+
+The code in the action label puts the route.
+```php
+<form action="{{ route('post.store') }}" method="POST" >
+
+</form>
+```
+
 ![Uploading image.png…]()
+
+To avoid CSRF attacks  we have to put the following token:
+
+```php
+<form action="{{ route('post.store') }}" method="POST" >
+    @csrf
+</form>
+```
+
+This generates an unick token that prevents attackers from using this form for non permitted uses.
+
+Once we send the form, whe jump to the content of the folowing function in the controller:
+
+```php
+public function store(Request $request)
+    {
+        dd($request);
+    }
+```
+
 
 
 
