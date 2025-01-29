@@ -266,7 +266,9 @@ public function store(Request $request)
     }
 ```
 
+#### Ep 42.
 
+I will creathe the post to the DB.
 
 
 
