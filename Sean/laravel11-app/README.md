@@ -151,7 +151,55 @@ public function index()
 Before and afther the execution of the query.
 
 #### Ep 39.
-min 7:25
+I have create a new controller, in `app/Http/Controllers/Dashboard/PostController.php`, that implements a function **create()**:
+```php
+public function create()
+    {
+        return view('dashboard.post.create'); 
+    }
+```
+
+This function returns a form, in `resources/views/dashboard/post/create.blade.php`, that does queries to the table **categories** and **posts**.
+
+
+```php
+@extends('dashboard.master')
+
+@section('contect')
+    <form action="" method="POST" >
+
+        <label for="">Title</label>
+        <input type="text" name="title">
+
+        <label for="">Slug</label>
+        <input type="text" name="title">
+
+        <label for="">Content</label>
+        <textarea name="content"></textarea>
+
+        <label for="">Categories</label>
+        <select name="categories_id">
+
+        </select>
+
+        <label for="">Posted</label>
+        <select name="posted">
+            <option value="Not">Not</option>
+            <option value="yes">Yes</option>
+        </select>
+
+        <label for="">Description</label>
+        <textarea name="description"></textarea>
+        <button type="submit">Send</button>
+    </form>
+
+    
+@endsection
+```
+
+The form has the following shape on the web:
+![image](https://github.com/user-attachments/assets/4a17236e-d35b-4f8a-b6b7-f6346c62e925)
+
 
 
 
