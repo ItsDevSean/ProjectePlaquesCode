@@ -201,7 +201,38 @@ The form has the following shape on the web:
 ![image](https://github.com/user-attachments/assets/4a17236e-d35b-4f8a-b6b7-f6346c62e925)
 
 
+#### Ep 40.
 
+I'm sharing the categories that I have in the DB. 
+
+The following code, in the controller, shows the values of the DB. 
+```php
+ $categories = Categories::pluck('id', 'title');
+        dd($categories); 
+```
+
+The next one, in the controller, passes values from the DB to the view.
+```php
+ public function create()
+    {
+        $categories = Categories::pluck('id', 'title');
+        
+        return view('dashboard.post.create', compact('categories')); 
+    }
+```
+
+Now, in the view, shows the values from the DB.
+```php
+<label for="">Categories</label>
+        <select name="categories_id">
+            @foreach ($categories as $title => $id)
+                <option value="{{ $id }}">{{$title}}</option>
+            @endforeach
+        </select>
+```
+
+In the Categories field, shows the values from the DB:
+![Uploading image.png…]()
 
 
 
