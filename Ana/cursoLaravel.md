@@ -110,3 +110,58 @@ Los comandos más utilizados:
 - `php artisan route:list` (Listar las rutas de la aplicación)
 - `php artisan serve` (Iniciar el servidor de desarrollo de Laravel)
 - `php artisan key:generate` (Generar una clave de aplicación)
+
+## Sección 3: Rutas, controladores y vistas
+
+---
+
+## 17. Crear dos rutas con nombre y vistas asociadas
+
+```php
+// En el archivo routes/web.php
+Route::get('/contact', function () {
+    $nombre = 'Juan';
+    return view('contact', compact('nombre'));
+})->name('contact');
+
+Route::get('/contact2', function () {
+    return view('contact2', compact('nombre', 'edad'));
+})->name('contact2');
+```
+
+- En la carpeta views , crear dos archivos: `contact.blade.php` y `contact2.blade.php`
+
+## 18. Redirecciones
+
+- **Redirecciones**: Es una forma de enviar a un usuario a una ruta diferente de la que solicitó.
+
+```php
+// En el archivo routes/web.php
+
+Route::get('/contact', function () {
+    // return redirect('contact2', 301); // Redirección permanente
+    return redirect()->route('contact2'); // Redirección con nombre de ruta
+})->name('contact');
+
+Route::get('/contact2', function () {
+    return view('contact2', compact('nombre', 'edad'));
+})->name('contact2');
+
+```
+
+## 19. Directivas de blade: if y for
+
+```php
+// En el archivo contact.blade.php
+@if ($name != 'Ana')
+    <p class="red">No eres Ana</p>
+@else
+    <p>Hola Ana</p>
+@endif
+
+<ul>
+@foreach ([1, 2, 3, 4] as $item)
+<li>{{ $item }}</li>
+@endforeach
+</ul>
+```
