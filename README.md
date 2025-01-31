@@ -32,7 +32,7 @@
 ```
 
 # 📑 Documentació Scrum
-Per desenvolupar aquest projecte estem utilitzant la metodologia àgil de *Scrum*. A l'hora d'organitzar-nos per aquest mètode, estem utilitzant el *Profhub*, que no deixa de ser una explicació per gestionar i planificar tasques.
+Per desenvolupar aquest projecte estem utilitzant la metodologia àgil de *Scrum*. A l'hora d'organitzar-nos per aquest mètode, estem utilitzant el *Proofhub*, que no deixa de ser una explicació per gestionar i planificar tasques.
 
 [ProofHub](https://itecbcn.proofhub.com/bapplite/#app/todos/project-8901747152/list-268270448035)
 
