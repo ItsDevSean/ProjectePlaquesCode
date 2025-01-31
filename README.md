@@ -49,6 +49,14 @@ Al final de cada Sprint, dediquem un moment per reflexionar sobre com ha anat l'
 ## Sprints Snapshots
 Els documents que es guarden al directori [sprintSnapshot](docs/sprintSnapshot) mostra, de forma resumida i amb imatges, les implementacions que hem anat fent en cada sprint. Aquí tenim un breu resum:
  - **Sprint 1:** (8/1/25 - 17/1/25)
-En aquest primer sprint, hem començat diferents cursos per aprendre el fram work i les eines noves que utilitzarem per a aquest projecte, com ara: Laravel, php, vue, etc.
+En aquest primer sprint, hem començat diferents cursos per aprendre el fram work i les eines noves que utilitzarem per a aquest projecte, com ara: Laravel, php, vue, etc. En el següent enllaç o expliquem de forma més extensa.
 
-[Snapsot](docs/sprintSnapshot)
+[Snapsot1](docs/sprintSnapshot/snapshot1.md)
+
+
+- **Sprint 2:** (20/1/25 - 31/1/25)
+En aquest segon sprint, hem seguit amb el curs que vam començar el sprint anterior. Hem fet migracions, formularis, sentencies SQL des d'aquests formularis, crear a APIs, utilitzant freame work de Vue pel front end, etc. Ho expliquem més detalladament en el següent enllaç.  
+
+[Snapsot2](docs/sprintSnapshot/snapshot2.md)
+
+
