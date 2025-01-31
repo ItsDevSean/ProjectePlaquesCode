@@ -29,12 +29,12 @@ Finalment, hem vist com usant Vue podem representar les dades de la API i consul
 ### Apunts fets per l'Ana
 L'Ana mentre anava avançant en el curs, també va anar fent apunts per una millor comprensió del que estem aprenent. En el següent enllaç estan els apunts. 
 
-[Apunts Ana](Ana/cursoLaravel.md)
+[Apunts Ana](/Ana/cursoLaravel.md)
 
 ### Apunt fets per Seán 
 El Seán, igual que l'Ana, també ha anat fent apunts en **md** del curs, per facilitar els recursos si els havia de consultar en el futur. Adjunto l'enllaç:
 
-[Apunts Seán](Sean/laravel11-app/README.md)
+[Apunts Seán](/Sean/laravel11-app/README.md)
 
 
 
