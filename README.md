@@ -44,7 +44,7 @@ Per estar tots al dia, estem fent *actes diàries* d'entre 10-15 min. Sense aque
 ## Retrospectives dels sprints
 Al final de cada Sprint, dediquem un moment per reflexionar sobre com ha anat l'últim parell de setmanes de treball, per poder aprendre, millorar i rectificar els nostres errors com a grup.
 
-[Full de retospectives](https://docs.google.com/spreadsheets/d/1CqHEfFJB-TC3fYGujDIzZEurREEQcQYT/edit?gid=954078206#gid=954078206)
+[Full de retrospectives](https://docs.google.com/spreadsheets/d/1CqHEfFJB-TC3fYGujDIzZEurREEQcQYT/edit?gid=954078206#gid=954078206)
 
 ## Sprints Snapshots
 Els documents que es guarden al directori [sprintSnapshot](docs/sprintSnapshot) mostra, de forma resumida i amb imatges, les implementacions que hem anat fent en cada sprint. Aquí tenim un breu resum:
