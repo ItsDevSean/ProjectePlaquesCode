@@ -36,7 +36,7 @@ Per desenvolupar aquest projecte estem utilitzant la metodologia àgil de *Scrum
 
 [ProofHub](https://itecbcn.proofhub.com/bapplite/#app/todos/project-8901747152/list-268270448035)
 
-## Actes dialys
+## Actes dailys
 Per estar tots al dia, estem fent *actes diàries* d'entre 10-15 min. Sense aquest apartat la metodologia *Scrum* no funcionaria. 
 
 [Actes Daily](docs/ActesDailyScrum)
