@@ -245,8 +245,6 @@ The code in the action label puts the route.
 </form>
 ```
 
-![Uploading image.png…]()
-
 To avoid CSRF attacks  we have to put the following token:
 
 ```php

@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.table {
+    @apply table-auto w-full border-collapse border border-gray-300;
+}
+
+.table th {
+    @apply px-6 py-3 bg-green-500 text-white font-bold uppercase border border-gray-300 text-center;
+}
+
+.table td {
+    @apply px-6 py-4 border border-gray-300 text-center;
+}
+
+.table tr:nth-child(even) {
+    @apply bg-gray-100;
+}
+
+.table tr:hover {
+    @apply bg-green-100;
+}
+
+.button {
+    @apply px-4 py-2 text-white font-medium rounded-md shadow-md transition duration-300;
+}
+
+.button-primary {
+    @apply bg-green-500 hover:bg-green-600;
+}
+
+.button-secondary {
+    @apply bg-green-400 hover:bg-green-600;
+}
+
+.button-danger {
+    @apply bg-green-700 hover:bg-green-800;
+}
+
+.form-control{
+    @apply block rounded-sm shadow-sm bg-slate-300 w-full
+}
+
+
+.card {
+    @apply p-6 rounded shadow-sm
+}
+
+.card-white {
+    @apply bg-slate-400
+}
+
