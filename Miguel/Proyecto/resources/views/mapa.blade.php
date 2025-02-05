@@ -6,31 +6,28 @@
     </x-slot>
 
     <style>
+        /* Estilos para mapa */
         #map {
-            height: 600px;
-            width: 100%;
+            height: 600px; 
+            width: 100%;   
         }
     </style>
 
     <div class="container">
         <h1>Mapa Interactivo</h1>
-        <div id="map"></div>
+        <div id="map"></div> <!-- Renderizamos el mapa -->
     </div>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Importamos una API (creada por nosotros) de Google Maps -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXRR6-McZKLNKCEabMp2il2wrTTMakV84"></script>
     <script>
-        // Inicializar el mapa
-        var map = L.map('map').setView([51.505, -0.09], 13);
-
-        // Añadir el tile layer de OpenStreetMap
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        // Añadir un marcador
-        var marker = L.marker([51.505, -0.09]).addTo(map)
-            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-            .openPopup();
+        // esperamos que DOM esté completamente cargado antes de ejecutar el script
+        document.addEventListener('DOMContentLoaded', function () {
+            // Una vez el dom cargado, inicializamos el mapa con una vista centrada en lat y lon que queramos:
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 40.19145865160104, lng: -1.6199891302842644 },  // Marcamos donde queremos que aparezca al recargar la página
+                zoom: 13 //E indicamos un zoom
+            });
+        });
     </script>
 </x-app-layout>
