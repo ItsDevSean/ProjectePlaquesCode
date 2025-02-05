@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\PostController;
 use App\Http\Controllers\FirstController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,8 @@ Route::get('/', function () {
 //     return redirect()->route('screen1'); // Redirects to screen1
 // })->name('screen2');
 
-Route::get('screen1', [FirstController::class, 'index']);
-Route::get('other/{post}/{other}', [FirstController::class, 'other']);
-Route::resource('post', FirstController::class);
+//Route::get('screen1', [FirstController::class, 'index']);
+//Route::get('other/{post}/{other}', [FirstController::class, 'other']);
+//Route::resource('post', FirstController::class);
+
+Route::resource('post', PostController::class);

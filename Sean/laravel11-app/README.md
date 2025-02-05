@@ -55,26 +55,26 @@ Schema::create('users', function (Blueprint $table) {
 ```
 In the MySQL database:
 
-![image](docs/img/sean_img/MySQL_table_example.png)
+![image](/docs/img/sean_img/MySQL_table_example.png)
 
 ### Trying the web
 I open the web server, in the terminal, inside my project, with the command `php artisan serve`.
 
-![image](docs/img/sean_img/Run_server.png)
+![image](/docs/img/sean_img/Run_server.png)
 
 And in the browser I search for the localhost: `http://localhost:8000/` and, if works, it shows this:
 
-![image](docs/img/sean_img/web_runing.png)
+![image](/docs/img/sean_img/web_runing.png)
 
 That is the page that is in the `Sean/laravel11-app/resources/views/welcome.blade.php`
 
 In some cases, when you are trying to show the `whelcome` page, it shows this error *welcome not found*. 
 
-![image](docs/img/sean_img/web_runing_error.png)
+![image](/docs/img/sean_img/web_runing_error.png)
 
 
 To solve this, I asked my friend *ChatGPT* and she told me that I had to clean my views and routes with the following commands:
-
+ 
 ```bash
 php artisan view:clear 
 php artisan cache:clear
@@ -83,6 +83,193 @@ php artisan route:clear
 ```
 
 And as easy as that, it works!
+
+
+### MVC & CRUD
+#### Ep 31.
+Resource Controller with the command `php artisan make:controller [nameFolder/][nameController] -r -m [NameModel]`.
+* `-r` => create a resource class.
+* `-m` => create a model related to this class.
+
+#### Ep 32. 
+Creating my first *ORM* (Object Relational Mapping). It's the relation between a method of an object and a SQL sentence. 
+
+![image](/docs/img/sean_img/model_post.png)
+
+
+We have to type all the attributes that we want to insert in an instance. Similar as `INSERT INTO nameTable (...)`.
+
+![image](/docs/img/sean_img/controller_resource.png)
+
+Is the method that inserts the values. Similar to when we do `VALUES (...);`.
+
+![image](/docs/img/sean_img/db_instance.png)
+
+In the *DB*, after executing this method, searching the *URL* `http://localhost:8000/post`, we see the new instance in the table.
+
+#### Ep 33.
+
+Now I'm updating instances of tables. 
+
+```php
+public function index()
+    {
+        $post = Post::find(2); //The filter.
+
+        $post -> update( //The values to chnage.
+            [
+                'title' => 'aaa',
+                'slug' => 'test slug',
+                'image' => 'test image',
+            ]
+        ); 
+
+        return 'Index';
+    }
+```
+
+![image](https://github.com/user-attachments/assets/5f2d4c3f-b724-4705-87c0-1bab0a723396)
+
+Before and afther the execution of the query.
+
+#### Ep 34.
+
+Delete an instance:
+
+```php
+public function index()
+    {
+        $post = Post::find(2);
+        $post->delete();
+
+        return 'Index';
+    }
+```
+
+![image](https://github.com/user-attachments/assets/ba27d605-a9a0-4a02-843f-0f35d0ae8319)
+
+Before and afther the execution of the query.
+
+#### Ep 39.
+I have create a new controller, in `app/Http/Controllers/Dashboard/PostController.php`, that implements a function **create()**:
+```php
+public function create()
+    {
+        return view('dashboard.post.create'); 
+    }
+```
+
+This function returns a form, in `resources/views/dashboard/post/create.blade.php`, that does queries to the table **categories** and **posts**.
+
+
+```php
+@extends('dashboard.master')
+
+@section('contect')
+    <form action="" method="POST" >
+
+        <label for="">Title</label>
+        <input type="text" name="title">
+
+        <label for="">Slug</label>
+        <input type="text" name="title">
+
+        <label for="">Content</label>
+        <textarea name="content"></textarea>
+
+        <label for="">Categories</label>
+        <select name="categories_id">
+
+        </select>
+
+        <label for="">Posted</label>
+        <select name="posted">
+            <option value="Not">Not</option>
+            <option value="yes">Yes</option>
+        </select>
+
+        <label for="">Description</label>
+        <textarea name="description"></textarea>
+        <button type="submit">Send</button>
+    </form>
+
+    
+@endsection
+```
+
+The form has the following shape on the web:
+![image](https://github.com/user-attachments/assets/4a17236e-d35b-4f8a-b6b7-f6346c62e925)
+
+
+#### Ep 40.
+
+I'm sharing the categories that I have in the DB. 
+
+The following code, in the controller, shows the values of the DB. 
+```php
+ $categories = Categories::pluck('id', 'title');
+        dd($categories); 
+```
+
+The next one, in the controller, passes values from the DB to the view.
+```php
+ public function create()
+    {
+        $categories = Categories::pluck('id', 'title');
+        
+        return view('dashboard.post.create', compact('categories')); 
+    }
+```
+
+Now, in the view, shows the values from the DB.
+```php
+<label for="">Categories</label>
+        <select name="categories_id">
+            @foreach ($categories as $title => $id)
+                <option value="{{ $id }}">{{$title}}</option>
+            @endforeach
+        </select>
+```
+
+In the Categories field, shows the values from the DB:
+![image](https://github.com/user-attachments/assets/77805d9c-d1b5-4278-b208-c5bbd4447436)
+
+#### Ep 41.
+
+Share the form.
+
+The code in the action label puts the route.
+```php
+<form action="{{ route('post.store') }}" method="POST" >
+
+</form>
+```
+
+To avoid CSRF attacks  we have to put the following token:
+
+```php
+<form action="{{ route('post.store') }}" method="POST" >
+    @csrf
+</form>
+```
+
+This generates an unick token that prevents attackers from using this form for non permitted uses.
+
+Once we send the form, whe jump to the content of the folowing function in the controller:
+
+```php
+public function store(Request $request)
+    {
+        dd($request);
+    }
+```
+
+#### Ep 42.
+
+I will creathe the post to the DB.
+
+
+
 
 
 
