@@ -21,11 +21,52 @@
             padding: 10px;
             text-align: center;
         }
+        .input-container {
+            display: flex;
+            align-items: center;
+            margin: 10px;
+        }
+        .input-container label, .input-container input, .input-container button {
+            margin-right: 10px;
+        }
+        .input-container input {
+            height: 30px; 
+        }
+        .input-container button {
+            background-color: #4CAF50; 
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition-duration: 0.4s;
+            height: 50px; 
+        }
+        .input-container button:hover {
+            background-color: white;
+            color: black;
+            border: 2px solid #4CAF50;
+        }
     </style>
 
     <div class="container">
         <h1>Mapa Interactivo</h1>
         <div id="map"></div> <!-- Renderizamos el mapa -->
+    </div>
+
+    <div class="container">
+        <div class="input-container">
+            <label for="lat">Latitud:</label>
+            <input type="text" id="lat" name="lat">
+            <label for="lng">Longitud:</label>
+            <input type="text" id="lng" name="lng">
+            <button id="search">Buscar</button>
+        </div>
     </div>
 
     <!-- Importamos la API de Google Maps -->
@@ -39,9 +80,12 @@
                 zoom: 13,
                 mapTypeId: 'roadmap', // Vista estándar por defecto
                 scaleControl: true, // Habilitamos control de escala
+                scaleControlOptions: {
+                    position: google.maps.ControlPosition.LEFT_BOTTOM // Posicionar el control de escala en la esquina inferior izquierda
+                }
             });
 
-            // Creamos botón para alternar entre vista satélite y vista estándar
+            // Creamos un botón para alternar entre la vista de satélite y la vista estándar
             var controlDiv = document.createElement('div');
             var controlUI = document.createElement('div');
             controlUI.className = 'map-control';
@@ -50,7 +94,7 @@
             controlDiv.appendChild(controlUI);
 
             // Añadimos el botón al mapa
-            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(controlDiv);
+            map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(controlDiv);
 
             // Añadimos un evento de clic al botón para alternar el tipo de mapa
             controlUI.addEventListener('click', function() {
@@ -58,6 +102,17 @@
                     map.setMapTypeId('satellite');
                 } else {
                     map.setMapTypeId('roadmap');
+                }
+            });
+
+            // Añadimos funcionalidad de búsqueda
+            document.getElementById('search').addEventListener('click', function() {
+                var lat = parseFloat(document.getElementById('lat').value);
+                var lng = parseFloat(document.getElementById('lng').value);
+                if (!isNaN(lat) && !isNaN(lng)) {
+                    map.setCenter({ lat: lat, lng: lng });
+                } else {
+                    alert('Por favor, introduce valores válidos para latitud y longitud.');
                 }
             });
         });
