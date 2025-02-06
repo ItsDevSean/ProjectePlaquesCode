@@ -10,6 +10,7 @@
         #map {
             height: 600px; 
             width: 100%;   
+            position: relative;
         }
         .map-control {
             background: white;
@@ -59,15 +60,18 @@
         <div id="map"></div> <!-- Renderizamos el mapa -->
     </div>
 
+    <!-- Hacemos un pequeño formulari para ofrecer una busqueda en el mapa por lat y long: -->
     <div class="container">
         <div class="input-container">
             <label for="lat">Latitud:</label>
-            <input type="text" id="lat" name="lat">
+            <input type="text" id="lat-input" name="lat">
             <label for="lng">Longitud:</label>
-            <input type="text" id="lng" name="lng">
+            <input type="text" id="lng-input" name="lng">
             <button id="search">Buscar</button>
         </div>
     </div>
+
+    <x-coordenadas-lector />
 
     <!-- Importamos la API de Google Maps -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXRR6-McZKLNKCEabMp2il2wrTTMakV84"></script>
@@ -107,13 +111,19 @@
 
             // Añadimos funcionalidad de búsqueda
             document.getElementById('search').addEventListener('click', function() {
-                var lat = parseFloat(document.getElementById('lat').value);
-                var lng = parseFloat(document.getElementById('lng').value);
+                var lat = parseFloat(document.getElementById('lat-input').value);
+                var lng = parseFloat(document.getElementById('lng-input').value);
                 if (!isNaN(lat) && !isNaN(lng)) {
                     map.setCenter({ lat: lat, lng: lng });
                 } else {
                     alert('Por favor, introduce valores válidos para latitud y longitud.');
                 }
+            });
+
+            // Actualizamos latitud y longitud conforme se mueve el ratón sobre el mapa
+            map.addListener('mousemove', function(event) {
+                document.getElementById('lat').innerText = event.latLng.lat().toFixed(6);
+                document.getElementById('lng').innerText = event.latLng.lng().toFixed(6);
             });
         });
     </script>
