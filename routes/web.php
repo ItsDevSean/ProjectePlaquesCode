@@ -26,3 +26,8 @@ require __DIR__.'/auth.php';
 Route::get('/mapa', function () {
     return view('map');
 })->name('map');
+
+Route::get('/open', function () {
+    return view('opencv');
+})->name('open');
+
