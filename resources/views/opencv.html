@@ -19,9 +19,6 @@
             margin-top: 20px;
             border: 1px solid #ccc;
         }
-        .loading {
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -33,15 +30,7 @@
     </div>
 
     <script>
-        let cvReady = false;
         let points = [];
-
-        // Función para manejar la carga de OpenCV.js
-        function openCvLoaded() {
-            cvReady = true;
-            document.querySelector("h1").textContent = "OpenCV.js cargado con éxito!";
-            console.log("OpenCV.js cargado y listo");
-        }
 
         // Función para procesar la imagen
         function processImage(imgElement) {
@@ -54,29 +43,9 @@
 
             // Dibujar la imagen en el canvas
             ctx.drawImage(imgElement, 0, 0);
-
-            // Procesar la imagen con OpenCV.js
-            const src = cv.imread(canvas);
-            const dst = new cv.Mat();
-
-            // Convertir la imagen a escala de grises
-            cv.cvtColor(src, src, cv.COLOR_RGBA2GRAY);
-
-            // Detectar bordes con Canny
-            cv.Canny(src, dst, 50, 100);
-
-            // Mostrar la imagen procesada
-            cv.imshow(canvas, dst);
-
-            // Liberar las matrices
-            src.delete();
-            dst.delete();
-
-            // Mostrar mensaje de éxito
-            document.getElementById("statusMessage").innerText = "Imagen procesada con éxito!";
         }
 
-        // Función para manejar el archivo de imagen cargado
+        // Función para manejar la carga de la imagen
         function handleImageUpload(event) {
             const file = event.target.files[0];
             if (file && file.type.startsWith('image/')) {
@@ -94,38 +63,34 @@
             }
         }
 
-        // Asignar el evento de carga de imagen
-        document.getElementById('imageInput').addEventListener('change', handleImageUpload);
+        // Función para calcular la distancia entre dos puntos en píxeles
+        function calculateDistance(p1, p2) {
+            return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+        }
 
-        // Función para calcular la altura de la fachada
+        // Función para calcular la dimensión de la fachada
         function calculateFacadeHeight() {
-            if (points.length < 2) {
-                alert("Necesitas seleccionar dos puntos de referencia.");
+            if (points.length < 4) {
+                alert("Por favor selecciona 4 puntos: dos para la referencia y dos para la fachada.");
                 return;
             }
 
-            // Obtener la distancia en píxeles entre los puntos seleccionados
-            const pixelDistance = Math.sqrt(Math.pow(points[1].x - points[0].x, 2) + Math.pow(points[1].y - points[0].y, 2));
-            console.log("Distancia en píxeles entre los puntos seleccionados: ", pixelDistance);
+            // Distancia entre los puntos de referencia (en píxeles)
+            const referenceDistance = calculateDistance(points[0], points[1]);
 
-            // Establecer la altura de referencia (esto debe ser algo conocido, como la altura de una persona, por ejemplo)
-            const referenceHeight = 1.7; // Establecer la altura de referencia (en metros, por ejemplo)
+            // Distancia entre los puntos de la fachada (en píxeles)
+            const facadeDistance = calculateDistance(points[2], points[3]);
 
-            // Establecer la distancia entre los puntos en la foto en píxeles y usarla para calcular la escala
-            const scale = referenceHeight / pixelDistance;
-            console.log("Escala calculada: ", scale);
+            // Suponiendo que la distancia de referencia es conocida (por ejemplo, 2 metros en la vida real)
+            const referenceRealDistance = 2; // Esto puede ser ajustado si se tiene una referencia real, por ejemplo
 
-            // Medir la altura de la fachada (esto se hace con los puntos de la fachada)
-            // Por ejemplo, si tienes puntos de la fachada, los puedes medir de manera similar.
-            // Para este ejemplo, imagina que tienes la distancia vertical de la fachada en píxeles:
-            const facadePixelHeight = 300; // Medido en píxeles, por ejemplo
-            console.log("Distancia vertical de la fachada en píxeles: ", facadePixelHeight);
+            // Calcular la escala (metros por píxel)
+            const scale = referenceRealDistance / referenceDistance;
 
             // Calcular la altura de la fachada en metros
-            const facadeHeight = facadePixelHeight * scale;
-            console.log("Altura de la fachada calculada: ", facadeHeight);
+            const facadeHeight = facadeDistance * scale;
 
-            alert("La altura de la fachada es " + facadeHeight.toFixed(2) + " metros.");
+            alert("La altura de la fachada es: " + facadeHeight.toFixed(2) + " metros.");
         }
 
         // Función para manejar el clic en el canvas y seleccionar puntos
@@ -135,7 +100,7 @@
             const y = event.clientY - rect.top;
 
             // Almacenar los puntos seleccionados
-            if (points.length < 2) {
+            if (points.length < 4) {
                 points.push({ x, y });
 
                 // Dibujar un círculo en el punto seleccionado
@@ -143,11 +108,11 @@
                 const ctx = canvas.getContext('2d');
                 ctx.beginPath();
                 ctx.arc(x, y, 5, 0, Math.PI * 2, false);
-                ctx.fillStyle = 'red';
+                ctx.fillStyle = points.length <= 2 ? 'blue' : 'red'; // Puntos de referencia en azul, puntos de la fachada en rojo
                 ctx.fill();
 
-                // Si ya hay dos puntos, calcular la altura de la fachada
-                if (points.length == 2) {
+                // Si ya hay 4 puntos, calcular la altura de la fachada
+                if (points.length === 4) {
                     calculateFacadeHeight();
                 }
             }
@@ -156,13 +121,8 @@
         // Asignar el evento de clic al canvas para seleccionar puntos
         document.getElementById('canvasOutput').addEventListener('click', handleCanvasClick);
 
-        // Iniciar la carga de OpenCV.js
-        window.onload = function() {
-            // Verificar si OpenCV.js está listo
-            if (typeof cv !== 'undefined') {
-                openCvLoaded();
-            }
-        };
+        // Asignar el evento de carga de imagen
+        document.getElementById('imageInput').addEventListener('change', handleImageUpload);
     </script>
 </body>
 </html>
