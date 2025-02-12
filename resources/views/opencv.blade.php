@@ -22,12 +22,15 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Calcular Altura de Fachada</h1>
-        <input type="file" id="imageInput" accept="image/*">
-        <canvas id="canvasOutput"></canvas>
-        <div id="statusMessage"></div>
-    </div>
+    <x-app-layout>
+        <x-slot name="header">
+            <div class="container">
+                <h1>Calcular Altura de Fachada</h1>
+                <input type="file" id="imageInput" accept="image/*">
+                <canvas id="canvasOutput"></canvas>
+                <div id="statusMessage"></div>
+            </div>
+        </x-slot>
 
     <script>
         let points = [];
@@ -124,5 +127,6 @@
         // Asignar el evento de carga de imagen
         document.getElementById('imageInput').addEventListener('change', handleImageUpload);
     </script>
+    </x-app-layout>
 </body>
 </html>
