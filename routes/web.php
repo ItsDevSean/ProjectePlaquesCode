@@ -31,3 +31,8 @@ Route::get('/open', function () {
     return view('opencv');
 })->name('open');
 
+
+Route::get('/web', function () {
+    return view('webXREjemplo');
+})->name('web');
+
