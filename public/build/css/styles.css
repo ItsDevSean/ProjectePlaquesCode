@@ -36,3 +36,8 @@
     color: #ffffff;
     border: 2px solid #49DBA3;
 }
+
+#logo {
+    height: 55px; 
+    width: auto; 
+}
