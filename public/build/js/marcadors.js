@@ -52,7 +52,7 @@ let map;
           edificis.push({
             lat: latLng.lat(),
             lng: latLng.lng(),
-            nom: "Edifici " + (edificis.length + 1),
+            nom: "Edifici" + (edificis.length + 1),
           });
 
           // Mostrar un missatge amb les coordenades
