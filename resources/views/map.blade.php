@@ -37,9 +37,16 @@
                                 <button onclick="changeMapType('roadmap')">Roadmap</button>
                                 <button onclick="changeMapType('satellite')">Satelite</button>
                             </div>
+
+                            <!-- Desplegable per seleccionar un edifici -->
+                            <div>
+                                <select id="edifici" onchange="seleccionarEdifici()">
+                                    <option value="">Selecciona un edifici</option>
+                                </select>
+                            </div>
                         </div>
 
-                        <!-- Mapa donde se mostrará la localización -->
+                        <!-- Mapa on es mostrarà la localització -->
                         <div id="map"></div>                        
                     </div>
                 </div>

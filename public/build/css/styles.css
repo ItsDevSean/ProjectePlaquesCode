@@ -1,20 +1,20 @@
-/* Estil per al mapa */
+/* Estilos para el mapa */
 #map {
     height: 500px;
     width: 100%;
 }
 
-#mapHeader{
+#mapHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-#address{
+#address {
     width: 260px;
 }
 
-/* Estils per als botons */
+/* Estilos para los botones */
 .map-buttons {
     top: 10px;
     right: 10px;
@@ -23,12 +23,16 @@
 
 .map-buttons button {
     background-color: rgba(255, 255, 255, 0.7);
-    border: 1px solid #ccc;
+    border: 2px solid #49DBA3; 
+    color: #000000; 
     padding: 10px;
     margin: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .map-buttons button:hover {
-    background-color: rgba(255, 255, 255, 1);
+    background-color: #49DBA3; 
+    color: #ffffff;
+    border: 2px solid #49DBA3;
 }
