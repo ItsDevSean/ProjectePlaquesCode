@@ -1,4 +1,4 @@
-# Sprint 3 (20/01/2025 - 14/02/2025)
+# Sprint 3 (03/02/2025 - 14/02/2025)
 **Nota:** En aquest snapshot, la majoria de les funcions implementades no tenen un funcionament correcte, ja que ens faltaria activar la facturació de les APIs.
 
 #### Creació marcadors
