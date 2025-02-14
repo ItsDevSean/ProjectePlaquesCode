@@ -7,19 +7,69 @@
     <link rel="stylesheet" href="build/css/styles.css">
     <script async src="https://docs.opencv.org/3.4/opencv.js"></script>
     <style>
+        /* Estilo general */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
+            max-width: 100%;
         }
+
         #imageInput {
             margin-top: 20px;
+            max-width: 100%;
+            width: 300px;
         }
+
         #canvasOutput {
             margin-top: 20px;
             border: 1px solid #ccc;
+            max-width: 100%;
+            width: 100%;
+            height: auto;
+            max-height: 500px;
         }
+
+        /* Estilo para el header */
+        h2 {
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        /* Media Queries para dispositivos móviles */
+        @media screen and (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            #imageInput {
+                width: 100%;
+            }
+
+            #canvasOutput {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            h2 {
+                font-size: 1rem;
+            }
+        }
+
     </style>
 </head>
 <body>
