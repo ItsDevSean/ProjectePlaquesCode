@@ -1,37 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Formulario de Instalación de Placas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .mapa-img {
+            max-width: 600px; /* Ancho máximo de la imagen */
+            height: auto; /* Mantiene la proporción */
+            margin: 0 auto 20px;
+        }
+    </style>
 </head>
 
-<body>
-    <h1>Form</h1>
-    <form action="">
-        <label for="">Latitud</label>
-        <input type="text" id="" name="latitud" placeholder="Ingrese la latitud ">
-        <br><br>
-        <label for="">Longitud</label>
-        <input type="text" id="" name="longitud" placeholder="Ingrese la longitud ">
-        <br><br>
-        <label for="">Altura</label>
-        <input type="text" id="" name="altura" placeholder="Ingrese la altura ">
-        <br><br>
-        <label for="">Dirección de la instalación</label>
-        <input type="text" id="" name="direccion" placeholder="Ingrese la dirección ">
-        <br><br>
-        <!-- Subir una imagen -->
-        <label for="">Imagen del área</label>
-        <input type="file" name="imagen" placeholder="Ingrese la imagen ">
-        <br><br>
-        <div class="resultImg">
-            <p>Aquí va el resultado de la imagen</p>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="img/logo.png" alt="Logo" width="50" height="40" class="me-2">
+                <span class="text-success fw-bold">Energía Solar</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link " href="#">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Formulario</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contacto</a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link active">Instalar Placas</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        
+        
+
+        <!-- Imagen del mapa alineada con el formulario -->
+        <div class="text-center">
+            <img src="img/mapa.jpg" alt="Mapa de ubicación" class="mapa-img rounded shadow">
         </div>
 
-        <button type="submit">Enviar</button>
-    </form>
-</body>
+        <form action="" class="p-4 bg-white shadow rounded">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="latitud" class="form-label">Latitud</label>
+                    <input type="text" class="form-control" id="latitud" name="latitud" placeholder="Ingrese la latitud">
+                </div>
+                <div class="col-md-6">
+                    <label for="longitud" class="form-label">Longitud</label>
+                    <input type="text" class="form-control" id="longitud" name="longitud" placeholder="Ingrese la longitud">
+                </div>
+            </div>
 
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="area" class="form-label">Área de las placas (m²)</label>
+                    <input type="text" class="form-control" id="area" name="area" placeholder="Ingrese el área">
+                </div>
+                <div class="col-md-4">
+                    <label for="orientacion" class="form-label">Orientación</label>
+                    <select class="form-select" id="orientacion" name="orientacion">
+                        <option selected>Seleccione...</option>
+                        <option value="norte">Norte</option>
+                        <option value="sur">Sur</option>
+                        <option value="este">Este</option>
+                        <option value="oeste">Oeste</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="inclinacion" class="form-label">Inclinación (°)</label>
+                    <input type="number" class="form-control" id="inclinacion" name="inclinacion" placeholder="Ingrese la inclinación">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">Enviar</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
