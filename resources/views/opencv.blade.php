@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calcular Altura de Fachada</title>
+    <link rel="stylesheet" href="build/css/styles.css">
     <script async src="https://docs.opencv.org/3.4/opencv.js"></script>
     <style>
         .container {

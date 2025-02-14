@@ -11,14 +11,19 @@
 }
 
 #address {
-    width: 260px;
+    width: 185px;
+    border: 2px solid #49DBA3; 
 }
 
-/* Estilos para los botones */
 .map-buttons {
     top: 10px;
     right: 10px;
     z-index: 5;
+}
+
+#map {
+    height: 500px;
+    width: 100%;
 }
 
 .map-buttons button {
@@ -31,6 +36,7 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+
 .map-buttons button:hover {
     background-color: #49DBA3; 
     color: #ffffff;
@@ -40,4 +46,9 @@
 #logo {
     height: 55px; 
     width: auto; 
+}
+
+#edifici {
+    border: 2px solid #49DBA3;
+    margin-left: 33px;
 }

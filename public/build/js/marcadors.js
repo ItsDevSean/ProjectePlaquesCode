@@ -200,8 +200,8 @@ function geocodeAddress() {
 function updateEdificiSelect(edifici) {
   const select = document.getElementById("edifici");
   const option = document.createElement("option");
-  option.value = edifici.id; // Valor de l'opció és l'ID de l'edifici
-  option.text = edifici.nom; // El text de l'opció és el nom de l'edifici
+  option.value = edifici.id; 
+  option.text = edifici.nom; 
   select.appendChild(option);
 }
 

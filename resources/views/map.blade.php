@@ -5,12 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscador de Dirección</title>
     <link rel="stylesheet" href="build/css/styles.css">
-    <style>
-        #map {
-            height: 500px;
-            width: 100%;
-        }
-    </style>
 </head>
 
 <body>
@@ -28,7 +22,7 @@
                         <div id="mapHeader">
                             <!-- Formulario de búsqueda -->
                             <div>
-                                <input type="text" id="address" placeholder="Escribe tu ciudad, calle y número">
+                                <input type="text" id="address" placeholder="Escriu la teva direcció">
                                 <button id="buttonBuscar" onclick="geocodeAddress()">Buscar</button>
                             </div>
 
