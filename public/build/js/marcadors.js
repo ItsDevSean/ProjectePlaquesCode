@@ -99,10 +99,10 @@ window.initMap = function () {
 
         // Afegir les coordenades de l'edifici a la llista
         const edifici = {
-          id: edificis.length + 1, // Generar un ID únic per a cada edifici
+          id: edificis.length + 1,
           lat: latLng.lat(),
           lng: latLng.lng(),
-          nom: nomEdifici + (edificis.length + 1),
+          nom: nomEdifici,
         };
         edificis.push(edifici);
 
@@ -110,12 +110,7 @@ window.initMap = function () {
         updateEdificiSelect(edifici);
 
         // Mostrar un missatge amb les coordenades
-        alert(
-          nomEdifici + " seleccionat! Coordenades: " +
-            latLng.lat() +
-            ", " +
-            latLng.lng()
-        );
+        alert(nomEdifici + " seleccionat!");
 
         // Obtenir dades de l'edifici
         obtenirDadesEdifici(latLng.lat(), latLng.lng());
