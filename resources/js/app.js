@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import App from "../views/vue/App.vue"; // Ruta correcta
+import App from "../views/vue/App.vue"; 
 import router from "./router";
 import Oruga from "@oruga-ui/oruga-next";
 import "@oruga-ui/theme-oruga/dist/oruga.css"; 
