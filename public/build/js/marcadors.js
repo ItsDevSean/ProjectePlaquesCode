@@ -14,11 +14,7 @@ async function obtenirDadesEdifici(lat, lng) {
     if (dades.solarPotential) {
       const superficieUtil =
         dades.solarPotential.panelCapacityWatts / 200; // Estimat amb plaques de 200W/m²
-      alert(
-        `Dades de l'edifici: Superfície útil estimada per plaques solars: ${superficieUtil.toFixed(
-          2
-        )} m²`
-      );
+      alert(`Dades de l'edifici: Superfície útil estimada per plaques solars: ${superficieUtil.toFixed(2)} m²`);
     } else {
       alert("No s'han trobat dades solars per aquest edifici.");
     }
@@ -40,13 +36,10 @@ window.initMap = function () {
 
   // Afegir un event per a crear un marcador en el lloc on l'usuari fa clic
   google.maps.event.addListener(map, "click", function (event) {
-    const latLng = event.latLng; // Obtenir les coordenades del punt clicat
+    const latLng = event.latLng; 
 
     if (marcadorExistente) {
-      // Si ja existeix un marcador, pregunta si vol crear un nou projecte
-      const resposta = confirm(
-        "Ja existeix un marcador al mapa. Vols crear un nou projecte amb aquesta ubicació?"
-      );
+      const resposta = confirm("Ja existeix un marcador al mapa. Vols crear un nou projecte amb aquesta ubicació?");
       if (resposta) {
         // Eliminar el marcador anterior del mapa
         marcadorExistente.setMap(null);
@@ -73,13 +66,11 @@ window.initMap = function () {
           edificis.push(edifici);
           updateEdificiSelect(edifici); // Actualitzar el desplegable amb el nou edifici
 
-          // Mostrar un missatge amb les coordenades
-          alert(
-            nomEdifici + " seleccionat! Coordenades: " +
-              latLng.lat() +
-              ", " +
-              latLng.lng()
-          );
+          if (nomEdifici && nomEdifici.toLowerCase().includes("edifici")) {
+            alert(nomEdifici + " seleccionat!");
+            } else {
+            alert("Edifici " + nomEdifici + " seleccionat!");
+          }
 
           // Obtenir dades de l'edifici
           obtenirDadesEdifici(latLng.lat(), latLng.lng());
@@ -109,8 +100,13 @@ window.initMap = function () {
         // Actualitzar el desplegable amb el nou edifici
         updateEdificiSelect(edifici);
 
-        // Mostrar un missatge amb les coordenades
-        alert(nomEdifici + " seleccionat!");
+        // Mostrar un missatge amb el nom del edifici
+        if (nomEdifici && nomEdifici.toLowerCase().includes("edifici")) {
+          alert(nomEdifici + " seleccionat!");
+          } else {
+          alert("Edifici " + nomEdifici + " seleccionat!");
+        }
+      
 
         // Obtenir dades de l'edifici
         obtenirDadesEdifici(latLng.lat(), latLng.lng());
