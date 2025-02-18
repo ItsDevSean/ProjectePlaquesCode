@@ -47,7 +47,7 @@
                         <!-- Formulari d'entrada de dades -->
                         <form action="" class="form-container">
                             <h3 class="form-title">Introduïu les dades de la ubicació</h3>
-                        
+
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="latitud" class="form-label">Latitud</label>
@@ -59,7 +59,7 @@
                                 </div>
                             </div>
                         
-                            <h3 class="form-title">Dades de les plaques solars</h3>
+                            <h3 class="form-title2">Dades de les plaques solars</h3>
                         
                             <div class="row mb-3">
                                 <div class="col-md-4">
@@ -69,9 +69,8 @@
                                 <div class="col-md-4">
                                     <label for="orientacion" class="form-label">Orientació</label>
                                     <select class="form-select" id="orientacion" name="orientacion">
-                                        <option selected>Seleccioneu...</option>
                                         <option value="norte">Nord</option>
-                                        <option value="sur">Sud</option>
+                                        <option value="sur" selected>Sud</option>
                                         <option value="este">Est</option>
                                         <option value="oeste">Oest</option>
                                     </select>

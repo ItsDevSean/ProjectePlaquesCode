@@ -71,9 +71,13 @@ function crearMarcador(latLng) {
     };
     edificis.push(edifici);
 
+    // Actualitzar els camps de latitud i longitud al formulari
+    document.getElementById("latitud").value = edifici.lat;
+    document.getElementById("longitud").value = edifici.lng;
+
     if (nomEdifici && nomEdifici.toLowerCase().includes("edifici")) {
       alert(nomEdifici + " creat!");
-      } else {
+    } else {
       alert("Edifici " + nomEdifici + " creat!");
     }
 
@@ -82,6 +86,7 @@ function crearMarcador(latLng) {
     obtenirDadesEdifici(latLng.lat(), latLng.lng());
   }
 }
+
 
 
 function updateEdificiSelect(edifici) {
@@ -96,23 +101,32 @@ function seleccionarEdifici() {
   const select = document.getElementById("edifici");
   const id = select.value;
   const edificiSeleccionat = edificis.find(e => e.id == id);
+
   if (edificiSeleccionat) {
     if (marcadorExistente) {
       marcadorExistente.setMap(null);
     }
+
+    // Crear un marcador per l'edifici seleccionat
     marcadorExistente = new google.maps.Marker({
       position: { lat: edificiSeleccionat.lat, lng: edificiSeleccionat.lng },
       map: map,
       title: edificiSeleccionat.nom,
     });
+
     map.setCenter({ lat: edificiSeleccionat.lat, lng: edificiSeleccionat.lng });
+
+    document.getElementById("latitud").value = edificiSeleccionat.lat;
+    document.getElementById("longitud").value = edificiSeleccionat.lng;
+
     if (edificiSeleccionat.nom && edificiSeleccionat.nom.toLowerCase().includes("edifici")) {
       alert(edificiSeleccionat.nom + " seleccionat!");
-      } else {
+    } else {
       alert("Edifici " + edificiSeleccionat.nom + " seleccionat!");
     }
   }
 }
+
 
 // Funció per canviar el tipus de mapa 
 function changeMapType(type) {
