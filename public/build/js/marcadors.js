@@ -1,8 +1,8 @@
 let map;
-const edificis = []; // Array per emmagatzemar les coordenades dels edificis
-let marcadorExistente = null; // Variable per controlar si ja hi ha un marcador al mapa
+const edificis = []; 
+let marcadorExistente = null; 
 
-// Funció per obtenir dades de l'edifici utilitzant l'API Building Insights
+// Funció per obtenir dades de l'edifici
 async function obtenirDadesEdifici(lat, lng) {
   const API_KEY = "AIzaSyDu3ReEUVEQANj_h1EAtfe4-zyarcb3X04";
   const url = `https://solar.googleapis.com/v1/buildingInsights:findClosest?location.latitude=${lat}&location.longitude=${lng}&key=${API_KEY}`;
