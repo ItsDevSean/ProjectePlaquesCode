@@ -36,3 +36,6 @@ Route::get('/web', function () {
     return view('webXREjemplo');
 })->name('web');
 
+Route::get('/vue', function(){
+    return view('vue');
+});
