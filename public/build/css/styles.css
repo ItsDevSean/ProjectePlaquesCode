@@ -127,3 +127,65 @@
     width: 200px;
     margin-left: 33px;
 }
+
+/* Contenidor per als edificis */
+.edificis-container {
+    margin-top: 20px;
+}
+
+/* Títol de la secció */
+.edificis-container .form-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #49DBA3;
+    padding-bottom: 8px;
+}
+
+/* Taula d'edificis */
+.edificis-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.edificis-table th,
+.edificis-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.edificis-table th {
+    background-color: #49DBA3;
+    color: white;
+}
+
+/* Botons d'editar i esborrar */
+.btn-edit,
+.btn-delete {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #49DBA3;
+    padding: 8px 16px;
+    margin-right: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-edit:hover {
+    background-color: #49DBA3;
+    color: white;
+}
+
+.btn-delete {
+    background-color: #f44336;
+    border: 2px solid #f44336;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #d32f2f;
+    color: white;
+}

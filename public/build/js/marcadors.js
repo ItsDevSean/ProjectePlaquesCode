@@ -91,16 +91,25 @@ function crearMarcador(latLng) {
 
 function updateEdificiSelect(edifici) {
   const select = document.getElementById("edifici");
+  
   const option = document.createElement("option");
   option.value = edifici.id;
   option.text = edifici.nom;
-  select.appendChild(option);
+
+  const editOption = select.querySelector('option[value="edit"]');
+
+  select.insertBefore(option, editOption);
 }
+
 
 function seleccionarEdifici() {
   const select = document.getElementById("edifici");
   const id = select.value;
   const edificiSeleccionat = edificis.find(e => e.id == id);
+
+  if (id === "edit") {
+    window.location.href = "resources\views\editarEdificis.blade.php"; 
+  }
 
   if (edificiSeleccionat) {
     if (marcadorExistente) {

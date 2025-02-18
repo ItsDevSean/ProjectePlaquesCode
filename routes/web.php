@@ -36,6 +36,10 @@ Route::get('/web', function () {
     return view('webXREjemplo');
 })->name('web');
 
+Route::get('/edificis', function () {
+    return view('editarEdificis');
+})->name('edificis');
+
 Route::get('/vue', function(){
     return view('vue');
 });
