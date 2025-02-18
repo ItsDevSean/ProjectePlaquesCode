@@ -73,9 +73,10 @@ function crearMarcador(latLng) {
     };
     edificis.push(edifici);
 
-    // Actualitzar els camps de latitud i longitud al formulari
+    // Actualitzar els camps de latitud, longitud i inclinació al formulari
     document.getElementById("latitud").value = edifici.lat;
     document.getElementById("longitud").value = edifici.lng;
+    document.getElementById("inclinacion").value = edifici.lat.toFixed(0);
 
     if (nomEdifici && nomEdifici.toLowerCase().includes("edifici")) {
       alert(nomEdifici + " creat!");
