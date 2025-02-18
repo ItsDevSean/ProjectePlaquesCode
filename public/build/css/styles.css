@@ -1,54 +1,107 @@
-/* Estilos para el mapa */
-#map {
-    height: 500px;
-    width: 100%;
-}
-
-#mapHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#address {
-    width: 185px;
-    border: 2px solid #49DBA3; 
-}
-
-.map-buttons {
-    top: 10px;
-    right: 10px;
-    z-index: 5;
-}
-
-#map {
-    height: 500px;
-    width: 100%;
-}
-
-.map-buttons button {
-    background-color: rgba(255, 255, 255, 0.7);
-    border: 2px solid #49DBA3; 
-    color: #000000; 
-    padding: 10px;
-    margin: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-
-.map-buttons button:hover {
-    background-color: #49DBA3; 
-    color: #ffffff;
-    border: 2px solid #49DBA3;
-}
-
 #logo {
     height: 55px; 
     width: auto; 
 }
 
+/* Contenidor del formulari */
+.form-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+    margin-top: 40px;
+}
+
+/* Títols del formulari */
+.form-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #49DBA3;
+    padding-bottom: 8px;
+}
+
+/* Inputs i selects */
+.form-control, .form-select {
+    border-radius: 8px;
+    padding: 14px;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+/* Labels */
+.form-label {
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 5px;
+}
+
+/* Estils per al mapa */
+#map {
+    height: 500px;
+    width: 100%;
+    border-radius: 12px;
+}
+
+/* Contenidor del mapa */
+#mapHeader {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+/* Input i botó de cerca */
+#address {
+    width: 185px;
+    border: 2px solid #49DBA3;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+/* Botons del mapa */
+.map-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.map-buttons button {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #49DBA3;
+    color: #000;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.map-buttons button:hover, .btn-success:hove {
+    background-color: #49DBA3;
+    color: #fff;
+}
+
+/* Botó d'enviament */
+.btn-success {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #49DBA3;
+    margin-top: 20px;
+    border: none;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+    width: 100%;
+}
+
+/* Select d'edificis */
 #edifici {
     border: 2px solid #49DBA3;
+    border-radius: 8px;
+    padding: 10px;
+    width: 200px;
     margin-left: 33px;
 }
