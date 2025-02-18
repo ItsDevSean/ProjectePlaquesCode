@@ -71,6 +71,12 @@ function crearMarcador(latLng) {
     };
     edificis.push(edifici);
 
+    if (nomEdifici && nomEdifici.toLowerCase().includes("edifici")) {
+      alert(nomEdifici + " creat!");
+      } else {
+      alert("Edifici " + nomEdifici + " creat!");
+    }
+
     updateEdificiSelect(edifici);
     document.getElementById("edifici").value = edifici.id;
     obtenirDadesEdifici(latLng.lat(), latLng.lng());
@@ -100,7 +106,11 @@ function seleccionarEdifici() {
       title: edificiSeleccionat.nom,
     });
     map.setCenter({ lat: edificiSeleccionat.lat, lng: edificiSeleccionat.lng });
-    alert(`Has seleccionat: ${edificiSeleccionat.nom}`);
+    if (edificiSeleccionat.nom && edificiSeleccionat.nom.toLowerCase().includes("edifici")) {
+      alert(edificiSeleccionat.nom + " seleccionat!");
+      } else {
+      alert("Edifici " + edificiSeleccionat.nom + " seleccionat!");
+    }
   }
 }
 
