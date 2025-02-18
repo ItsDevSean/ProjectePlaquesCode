@@ -37,7 +37,7 @@
                             <div>
                                 <select id="edifici" onchange="seleccionarEdifici()">
                                     <option value="" disabled selected>Selecciona un edifici</option>
-                                    <option value="edit">Editar edificis</option>
+                                    <option value="edit">Editar edificis...</option>
                                 </select>                                
                             </div>
                         </div>

@@ -1,5 +1,5 @@
 let map;
-const edificis = []; 
+let edificis = []; 
 let marcadorExistente = null; 
 
 // Funció per obtenir dades de l'edifici
@@ -23,6 +23,8 @@ async function obtenirDadesEdifici(lat, lng) {
     alert("Hi ha hagut un error en obtenir les dades de l'edifici.");
   }
 }
+
+
 
 // Funció d'inicialització del mapa
 window.initMap = function () {
@@ -108,8 +110,9 @@ function seleccionarEdifici() {
   const edificiSeleccionat = edificis.find(e => e.id == id);
 
   if (id === "edit") {
-    window.location.href = "resources\views\editarEdificis.blade.php"; 
+    window.location.href = "edificis";
   }
+  
 
   if (edificiSeleccionat) {
     if (marcadorExistente) {
