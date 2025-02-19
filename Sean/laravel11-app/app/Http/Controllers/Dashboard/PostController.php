@@ -44,7 +44,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('dashboard.post.create'); 
+        $categories = Categories::pluck('id', 'title');
+        
+        return view('dashboard.post.create', compact('categories')); 
     }
 
     /**
@@ -52,7 +54,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
