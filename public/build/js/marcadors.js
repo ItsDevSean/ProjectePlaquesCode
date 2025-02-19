@@ -2,6 +2,7 @@ let map;
 let edificis = []; 
 let marcadorExistente = null; 
 
+
 // Funció per obtenir dades de l'edifici
 async function obtenirDadesEdifici(lat, lng) {
   const API_KEY = "AIzaSyDu3ReEUVEQANj_h1EAtfe4-zyarcb3X04";

@@ -14,8 +14,15 @@
                 {{ __('Buscador de Direcció') }}
             </h2>
         </x-slot>
-
-        <div class="py-12">
+        <div class="container mt-4">
+            <ul class="progressbar">
+                <li class="active">Paso 1: Introducir dirección</li>
+                <li>Paso 2: Seleccionar tipo de mapa</li>
+                <li>Paso 3: Obtener resultado</li>
+            </ul>
+        </div>      
+        
+        <div class="py-13">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
