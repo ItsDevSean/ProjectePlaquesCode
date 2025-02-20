@@ -16,10 +16,11 @@
         </x-slot>
         <div class="container mt-4">
             <ul class="progressbar">
-                <li class="active">Introducir dirección</li>
-                <li>Seleccionar tipo de mapa</li>
-                <li>Obtener resultado</li>
+                <li data-url="dades" class=active>Dades Client</li>
+                <li data-url="mapa">Seleccionar area</li>
+                <li data-url="vista3.html">Pas 3</li>
             </ul>
+            
         </div>
         <div class="client-form-container">
             <h2 class="client-form-title">Dades del Client</h2>
@@ -45,6 +46,9 @@
                 <button type="submit" class="client-form-submit">Enviar</button>
             </form>
         </div>
+        <script src="build/js/marcadors.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDu3ReEUVEQANj_h1EAtfe4-zyarcb3X04&libraries=places&callback=initMap"></script>
+        <script src="https://solar.googleapis.com/v1/buildingInsights:findClosest?key=AIzaSyDu3ReEUVEQANj_h1EAtfe4-zyarcb3X04"></script>
     </x-app-layout>
 </body>
 </html>
