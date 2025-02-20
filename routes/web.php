@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\InformacionFisicaPanelController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -43,3 +44,10 @@ Route::get('/edificis', function () {
 Route::get('/vue', function(){
     return view('vue');
 });
+
+Route::get('/fisico', function(){
+    return view('caracFisiPlac');
+});
+
+Route::post('/guardar-informacion', [InformacionFisicaPanelController::class, 'store']);
+
