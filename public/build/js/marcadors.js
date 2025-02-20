@@ -185,3 +185,9 @@ function geocodeAddress() {
     }
   });
 }
+
+document.querySelectorAll('.progressbar li').forEach((step) => {
+  step.addEventListener('click', () => {
+      window.location.href = step.getAttribute('data-url');
+  });
+});

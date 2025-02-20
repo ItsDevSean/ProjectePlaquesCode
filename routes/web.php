@@ -45,6 +45,10 @@ Route::get('/vue', function(){
     return view('vue');
 });
 
+Route::get('/dades', function(){
+    return view('dadesClient');
+})->name('dades');
+
 Route::get('/fisico', function(){
     return view('caracFisiPlac');
 });

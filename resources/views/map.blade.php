@@ -16,9 +16,9 @@
         </x-slot>
         <div class="container mt-4">
             <ul class="progressbar">
-                <li class="active">Paso 1: Introducir dirección</li>
-                <li>Paso 2: Seleccionar tipo de mapa</li>
-                <li>Paso 3: Obtener resultado</li>
+                <li data-url="dades">Dades Client</li>
+                <li data-url="mapa" class=active>Seleccionar area</li>
+                <li data-url="vista3.html">Pas 3</li>
             </ul>
         </div>      
         
