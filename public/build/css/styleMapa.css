@@ -20,7 +20,7 @@
     background-color: #ffffff;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
     position: absolute;
-    margin-top: 8%; /* Ajusta esta distancia para mover el buscador abajo */
+    margin-top: 8%; 
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
@@ -82,7 +82,7 @@
 
 .progressbar-container {
     position: absolute;
-    top: 0px; /* Ajusta la distancia desde la parte superior */
+    top: 0px; 
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
@@ -205,7 +205,7 @@
 /* Barra de progreso encima del mapa */
 .container.mt-4 {
     position: absolute;
-    top: 20px; /* Ajusta la posición vertical */
+    top: 20px; 
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
