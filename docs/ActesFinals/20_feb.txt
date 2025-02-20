@@ -26,3 +26,10 @@ Models:
 DadesClient
 InformacionElectricaPanel
 InformacionFisicaPanel
+
+Acte fnal Teo:
+
+Creció de formulari dades client.
+Modificiació de les vistes, He eliminat la del mapa ja que he cambiat completament la vista basantme en la web que ens va dir el Iban que ens miresim.
+He creat un css per a cada vista ja que d'aquesta manera estara tot mes clar.
+He implementat a la barra de progres les noves vistes i he millorat el estil de aquesta.
