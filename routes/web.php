@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InformacionFisicaPanelController;
+use App\Http\Controllers\InformacionElectricaPanelController;
 use App\Http\Controllers\DadesClientController;
 use Illuminate\Support\Facades\Route;
 
@@ -63,6 +64,8 @@ Route::get('/electrico', function(){
     return view('caracElecPlac');
 });
 
-Route::post('/guardar-informacion', [InformacionFisicaPanelController::class, 'store']);
+Route::post('/guardar-informacionFisica', [InformacionFisicaPanelController::class, 'store']);
+
+Route::post('/guardar-informacionElectrica', [InformacionElectricaPanelController::class, 'store']);
 
 Route::post('/guardar-dades', [DadesClientController::class, 'store'])->name('guardar.dades');
