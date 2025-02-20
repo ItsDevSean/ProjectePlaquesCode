@@ -10,7 +10,7 @@
 <body>
     
 
-    <form>
+    <form action="{{ route('guardar.informacionElectrica') }}" method="post">
 
         {{--  Campo numérico en vatios (W). --}}
         <p>Potencia Máxima (Pmax)</p>

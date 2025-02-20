@@ -10,7 +10,7 @@
 <body>
     
 
-    <form>
+    <form action="{{ route('guardar.informacionFisica') }}" method="post">
 
         {{-- Campo numérico en milímetros (mm) --}}
         <p>Longitud</p>
