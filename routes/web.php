@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InformacionFisicaPanelController;
+use App\Http\Controllers\DadesClientController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -62,3 +63,4 @@ Route::get('/fisico', function(){
 
 Route::post('/guardar-informacion', [InformacionFisicaPanelController::class, 'store']);
 
+Route::post('/guardar-dades', [DadesClientController::class, 'store'])->name('guardar.dades');

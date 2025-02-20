@@ -24,7 +24,7 @@
         </div>
         <div class="client-form-container">
             <h2 class="client-form-title">Dades del Client</h2>
-            <form action="" method="post">
+            <form action="{{ route('guardar.dades') }}" method="post">
                 <label for="nombre" class="client-form-label">Nom Complet</label>
                 <input type="text" class="client-form-input" id="nombre" name="nombre" placeholder="Exemple: Juan Pérez" required>
 
