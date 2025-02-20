@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dades del Client</title>
-    <link rel="stylesheet" href="build/css/styles.css">
+    <link rel="stylesheet" href="build/css/styleDades.css">
 </head>
 <body>
     <x-app-layout>
@@ -16,9 +16,9 @@
         </x-slot>
         <div class="container mt-4">
             <ul class="progressbar">
-                <li data-url="dades" class=active>Dades Client</li>
+                <li data-url="dades" class=active>Dades del Client</li>
                 <li data-url="mapa">Seleccionar area</li>
-                <li data-url="vista3.html">Pas 3</li>
+                <li data-url="formulari">Formulari Prova</li>
             </ul>
             
         </div>

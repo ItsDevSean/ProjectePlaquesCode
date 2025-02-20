@@ -1,0 +1,215 @@
+/* Estilos generales */
+#logo {
+    height: 55px;
+    width: auto;
+}
+
+/* Contenedor del mapa */
+.map-container {
+    width: 100%;
+    position: relative;
+}
+
+/* Encabezado del mapa (buscador y botones) */
+.map-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    position: absolute;
+    margin-top: 8%; /* Ajusta esta distancia para mover el buscador abajo */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    border-radius: 12px;
+}
+
+.search-container {
+    display: flex;
+    gap: 10px;
+}
+
+#address {
+    width: 300px;
+    border: 2px solid #49DBA3;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+#buttonBuscar {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #49DBA3;
+    color: #000;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+#buttonBuscar:hover {
+    background-color: #49DBA3;
+    color: #fff;
+}
+
+.map-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.map-buttons button {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #49DBA3;
+    color: #000;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.map-buttons button:hover {
+    background-color: #49DBA3;
+    color: #fff;
+}
+
+/* Estilos del mapa */
+#map {
+    height: 100vh;
+    width: 100%;
+}
+
+.progressbar-container {
+    position: absolute;
+    top: 0px; /* Ajusta la distancia desde la parte superior */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 80%;
+}
+
+
+/* Barra de progreso */
+.progressbar {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    counter-reset: step;
+    margin: 0;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    padding: 10px;
+    width: 80%;
+    margin: 20px auto;
+    position: relative;
+    z-index: 1000;
+}
+
+.progressbar li {
+    position: relative;
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    color: #333;
+    padding-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.progressbar li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    display: block;
+    text-align: center;
+    margin: auto;
+    background: #ffffff;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: bold;
+    color: #49DBA3;
+    border: 2px solid #49DBA3;
+    transition: background 0.3s, border-color 0.3s, transform 0.3s;
+}
+
+.progressbar li.active:before {
+    background: #49DBA3;
+    color: white;
+    border-color: #49DBA3;
+}
+
+.progressbar li:hover:before {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.progressbar li:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+/* Resto de estilos (formulario, etc.) */
+.form-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+    margin-top: 40px;
+}
+
+.form-title, .form-title2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #49DBA3;
+    padding-bottom: 8px;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    padding: 14px;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 5px;
+}
+
+.btn-success {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #49DBA3;
+    margin-top: 20px;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.btn-success:hover {
+    background-color: #49DBA3;
+    color: #fff;
+}
+
+/* Barra de progreso encima del mapa */
+.container.mt-4 {
+    position: absolute;
+    top: 20px; /* Ajusta la posición vertical */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 80%;
+}
+
+/* Rest of your styles remain unchanged */
