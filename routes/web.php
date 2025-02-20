@@ -26,7 +26,7 @@ Route::get('/web', function(){
 require __DIR__.'/auth.php';
 
 Route::get('/mapa', function () {
-    return view('map');
+    return view('mapaPrueva');
 })->name('map');
 
 Route::get('/open', function () {
@@ -41,6 +41,11 @@ Route::get('/web', function () {
 Route::get('/edificis', function () {
     return view('editarEdificis');
 })->name('edificis');
+
+Route::get('/formulari', function () {
+    return view('formulariProva');
+})->name('formulari');
+
 
 Route::get('/vue', function(){
     return view('vue');
