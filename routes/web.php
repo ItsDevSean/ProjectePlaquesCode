@@ -17,6 +17,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/herramientas/paneles', function(){
+    return view('tools.panels');
+})->name('panels');
+
 Route::get('/web', function(){
     return view('webxr');
 });
