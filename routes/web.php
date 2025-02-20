@@ -43,3 +43,7 @@ Route::get('/edificis', function () {
 Route::get('/vue', function(){
     return view('vue');
 });
+
+Route::get('/dades', function(){
+    return view('dadesClient');
+})->name('dades');

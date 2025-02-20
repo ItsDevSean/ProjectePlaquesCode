@@ -16,9 +16,9 @@
         </x-slot>
         <div class="container mt-4">
             <ul class="progressbar">
-                <li class="active">Paso 1: Introducir dirección</li>
-                <li>Paso 2: Seleccionar tipo de mapa</li>
-                <li>Paso 3: Obtener resultado</li>
+                <li>Introducir dirección</li>
+                <li class="active">Seleccionar tipo de mapa</li>
+                <li>Obtener resultado</li>
             </ul>
         </div>      
         
