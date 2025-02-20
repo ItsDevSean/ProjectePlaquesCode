@@ -54,6 +54,10 @@ Route::get('/fisico', function(){
     return view('caracFisiPlac');
 });
 
+Route::get('/electrico', function(){
+    return view('caracElecPlac');
+});
+
 Route::post('/guardar-informacion', [InformacionFisicaPanelController::class, 'store']);
 
 Route::post('/guardar-dades', [DadesClientController::class, 'store'])->name('guardar.dades');
