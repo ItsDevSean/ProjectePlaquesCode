@@ -1,0 +1,204 @@
+#logo {
+    height: 55px; 
+    width: auto; 
+}
+
+.progressbar {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    counter-reset: step;
+    margin: 0;
+    background: #ffffff;  
+    border-radius: 12px;  
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); 
+    width: 80%;  
+    margin: 20px auto;
+    margin-bottom: 0px;
+    position: relative;
+}
+
+.progressbar li {
+    position: relative;
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;  
+    font-size: 14px;
+    color: #333;  
+    padding-bottom: 10px;
+    transition: all 0.3s ease;  
+}
+
+/* Estilo de los círculos */
+.progressbar li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    display: block;
+    text-align: center;
+    margin: auto;
+    background: #ffffff;  
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: bold;
+    color: #49DBA3;  
+    border: 2px solid #49DBA3;  
+    transition: background 0.3s, border-color 0.3s, transform 0.3s;  
+}
+
+.progressbar li.active:before {
+    background: #49DBA3;  
+    color: white;
+    border-color: #49DBA3;  
+}
+
+.progressbar li:hover:before {
+    cursor: pointer;
+    transform: scale(1.1);  
+}
+
+.progressbar li:hover {
+    cursor: pointer;
+    transform: scale(1.1);  
+}
+
+.progressbar li:not(.active) {
+    pointer-events: auto; 
+}
+
+.progressbar li.active + li:hover:before {
+    transform: scale(1.1);  
+}
+
+.progressbar li:last-child {
+    margin-right: 0;
+}
+
+.progressbar li {
+    font-size: 16px;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.py-13{
+    margin-top: 22px;
+}
+
+
+/* Contenedor del formulario */
+.client-form-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+
+
+/* Título del formulario */
+.client-form-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #49DBA3;
+    padding-bottom: 8px;
+}
+
+/* Etiquetas del formulario */
+.client-form-label {
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Inputs del formulario */
+.client-form-input {
+    border-radius: 8px;
+    padding: 14px;
+    width: 100%;
+    border: 2px solid #ddd;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.client-form-input:focus {
+    border-color: #49DBA3;
+    outline: none;
+    box-shadow: 0 0 5px rgba(73, 219, 163, 0.5);
+}
+
+/* Botón de envío */
+.client-form-submit {
+    background-color: #ffffff;
+    border: 2px solid #49DBA3; 
+    color: black;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.client-form-submit:hover {
+    background-color: #49DBA3;
+    color: #fff;
+}
+
+.client-form-input::placeholder {
+    color: #999;
+    font-size: 14px;
+}
+
+.client-form-input[type="tel"],
+.client-form-input[type="email"] {
+    font-family: 'Arial', sans-serif;
+}
+
+.client-form-input[type="tel"] {
+    letter-spacing: 1px;
+}
+
+.client-form-input[type="email"] {
+    text-transform: lowercase;
+}
+
+.client-form-input[type="text"] {
+    text-transform: capitalize;
+}
+
+.client-form-input#direccion {
+    text-transform: none;
+}
+
+.client-form-input#codigo_postal {
+    text-transform: uppercase;
+}
+
+.client-form-input#ciudad {
+    text-transform: capitalize;
+}
+
+.client-form-input#nombre {
+    text-transform: capitalize;
+}
+
+.client-form-input#telefono {
+    text-transform: none;
+}
+
+.client-form-input#email {
+    text-transform: lowercase;
+}
+

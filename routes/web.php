@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\InformacionFisicaPanelController;
+use App\Http\Controllers\InformacionElectricaPanelController;
+use App\Http\Controllers\DadesClientController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,7 +27,7 @@ Route::get('/web', function(){
 require __DIR__.'/auth.php';
 
 Route::get('/mapa', function () {
-    return view('map');
+    return view('mapaPrueva');
 })->name('map');
 
 Route::get('/open', function () {
@@ -40,6 +43,29 @@ Route::get('/edificis', function () {
     return view('editarEdificis');
 })->name('edificis');
 
+Route::get('/formulari', function () {
+    return view('formulariProva');
+})->name('formulari');
+
+
 Route::get('/vue', function(){
     return view('vue');
 });
+
+Route::get('/dades', function(){
+    return view('dadesClient');
+})->name('dades');
+
+Route::get('/fisico', function(){
+    return view('caracFisiPlac');
+});
+
+Route::get('/electrico', function(){
+    return view('caracElecPlac');
+});
+
+Route::post('/guardar-informacionFisica', [InformacionFisicaPanelController::class, 'store']);
+
+Route::post('/guardar-informacionElectrica', [InformacionElectricaPanelController::class, 'store']);
+
+Route::post('/guardar-dades', [DadesClientController::class, 'store'])->name('guardar.dades');
