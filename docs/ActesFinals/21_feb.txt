@@ -4,3 +4,8 @@ Hoy he estado intentando de nuevo subir las tablas a la BD. He continuado tenien
 He estado creando nuevas tablas y revisando las ya existentes.
 Tambien he instalado dbVisualizer para ver las tablas de la BD, sin conseguirlo. Y mira que es raro ya que en el phpmyadmin me deja loguearme y hacer sentencias.
 *He creado en phpmyadmin una tabla con una sentencia sql, basicamente la que he creado con php, la migration 2025_02_20_094400_create_informacion_fisica_panel_table la he pasado a sentencia sql y la he insertado en la BD. 
+
+Teo.C
+Hem estat intentant pujar de nou les taulas ala DB pero seguim amb els mateixos problemes.
+He implementat una nova vista per veure els diferents plans que te la aplicació.
+He cambiat un paraell de cosas de header que estaben malament, a mes de cambiar la navegació
