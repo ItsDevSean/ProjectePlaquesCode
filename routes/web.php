@@ -64,8 +64,8 @@ Route::get('/electrico', function(){
     return view('caracElecPlac');
 });
 
-Route::post('/guardar-informacionFisica', [InformacionFisicaPanelController::class, 'store']);
+Route::post('/guardar-informacionFisica', [InformacionFisicaPanelController::class, 'store'])->name('guardar.informacionFisica');
 
-Route::post('/guardar-informacionElectrica', [InformacionElectricaPanelController::class, 'store']);
+Route::post('/guardar-informacionElectrica', [InformacionElectricaPanelController::class, 'store'])->name('guardar.informacionElectrica');
 
 Route::post('/guardar-dades', [DadesClientController::class, 'store'])->name('guardar.dades');
