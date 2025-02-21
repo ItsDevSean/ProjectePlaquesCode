@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paneles Solares</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="./panels_styles.css"> -->
+    <!-- Aplicar el css de nuestra aplicación-->
+
+    <link rel="stylesheet" href="build/css/styles.css"> 
     <script>
         function toggleModal() {
             document.getElementById('modal').classList.toggle('hidden');
