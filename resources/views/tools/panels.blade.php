@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <!-- Modal -->
+        <!-- Pop up with a form -->
         <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex justify-center items-center">
             <div class="bg-white rounded-lg p-6 w-full max-w-2xl">
                 <div class="flex justify-between items-center mb-4">
