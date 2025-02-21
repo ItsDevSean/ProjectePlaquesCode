@@ -1,0 +1,35 @@
+Acta final Marc.S:
+
+Creación de formularios, models, controllers y tablas.
+
+He creado formularios para subir la informacion a la bd. Esta hecho el back-end, solo queda implementar front-end (.css y .js).
+
+Solo queda editar los estilos y que se vea majo y tenga su boton y tal. Habrá que hacer que el botón con el script haga el submit y tal.
+
+Archivos de referencia:
+
+caracElecPlac.blade.php
+
+caracFisiPlac.blade.php
+
+dadesClient.blade.php
+
+
+Si necesitais ver controler o model:
+
+Controllers:
+InformacionElectricaController
+InformacionFisicaController
+DadesClientController
+
+Models:
+DadesClient
+InformacionElectricaPanel
+InformacionFisicaPanel
+
+Acte fnal Teo:
+
+Creció de formulari dades client.
+Modificiació de les vistes, He eliminat la del mapa ja que he cambiat completament la vista basantme en la web que ens va dir el Iban que ens miresim.
+He creat un css per a cada vista ja que d'aquesta manera estara tot mes clar.
+He implementat a la barra de progres les noves vistes i he millorat el estil de aquesta.
