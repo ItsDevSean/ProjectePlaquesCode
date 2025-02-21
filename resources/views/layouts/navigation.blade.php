@@ -38,8 +38,8 @@
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dades')" :active="request()->routeIs('dadesClient')">
-                        <button class="px-4 py-2 bg-green-400 text-white rounded-lg border-spacing-6">
-                            {{ __('Dades Client') }}
+                        <button class="px-4 py-2 bg-emerald-400 text-white rounded-lg border-spacing-6">
+                            {{ __('Nuevo Proyecto') }}
                         </button>
                     </x-nav-link>
                 </div>
