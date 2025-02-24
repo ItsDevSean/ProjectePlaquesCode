@@ -1,6 +1,9 @@
 let map;
 let edificis = []; 
 let marcadorExistente = null; 
+let selectedMarkers = [];
+let selectedPolygon = null;
+let areaLabel = document.getElementById("areaResult");
 
 
 // Funció per obtenir dades de l'edifici
@@ -38,20 +41,8 @@ window.initMap = function () {
   });
 
   initAutocomplete();
+  document.getElementById("startSelection").addEventListener("click", iniciarSeleccio);
 
-  google.maps.event.addListener(map, "click", function (event) {
-    const latLng = event.latLng;
-
-    if (marcadorExistente) {
-      const resposta = confirm("Ja existeix un marcador al mapa. Vols crear un nou projecte amb aquesta ubicació?");
-      if (resposta) {
-        marcadorExistente.setMap(null);
-        crearMarcador(latLng);
-      }
-    } else {
-      crearMarcador(latLng);
-    }
-  });
 };
 
 // Funció per inicialitzar Autocomplete
@@ -211,3 +202,76 @@ document.querySelectorAll('ul.flex-col li').forEach((step) => {
     window.location.href = step.getAttribute('data-url');
   });
 });
+
+// Comença la selecció de punts
+function iniciarSeleccio() {
+  netejarSeleccio();
+  map.addListener("click", seleccionarPunt);
+}
+
+// Funció per seleccionar punts
+function seleccionarPunt(event) {
+  let marker = new google.maps.Marker({
+      position: event.latLng,
+      map: map,
+      icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 6,
+          fillColor: "red",
+          fillOpacity: 1,
+          strokeWeight: 1,
+      },
+  });
+
+  selectedMarkers.push(marker);
+
+  // Dibuixa el polígon sempre que hi hagi almenys 3 punts
+  if (selectedMarkers.length >= 3) {
+      dibuixarPoligon();
+  }
+}
+
+// Dibuixa el polígon
+function dibuixarPoligon() {
+  if (selectedPolygon) {
+      selectedPolygon.setMap(null);
+  }
+
+  let coordinates = selectedMarkers.map(marker => marker.getPosition());
+
+  // Tanquem el polígon unint el primer i l'últim punt
+  coordinates.push(coordinates[0]);
+
+  selectedPolygon = new google.maps.Polygon({
+      paths: coordinates,
+      strokeColor: "#00FF00",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#00FF00",
+      fillOpacity: 0.35,
+      map: map,
+  });
+
+  calcularArea();
+}
+
+// Calcula l'àrea del polígon
+function calcularArea() {
+  if (selectedPolygon) {
+      let area = google.maps.geometry.spherical.computeArea(selectedPolygon.getPath());
+      areaLabel.innerText = `Àrea: ${area.toFixed(2)} m²`;
+  }
+}
+
+// Neteja els punts i el polígon anterior
+function netejarSeleccio() {
+  selectedMarkers.forEach(marker => marker.setMap(null));
+  selectedMarkers = [];
+
+  if (selectedPolygon) {
+      selectedPolygon.setMap(null);
+      selectedPolygon = null;
+  }
+
+  areaLabel.innerText = "";
+}

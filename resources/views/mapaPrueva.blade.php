@@ -10,25 +10,26 @@
 
 <body>
     <x-app-layout>
-        <!-- Barra de progrés fora del contenidor del mapa -->
+
+        <!-- Barra de progrés -->
         <div class="progress-bar-container">
             <div class="progress-bar bg-white border flex justify-center items-center mx-auto shadow-teal-300 shadow-md max-w-6xl p-2 rounded-lg dark:bg-gray-700 dark:text-gray-300">
                 <div class="w-full max-w-screen-2xl px-12 mx-auto">
                     <ul class="w-full flex flex-col md:flex-row justify-center items-center gap-40 mt-2 md:mt-0 md:text-base md:font-medium">
-                        <li class="flex flex-col items-center cursor-pointer transition-transform duration-200 ease-in-out hover:scale-110">
-                            <a href="dades" class="flex flex-col items-center">
+                        <li class="flex flex-col items-center cursor-pointer hover:scale-110 transition-transform duration-200 ease-in-out">
+                            <a href="dades.html" class="flex flex-col items-center">
                                 <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">1</div>
                                 <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">Dades del Client</span>
                             </a>
                         </li>
-                        <li class="flex flex-col items-center cursor-pointer transition-transform duration-200 ease-in-out hover:scale-110">
-                            <a href="mapa" class="flex flex-col items-center">
+                        <li class="flex flex-col items-center cursor-pointer hover:scale-110 transition-transform duration-200 ease-in-out">
+                            <a href="mapa.html" class="flex flex-col items-center">
                                 <div class="w-10 h-10 flex items-center justify-center bg-emerald-400 border-2 border-emerald-400 rounded-full text-white font-bold text-lg">2</div>
                                 <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">Seleccionar area</span>
                             </a>
                         </li>
-                        <li class="flex flex-col items-center cursor-pointer transition-transform duration-200 ease-in-out hover:scale-110">
-                            <a href="formulari" class="flex flex-col items-center">
+                        <li class="flex flex-col items-center cursor-pointer hover:scale-110 transition-transform duration-200 ease-in-out">
+                            <a href="formulari.html" class="flex flex-col items-center">
                                 <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">3</div>
                                 <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">Formulari Prova</span>
                             </a>
@@ -37,20 +38,20 @@
                 </div>
             </div>
         </div>
-        
-    
-        <!-- Contenedor del mapa i buscador -->
+
+        <!-- Contenidor del mapa -->
         <div class="map-container">
             <div class="map-header">
                 <div class="search-container">
                     <input type="text" id="address" placeholder="Escriu la teva direcció" autocomplete="off">
-                    <button id="buttonBuscar" onclick="geocodeAddress()">Buscar</button>
+                    <button id="buttonBuscar">Buscar</button>
                 </div>
+                <button id="startSelection" class="btn-primary">Seleccionar area</button>
+                <span id="areaResult"></span>
             </div>
-    
             <div id="map"></div>
         </div>
-    
+
     </x-app-layout>
     
     <script src="build/js/marcadors.js"></script>
