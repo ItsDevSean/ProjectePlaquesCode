@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dades del Client</title>
     <link rel="stylesheet" href="build/css/styleDades.css">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
     <x-app-layout>
@@ -14,14 +15,29 @@
                 {{ __('Buscador de Direcció') }}
             </h2>
         </x-slot>
-        <div class="container mt-4">
-            <ul class="progressbar">
-                <li data-url="dades" class=active>Dades del Client</li>
-                <li data-url="mapa">Seleccionar area</li>
-                <li data-url="formulari">Formulari Prova</li>
-            </ul>
-            
+        <!-- barra de progres -->
+        <div class="progress-bar-container mt-5">
+            <div class="progress-bar bg-white border flex justify-center items-center mx-auto shadow-teal-300 shadow-md max-w-6xl p-2 rounded-lg dark:bg-gray-700 dark:text-gray-300">
+                <div class="w-full max-w-screen-2xl px-12 mx-auto">
+                    <ul class="w-full flex flex-col md:flex-row justify-center items-center gap-40 mt-2 md:mt-0 md:text-base md:font-medium">
+                        <li class="flex flex-col items-center">
+                            <div class="w-10 h-10 flex items-center justify-center bg-emerald-400 border-2 border-emerald-400 rounded-full text-white font-bold text-lg">1</div>
+                            <span class="text-gray-700 dark:text-white text-sm md:text-base">Dades del Client</span>
+                        </li>
+                        <li class="flex flex-col items-center">
+                            <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">2</div>
+                            <span class="text-gray-700 dark:text-white text-sm md:text-base">Seleccionar area</span>
+                        </li>
+                        <li class="flex flex-col items-center">
+                            <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">3</div>
+                            <span class="text-gray-700 dark:text-white text-sm md:text-base">Formulari Prova</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
+        
+        
         <div class="client-form-container">
             <h2 class="client-form-title">Dades del Client</h2>
             <form action="{{ route('guardar.dades') }}" method="post">

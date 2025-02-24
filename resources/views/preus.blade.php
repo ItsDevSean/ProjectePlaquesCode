@@ -17,7 +17,7 @@
         </x-slot>
 
         <section class="py-6 leading-7 text-gray-900 bg-gray sm:py-12 md:py-16">
-            <div class="box-border px-4 mx-auto border-solid bg-white sm:px-6 md:px-6 lg:px-0 max-w-[90%] rounded-[10px]">
+            <div class="box-border px-4 mx-auto border-solid bg-white sm:px-6 md:px-6 lg:px-0 max-w-[90%] rounded-[20px]">
                 <div class="scale-90">   
                     <div class="flex flex-col items-center leading-7 text-center text-gray-900 border-0 border-gray-200">
                         <h2 id="pricing"

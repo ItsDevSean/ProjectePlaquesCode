@@ -35,9 +35,7 @@ Route::get('/open', function () {
 })->name('open');
 
 
-Route::get('/web', function () {
-    return view('webXREjemplo');
-})->name('web');
+
 
 Route::get('/edificis', function () {
     return view('editarEdificis');

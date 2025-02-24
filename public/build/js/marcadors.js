@@ -37,6 +37,8 @@ window.initMap = function () {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
   });
 
+  initAutocomplete();
+
   google.maps.event.addListener(map, "click", function (event) {
     const latLng = event.latLng;
 
@@ -51,6 +53,32 @@ window.initMap = function () {
     }
   });
 };
+
+// Funció per inicialitzar Autocomplete
+function initAutocomplete() {
+  autocomplete = new google.maps.places.Autocomplete(
+      document.getElementById("address"),
+      { types: ["geocode"] }
+  );
+
+  autocomplete.addListener("place_changed", function () {
+      const place = autocomplete.getPlace();
+
+      if (!place.geometry) {
+          alert("No s'han trobat detalls per aquesta adreça.");
+          return;
+      }
+
+      console.log("Direcció seleccionada:", place.formatted_address);
+      console.log("Latitud:", place.geometry.location.lat());
+      console.log("Longitud:", place.geometry.location.lng());
+
+      map.setCenter(place.geometry.location);
+      if (marcadorExistente) marcadorExistente.setMap(null);
+      crearMarcador(place.geometry.location);
+  });
+}
+
 
 function crearMarcador(latLng) {
   const nomEdifici = prompt("Introdueix el nom de l'edifici:");
@@ -142,14 +170,6 @@ function seleccionarEdifici() {
 }
 
 
-// Funció per canviar el tipus de mapa 
-function changeMapType(type) {
-  if (type === "satellite") {
-    map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
-  } else {
-    map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
-  }
-}
 
 // Funció per geolocalitzar una adreça introduïda
 function geocodeAddress() {
@@ -186,8 +206,8 @@ function geocodeAddress() {
   });
 }
 
-document.querySelectorAll('.progressbar li').forEach((step) => {
+document.querySelectorAll('ul.flex-col li').forEach((step) => {
   step.addEventListener('click', () => {
-      window.location.href = step.getAttribute('data-url');
+    window.location.href = step.getAttribute('data-url');
   });
 });
