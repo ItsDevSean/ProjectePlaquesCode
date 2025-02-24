@@ -70,7 +70,8 @@
                     <button onclick="toggleModal()" class="text-gray-500">✖</button>
                 </div>
 
-                <form class="grid grid-cols-2 gap-4">
+                <form class="grid grid-cols-2 gap-4" action="/herramientas/paneles" method="POST">
+                    @csrf
                     <div>
                         <label>Nombre del Modelo*</label>
                         <input type="text" class="border p-2 rounded w-full">
@@ -101,7 +102,8 @@
                     </div>
                 </form>
 
-                <form action="grid grid-cols-2 gap-4">
+                <form action="grid grid-cols-2 gap-4" method="POST">
+                    @csrf
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-bold">Características Eléctricas:</h3>
                         <button onclick="toggleModal()" class="text-gray-500">✖</button>
