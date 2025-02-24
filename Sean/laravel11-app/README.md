@@ -84,6 +84,13 @@ php artisan route:clear
 
 And as easy as that, it works!
 
+### Migrations
+#### Ep 27.
+For creating a new table, you run the cmd: `php artisan make:migration [tableName]`
+
+In this file, you will put the structure of the table.
+
+Once you create the table structure, for adding to the database, you run: `php artisan migrate`
 
 ### MVC & CRUD
 #### Ep 31.
