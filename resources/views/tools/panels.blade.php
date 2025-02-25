@@ -70,40 +70,38 @@
                     <button onclick="toggleModal()" class="text-gray-500">✖</button>
                 </div>
 
-                <form class="grid grid-cols-2 gap-4" action="/herramientas/paneles" method="POST">
+                <form action="{{ route('paneles.resultado')}}" method="POST">
                     @csrf
+                    @method('POST')
                     <div>
                         <label>Nombre del Modelo*</label>
-                        <input type="text" class="border p-2 rounded w-full">
+                        <input type="text" name="panel_model" class="border p-2 rounded w-full">
                     </div>
                     <div>
                         <label>Fabricante*</label>
-                        <input type="text" class="border p-2 rounded w-full">
+                        <input type="text" name="manufacturer"class="border p-2 rounded w-full">
                     </div>
                     <div>
                         <label>Tipo de Panel*</label><br>
                         <select id="options" name="options">
-                            <option value="Monocristalino">Monocristalino</option>
-                            <option value="Policristalino">Policristalino</option>
-                            <option value="Thin-Film">Thin-Film</option>
+                            <option name="panel_type" value="Monocristalino">Monocristalino</option>
+                            <option name="panel_type" value="Policristalino">Policristalino</option>
+                            <option name="panel_type" value="Thin-Film">Thin-Film</option>
                         </select>
                     </div>
                     <div>
                     <label for="date">Fecha de Fabricación:</label>
-                    <input type="date" class="border p-2 rounded w-full">
+                    <input type="date" name="date_manufacturer" class="border p-2 rounded w-full">
                     </div>
                     <div>
                         <label>Garantía del producto (años)*:</label>
-                        <input type="number" class="border p-2 rounded w-full">
+                        <input type="number" name="panel_warranty" class="border p-2 rounded w-full">
                     </div>
                     <div>
                         <label>Garantía de rendimiento (años):</label>
-                        <input type="number" class="border p-2 rounded w-full">
+                        <input type="number" name="performance_warranty" class="border p-2 rounded w-full">
                     </div>
-                </form>
 
-                <form action="grid grid-cols-2 gap-4" method="POST">
-                    @csrf
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-bold">Características Eléctricas:</h3>
                         <button onclick="toggleModal()" class="text-gray-500">✖</button>
@@ -111,34 +109,35 @@
 
                     <div>
                         <label>Potencia Máxima (Pmax):*</label>
-                        <input type="number" class="border p-2 rounded w-full">
+                        <input type="number" name="maximum_power" class="border p-2 rounded w-full">
                     </div>
                     <div>
                         <label>Tensión en Punto de Máxima Potencia (Vmp):*</label>
-                        <input type="number" class="border p-2 rounded w-full">
+                        <input type="number" name="voltage_maximum_power_point" class="border p-2 rounded w-full">
                     </div>
                     <div>
                         <label>Corriente en Punto de Máxima Potencia (Imp):*</label>
-                        <input type="number" class="border p-2 rounded w-full">
+                        <input type="number" name="current_maximum_power_point" class="border p-2 rounded w-full">
                     </div>
                     <div>
                         <label>Tensión de Circuito Abierto (Voc):*</label>
-                        <input type="number" class="border p-2 rounded w-full">
+                        <input type="number" name="open_circuit_voltage" class="border p-2 rounded w-full">
                     </div>
                     <div>
                         <label>Corriente de Cortocircuito (Isc):*</label>
-                        <input type="number" class="border p-2 rounded w-full">
+                        <input type="number" name="short_circuit_current" class="border p-2 rounded w-full">
                     </div>
                     <div>
                         <label>Eficiencia del Panel:</label>
-                        <input type="number" class="border p-2 rounded w-full">
+                        <input type="number" name="panel_efficiency" class="border p-2 rounded w-full">
+                    </div>
+                
+                    <div class="flex justify-end mt-4 space-x-4">
+                        <button onclick="toggleModal()" class="text-gray-500">Cancelar</button>
+                        <button class="bg-green-500 text-white py-2 px-4 rounded-lg" type="submit">Confirmar</button>
                     </div>
                 </form>
-
-                <div class="flex justify-end mt-4 space-x-4">
-                    <button onclick="toggleModal()" class="text-gray-500">Cancelar</button>
-                    <button class="bg-green-500 text-white py-2 px-4 rounded-lg">Confirmar</button>
-                </div>
+                
             </div>
         </div>
     </x-app-layout>

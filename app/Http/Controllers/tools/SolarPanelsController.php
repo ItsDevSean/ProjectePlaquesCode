@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SolarPanelsModel;
 use Illuminate\Http\Request;
 
+
 class SolarPanelsController extends Controller
 {
     /**
@@ -31,23 +32,28 @@ class SolarPanelsController extends Controller
      */
     public function store(Request $request)
     {
-        Post::create(
+        $request->validate(
             [
-                'panel_model' => $request->all(['panel_model']),
-                'manufacturer' =>$request->all(['manufacturer']) ,
-                'panel_type' =>  $request->all(['panel_type']),
-                #ToDo, implementar la resta d'atributs, min 1:51-
-                'date_manufacturer' => , 
-                'panel_warranty' => ,
-                'performance_warranty' => ,
-                'maximum_power' => ,
-                'voltage_maximum_power_point' => ,
-                'current_maximum_power_point' => , 
-                'open_circuit_voltage' => ,
-                'short_circuit_current' => ,
-                'panel_efficiency' => 
+                [
+                    'panel_model' => 'required|string',
+                    'manufacturer' => 'required|string' ,
+                    'panel_type' =>  'required|string',
+                    'date_manufacturer' => 'required|date', 
+                    'panel_warranty' => 'required|numeric|min:0',
+                    'performance_warranty' => 'required|numeric|min:0',
+                    'maximum_power' => 'required|numeric|min:0',
+                    'voltage_maximum_power_point' => 'required|numeric|min:0',
+                    'current_maximum_power_point' => 'required|numeric|min:0', 
+                    'open_circuit_voltage' => 'required|numeric|min:0',
+                    'short_circuit_current' => 'required|numeric|min:0',
+                    'panel_efficiency' => 'required|numeric|min:0'
+                ] 
             ]
         );
+        SolarPanelsController::create($request->all());
+
+        return response()->json(['message' => 'Datos saved:)']);
+                  
     }
 
     /**

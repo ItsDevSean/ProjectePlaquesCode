@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\tools\SolarPanelsController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -47,3 +49,5 @@ Route::get('/vue', function(){
 Route::get('/herramientas/paneles', function(){
     return view('tools.panels');
 })->name('panels');
+
+Route::post('/herramientas/paneles/resultado', [SolarPanelsController::class, 'store'])->name('paneles.resultado');
