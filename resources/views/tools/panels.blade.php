@@ -81,13 +81,18 @@
                         <label>Fabricante*</label>
                         <input type="text" name="manufacturer"class="border p-2 rounded w-full">
                     </div>
-                    <div>
+                    {{-- <div>
                         <label>Tipo de Panel*</label><br>
-                        <select id="options" name="options">
-                            <option name="panel_type" value="Monocristalino">Monocristalino</option>
-                            <option name="panel_type" value="Policristalino">Policristalino</option>
-                            <option name="panel_type" value="Thin-Film">Thin-Film</option>
+                        <select id="options" name="panel_type" class="border p-2 rounded w-full">
+                            <option value="" disabled selected>Selecciona un tipo de panel</option>
+                            <option value="Monocristalino" @if(old('panel_type') == 'Monocristalino') selected @endif>Monocristalino</option>
+                            <option value="Policristalino" @if(old('panel_type') == 'Policristalino') selected @endif>Policristalino</option>
+                            <option value="Thin-Film" @if(old('panel_type') == 'Thin-Film') selected @endif>Thin-Film</option>
                         </select>
+                    </div> --}}
+                    <div>
+                        <label>Tipo de Panel*</label>
+                        <input type="text" name="panel_type"class="border p-2 rounded w-full">
                     </div>
                     <div>
                     <label for="date">Fecha de Fabricación:</label>

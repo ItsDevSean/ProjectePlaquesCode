@@ -37,7 +37,7 @@ class SolarPanelsController extends Controller
                 [
                     'panel_model' => 'required|string',
                     'manufacturer' => 'required|string' ,
-                    'panel_type' =>  'required|string',
+                    'panel_type' =>  'nullable|string',
                     'date_manufacturer' => 'required|date', 
                     'panel_warranty' => 'required|numeric|min:0',
                     'performance_warranty' => 'required|numeric|min:0',
@@ -50,7 +50,7 @@ class SolarPanelsController extends Controller
                 ] 
             ]
         );
-        SolarPanelsController::create($request->all());
+        SolarPanelsModel::create($request->all());
 
         return response()->json(['message' => 'Datos saved:)']);
                   
