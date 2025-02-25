@@ -38,6 +38,8 @@ window.initMap = function () {
     zoom: 15,
     center: centre,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
+    tilt: 0, 
+    heading: 0
   });
 
   initAutocomplete();
@@ -186,13 +188,10 @@ function geocodeAddress() {
         title: results[0].formatted_address,
       });
       alert(
-        "Ubicació: " +
-          results[0].geometry.location.lat() +
-          ", " +
-          results[0].geometry.location.lng()
+        "Ubicació trobada"
       );
     } else {
-      alert("No es va poder trobar la direcció: " + status);
+      alert("No sa trobat la direcció, torna-ho a intentar.");
       console.log(results);
     }
   });
