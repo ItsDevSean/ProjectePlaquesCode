@@ -8,16 +8,13 @@ class ProyectosPropios extends Model
 {
         use HasFactory;
     
-        protected $table = "InformacionFisicaPanel";
+        protected $table = "proyectospropios";
     
         protected $fillable = [
-            'asignado',
-            'estado',
-            'nombre_proyecto',
-            'cliente',
-            'tarifa',
-            'potencia_pico',
-            'pvp',
+            'Nombre',
+            'Latitud',
+            'Longitud',
+            'Descripcion',
         ];
     }
     

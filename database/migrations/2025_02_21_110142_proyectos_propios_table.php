@@ -13,14 +13,10 @@ return new class extends Migration
     {
         Schema::create('ProyectosPropios', function (Blueprint $table) {
             $table->id();
-            $table->string('asignado');
-            $table->boolean('estado');
-            $table->string('nombre_proyecto');
-            $table->string('cliente');
-            $table->string('tarifa');
-            $table->string('potencia_pico');
-            $table->string('pvp');
-            $table->timestamps();
+            $table->string('nombre');
+            $table->int('latitud');
+            $table->int('longitud');
+            $table->string('descripcion');
         });
     }
 
