@@ -11,7 +11,7 @@
     
 
     <form action="{{ route('guardar.informacionElectrica') }}" method="post">
-
+    @csrf
         {{--  Campo numérico en vatios (W). --}}
         <p>Potencia Máxima (Pmax)</p>
         <input type="text" name="potencia_maxima"/>
@@ -47,6 +47,8 @@
         {{-- Campo numérico en %/°C --}}
         <p>Coeficiente de Temperatura de</p>
         <input type="text" name="coeficiente_temp_isc"/>
+
+        <button type="submit" name="Guardar"> Guardar </button>
       
 
 
