@@ -43,6 +43,7 @@ window.initMap = function () {
   initAutocomplete();
   document.getElementById("startSelection").addEventListener("click", iniciarSeleccio);
 
+  document.getElementById("buttonBuscar").addEventListener("click", geocodeAddress);
 };
 
 // Funció per inicialitzar Autocomplete
