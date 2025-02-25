@@ -88,18 +88,25 @@ function crearMarcador(latLng) {
 
     map.setCenter(latLng);
 
+    // Extraer el área del texto dentro de #areaResult
+    const areaText = document.getElementById("areaResult").innerText;
+    const areaValue = areaText.replace("Àrea: ", "").replace(" m²", ""); 
+
     const edifici = {
       id: edificis.length + 1,
       lat: latLng.lat(),
       lng: latLng.lng(),
       nom: nomEdifici,
+      inclinacion: latLng.lat().toFixed(0),
+      area: areaValue, 
     };
     edificis.push(edifici);
 
-    // Actualitzar els camps de latitud, longitud i inclinació al formulari
-    document.getElementById("latitud").value = edifici.lat;
-    document.getElementById("longitud").value = edifici.lng;
-    document.getElementById("inclinacion").value = edifici.lat.toFixed(0);
+    // Guardar en localStorage
+    localStorage.setItem("edificiData", JSON.stringify(edifici));
+
+    // Redirigir a la página del formulario con los datos en la URL
+    const url = `/formulari?lat=${edifici.lat}&lng=${edifici.lng}&inclinacion=${edifici.inclinacion}&area=${edifici.area}`;
 
     if (nomEdifici && nomEdifici.toLowerCase().includes("edifici")) {
       alert(nomEdifici + " creat!");
@@ -112,6 +119,35 @@ function crearMarcador(latLng) {
     obtenirDadesEdifici(latLng.lat(), latLng.lng());
   }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Recuperar datos de localStorage
+  const edificiData = JSON.parse(localStorage.getItem("edificiData"));
+
+  if (edificiData) {
+    document.getElementById("latitud").value = edificiData.lat;
+    document.getElementById("longitud").value = edificiData.lng;
+    document.getElementById("inclinacion").value = edificiData.inclinacion;
+    document.getElementById("area").value = edificiData.area; 
+
+    // Limpiar el localStorage después de usar los datos
+    localStorage.removeItem("edificiData");
+  }
+
+  // También puedes recuperar los datos de la URL si los pasas como parámetros
+  const urlParams = new URLSearchParams(window.location.search);
+  const lat = urlParams.get("lat");
+  const lng = urlParams.get("lng");
+  const inclinacion = urlParams.get("inclinacion");
+  const area = urlParams.get("area");
+
+  if (lat && lng && inclinacion && area) {
+    document.getElementById("latitud").value = lat;
+    document.getElementById("longitud").value = lng;
+    document.getElementById("inclinacion").value = inclinacion;
+    document.getElementById("area").value = area; 
+  }
+});
 
 
 
@@ -258,8 +294,13 @@ function dibuixarPoligon() {
 // Calcula l'àrea del polígon
 function calcularArea() {
   if (selectedPolygon) {
-      let area = google.maps.geometry.spherical.computeArea(selectedPolygon.getPath());
-      areaLabel.innerText = `Àrea: ${area.toFixed(2)} m²`;
+    let area = google.maps.geometry.spherical.computeArea(selectedPolygon.getPath());
+    areaLabel.innerText = `Àrea: ${area.toFixed(2)} m²`;
+
+    // Guardar el área en localStorage
+    const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
+    edificiData.area = area.toFixed(2); // Guardar el área con 2 decimales
+    localStorage.setItem("edificiData", JSON.stringify(edificiData));
   }
 }
 
