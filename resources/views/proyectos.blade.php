@@ -52,7 +52,8 @@
             </div>
         </div>
     </div>
-
+ 
+    <div id="overlay" class="overlay"></div>
 
     <div id="sidePanel" class="side-panel">
         <div class="side-panel-content">
@@ -63,11 +64,15 @@
     </div>
 
     </div>
+
+
+
     <script>
 
 document.addEventListener("DOMContentLoaded", function() {
     const projectRows = document.querySelectorAll('.project-row');
     const sidePanel = document.getElementById('sidePanel');
+    const overlay = document.getElementById('overlay'); // Referencia al overlay
     const closeButton = document.querySelector('.close-btn');
 
     // Manejador de clic para cada proyecto
@@ -75,15 +80,11 @@ document.addEventListener("DOMContentLoaded", function() {
         row.addEventListener('click', function() {
             const projectId = row.getAttribute('data-id');
 
-            // Aquí deberías cargar los detalles del proyecto de forma dinámica
-            // por ejemplo, utilizando Ajax o mediante el uso de rutas en Laravel.
-
             // Mostrar los detalles (esto es solo un ejemplo simple)
             const projectDetailsContent = `
                 <h3>Detalles del Proyecto</h3>
                 <p>ID del Proyecto: ${projectId}</p>
                 <p>Más información aquí...</p>
-    
             `;
 
             // Mostrar los detalles en el sidePanel
@@ -93,19 +94,27 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // Abrir el panel
             sidePanel.classList.add('show');
+            overlay.style.display = 'block'; // Mostrar el overlay cuando el panel se abre
         });
     });
 
-    // Cerrar el panel cuando se haga clic en el botón de cerrar
+    // Cerrar el panel y el overlay cuando se haga clic en el botón de cerrar
     closeButton.addEventListener('click', function() {
         sidePanel.classList.remove('show');
+        overlay.style.display = 'none'; // Ocultar el overlay cuando se cierra el panel
     });
 
-    // Cerrar el panel cuando se haga clic fuera del panel
+    // Cerrar el panel y el overlay cuando se haga clic fuera del panel (en el overlay)
+    overlay.addEventListener('click', function() {
+        sidePanel.classList.remove('show');
+        overlay.style.display = 'none'; // Ocultar el overlay
+    });
+
+    // Cerrar el panel si se hace clic fuera del sidePanel (pero no en el overlay)
     document.addEventListener('click', function(event) {
-        // Si el clic es fuera del panel y no es el botón de cerrar ni el panel mismo
-        if (!sidePanel.contains(event.target) && !event.target.closest('.project-row')) {
+        if (!sidePanel.contains(event.target) && !event.target.closest('.project-row') && !event.target.closest('#overlay')) {
             sidePanel.classList.remove('show');
+            overlay.style.display = 'none'; // Ocultar el overlay
         }
     });
 
