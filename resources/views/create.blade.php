@@ -27,20 +27,6 @@
                         <input type="text" name="nombre" id="nombre" class="w-full p-2 border rounded" required>
                     </div>
 
-                    <div class="mb-4">
-                        <label for="latitud" class="block font-medium">Latitud:</label>
-                        <input type="text" name="latitud" id="latitud" class="w-full p-2 border rounded" required>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="longitud" class="block font-medium">Longitud:</label>
-                        <input type="text" name="longitud" id="longitud" class="w-full p-2 border rounded" required>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="descripcion" class="block font-medium">Descripción:</label>
-                        <textarea name="descripcion" id="descripcion" class="w-full p-2 border rounded"></textarea>
-                    </div>
 
                     <div class="flex justify-end">
                         <a href="{{ route('proyectos.index') }}" class="mr-4 px-4 py-2 bg-gray-500 text-white rounded">Cancelar</a>

@@ -23,9 +23,6 @@
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Usuario</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nombre Proyecto</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Latitud</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Longitud</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Descripción</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Acciones</th>
                             </tr>
                         </thead>
@@ -34,11 +31,7 @@
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->user?->name ?? 'Usuario no disponible' }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->latitud }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->longitud }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->descripcion }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <a href="{{ route('proyectos.show', $proyecto->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Mostrar</a>
                                         <a href="{{ route('proyectos.edit', $proyecto->id) }}" class="text-green-600 hover:text-green-900 mr-3">Editar</a>
                                         <form action="{{ route('proyectos.destroy', $proyecto->id) }}" method="POST" class="inline-block">
                                             @csrf
