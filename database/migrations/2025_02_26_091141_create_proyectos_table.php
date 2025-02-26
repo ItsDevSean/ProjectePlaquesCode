@@ -17,9 +17,11 @@ return new class extends Migration
             $table->decimal('latitud', 10, 7);
             $table->decimal('longitud', 10, 7);
             $table->text('descripcion')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Relación con la tabla 'users'
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      */

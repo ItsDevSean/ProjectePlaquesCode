@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Proyecto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; // Importa Auth
 
 class ProyectoController extends Controller
 {
     public function index()
     {
-        $proyectos = Proyecto::paginate(10);
+        // Aquí estamos cargando la relación 'user' para cada proyecto
+        $proyectos = Proyecto::with('user')->paginate(10);
         return view('proyectos', compact('proyectos'));
     }
 
@@ -27,14 +29,23 @@ class ProyectoController extends Controller
             'descripcion' => 'nullable|string',
         ]);
 
-        Proyecto::create($request->all());
+        // Aquí se asigna el usuario logueado al proyecto
+        Proyecto::create([
+            'nombre' => $request->nombre,
+            'latitud' => $request->latitud,
+            'longitud' => $request->longitud,
+            'descripcion' => $request->descripcion,
+            'user_id' => Auth::id(),  // Asigna el ID del usuario logueado
+        ]);
 
         return redirect()->route('proyectos.index')->with('status', 'Proyecto creado con éxito');
     }
 
     public function show(Proyecto $proyecto)
     {
-        return view('proyectos.show', compact('proyecto'));
+        // Accede al nombre del usuario asociado al proyecto
+        $userName = $proyecto->user->name;
+        return view('proyectos.show', compact('proyecto', 'userName'));
     }
 
     public function edit(Proyecto $proyecto)

@@ -12,4 +12,9 @@ class Proyecto extends Model
     protected $table = 'proyectos';
 
     protected $fillable = ['nombre', 'latitud', 'longitud', 'descripcion'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

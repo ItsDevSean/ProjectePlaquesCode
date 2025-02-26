@@ -21,8 +21,8 @@
                     <table class="tabla min-w-full divide-y">
                         <thead>
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">ID</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nombre</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Usuario</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nombre Proyecto</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Latitud</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Longitud</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Descripción</th>
@@ -32,7 +32,7 @@
                         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                             @foreach ($proyectos as $proyecto)
                                 <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->id }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->user?->name ?? 'Usuario no disponible' }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->latitud }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->longitud }}</td>
