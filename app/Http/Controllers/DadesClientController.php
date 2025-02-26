@@ -16,7 +16,7 @@ class DadesClientController extends Controller
             'codigo_postal' => 'nullable|numeric|min:0',
         ]);
 
-        DadesClient::create($request->all());
+        dadesclient::create($request->all());
 
         return response()->json(['message' =>'Datos guardados.']);
 

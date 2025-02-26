@@ -8,7 +8,7 @@ class DadesClient extends Model
 {
     use HasFactory;
 
-    protected $table = "DadesClient";
+    protected $table = "dadesclient";
 
     protected $fillable = [
         'nombre',

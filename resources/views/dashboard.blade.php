@@ -18,7 +18,6 @@
         background-color: rgba(74, 219, 164, 0.1);
     }
 </style>
-
 <x-app-layout>
     <x-slot name="header">
         <link rel="stylesheet" href="build/css/styles.css">
@@ -105,4 +104,5 @@
             </div>
         </div>
     </div>
+    
 </x-app-layout>

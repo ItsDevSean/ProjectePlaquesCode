@@ -12,6 +12,7 @@
 
     <form action="{{ route('guardar.informacionFisica') }}" method="post">
 
+    @csrf
         {{-- Campo numérico en milímetros (mm) --}}
         <p>Longitud</p>
         <input type="text" name="longitud"/>
@@ -52,6 +53,7 @@
         <p>Opcional : color del panel</p>
         <input type="text" name="color_panel"/>
 
+        <button type="submit">Guardar</button>
 
 
     </form>
