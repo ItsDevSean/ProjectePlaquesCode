@@ -8,7 +8,7 @@
     <style></style>
 </head>
 <body>
-    
+    <!-- Aplicar estilos-->
 
     <form action="{{ route('guardar.informacionFisica') }}" method="post">
 
