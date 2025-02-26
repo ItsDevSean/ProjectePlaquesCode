@@ -64,11 +64,20 @@
 
         <!-- Pop up with a form -->
         <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex justify-center items-center">
-            <div class="bg-white rounded-lg p-6 w-full max-w-2xl">
+            <div class="bg-white rounded-lg p-6 w-full max-w-2xl max-h-screen overflow-y-auto">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-bold">Creación de nuevo panel:</h3>
                     <button onclick="toggleModal()" class="text-gray-500">✖</button>
                 </div>
+                
+                <!-- toDO: reutilzable -->
+                @if ($errors->any())
+                    @foreach ($errors->all() as $e)
+                        <div>
+                            {{ $e }}
+                        </div>
+                    @endforeach
+                @endif
 
                 <form action="{{ route('paneles.resultado')}}" method="POST">
                     @csrf
@@ -81,15 +90,7 @@
                         <label>Fabricante*</label>
                         <input type="text" name="manufacturer"class="border p-2 rounded w-full">
                     </div>
-                    {{-- <div>
-                        <label>Tipo de Panel*</label><br>
-                        <select id="options" name="panel_type" class="border p-2 rounded w-full">
-                            <option value="" disabled selected>Selecciona un tipo de panel</option>
-                            <option value="Monocristalino" @if(old('panel_type') == 'Monocristalino') selected @endif>Monocristalino</option>
-                            <option value="Policristalino" @if(old('panel_type') == 'Policristalino') selected @endif>Policristalino</option>
-                            <option value="Thin-Film" @if(old('panel_type') == 'Thin-Film') selected @endif>Thin-Film</option>
-                        </select>
-                    </div> --}}
+                
                     <div>
                         <label>Tipo de Panel*</label>
                         <input type="text" name="panel_type"class="border p-2 rounded w-full">

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\tools;
 use App\Http\Controllers\Controller;
 use App\Models\SolarPanelsModel;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 
 class SolarPanelsController extends Controller
 {
@@ -22,7 +22,7 @@ class SolarPanelsController extends Controller
      */
     public function create()
     {
-        #toDo: deveria cojer los valores por defecto desde aqui
+        return view('panels');
     }
 
     
@@ -32,28 +32,27 @@ class SolarPanelsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(
-            [
-                [
-                    'panel_model' => 'required|string',
-                    'manufacturer' => 'required|string' ,
-                    'panel_type' =>  'nullable|string',
-                    'date_manufacturer' => 'required|date', 
-                    'panel_warranty' => 'required|numeric|min:0',
-                    'performance_warranty' => 'required|numeric|min:0',
-                    'maximum_power' => 'required|numeric|min:0',
-                    'voltage_maximum_power_point' => 'required|numeric|min:0',
-                    'current_maximum_power_point' => 'required|numeric|min:0', 
-                    'open_circuit_voltage' => 'required|numeric|min:0',
-                    'short_circuit_current' => 'required|numeric|min:0',
-                    'panel_efficiency' => 'required|numeric|min:0'
-                ] 
-            ]
-        );
+
+
+        $request->validate([
+            'panel_model' => 'required|string|min:2|max:100',
+            'manufacturer' => 'required|string|min:2|max:100',
+            'panel_type' => 'required|string|min:2|max:50',
+            'date_manufacturer' => 'required|date',
+            'panel_warranty' => 'required|integer',
+            'performance_warranty' => 'required|integer',
+            'maximum_power' => 'required|integer',
+            'voltage_maximum_power_point' => 'required|integer',
+            'current_maximum_power_point' => 'required|integer',
+            'open_circuit_voltage' => 'required|integer',
+            'short_circuit_current' => 'required|integer',
+            'panel_efficiency' => 'required|integer'
+        ]);
+
+
         SolarPanelsModel::create($request->all());
 
-        return response()->json(['message' => 'Datos saved:)']);
-                  
+        return to_route('panels');    
     }
 
     /**
