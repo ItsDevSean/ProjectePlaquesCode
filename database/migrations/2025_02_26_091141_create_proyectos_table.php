@@ -9,22 +9,22 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('ProyectosPropios', function (Blueprint $table) {
+        Schema::create('proyectos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->integer('latitud');
-            $table->integer('longitud');
-            $table->string('descripcion');
+            $table->decimal('latitud', 10, 7);
+            $table->decimal('longitud', 10, 7);
+            $table->text('descripcion')->nullable();
+            $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('ProyectosPropios');
+        Schema::dropIfExists('proyectos');
     }
 };
