@@ -24,23 +24,23 @@
         </x-slot>
         <div class="max-w-4xl mx-auto">
             
-            <h1 class="text-2xl font-bold text-yellow-500 mb-4">Paneles</h1>
+            <h1 class="text-2xl font-bold text-[#49DBA3] mb-4">Paneles</h1>
             
             <div class="mb-6">
                 <div class="border rounded-lg p-4 flex items-center">
-                    <span class="text-red-500 mr-2">🔍</span>
+                    <i class="fas fa-search text-[#193849] text-2xl"></i>
                     <select class="border p-2 rounded w-full">
                         <option>Filtros</option>
                     </select>
                 </div>
             </div>
             
-            <h2 class="text-xl font-bold text-pink-500 mb-4">Tus paneles individuales</h2>
+            <h2 class="text-xl font-bold text-[#49DBA3] mb-4">Tus paneles individuales</h2>
             
             <div class="bg-white border rounded-lg shadow p-4">
                 <table class="w-full text-left mb-4">
-                    <thead>
-                        <tr class="text-gray-600">
+                    <thead class="text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr class="text-gray-800">
                             <th class="py-2">Nombre</th>
                             <th class="py-2">Potencia pico (Wp)</th>
                             <th class="py-2">Eficiencia (%)</th>
@@ -49,16 +49,26 @@
                             <th class="py-2">Fecha de creación</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        <tr class="border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                            <th class="text-gray-600 py-4">Hola</th>
+                            <th class="text-gray-600 py-4">Hola</th>
+                            <th class="text-gray-600 py-4">Hola</th>
+                            <th class="text-gray-600 py-4">Hola</th>
+                            <th class="text-gray-600 py-4">Hola</th>
+                            <th class="text-gray-600 py-4">Hola</th>
+                        </tr>
+                    </tbody>
                 </table>
                 
                 <div class="text-center py-8">
                     <p class="text-gray-500 mb-2">Aún no se ha creado ningún panel</p>
-                    <button onclick="toggleModal()" class="bg-yellow-500 text-white py-2 px-4 rounded-lg">Crea el primero</button>
+                    <button onclick="toggleModal()" class="bg-[#49DBA3] hover:bg-[#193849] text-white py-2 px-4 rounded-lg">Crea el primero</button>
                 </div>
             </div>
             
             <div class="text-right mt-4">
-                <button onclick="toggleModal()" class="bg-yellow-500 text-white py-2 px-4 rounded-lg">+ Nuevo panel individual</button>
+                <button onclick="toggleModal()" class="bg-[#49DBA3] hover:bg-[#193849] text-white py-2 px-4 rounded-lg">+ Nuevo panel individual</button>
             </div>
         </div>
 
@@ -67,7 +77,9 @@
             <div class="bg-white rounded-lg p-6 w-full max-w-2xl max-h-screen overflow-y-auto">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-bold">Creación de nuevo panel:</h3>
-                    <button onclick="toggleModal()" class="text-gray-500">✖</button>
+                    <button onclick="toggleModal()" class="text-gray-500">
+                        <i class="fas fa-times text-gray-500 text-2xl"></i>
+                    </button>
                 </div>
                 
                 <!-- toDO: reutilzable -->
@@ -83,16 +95,16 @@
                     @csrf
                     @method('POST')
                     <div>
-                        <label>Nombre del Modelo*</label>
+                        <label>Nombre del Modelo <span class="text-red-500">*</span></label>
                         <input type="text" name="panel_model" class="border p-2 rounded w-full">
                     </div>
                     <div>
-                        <label>Fabricante*</label>
+                        <label>Fabricante <span class="text-red-500">*</span></label>
                         <input type="text" name="manufacturer"class="border p-2 rounded w-full">
                     </div>
                 
                     <div>
-                        <label>Tipo de Panel*</label>
+                        <label>Tipo de Panel <span class="text-red-500">*</span></label>
                         <input type="text" name="panel_type"class="border p-2 rounded w-full">
                     </div>
                     <div>
@@ -100,47 +112,47 @@
                     <input type="date" name="date_manufacturer" class="border p-2 rounded w-full">
                     </div>
                     <div>
-                        <label>Garantía del producto (años)*:</label>
+                        <label>Garantía del producto (años) <span class="text-red-500">*</span></label>
                         <input type="number" name="panel_warranty" class="border p-2 rounded w-full">
                     </div>
                     <div>
-                        <label>Garantía de rendimiento (años):</label>
+                        <label>Garantía de rendimiento (años)</label>
                         <input type="number" name="performance_warranty" class="border p-2 rounded w-full">
                     </div>
 
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-bold">Características Eléctricas:</h3>
+                        <h3 class="text-lg font-bold">Características Eléctricas</h3>
                         <button onclick="toggleModal()" class="text-gray-500">✖</button>
                     </div>
 
                     <div>
-                        <label>Potencia Máxima (Pmax):*</label>
+                        <label>Potencia Máxima (Pmax) <span class="text-red-500">*</span></label>
                         <input type="number" name="maximum_power" class="border p-2 rounded w-full">
                     </div>
                     <div>
-                        <label>Tensión en Punto de Máxima Potencia (Vmp):*</label>
+                        <label>Tensión en Punto de Máxima Potencia (Vmp) <span class="text-red-500">*</span></label>
                         <input type="number" name="voltage_maximum_power_point" class="border p-2 rounded w-full">
                     </div>
                     <div>
-                        <label>Corriente en Punto de Máxima Potencia (Imp):*</label>
+                        <label>Corriente en Punto de Máxima Potencia (Imp) <span class="text-red-500">*</span></label>
                         <input type="number" name="current_maximum_power_point" class="border p-2 rounded w-full">
                     </div>
                     <div>
-                        <label>Tensión de Circuito Abierto (Voc):*</label>
+                        <label>Tensión de Circuito Abierto (Voc) <span class="text-red-500">*</span></label>
                         <input type="number" name="open_circuit_voltage" class="border p-2 rounded w-full">
                     </div>
                     <div>
-                        <label>Corriente de Cortocircuito (Isc):*</label>
+                        <label>Corriente de Cortocircuito (Isc) <span class="text-red-500">*</span></label>
                         <input type="number" name="short_circuit_current" class="border p-2 rounded w-full">
                     </div>
                     <div>
-                        <label>Eficiencia del Panel:</label>
+                        <label>Eficiencia del Panel</label>
                         <input type="number" name="panel_efficiency" class="border p-2 rounded w-full">
                     </div>
                 
                     <div class="flex justify-end mt-4 space-x-4">
-                        <button onclick="toggleModal()" class="text-gray-500">Cancelar</button>
-                        <button class="bg-green-500 text-white py-2 px-4 rounded-lg" type="submit">Confirmar</button>
+                        <button onclick="toggleModal()" class="text-gray-500 hover:bg-gray-500 hover:text-white py-2 px-4 rounded-lg">Cancelar</button>
+                        <button class="bg-[#49DBA3] hover:bg-[#193849] text-white py-2 px-4 rounded-lg" type="submit">Confirmar</button>
                     </div>
                 </form>
                 
