@@ -74,3 +74,5 @@ Route::post('/guardar-informacionElectrica', [InformacionElectricaPanelControlle
 Route::post('/guardar-dades', [DadesClientController::class, 'store'])->name('guardar.dades');
 
 Route::resource('proyectos', ProyectoController::class);
+
+

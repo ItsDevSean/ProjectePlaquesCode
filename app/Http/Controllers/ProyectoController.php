@@ -22,6 +22,9 @@ class ProyectoController extends Controller
 
     public function store(Request $request)
     {
+      
+    
+        // Validación de los campos
         $request->validate([
             'nombre' => 'required|string|max:255',
             'latitud' => 'required|numeric',
@@ -40,6 +43,8 @@ class ProyectoController extends Controller
 
         return redirect()->route('proyectos.index')->with('status', 'Proyecto creado con éxito');
     }
+
+
 
     public function show(Proyecto $proyecto)
     {
