@@ -1,63 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caracteristicas fisicas panel</title>
-    <link rel="stylesheet" type="text/css" href="build/css/fisico.css">
-    <style></style>
-</head>
-<body>
-    <!-- Aplicar estilos-->
-
+<x-guest-layout>
     <form action="{{ route('guardar.informacionFisica') }}" method="post">
+        @csrf
 
-    @csrf
-        {{-- Campo numérico en milímetros (mm) --}}
-        <p>Longitud</p>
-        <input type="text" name="longitud"/>
+        <h2 class="text-xl font-bold text-gray-700 mb-4 text-center underline underline-offset-8 decoration-green-200">
+            Datos Físicos del Panel
+        </h2>
 
-        {{-- Campo numérico en milímetros (mm) --}}
-        <p>Anchura</p>
-        <input type="text" name="anchura"/>
+        <div>
+            <x-input-label for="longitud" :value="__('Longitud (mm)')" />
+            <x-text-input id="longitud" class="block mt-1 w-full focus:ring-green-500" type="text" name="longitud" required />
+        </div>
 
-        {{-- Campo numérico en milímetros (mm) --}}
-        <p>Espesor</p>
-        <input type="text" name="espesor"/>
+        <div class="mt-4">
+            <x-input-label for="anchura" :value="__('Anchura (mm)')" />
+            <x-text-input id="anchura" class="block mt-1 w-full focus:ring-green-500" type="text" name="anchura" required />
+        </div>
 
-        {{-- Campo numérico en kilogramos (kg) --}}
-        <p>Peso</p>
-        <input type="text" name="peso"/>
+        <div class="mt-4">
+            <x-input-label for="espesor" :value="__('Espesor (mm)')" />
+            <x-text-input id="espesor" class="block mt-1 w-full focus:ring-green-500" type="text" name="espesor" required />
+        </div>
 
-        {{-- Campo numérico en metros cuadrados (m²) (puede calcularse automáticamente si se desea) --}}
-        <p>Superficie</p>
-        <input type="text" name="superficie"/>
+        <div class="mt-4">
+            <x-input-label for="peso" :value="__('Peso (kg)')" />
+            <x-text-input id="peso" class="block mt-1 w-full focus:ring-green-500" type="text" name="peso" required />
+        </div>
 
-        {{-- Área de texto para una descripción detallada del panel, que se podría utilizar para implementar el presupuesto por ejemplo, podría ser interesante un campo para el presupuesto y otro para observaciones de los usuarios. --}}
-        <p>Descripcion</p>
-        <input type="text" name="descripcion"/>
+        <div class="mt-4">
+            <x-input-label for="superficie" :value="__('Superficie (m²)')" />
+            <x-text-input id="superficie" class="block mt-1 w-full focus:ring-green-500" type="text" name="superficie" required />
+        </div>
 
-        {{--  Campo de texto para el enlace a la ficha técnica del fabricante. --}}
-        <p>Url del Fabricante</p>
-        <input type="text" name="url_fabricante"/>
+        <div class="mt-4">
+            <x-input-label for="descripcion" :value="__('Descripción')" />
+            <x-text-input id="descripcion" class="block mt-1 w-full focus:ring-green-500" type="text" name="descripcion" required />
+        </div>
 
-        {{-- Campo para subir una imagen del panel. --}}
-        <p>Imagen del Panel</p>
-        <input type="text" name="imagen_panel"/>
+        <div class="mt-4">
+            <x-input-label for="url_fabricante" :value="__('URL del Fabricante')" />
+            <x-text-input id="url_fabricante" class="block mt-1 w-full focus:ring-green-500" type="text" name="url_fabricante" required />
+        </div>
 
-        {{--  Menú desplegable con opciones como Aluminio, Acero, etc. --}}
-        <p>Material del Marco </p>
-        <input type="text" name="material_marco"/>
-        
-        {{-- Campo de texto (opcional) --}}
-        <p>Opcional : color del panel</p>
-        <input type="text" name="color_panel"/>
+        <div class="mt-4">
+            <x-input-label for="imagen_panel" :value="__('Imagen del Panel')" />
+            <x-text-input id="imagen_panel" class="block mt-1 w-full focus:ring-green-500" type="text" name="imagen_panel" required />
+        </div>
 
-        <button type="submit">Guardar</button>
+        <div class="mt-4">
+            <x-input-label for="material_marco" :value="__('Material del Marco')" />
+            <x-text-input id="material_marco" class="block mt-1 w-full focus:ring-green-500" type="text" name="material_marco" required />
+        </div>
 
+        <div class="mt-4">
+            <x-input-label for="color_panel" :value="__('Color del Panel (Opcional)')" />
+            <x-text-input id="color_panel" class="block mt-1 w-full focus:ring-green-500" type="text" name="color_panel" />
+        </div>
 
+        <div class="flex items-center justify-end mt-4">
+            <x-primary-button class="ms-3">
+                {{ __('Guardar') }}
+            </x-primary-button>
+        </div>
     </form>
-
-    
-</body>
-</html>
+</x-guest-layout>
