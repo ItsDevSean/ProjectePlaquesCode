@@ -64,13 +64,13 @@
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dades')" :active="request()->routeIs('dadesClient')">
-                        <button class="px-4 py-2 bg-emerald-400 text-white rounded-lg border-spacing-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                            <i class="fas fa-plus"></i> {{ __(' Nuevo Proyecto') }}
-                        </button>
-                    </x-nav-link>
-                </div>
+            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <x-nav-link :href="route('dades')" :active="request()->routeIs('dadesClient')" class="hover:no-underline">
+                    <button class="px-4 py-2 bg-emerald-400 text-white rounded-lg border-spacing-6 shadow-lg hover:bg-[#193849] transition-all duration-300">
+                        <i class="fas fa-plus"></i> {{ __(' Nuevo Proyecto') }}
+                    </button>
+                </x-nav-link>
+            </div>
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
