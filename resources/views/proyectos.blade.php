@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <link rel="stylesheet" href="build/css/styles.css">
-        <script src="public\build\js\marcadors.js"></script>
+        <script src="build/js/generalScript.js"></script>
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Listado de Proyectos') }}
         </h2>
