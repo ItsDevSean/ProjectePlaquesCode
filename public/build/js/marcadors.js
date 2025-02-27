@@ -316,3 +316,4 @@ function netejarSeleccio() {
 
   areaLabel.innerText = "";
 }
+

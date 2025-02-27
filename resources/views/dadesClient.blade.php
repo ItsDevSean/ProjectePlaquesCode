@@ -14,30 +14,52 @@
         <!-- Barra de progrés responsive -->
         <div class="progress-bar-container mt-5 px-4">
             <div class="progress-bar bg-white border flex justify-center items-center mx-auto shadow-teal-300 shadow-md max-w-6xl p-2 rounded-lg dark:bg-gray-700 dark:text-gray-300">
-                <div class="w-full max-w-screen-2xl px-4 md:px-12 mx-auto">
-                    <ul class="w-full flex flex-wrap justify-center items-center gap-6 sm:gap-10 md:gap-20 mt-2 md:mt-0 text-center">
-                        <li class="flex flex-col items-center cursor-pointer w-full sm:w-auto transition-transform duration-200 ease-in-out hover:scale-110">
+                <div class="w-full max-w-screen-2xl px-4 md:px-12 mx-auto overflow-x-auto overflow-y-hidden scrollbar-hide">
+                    <ul class="w-full flex flex-nowrap justify-start md:justify-center items-center gap-6 sm:gap-10 md:gap-20 mt-2 md:mt-0 text-center whitespace-nowrap overflow-visible min-h-[4rem]">
+                        
+                        <!-- PAS 1 -->
+                        <li class="flex flex-col items-center cursor-pointer transition-transform duration-200 ease-in-out hover:scale-95">
                             <a href="dades" class="flex flex-col items-center">
-                                <div class="w-10 h-10 flex items-center justify-center bg-emerald-400 border-2 border-emerald-400 rounded-full text-white font-bold text-lg">1</div>
-                                <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">Dades del Client</span>
+                                <div class="w-10 h-10 flex items-center justify-center bg-emerald-400 border-2 border-emerald-400 rounded-full text-white font-bold text-lg">
+                                    1
+                                </div>
+                                <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">
+                                    Dades del Client
+                                </span>
                             </a>
                         </li>
-                        <li class="flex flex-col items-center cursor-pointer w-full sm:w-auto transition-transform duration-200 ease-in-out hover:scale-110">
+        
+                        <!-- PAS 2 -->
+                        <li class="flex flex-col items-center cursor-pointer transition-transform duration-200 ease-in-out hover:scale-95">
                             <a href="mapa" class="flex flex-col items-center">
-                                <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">2</div>
-                                <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">Seleccionar àrea</span>
+                                <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">
+                                    2
+                                </div>
+                                <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">
+                                    Seleccionar Àrea
+                                </span>
                             </a>
                         </li>
-                        <li class="flex flex-col items-center cursor-pointer w-full sm:w-auto transition-transform duration-200 ease-in-out hover:scale-110">
+        
+                        <!-- PAS 3 -->
+                        <li class="flex flex-col items-center cursor-pointer transition-transform duration-200 ease-in-out hover:scale-95">
                             <a href="formulari" class="flex flex-col items-center">
-                                <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">3</div>
-                                <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">Formulari Prova</span>
+                                <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">
+                                    3
+                                </div>
+                                <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">
+                                    Formulari Prova
+                                </span>
                             </a>
                         </li>
+        
                     </ul>
                 </div>
             </div>
         </div>
+        
+        
+        
 
         <!-- Formulari del client -->
         <div class="client-form-container max-w-lg mx-auto p-4 mt-6 bg-white shadow-md rounded-lg dark:bg-gray-800">
@@ -74,7 +96,9 @@
                     <input type="text" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="codigo_postal" name="codigo_postal" placeholder="Exemple: 08001" required>
                 </div>
 
-                <button type="submit" class="client-form-submit w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">Enviar</button>
+                <button type="submit" class="client-form-submit w-full bg-white border-2 border-emerald-400 text-emerald-500 font-semibold py-2 px-4 rounded-lg transition duration-300 hover:bg-emerald-400 hover:text-white">
+                    Enviar
+                  </button>
             </form>
         </div>
 
