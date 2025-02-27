@@ -8,27 +8,27 @@
 
         <div>
             <x-input-label for="longitud" :value="__('Longitud (mm)')" />
-            <x-text-input id="longitud" class="block mt-1 w-full focus:ring-green-500" type="text" name="longitud" required />
+            <x-text-input id="longitud" class="block mt-1 w-full focus:ring-green-500" type="number" name="longitud" required />
         </div>
 
         <div class="mt-4">
             <x-input-label for="anchura" :value="__('Anchura (mm)')" />
-            <x-text-input id="anchura" class="block mt-1 w-full focus:ring-green-500" type="text" name="anchura" required />
+            <x-text-input id="anchura" class="block mt-1 w-full focus:ring-green-500" type="number" name="anchura" required />
         </div>
 
         <div class="mt-4">
             <x-input-label for="espesor" :value="__('Espesor (mm)')" />
-            <x-text-input id="espesor" class="block mt-1 w-full focus:ring-green-500" type="text" name="espesor" required />
+            <x-text-input id="espesor" class="block mt-1 w-full focus:ring-green-500" type="number" name="espesor" required />
         </div>
 
         <div class="mt-4">
             <x-input-label for="peso" :value="__('Peso (kg)')" />
-            <x-text-input id="peso" class="block mt-1 w-full focus:ring-green-500" type="text" name="peso" required />
+            <x-text-input id="peso" class="block mt-1 w-full focus:ring-green-500" type="number" name="peso" required />
         </div>
 
         <div class="mt-4">
             <x-input-label for="superficie" :value="__('Superficie (m²)')" />
-            <x-text-input id="superficie" class="block mt-1 w-full focus:ring-green-500" type="text" name="superficie" required />
+            <x-text-input id="superficie" class="block mt-1 w-full focus:ring-green-500" type="number" name="superficie" required />
         </div>
 
         <div class="mt-4">

@@ -23,17 +23,17 @@
 
         <div class="mt-4">
             <x-input-label for="fecha" :value="__('Fecha de fabricación')" />
-            <x-text-input id="fecha" class="block mt-1 w-full focus:ring-green-500" type="text" name="fecha" required />
+            <x-text-input id="fecha" class="block mt-1 w-full focus:ring-green-500" type="date" name="fecha" required />
         </div>
 
         <div class="mt-4">
             <x-input-label for="gproducto" :value="__('Garantía del producto(años)')" />
-            <x-text-input id="gproducto" class="block mt-1 w-full focus:ring-green-500" type="text" name="gproducto" required />
+            <x-text-input id="gproducto" class="block mt-1 w-full focus:ring-green-500" type="number" name="gproducto" required />
         </div>
 
         <div class="mt-4">
             <x-input-label for="grendimiento" :value="__('Garantía de rendimiento(años)')" />
-            <x-text-input id="grendimiento" class="block mt-1 w-full focus:ring-green-500" type="text" name="grendimiento" required />
+            <x-text-input id="grendimiento" class="block mt-1 w-full focus:ring-green-500" type="number" name="grendimiento" required />
         </div>
         <div class="flex items-center justify-end mt-4">
             <x-primary-button class="ms-3">

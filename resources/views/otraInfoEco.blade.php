@@ -35,10 +35,16 @@
         <div class="mt-4">
             <h2 class="text-xl font-bold text-gray-700 mb-4 text-center underline underline-offset-8 decoration-green-200"> Contacto del proveedor</h2>
             <x-input-label for="telf_proveedor" :value="__('Teléfono')" />
-            <x-text-input id="telf_proveedor" class="block mt-1 w-full focus:ring-green-500" type="text" name="telf_proveedor" required />
+            <x-text-input id="telf_proveedor" class="block mb-3 mt-1 w-full focus:ring-green-500" type="tel" name="telf_proveedor" required />
             <x-input-label for="email_proveedor" :value="__('Email')" />
-            <x-text-input id="email_proveedor" class="block mt-1 w-full focus:ring-green-500" type="text" name="email_proveedor" required />
+            <x-text-input id="email_proveedor" class="block mt-1 w-full focus:ring-green-500" type="email" name="email_proveedor" required />
         </div>
 
+
+        <div class="flex items-center justify-end mt-4">
+            <x-primary-button class="ms-3">
+                {{ __('Guardar') }}
+            </x-primary-button>
+        </div>
     </form>
 </x-guest-layout>
