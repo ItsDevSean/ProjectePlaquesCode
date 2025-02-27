@@ -5,7 +5,6 @@ let selectedMarkers = [];
 let selectedPolygon = null;
 let areaLabel = document.getElementById("areaResult");
 
-
 // Funció per obtenir dades de l'edifici
 async function obtenirDadesEdifici(lat, lng) {
   const API_KEY = "AIzaSyDu3ReEUVEQANj_h1EAtfe4-zyarcb3X04";
@@ -16,8 +15,7 @@ async function obtenirDadesEdifici(lat, lng) {
     const dades = await resposta.json();
 
     if (dades.solarPotential) {
-      const superficieUtil =
-        dades.solarPotential.panelCapacityWatts / 200; // Estimat amb plaques de 200W/m²
+      const superficieUtil = dades.solarPotential.panelCapacityWatts / 200; // Estimat amb plaques de 200W/m²
       alert(`Dades de l'edifici: Superfície útil estimada per plaques solars: ${superficieUtil.toFixed(2)} m²`);
     } else {
       alert("No s'han trobat dades solars per aquest edifici.");
@@ -28,52 +26,7 @@ async function obtenirDadesEdifici(lat, lng) {
   }
 }
 
-
-
-// Funció d'inicialització del mapa
-window.initMap = function () {
-  const centre = { lat: 41.3879, lng: 2.16992 };
-
-  map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 15,
-    center: centre,
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
-    tilt: 0, 
-    heading: 0
-  });
-
-  initAutocomplete();
-  document.getElementById("startSelection").addEventListener("click", iniciarSeleccio);
-
-  document.getElementById("buttonBuscar").addEventListener("click", geocodeAddress);
-};
-
-// Funció per inicialitzar Autocomplete
-function initAutocomplete() {
-  autocomplete = new google.maps.places.Autocomplete(
-      document.getElementById("address"),
-      { types: ["geocode"] }
-  );
-
-  autocomplete.addListener("place_changed", function () {
-      const place = autocomplete.getPlace();
-
-      if (!place.geometry) {
-          alert("No s'han trobat detalls per aquesta adreça.");
-          return;
-      }
-
-      console.log("Direcció seleccionada:", place.formatted_address);
-      console.log("Latitud:", place.geometry.location.lat());
-      console.log("Longitud:", place.geometry.location.lng());
-
-      map.setCenter(place.geometry.location);
-      if (marcadorExistente) marcadorExistente.setMap(null);
-      crearMarcador(place.geometry.location);
-  });
-}
-
-
+// Funció per crear un marcador
 function crearMarcador(latLng) {
   const nomEdifici = prompt("Introdueix el nom de l'edifici:");
   if (nomEdifici) {
@@ -88,7 +41,6 @@ function crearMarcador(latLng) {
 
     map.setCenter(latLng);
 
-    // Extraer el área del texto dentro de #areaResult
     const areaText = document.getElementById("areaResult").innerText;
     const areaValue = areaText.replace("Àrea: ", "").replace(" m²", ""); 
 
@@ -102,10 +54,8 @@ function crearMarcador(latLng) {
     };
     edificis.push(edifici);
 
-    // Guardar en localStorage
     localStorage.setItem("edificiData", JSON.stringify(edifici));
 
-    // Redirigir a la página del formulario con los datos en la URL
     const url = `/formulari?lat=${edifici.lat}&lng=${edifici.lng}&inclinacion=${edifici.inclinacion}&area=${edifici.area}`;
 
     if (nomEdifici && nomEdifici.toLowerCase().includes("edifici")) {
@@ -120,49 +70,14 @@ function crearMarcador(latLng) {
   }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Recuperar datos de localStorage
-  const edificiData = JSON.parse(localStorage.getItem("edificiData"));
-
-  if (edificiData) {
-    document.getElementById("latitud").value = edificiData.lat;
-    document.getElementById("longitud").value = edificiData.lng;
-    document.getElementById("inclinacion").value = edificiData.inclinacion;
-    document.getElementById("area").value = edificiData.area; 
-
-    // Limpiar el localStorage después de usar los datos
-    localStorage.removeItem("edificiData");
-  }
-
-  // También puedes recuperar los datos de la URL si los pasas como parámetros
-  const urlParams = new URLSearchParams(window.location.search);
-  const lat = urlParams.get("lat");
-  const lng = urlParams.get("lng");
-  const inclinacion = urlParams.get("inclinacion");
-  const area = urlParams.get("area");
-
-  if (lat && lng && inclinacion && area) {
-    document.getElementById("latitud").value = lat;
-    document.getElementById("longitud").value = lng;
-    document.getElementById("inclinacion").value = inclinacion;
-    document.getElementById("area").value = area; 
-  }
-});
-
-
-
 function updateEdificiSelect(edifici) {
   const select = document.getElementById("edifici");
-  
   const option = document.createElement("option");
   option.value = edifici.id;
   option.text = edifici.nom;
-
   const editOption = select.querySelector('option[value="edit"]');
-
   select.insertBefore(option, editOption);
 }
-
 
 function seleccionarEdifici() {
   const select = document.getElementById("edifici");
@@ -172,14 +87,12 @@ function seleccionarEdifici() {
   if (id === "edit") {
     window.location.href = "edificis";
   }
-  
 
   if (edificiSeleccionat) {
     if (marcadorExistente) {
       marcadorExistente.setMap(null);
     }
 
-    // Crear un marcador per l'edifici seleccionat
     marcadorExistente = new google.maps.Marker({
       position: { lat: edificiSeleccionat.lat, lng: edificiSeleccionat.lng },
       map: map,
@@ -197,128 +110,4 @@ function seleccionarEdifici() {
       alert("Edifici " + edificiSeleccionat.nom + " seleccionat!");
     }
   }
-}
-
-
-
-// Funció per geolocalitzar una adreça introduïda
-function geocodeAddress() {
-  const address = document.getElementById("address").value;
-
-  if (address === "") {
-    alert("Per favor, introduïu una adreça.");
-    return;
-  }
-
-  const geocoder = new google.maps.Geocoder();
-
-  geocoder.geocode({ address: address }, function (results, status) {
-    if (status === "OK") {
-      map.setCenter(results[0].geometry.location);
-      if (marcadorExistente) {
-        marcadorExistente.setMap(null);
-      }
-      marcadorExistente = new google.maps.Marker({
-        map: map,
-        position: results[0].geometry.location,
-        title: results[0].formatted_address,
-      });
-      alert(
-        "Ubicació trobada"
-      );
-    } else {
-      alert("No sa trobat la direcció, torna-ho a intentar.");
-      console.log(results);
-    }
-  });
-}
-
-document.querySelectorAll('ul.flex-col li').forEach((step) => {
-  step.addEventListener('click', () => {
-    window.location.href = step.getAttribute('data-url');
-  });
-});
-
-// Comienza la selección de puntos
-function iniciarSeleccio() {
-  netejarSeleccio();
-  map.addListener("click", seleccionarPunt);
-}
-
-// Función para seleccionar puntos
-function seleccionarPunt(event) {
-  let marker = new google.maps.Marker({
-      position: event.latLng,
-      map: map,
-      icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 6,
-          fillColor: "red",
-          fillOpacity: 1,
-          strokeWeight: 1,
-      },
-      draggable: true // Habilita el arrastre del marcador
-  });
-
-  selectedMarkers.push(marker);
-
-  // Agrega un listener para actualizar el polígono cuando se mueve el marcador
-  marker.addListener('dragend', function() {
-      dibuixarPoligon();
-  });
-
-  // Dibuja el polígono siempre que haya al menos 3 puntos
-  if (selectedMarkers.length >= 3) {
-      dibuixarPoligon();
-  }
-}
-
-// Dibuja el polígono
-function dibuixarPoligon() {
-  if (selectedPolygon) {
-      selectedPolygon.setMap(null);
-  }
-
-  let coordinates = selectedMarkers.map(marker => marker.getPosition());
-
-  // Cierra el polígono uniendo el primer y el último punto
-  coordinates.push(coordinates[0]);
-
-  selectedPolygon = new google.maps.Polygon({
-      paths: coordinates,
-      strokeColor: "#00FF00",
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: "#00FF00",
-      fillOpacity: 0.35,
-      map: map,
-  });
-
-  calcularArea();
-}
-
-// Calcula el área del polígón
-function calcularArea() {
-  if (selectedPolygon) {
-    let area = google.maps.geometry.spherical.computeArea(selectedPolygon.getPath());
-    areaLabel.innerText = `Àrea: ${area.toFixed(2)} m²`;
-
-    // Guardar el área en localStorage
-    const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
-    edificiData.area = area.toFixed(2); // Guardar el área con 2 decimales
-    localStorage.setItem("edificiData", JSON.stringify(edificiData));
-  }
-}
-
-// Limpia los puntos y el polígono anterior
-function netejarSeleccio() {
-  selectedMarkers.forEach(marker => marker.setMap(null));
-  selectedMarkers = [];
-
-  if (selectedPolygon) {
-      selectedPolygon.setMap(null);
-      selectedPolygon = null;
-  }
-
-  areaLabel.innerText = "";
 }

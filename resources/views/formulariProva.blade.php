@@ -81,6 +81,7 @@
         </div>
     </x-app-layout>
     <script src="build/js/marcadors.js"></script>
+    <script src="build/js/formulari.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDu3ReEUVEQANj_h1EAtfe4-zyarcb3X04&libraries=places&callback=initMap"></script>
     <script src="https://solar.googleapis.com/v1/buildingInsights:findClosest?key=AIzaSyDu3ReEUVEQANj_h1EAtfe4-zyarcb3X04"></script>
 </body>
