@@ -15,22 +15,22 @@
         <div class="progress-bar-container">
             <div class="progress-bar bg-white border flex justify-center items-center mx-auto shadow-teal-300 shadow-md max-w-6xl p-2 rounded-lg dark:bg-gray-700 dark:text-gray-300">
                 <div class="w-full max-w-screen-2xl px-12 mx-auto">
-                    <ul class="w-full flex flex-col md:flex-row justify-center items-center gap-40 mt-2 md:mt-0 md:text-base md:font-medium">
+                    <ul class="w-full flex flex-col md:flex-row justify-center items-center gap-4 md:gap-40 mt-2 md:mt-0 md:text-base md:font-medium">
                         <li class="flex flex-col items-center cursor-pointer hover:scale-110 transition-transform duration-200 ease-in-out">
                             <a href="dades" class="flex flex-col items-center">
-                                <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">1</div>
+                                <div class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">1</div>
                                 <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">Dades del Client</span>
                             </a>
                         </li>
                         <li class="flex flex-col items-center cursor-pointer hover:scale-110 transition-transform duration-200 ease-in-out">
                             <a href="mapa" class="flex flex-col items-center">
-                                <div class="w-10 h-10 flex items-center justify-center bg-emerald-400 border-2 border-emerald-400 rounded-full text-white font-bold text-lg">2</div>
+                                <div class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-emerald-400 border-2 border-emerald-400 rounded-full text-white font-bold text-lg">2</div>
                                 <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">Seleccionar area</span>
                             </a>
                         </li>
                         <li class="flex flex-col items-center cursor-pointer hover:scale-110 transition-transform duration-200 ease-in-out">
                             <a href="formulari" class="flex flex-col items-center">
-                                <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">3</div>
+                                <div class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">3</div>
                                 <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">Formulari Prova</span>
                             </a>
                         </li>
@@ -54,9 +54,10 @@
 
     </x-app-layout>
     
-    <script src="build/js/marcadors.js"></script>
+    <script src="build/js/generalScript.js"></script>
+    <script src="build/js/mapa.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9dnmay3GsjXeiIqbmYoJ3FJ95rDo6hoY&libraries=places&callback=initMap"></script>
-    <script src="https://solar.googleapis.com/v1/buildingInsights:findClosest?key=AIzaSyDu3ReEUVEQANj_h1EAtfe4-zyarcb3X04"></script>
+    <script src="https://solar.googleapis.com/v1/buildingInsights:findClosest?key=AIzaSyB9dnmay3GsjXeiIqbmYoJ3FJ95rDo6hoY"></script>
 </body>
 
 </html>
