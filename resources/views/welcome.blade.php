@@ -118,7 +118,7 @@
             </video>
 
             <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-center">
-                <img src="{{ asset('build/img/Captura.PNG') }}" alt="Logo" class="h-20 w-auto mx-auto mb-4">
+                <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-20 w-auto mx-auto mb-4">
                 <h1 class="text-4xl font-bold text-white mb-2">LO HACEMOS REALIDAD</h1>
                 <h4 class="text-white text-xl">Ayudándole a desarrollar proyectos de energía renovable</h4>
             </div>
