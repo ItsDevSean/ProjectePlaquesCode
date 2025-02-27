@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('dadesclient', function (Blueprint $table) {
-            $table->dropForeign(['proyecto_id']);
+        Schema::table('dades_clients', function (Blueprint $table) {
+            $table->unique('proyecto_id'); // Añadir restricción de unicidad
         });
     }
     
     public function down()
     {
-        Schema::table('dadesclient', function (Blueprint $table) {
-            $table->foreign('proyecto_id')->references('id')->on('proyectos')->onDelete('cascade');
+        Schema::table('dades_clients', function (Blueprint $table) {
+            $table->dropUnique(['proyecto_id']); // Eliminar restricción de unicidad
         });
     }
-    
 };

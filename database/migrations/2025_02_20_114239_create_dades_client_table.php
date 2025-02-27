@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('DadesClient', function (Blueprint $table) {
+        Schema::create('dades_clients', function (Blueprint $table) {
+            $table->id(); // Añade un ID autoincremental como clave primaria
             $table->string('nombre');
             $table->string('email');
             $table->integer('telefono');
             $table->string('direccion');
             $table->string('ciudad');
             $table->integer('codigo_postal');
+            $table->unsignedBigInteger('proyecto_id')->unique(); // Columna para la clave foránea
+            $table->foreign('proyecto_id')->references('id')->on('proyectos')->onDelete('cascade'); // Relación con la tabla proyectos
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('DadesClient');
+        Schema::dropIfExists('dades_clients');
     }
 };

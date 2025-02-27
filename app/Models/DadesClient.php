@@ -8,7 +8,7 @@ class DadesClient extends Model
 {
     use HasFactory;
 
-    protected $table = "dadesclient";
+    protected $table = "dades_clients";
 
     protected $fillable = [
         'nombre',
@@ -17,6 +17,7 @@ class DadesClient extends Model
         'direccion',
         'ciudad',
         'codigo_postal',
+        'proyecto_id'
     ];
     public function proyecto()
     {

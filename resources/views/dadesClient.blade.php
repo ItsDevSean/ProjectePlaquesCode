@@ -58,28 +58,25 @@
             </div>
         </div>
         
-        <!-- Formulari del client -->
-        <div class="max-w-6xl mx-auto p-4 mt-6 bg-white shadow-md rounded-lg dark:bg-gray-800">
-            <h2 class="text-xl font-semibold text-center mb-4 dark:text-white">Dades del Client</h2>
-            <form action="" method="post" id="clientForm">
-                @csrf
+        
+        
 
-                <!-- Secció Dades del Client -->
-                <div class="mb-6">
-                    <h3 class="text-lg font-semibold text-gray-700 dark:text-white mb-2">Dades del Client</h3>
-                    <div class="border-b-2 border-emerald-400 mb-4"></div> <!-- Línia divisòria -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div class="mb-4">
-                            <label for="nombre" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nom Complet</label>
-                            <input type="text" class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="nombre" name="nombre" placeholder="Exemple: Juan Pérez" required>
-                            <span class="error-message text-red-500 text-sm hidden">El nom és obligatori.</span>
-                        </div>
+<!-- Formulari del client -->
+<div class="client-form-container max-w-lg mx-auto p-4 mt-6 bg-white shadow-md rounded-lg dark:bg-gray-800">
+    <h2 class="client-form-title text-xl font-semibold text-center mb-4 dark:text-white">Dades del Client</h2>
+    <form action="" method="post" id="clientForm">
+        @csrf
+        <div class="mb-4">
+            <label for="nombre" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Nom Complet</label>
+            <input type="text" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="nombre" name="nombre" placeholder="Exemple: Juan Pérez" required>
+            <span class="error-message text-red-500 text-sm hidden">El nom és obligatori.</span>
+        </div>
 
-                        <div class="mb-4">
-                            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Correu Electrònic</label>
-                            <input type="email" class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="email" name="email" placeholder="Exemple: juan@gmail.com" required>
-                            <span class="error-message text-red-500 text-sm hidden">El correu electrònic no és vàlid (ha de contenir una @).</span>
-                        </div>
+        <div class="mb-4">
+            <label for="email" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Correu Electrònic</label>
+            <input type="email" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="email" name="email" placeholder="Exemple: juan@gmail.com" required>
+            <span class="error-message text-red-500 text-sm hidden">El correu electrònic no és vàlid (ha de contenir una @).</span>
+        </div>
 
                         <div class="mb-4">
                             <label for="telefono" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Telèfon</label>
@@ -99,54 +96,11 @@
                             <span class="error-message text-red-500 text-sm hidden">La ciutat és obligatòria.</span>
                         </div>
 
-                        <div class="mb-4">
-                            <label for="codigo_postal" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Codi Postal</label>
-                            <input type="text" class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="codigo_postal" name="codigo_postal" placeholder="Exemple: 08001" required>
-                            <span class="error-message text-red-500 text-sm hidden">El codi postal ha de tenir 5 dígits.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Secció Dades del Projecte -->
-                <div class="mb-6">
-                    <h3 class="text-lg font-semibold text-gray-700 dark:text-white mb-2">Dades del Projecte</h3>
-                    <div class="border-b-2 border-emerald-400 mb-4"></div> <!-- Línia divisòria -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="mb-4">
-                            <label for="nombre_proyecto" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nom del Projecte</label>
-                            <input type="text" class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="nombre_proyecto" name="nombre_proyecto" placeholder="Exemple: Instal·lació Solar" required>
-                            <span class="error-message text-red-500 text-sm hidden">El nom del projecte és obligatori.</span>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="descripcion" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descripció del Projecte</label>
-                            <textarea class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="descripcion" name="descripcion" rows="3" placeholder="Descripció del projecte..." required></textarea>
-                            <span class="error-message text-red-500 text-sm hidden">La descripció és obligatòria.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Secció Dades de la Instal·lació -->
-                <div class="mb-6">
-                    <h3 class="text-lg font-semibold text-gray-700 dark:text-white mb-2">Dades de la Instal·lació</h3>
-                    <div class="border-b-2 border-emerald-400 mb-4"></div> <!-- Línia divisòria -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="mb-4">
-                            <label for="tarifa_acceso" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tarifa d'Accés</label>
-                            <input type="text" class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="tarifa_acceso" name="tarifa_acceso" placeholder="Exemple: 2.0A" required>
-                            <span class="error-message text-red-500 text-sm hidden">La tarifa d'accés és obligatòria.</span>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="tipo_instalacion" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tipus d'Instal·lació</label>
-                            <select class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="tipo_instalacion" name="tipo_instalacion" required>
-                                <option value="monofasica">Monofàsica</option>
-                                <option value="trifasica">Trifàsica</option>
-                            </select>
-                            <span class="error-message text-red-500 text-sm hidden">Selecciona un tipus d'instal·lació.</span>
-                        </div>
-                    </div>
-                </div>
+        <div class="mb-4">
+            <label for="codigo_postal" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Codi Postal</label>
+            <input type="text" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="codigo_postal" name="codigo_postal" placeholder="Exemple: 08001" required>
+            <span class="error-message text-red-500 text-sm hidden">El codi postal ha de tenir 5 dígits.</span>
+        </div>
 
                 <!-- Botó de submisió -->
                 <button type="submit" class="w-full bg-white border-2 border-emerald-400 text-emerald-500 font-semibold py-2 px-4 rounded-lg transition duration-300 hover:bg-emerald-400 hover:text-white" id="submitButton">
