@@ -25,15 +25,11 @@ class SolarPanelsController extends Controller
         return view('panels');
     }
 
-    
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-
-
         $request->validate([
             'panel_model' => 'required|string|min:2|max:100',
             'manufacturer' => 'required|string|min:2|max:100',
@@ -41,14 +37,7 @@ class SolarPanelsController extends Controller
             'date_manufacturer' => 'required|date',
             'panel_warranty' => 'required|integer',
             'performance_warranty' => 'required|integer',
-            'maximum_power' => 'required|integer',
-            'voltage_maximum_power_point' => 'required|integer',
-            'current_maximum_power_point' => 'required|integer',
-            'open_circuit_voltage' => 'required|integer',
-            'short_circuit_current' => 'required|integer',
-            'panel_efficiency' => 'required|integer'
         ]);
-
 
         SolarPanelsModel::create($request->all());
 

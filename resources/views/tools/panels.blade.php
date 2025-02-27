@@ -69,19 +69,15 @@
                     <h3 class="text-lg font-bold">Creación de nuevo panel:</h3>
                     <button onclick="toggleModal()" class="text-gray-500">✖</button>
                 </div>
-                
-                <!-- toDO: reutilzable -->
-                @if ($errors->any())
-                    @foreach ($errors->all() as $e)
-                        <div>
-                            {{ $e }}
-                        </div>
-                    @endforeach
-                @endif
+
+                @include('fragments._errors-form')
 
                 <form action="{{ route('paneles.resultado')}}" method="POST">
+                    
                     @csrf
+
                     @method('POST')
+
                     <div>
                         <label>Nombre del Modelo*</label>
                         <input type="text" name="panel_model" class="border p-2 rounded w-full">
@@ -93,7 +89,10 @@
                 
                     <div>
                         <label>Tipo de Panel*</label>
-                        <input type="text" name="panel_type"class="border p-2 rounded w-full">
+                        <select name="panel_type"class="border p-2 rounded w-full">
+                            <option value="yes">yes</option>
+                            <option value="not">not</option>
+                        </select> 
                     </div>
                     <div>
                     <label for="date">Fecha de Fabricación:</label>
@@ -108,39 +107,9 @@
                         <input type="number" name="performance_warranty" class="border p-2 rounded w-full">
                     </div>
 
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-bold">Características Eléctricas:</h3>
-                        <button onclick="toggleModal()" class="text-gray-500">✖</button>
-                    </div>
-
-                    <div>
-                        <label>Potencia Máxima (Pmax):*</label>
-                        <input type="number" name="maximum_power" class="border p-2 rounded w-full">
-                    </div>
-                    <div>
-                        <label>Tensión en Punto de Máxima Potencia (Vmp):*</label>
-                        <input type="number" name="voltage_maximum_power_point" class="border p-2 rounded w-full">
-                    </div>
-                    <div>
-                        <label>Corriente en Punto de Máxima Potencia (Imp):*</label>
-                        <input type="number" name="current_maximum_power_point" class="border p-2 rounded w-full">
-                    </div>
-                    <div>
-                        <label>Tensión de Circuito Abierto (Voc):*</label>
-                        <input type="number" name="open_circuit_voltage" class="border p-2 rounded w-full">
-                    </div>
-                    <div>
-                        <label>Corriente de Cortocircuito (Isc):*</label>
-                        <input type="number" name="short_circuit_current" class="border p-2 rounded w-full">
-                    </div>
-                    <div>
-                        <label>Eficiencia del Panel:</label>
-                        <input type="number" name="panel_efficiency" class="border p-2 rounded w-full">
-                    </div>
-                
-                    <div class="flex justify-end mt-4 space-x-4">
-                        <button onclick="toggleModal()" class="text-gray-500">Cancelar</button>
-                        <button class="bg-green-500 text-white py-2 px-4 rounded-lg" type="submit">Confirmar</button>
+                    <div class="flex justify-end space-x-2 mt-4">
+                        <button type="reset" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
+                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Enviar</button>
                     </div>
                 </form>
                 
