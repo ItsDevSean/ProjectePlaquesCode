@@ -239,13 +239,13 @@ document.querySelectorAll('ul.flex-col li').forEach((step) => {
   });
 });
 
-// Comença la selecció de punts
+// Comienza la selección de puntos
 function iniciarSeleccio() {
   netejarSeleccio();
   map.addListener("click", seleccionarPunt);
 }
 
-// Funció per seleccionar punts
+// Función para seleccionar puntos
 function seleccionarPunt(event) {
   let marker = new google.maps.Marker({
       position: event.latLng,
@@ -257,17 +257,23 @@ function seleccionarPunt(event) {
           fillOpacity: 1,
           strokeWeight: 1,
       },
+      draggable: true // Habilita el arrastre del marcador
   });
 
   selectedMarkers.push(marker);
 
-  // Dibuixa el polígon sempre que hi hagi almenys 3 punts
+  // Agrega un listener para actualizar el polígono cuando se mueve el marcador
+  marker.addListener('dragend', function() {
+      dibuixarPoligon();
+  });
+
+  // Dibuja el polígono siempre que haya al menos 3 puntos
   if (selectedMarkers.length >= 3) {
       dibuixarPoligon();
   }
 }
 
-// Dibuixa el polígon
+// Dibuja el polígono
 function dibuixarPoligon() {
   if (selectedPolygon) {
       selectedPolygon.setMap(null);
@@ -275,7 +281,7 @@ function dibuixarPoligon() {
 
   let coordinates = selectedMarkers.map(marker => marker.getPosition());
 
-  // Tanquem el polígon unint el primer i l'últim punt
+  // Cierra el polígono uniendo el primer y el último punto
   coordinates.push(coordinates[0]);
 
   selectedPolygon = new google.maps.Polygon({
@@ -291,7 +297,7 @@ function dibuixarPoligon() {
   calcularArea();
 }
 
-// Calcula l'àrea del polígon
+// Calcula el área del polígón
 function calcularArea() {
   if (selectedPolygon) {
     let area = google.maps.geometry.spherical.computeArea(selectedPolygon.getPath());
@@ -304,7 +310,7 @@ function calcularArea() {
   }
 }
 
-// Neteja els punts i el polígon anterior
+// Limpia los puntos y el polígono anterior
 function netejarSeleccio() {
   selectedMarkers.forEach(marker => marker.setMap(null));
   selectedMarkers = [];
