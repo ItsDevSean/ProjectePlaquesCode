@@ -6,6 +6,8 @@ use App\Http\Controllers\InformacionElectricaPanelController;
 use App\Http\Controllers\DadesClientController;
 use App\Http\Controllers\ProyectoController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\tools\SolarPanelsController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -51,6 +53,12 @@ Route::get('/vue', function(){
     return view('vue');
 });
 
+Route::get('/herramientas/paneles', function(){
+    return view('tools.panels');
+})->name('panels');
+
+Route::post('/herramientas/paneles/resultado', [SolarPanelsController::class, 'store'])->name('paneles.resultado');
+
 Route::get('/dades', function(){
     return view('dadesClient');
 })->name('dades');
@@ -82,5 +90,8 @@ Route::post('/guardar-informacionElectrica', [InformacionElectricaPanelControlle
 Route::post('/guardar-dades', [DadesClientController::class, 'store'])->name('guardar.dades');
 
 Route::resource('proyectos', ProyectoController::class);
+
+
+Route::get('/proyectos/{id}/details', [ProyectoController::class, 'details'])->name('proyectos.details');
 
 

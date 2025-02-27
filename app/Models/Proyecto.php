@@ -11,10 +11,19 @@ class Proyecto extends Model
 
     protected $table = 'proyectos';
 
-    protected $fillable = ['nombre', 'latitud', 'longitud', 'descripcion'];
+    protected $fillable = ['nombre', 'user_id', 'estado_id'];
 
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class);
+    }
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+    public function dadesClient()
+{
+    return $this->hasOne(DadesClient::class, 'proyecto_id');
+}
 }

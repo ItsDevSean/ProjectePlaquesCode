@@ -11,7 +11,7 @@ class ProyectoController extends Controller
     public function index()
     {
       
-        $proyectos = Proyecto::with('user')->paginate(10);
+        $proyectos = Proyecto::with('user','dadesClient')->paginate(10);
         return view('proyectos', compact('proyectos'));
     }
 
@@ -32,7 +32,8 @@ class ProyectoController extends Controller
        
         Proyecto::create([
             'nombre' => $request->nombre,
-            'user_id' => Auth::id(),  
+            'user_id' => Auth::id(),
+            'estado_id' => 1, 
         ]);
 
         return redirect()->route('proyectos.index')->with('status', 'Proyecto creado con éxito');
@@ -70,5 +71,34 @@ class ProyectoController extends Controller
 
         return redirect()->route('proyectos.index')->with('status', 'Proyecto eliminado con éxito');
     }
+
+    public function details($id)
+{
+    $proyecto = Proyecto::with(['user', 'dadesClient'])->find($id);
+
+    if (!$proyecto) {
+        return response()->json(['error' => 'Proyecto no encontrado'], 404);
+    }
+
+    // Verifica si 'dadesClient' existe antes de devolver los datos
+    $dadesClient = $proyecto->dadesClient ? $proyecto->dadesClient : null;
+
+    return response()->json([
+        'proyecto' => $proyecto,
+        'dadesClient' => $dadesClient
+    ]);
+}
+
+public function showForm($proyecto_id)
+{
+    $proyecto = Proyecto::find($proyecto_id);
+
+    if (!$proyecto) {
+        return redirect()->back()->with('error', 'Proyecto no encontrado');
+    }
+
+    return view('dadesClient', compact('proyecto'));
+}
+
 }
 

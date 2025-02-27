@@ -278,3 +278,68 @@
 .py-13{
     margin-top: 22px;
 }
+/* Estilos para el Panel Lateral */
+.side-panel {
+    position: fixed;
+    top: 0;
+    left: -300px; /* Inicialmente oculto fuera de la pantalla */
+    width: 300px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.2);
+    transition: left 0.3s ease;
+    z-index: 1000;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.side-panel.show {
+    left: 0; /* Cuando se activa, se desliza hacia adentro */
+}
+
+.side-panel-content {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.project-row {
+    cursor: pointer;
+}
+
+.project-row:hover {
+    background-color: #f3f4f6;
+}
+
+
+/* Estilo para el overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro con opacidad */
+    z-index: 999; /* Asegúrate de que esté por encima del contenido */
+    display: none; /* Ocultar por defecto */
+}
+
+/* Estilo para el sidePanel cuando está visible */
+.side-panel.show + .overlay {
+    display: block; /* Mostrar cuando el panel está visible */
+}
+
