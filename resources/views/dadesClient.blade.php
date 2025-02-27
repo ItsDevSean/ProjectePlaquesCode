@@ -61,49 +61,57 @@
         
         
 
-        <!-- Formulari del client -->
-        <div class="client-form-container max-w-lg mx-auto p-4 mt-6 bg-white shadow-md rounded-lg dark:bg-gray-800">
-            <h2 class="client-form-title text-xl font-semibold text-center mb-4 dark:text-white">Dades del Client</h2>
-            <form action="{{ route('guardar.dades') }}" method="post">
-                @csrf
-                <div class="mb-4">
-                    <label for="nombre" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Nom Complet</label>
-                    <input type="text" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="nombre" name="nombre" placeholder="Exemple: Juan Pérez" required>
-                </div>
-
-                <div class="mb-4">
-                    <label for="email" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Correu Electrònic</label>
-                    <input type="email" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="email" name="email" placeholder="Exemple: juan@gmail.com" required>
-                </div>
-
-                <div class="mb-4">
-                    <label for="telefono" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Telèfon</label>
-                    <input type="tel" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="telefono" name="telefono" placeholder="Exemple: 600123456" required>
-                </div>
-
-                <div class="mb-4">
-                    <label for="direccion" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Direcció</label>
-                    <input type="text" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="direccion" name="direccion" placeholder="Exemple: Carrer Major, 12" required>
-                </div>
-
-                <div class="mb-4">
-                    <label for="ciudad" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Ciutat</label>
-                    <input type="text" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="ciudad" name="ciudad" placeholder="Exemple: Barcelona" required>
-                </div>
-
-                <div class="mb-4">
-                    <label for="codigo_postal" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Codi Postal</label>
-                    <input type="text" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="codigo_postal" name="codigo_postal" placeholder="Exemple: 08001" required>
-                </div>
-
-                <button type="submit" class="client-form-submit w-full bg-white border-2 border-emerald-400 text-emerald-500 font-semibold py-2 px-4 rounded-lg transition duration-300 hover:bg-emerald-400 hover:text-white">
-                    Seguent
-                  </button>
-            </form>
+<!-- Formulari del client -->
+<div class="client-form-container max-w-lg mx-auto p-4 mt-6 bg-white shadow-md rounded-lg dark:bg-gray-800">
+    <h2 class="client-form-title text-xl font-semibold text-center mb-4 dark:text-white">Dades del Client</h2>
+    <form action="" method="post" id="clientForm">
+        @csrf
+        <div class="mb-4">
+            <label for="nombre" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Nom Complet</label>
+            <input type="text" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="nombre" name="nombre" placeholder="Exemple: Juan Pérez" required>
+            <span class="error-message text-red-500 text-sm hidden">El nom és obligatori.</span>
         </div>
+
+        <div class="mb-4">
+            <label for="email" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Correu Electrònic</label>
+            <input type="email" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="email" name="email" placeholder="Exemple: juan@gmail.com" required>
+            <span class="error-message text-red-500 text-sm hidden">El correu electrònic no és vàlid (ha de contenir una @).</span>
+        </div>
+
+        <div class="mb-4">
+            <label for="telefono" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Telèfon</label>
+            <input type="tel" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="telefono" name="telefono" placeholder="Exemple: 600123456" required>
+            <span class="error-message text-red-500 text-sm hidden">El telèfon ha de tenir 9 dígits.</span>
+        </div>
+
+        <div class="mb-4">
+            <label for="direccion" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Direcció</label>
+            <input type="text" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="direccion" name="direccion" placeholder="Exemple: Carrer Major, 12" required>
+            <span class="error-message text-red-500 text-sm hidden">La direcció és obligatòria.</span>
+        </div>
+
+        <div class="mb-4">
+            <label for="ciudad" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Ciutat</label>
+            <input type="text" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="ciudad" name="ciudad" placeholder="Exemple: Barcelona" required>
+            <span class="error-message text-red-500 text-sm hidden">La ciutat és obligatòria.</span>
+        </div>
+
+        <div class="mb-4">
+            <label for="codigo_postal" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Codi Postal</label>
+            <input type="text" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="codigo_postal" name="codigo_postal" placeholder="Exemple: 08001" required>
+            <span class="error-message text-red-500 text-sm hidden">El codi postal ha de tenir 5 dígits.</span>
+        </div>
+
+        <button type="submit" class="client-form-submit w-full bg-white border-2 border-emerald-400 text-emerald-500 font-semibold py-2 px-4 rounded-lg transition duration-300 hover:bg-emerald-400 hover:text-white" id="submitButton">
+            Seguent
+        </button>
+    </form>
+</div>
+
 
         <!-- Scripts -->
         <script src="build/js/generalScript.js"></script>
+        <script src="build/js/dades.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDu3ReEUVEQANj_h1EAtfe4-zyarcb3X04&libraries=places&callback=initMap"></script>
         <script src="https://solar.googleapis.com/v1/buildingInsights:findClosest?key=AIzaSyDu3ReEUVEQANj_h1EAtfe4-zyarcb3X04"></script>
     </x-app-layout>
