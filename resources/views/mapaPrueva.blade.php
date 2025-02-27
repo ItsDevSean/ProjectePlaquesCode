@@ -40,16 +40,16 @@
         </div>
 
         <!-- Contenidor del mapa -->
-        <div class="map-container">
-            <div class="map-header">
-                <div class="search-container">
-                    <input type="text" id="address" placeholder="Escriu la teva direcció" autocomplete="off">
-                    <button id="buttonBuscar">Buscar</button>
+       <div class="map-container mt-16 max-w-6xl mx-auto p-4">
+            <div class="map-header flex flex-col md:flex-row items-center justify-between gap-4 p-4 bg-white shadow-md rounded-lg dark:bg-gray-800">
+                <div class="search-container w-full md:w-3/5 flex gap-2">
+                    <input type="text" id="address" placeholder="Escriu la teva direcció" autocomplete="off" class="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                    <button id="buttonBuscar" class="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition">Buscar</button>
                 </div>
-                <button id="startSelection" class="btn-primary">Seleccionar area</button>
-                <span id="areaResult"></span>
+                <button id="startSelection" class="btn-primary w-full md:w-auto px-6 py-2 text-black rounded-lg transition">Seleccionar area</button>
+                <span id="areaResult" class="text-gray-700 dark:text-white"></span>
             </div>
-            <div id="map"></div>
+            <div id="map" class="w-full h-[400px] md:h-[500px] mt-14 rounded-lg shadow-md"></div>
         </div>
 
     </x-app-layout>
