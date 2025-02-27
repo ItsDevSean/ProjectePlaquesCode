@@ -84,3 +84,4 @@ Route::post('/guardar-dades', [DadesClientController::class, 'store'])->name('gu
 Route::resource('proyectos', ProyectoController::class);
 
 
+Route::get('/proyectos/{id}/details', [ProyectoController::class, 'details'])->name('proyectos.details');

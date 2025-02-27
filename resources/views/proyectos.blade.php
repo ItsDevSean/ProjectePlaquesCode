@@ -23,6 +23,7 @@
                         <thead>
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Usuario</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Estado</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nombre Proyecto</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Acciones</th>
                             </tr>
@@ -31,7 +32,19 @@
                             @foreach ($proyectos as $proyecto)
                                 <tr class="project-row" data-id="{{ $proyecto->id }}">
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->user?->name ?? 'Usuario no disponible' }}</td>
+                                    
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <select name="estado_id" class="estado-select" data-id="{{ $proyecto->id }}">
+                                            @foreach(App\Models\Estado::all() as $estado)
+                                                <option value="{{ $estado->id }}" {{ $proyecto->estado_id == $estado->id ? 'selected' : '' }}>
+                                                    {{ ucfirst($estado->nombre) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre }}</td>
+
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <a href="{{ route('proyectos.edit', $proyecto->id) }}" class="text-green-600 hover:text-green-900 mr-3">Editar</a>
                                         <form action="{{ route('proyectos.destroy', $proyecto->id) }}" method="POST" class="inline-block">
@@ -63,67 +76,79 @@
         </div>
     </div>
 
-    </div>
-
-
-
     <script>
-
 document.addEventListener("DOMContentLoaded", function() {
     const projectRows = document.querySelectorAll('.project-row');
     const sidePanel = document.getElementById('sidePanel');
-    const overlay = document.getElementById('overlay'); // Referencia al overlay
+    const overlay = document.getElementById('overlay');
     const closeButton = document.querySelector('.close-btn');
 
-    // Manejador de clic para cada proyecto
     projectRows.forEach(row => {
         row.addEventListener('click', function() {
+            console.log('Clic en la fila:', row); // Verifica si este mensaje aparece en la consola
             const projectId = row.getAttribute('data-id');
 
-            // Mostrar los detalles (esto es solo un ejemplo simple)
-            const projectDetailsContent = `
-                <h3>Detalles del Proyecto</h3>
-                <p>ID del Proyecto: ${projectId}</p>
-                <p>Más información aquí...</p>
-            `;
+            fetch(`/proyectos/${projectId}/details`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la solicitud');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data); // Esto te mostrará el contenido de la respuesta
 
-            // Mostrar los detalles en el sidePanel
-            sidePanel.querySelector('.side-panel-content').innerHTML = projectDetailsContent + `
-                <div id="map" style="width: 100%; height: 100%;"></div>
-            `;
+                    if (data.error) {
+                        sidePanel.querySelector('.side-panel-content').innerHTML = `<p>${data.error}</p>`;
+                    } else {
+                        const projectDetailsContent = `
+                            <h3>Detalles del Proyecto</h3>
+                            <p>ID del Proyecto: ${data.proyecto.id}</p>
+                            <p>Nombre del Proyecto: ${data.proyecto.nombre}</p>
+                            <h4>Datos del Cliente</h4>
+                            <p>Nombre: ${data.dadesClient?.nombre ?? 'No disponible'}</p>
+                            <p>Email: ${data.dadesClient?.email ?? 'No disponible'}</p>
+                            <p>Teléfono: ${data.dadesClient?.telefono ?? 'No disponible'}</p>
+                            <p>Dirección: ${data.dadesClient?.direccion ?? 'No disponible'}</p>
+                            <p>Ciudad: ${data.dadesClient?.ciudad ?? 'No disponible'}</p>
+                            <p>Código Postal: ${data.dadesClient?.codigo_postal ?? 'No disponible'}</p>
+                        `;
 
-            // Abrir el panel
-            sidePanel.classList.add('show');
-            overlay.style.display = 'block'; // Mostrar el overlay cuando el panel se abre
+                        sidePanel.querySelector('.side-panel-content').innerHTML = projectDetailsContent;
+                        sidePanel.classList.add('show');
+                        overlay.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    sidePanel.querySelector('.side-panel-content').innerHTML = `<p>Error al cargar los detalles del proyecto.</p>`;
+                    sidePanel.classList.add('show');
+                    overlay.style.display = 'block';
+                });
         });
     });
 
-    // Cerrar el panel y el overlay cuando se haga clic en el botón de cerrar
     closeButton.addEventListener('click', function() {
         sidePanel.classList.remove('show');
-        overlay.style.display = 'none'; // Ocultar el overlay cuando se cierra el panel
+        overlay.style.display = 'none';
     });
 
-    // Cerrar el panel y el overlay cuando se haga clic fuera del panel (en el overlay)
     overlay.addEventListener('click', function() {
         sidePanel.classList.remove('show');
-        overlay.style.display = 'none'; // Ocultar el overlay
+        overlay.style.display = 'none';
     });
 
-    // Cerrar el panel si se hace clic fuera del sidePanel (pero no en el overlay)
     document.addEventListener('click', function(event) {
         if (!sidePanel.contains(event.target) && !event.target.closest('.project-row') && !event.target.closest('#overlay')) {
             sidePanel.classList.remove('show');
-            overlay.style.display = 'none'; // Ocultar el overlay
+            overlay.style.display = 'none';
         }
     });
 
-    // Evitar que el clic en el panel lo cierre
     sidePanel.addEventListener('click', function(event) {
-        event.stopPropagation(); // Esto evita que el panel cierre cuando se hace clic dentro de él
+        event.stopPropagation();
     });
 });
-
-
     </script>    
+
 </x-app-layout>

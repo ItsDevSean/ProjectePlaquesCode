@@ -18,6 +18,9 @@ class DadesClient extends Model
         'ciudad',
         'codigo_postal',
     ];
-
+    public function proyecto()
+    {
+        return $this->belongsTo(Proyecto::class, 'proyecto_id');
+    }
     
 }
