@@ -97,7 +97,7 @@
                 </div>
 
                 <button type="submit" class="client-form-submit w-full bg-white border-2 border-emerald-400 text-emerald-500 font-semibold py-2 px-4 rounded-lg transition duration-300 hover:bg-emerald-400 hover:text-white">
-                    Enviar
+                    Seguent
                   </button>
             </form>
         </div>
