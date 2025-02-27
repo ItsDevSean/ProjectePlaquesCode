@@ -119,10 +119,14 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="descripcion" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descripció del Projecte</label>
-                            <textarea class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="descripcion" name="descripcion" rows="3" placeholder="Descripció del projecte..." required></textarea>
-                            <span class="error-message text-red-500 text-sm hidden">La descripció és obligatòria.</span>
+                            <label for="descripcion" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                Descripció del Projecte
+                            </label>
+                            <textarea class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" 
+                                id="descripcion" name="descripcion" rows="3" placeholder="Descripció del projecte..."></textarea>
+                            <small class="text-gray-500 dark:text-gray-400">Aquest camp és opcional.</small>
                         </div>
+                        
                     </div>
                 </div>
 
