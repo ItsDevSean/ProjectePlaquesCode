@@ -87,11 +87,12 @@
                         <input type="text" name="manufacturer"class="border p-2 rounded w-full">
                     </div>
                 
-                    <div>
+                    <div> <!--toDO: aqui: geting values from db, ep. 40, min 4-->
                         <label>Tipo de Panel*</label>
                         <select name="panel_type"class="border p-2 rounded w-full">
-                            <option value="yes">yes</option>
-                            <option value="not">not</option>
+                            @foreach ($panelType as $panelType => $id)
+                                <option value="{{ $id }}">{{$panelType}}</option>
+                            @endforeach
                         </select> 
                     </div>
                     <div>

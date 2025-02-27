@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\tools;
 
 use App\Http\Controllers\Controller;
+use App\Models\PanelType;
 use App\Models\SolarPanelsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -22,7 +23,9 @@ class SolarPanelsController extends Controller
      */
     public function create()
     {
-        return view('panels');
+        $panelType = PanelType::pluck('panel_type', 'id');
+
+        return view('panels', compact('panelType'));
     }
 
     /**
