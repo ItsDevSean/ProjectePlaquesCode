@@ -83,6 +83,23 @@ Route::get('/infoeco2', function(){
     return view('otraInfoEco');
 });
 
+Route::get('/infoadd', function(){
+    return view('infoAdd');
+});
+
+Route::get('/condicionesop', function(){
+    return view('condeOper');
+});
+
+Route::get('/certificaciones', function(){
+    return view('certOp');
+});
+
+Route::get('/infoEco', function(){
+    return view('infoEco');
+});
+
+
 Route::post('/guardar-informacionFisica', [InformacionFisicaPanelController::class, 'store'])->name('guardar.informacionFisica');
 
 Route::post('/guardar-informacionElectrica', [InformacionElectricaPanelController::class, 'store'])->name('guardar.informacionElectrica');
