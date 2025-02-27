@@ -114,7 +114,7 @@
 
             <div class="video-overlay"></div>
             <video id="background" autoplay muted loop playsinline>
-                <source src="{{ asset('build/video.mp4.mp4') }}" type="video/mp4">
+                <source src="{{ asset('build/img/video.mp4.mp4') }}" type="video/mp4">
             </video>
 
             <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-center">
@@ -223,6 +223,7 @@
             </div>
             <div class="absolute inset-0 bg-black/30 z-10"></div>
         </div>
+
         <!-- Codigo js para el efecto parallax -->
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -234,7 +235,7 @@
                     
                     if (rect.top < window.innerHeight && rect.bottom > 0) {
                         const scrolled = window.pageYOffset;
-                        const speed = 0.5;
+                        const speed = 0.8;
                         const yPos = -(rect.top * speed);
                         parallaxImage.style.transform = `translateY(${yPos}px)`;
                     }
