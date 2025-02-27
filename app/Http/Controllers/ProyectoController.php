@@ -88,5 +88,17 @@ class ProyectoController extends Controller
         'dadesClient' => $dadesClient
     ]);
 }
+
+public function showForm($proyecto_id)
+{
+    $proyecto = Proyecto::find($proyecto_id);
+
+    if (!$proyecto) {
+        return redirect()->back()->with('error', 'Proyecto no encontrado');
+    }
+
+    return view('dadesClient', compact('proyecto'));
+}
+
 }
 

@@ -84,49 +84,51 @@ document.addEventListener("DOMContentLoaded", function() {
     const closeButton = document.querySelector('.close-btn');
 
     projectRows.forEach(row => {
-        row.addEventListener('click', function() {
-            console.log('Clic en la fila:', row); // Verifica si este mensaje aparece en la consola
-            const projectId = row.getAttribute('data-id');
+    row.addEventListener('click', function(event) {
+        // Evitar que el clic en el select dispare el evento
+        if (event.target.closest('select.estado-select')) {
+            return;
+        }
 
-            fetch(`/proyectos/${projectId}/details`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error en la solicitud');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log(data); // Esto te mostrará el contenido de la respuesta
+        const projectId = row.getAttribute('data-id');
 
-                    if (data.error) {
-                        sidePanel.querySelector('.side-panel-content').innerHTML = `<p>${data.error}</p>`;
-                    } else {
-                        const projectDetailsContent = `
-                            <h3>Detalles del Proyecto</h3>
-                            <p>ID del Proyecto: ${data.proyecto.id}</p>
-                            <p>Nombre del Proyecto: ${data.proyecto.nombre}</p>
-                            <h4>Datos del Cliente</h4>
-                            <p>Nombre: ${data.dadesClient?.nombre ?? 'No disponible'}</p>
-                            <p>Email: ${data.dadesClient?.email ?? 'No disponible'}</p>
-                            <p>Teléfono: ${data.dadesClient?.telefono ?? 'No disponible'}</p>
-                            <p>Dirección: ${data.dadesClient?.direccion ?? 'No disponible'}</p>
-                            <p>Ciudad: ${data.dadesClient?.ciudad ?? 'No disponible'}</p>
-                            <p>Código Postal: ${data.dadesClient?.codigo_postal ?? 'No disponible'}</p>
-                        `;
+        fetch(`/proyectos/${projectId}/details`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la solicitud');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    sidePanel.querySelector('.side-panel-content').innerHTML = `<p>${data.error}</p>`;
+                } else {
+                    const projectDetailsContent = `
+                        <h3>Detalles del Proyecto</h3>
+                        <p>ID del Proyecto: ${data.proyecto.id}</p>
+                        <p>Nombre del Proyecto: ${data.proyecto.nombre}</p>
+                        <h4>Datos del Cliente</h4>
+                        <p>Nombre: ${data.dadesClient?.nombre ?? 'No disponible'}</p>
+                        <p>Email: ${data.dadesClient?.email ?? 'No disponible'}</p>
+                        <p>Teléfono: ${data.dadesClient?.telefono ?? 'No disponible'}</p>
+                        <p>Dirección: ${data.dadesClient?.direccion ?? 'No disponible'}</p>
+                        <p>Ciudad: ${data.dadesClient?.ciudad ?? 'No disponible'}</p>
+                        <p>Código Postal: ${data.dadesClient?.codigo_postal ?? 'No disponible'}</p>
+                    `;
 
-                        sidePanel.querySelector('.side-panel-content').innerHTML = projectDetailsContent;
-                        sidePanel.classList.add('show');
-                        overlay.style.display = 'block';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    sidePanel.querySelector('.side-panel-content').innerHTML = `<p>Error al cargar los detalles del proyecto.</p>`;
+                    sidePanel.querySelector('.side-panel-content').innerHTML = projectDetailsContent;
                     sidePanel.classList.add('show');
                     overlay.style.display = 'block';
-                });
-        });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                sidePanel.querySelector('.side-panel-content').innerHTML = `<p>Error al cargar los detalles del proyecto.</p>`;
+                sidePanel.classList.add('show');
+                overlay.style.display = 'block';
+            });
     });
+});
 
     closeButton.addEventListener('click', function() {
         sidePanel.classList.remove('show');
@@ -149,6 +151,7 @@ document.addEventListener("DOMContentLoaded", function() {
         event.stopPropagation();
     });
 });
+
     </script>    
 
 </x-app-layout>

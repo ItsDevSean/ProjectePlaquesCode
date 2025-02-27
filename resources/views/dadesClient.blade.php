@@ -66,6 +66,7 @@
             <h2 class="client-form-title text-xl font-semibold text-center mb-4 dark:text-white">Dades del Client</h2>
             <form action="{{ route('guardar.dades') }}" method="post">
                 @csrf
+                
                 <div class="mb-4">
                     <label for="nombre" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Nom Complet</label>
                     <input type="text" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="nombre" name="nombre" placeholder="Exemple: Juan Pérez" required>
@@ -94,6 +95,11 @@
                 <div class="mb-4">
                     <label for="codigo_postal" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Codi Postal</label>
                     <input type="text" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="codigo_postal" name="codigo_postal" placeholder="Exemple: 08001" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="codigo_postal" class="client-form-label block text-sm font-medium text-gray-700 dark:text-gray-300">Id proyecto</label>
+                    <input type="text" class="client-form-input mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="codigo_postal" name="proyecto_id" placeholder="Exemple: 08001" required>
                 </div>
 
                 <button type="submit" class="client-form-submit w-full bg-white border-2 border-emerald-400 text-emerald-500 font-semibold py-2 px-4 rounded-lg transition duration-300 hover:bg-emerald-400 hover:text-white">
