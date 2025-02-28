@@ -92,9 +92,9 @@
             @if (Route::has('login'))
             <nav class="auth-buttons">
                 @auth
-                <a href="{{ url('/dashboard') }}"
+                <a href="{{ url('/proyectos') }}"
                 class="rounded-md px-3 py-2 text-white bg-[#4adba4] ring-1 ring-[#4adba4] transition hover:bg-transparent hover:text-white focus:outline-none focus-visible:ring-[#4adba4] mr-2">
-                    Dashboard
+                    Començar
                 </a>
                 @else
                 <a href="{{ route('login') }}"
