@@ -6,34 +6,39 @@
 
 /* Contenedor del mapa */
 .map-container {
-    width: 100%;
     position: relative;
+    height: 100vh;
+    width: 100%;
 }
 
 /* Encabezado del mapa (buscador y botones) */
 .map-header {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    gap: 15px;
-    padding: 5px;
+    gap: 10px;
+    padding: 10px;
     background-color: #ffffff;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
     position: absolute;
-    margin-top: 7%; 
+    top: 120px; /* Ajustado para acercar a la barra de progreso */
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
     border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
 }
 
 .search-container {
     display: flex;
     gap: 10px;
+    width: 100%;
+    align-items: center; /* Alinea los elementos verticalmente */
 }
 
 #address {
-    width: 300px;
+    width: 60%; /* Reducido el ancho del input */
     border: 2px solid #49DBA3;
     border-radius: 8px;
     padding: 10px;
@@ -47,6 +52,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     border-radius: 8px;
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
 }
 
 #buttonBuscar:hover {
@@ -54,33 +60,36 @@
     color: #fff;
 }
 
-.map-buttons {
-    display: flex;
-    gap: 10px;
+#startSelection {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #49DBA3;
+    color: #000;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
 }
 
-
-
-.map-buttons button:hover {
+#startSelection:hover {
     background-color: #49DBA3;
     color: #fff;
 }
 
 /* Estilos del mapa */
 #map {
-    height: 100vh;
+    height: 100%;
     width: 100%;
 }
 
 .progress-bar-container {
     position: absolute;
-    top: 70px;
+    top: 70px; /* Ajustado para acercar a la barra de dirección */
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1000; /* Assegura't que està per sobre del mapa */
-    width: 70%;
-    display: flex;
-    justify-content: center;
+    z-index: 1000;
+    width: 90%;
+    max-width: 800px;
 }
 
 /* Resto de estilos (formulario, etc.) */
@@ -163,4 +172,16 @@
     width: 80%;
 }
 
-/* Rest of your styles remain unchanged */
+
+@media (max-width: 1250px) {
+    div.gmnoprint[role="menubar"] {
+        position: absolute !important; 
+        bottom: 20px !important; 
+        top: auto !important; 
+        left: 10px;
+        z-index: 1000 !important;
+        display: flex !important;
+        flex-direction: row !important;
+    }
+}
+

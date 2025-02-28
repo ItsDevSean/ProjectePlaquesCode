@@ -102,15 +102,18 @@ window.initMap = function () {
     }
   }
   
-  // Dibuja el polígono
   function dibuixarPoligon() {
     if (selectedPolygon) {
         selectedPolygon.setMap(null);
     }
-  
+
     let coordinates = selectedMarkers.map(marker => marker.getPosition());
-    coordinates.push(coordinates[0]);
-  
+
+    // Només tanca el polígon si hi ha 3 punts o més
+    if (coordinates.length >= 3) {
+        coordinates.push(coordinates[0]); // Tanca només si hi ha 3 o més punts
+    }
+
     selectedPolygon = new google.maps.Polygon({
         paths: coordinates,
         strokeColor: "#00FF00",
@@ -120,12 +123,16 @@ window.initMap = function () {
         fillOpacity: 0.35,
         map: map,
     });
-  
-    calcularArea();
-  }
+
+    if (coordinates.length >= 3) {
+        calcularArea(); 
+    }
+}
+
   
   // Calcula el área del polígón
   function calcularArea() {
+    const areaLabel = document.getElementById("areaResult");
     if (selectedPolygon) {
       let area = google.maps.geometry.spherical.computeArea(selectedPolygon.getPath());
       areaLabel.innerText = `Àrea: ${area.toFixed(2)} m²`;

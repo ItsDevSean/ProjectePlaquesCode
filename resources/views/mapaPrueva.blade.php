@@ -11,45 +11,64 @@
 <body>
     <x-app-layout>
 
-        <!-- Barra de progrés -->
-        <div class="progress-bar-container">
-            <div class="progress-bar bg-white border flex justify-center items-center mx-auto shadow-teal-300 shadow-md max-w-6xl p-2 rounded-lg dark:bg-gray-700 dark:text-gray-300">
-                <div class="w-full max-w-screen-2xl px-12 mx-auto">
-                    <ul class="w-full flex flex-col md:flex-row justify-center items-center gap-4 md:gap-40 mt-2 md:mt-0 md:text-base md:font-medium">
-                        <li class="flex flex-col items-center cursor-pointer hover:scale-110 transition-transform duration-200 ease-in-out">
-                            <a href="dades" class="flex flex-col items-center">
-                                <div class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">1</div>
-                                <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">Dades del Client</span>
-                            </a>
-                        </li>
-                        <li class="flex flex-col items-center cursor-pointer hover:scale-110 transition-transform duration-200 ease-in-out">
-                            <a href="mapa" class="flex flex-col items-center">
-                                <div class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-emerald-400 border-2 border-emerald-400 rounded-full text-white font-bold text-lg">2</div>
-                                <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">Seleccionar area</span>
-                            </a>
-                        </li>
-                        <li class="flex flex-col items-center cursor-pointer hover:scale-110 transition-transform duration-200 ease-in-out">
-                            <a href="formulari" class="flex flex-col items-center">
-                                <div class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">3</div>
-                                <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">Formulari Prova</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <!-- Barra de progrés responsive -->
+<div class="progress-bar-container mt-4 px-4"> <!-- Ajustado el margen superior -->
+    <div class="progress-bar bg-white border flex justify-center items-center mx-auto shadow-teal-300 shadow-md max-w-6xl p-2 rounded-lg dark:bg-gray-700 dark:text-gray-300">
+        <div class="w-full max-w-screen-2xl px-4 md:px-12 mx-auto overflow-x-auto overflow-y-hidden scrollbar-hide">
+            <ul class="w-full flex flex-nowrap justify-start md:justify-center items-center gap-6 sm:gap-10 md:gap-20 mt-2 md:mt-0 text-center whitespace-nowrap overflow-visible min-h-[4rem]">
+                
+                <!-- PAS 1 -->
+                <li class="flex flex-col items-center cursor-pointer transition-transform duration-200 ease-in-out hover:scale-95">
+                    <a href="dades" class="flex flex-col items-center">
+                        <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">
+                            1
+                        </div>
+                        <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">
+                            Dades del Client
+                        </span>
+                    </a>
+                </li>
+    
+                <!-- PAS 2 -->
+                <li class="flex flex-col items-center cursor-pointer transition-transform duration-200 ease-in-out hover:scale-95">
+                    <a href="mapa" class="flex flex-col items-center">
+                        <div class="w-10 h-10 flex items-center justify-center bg-emerald-400 border-2 border-emerald-400 rounded-full text-white font-bold text-lg">
+                            2
+                        </div>
+                        <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">
+                            Seleccionar Àrea
+                        </span>
+                    </a>
+                </li>
+    
+                <!-- PAS 3 -->
+                <li class="flex flex-col items-center cursor-pointer transition-transform duration-200 ease-in-out hover:scale-95">
+                    <a href="formulari" class="flex flex-col items-center">
+                        <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">
+                            3
+                        </div>
+                        <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">
+                            Formulari Prova
+                        </span>
+                    </a>
+                </li>
+    
+            </ul>
         </div>
+    </div>
+</div>
 
         <!-- Contenidor del mapa -->
-       <div class="map-container mt-16 max-w-6xl mx-auto p-4">
-            <div class="map-header flex flex-col md:flex-row items-center justify-between gap-4 p-4 bg-white shadow-md rounded-lg dark:bg-gray-800">
-                <div class="search-container w-full md:w-3/5 flex gap-2">
-                    <input type="text" id="address" placeholder="Escriu la teva direcció" autocomplete="off" class="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
-                    <button id="buttonBuscar" class="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition">Buscar</button>
+        <div class="map-container">
+            <div class="map-header">
+                <div class="search-container">
+                    <input type="text" id="address" placeholder="Escriu la teva direcció" autocomplete="off">
+                    <button id="buttonBuscar">Buscar</button>
+                    <button id="startSelection">Seleccionar area</button>
+                    <span id="areaResult"></span>
                 </div>
-                <button id="startSelection" class="btn-primary w-full md:w-auto px-6 py-2 text-black rounded-lg transition">Seleccionar area</button>
-                <span id="areaResult" class="text-gray-700 dark:text-white"></span>
             </div>
-            <div id="map" class="w-full h-[400px] md:h-[500px] mt-14 rounded-lg shadow-md"></div>
+            <div id="map"></div>
         </div>
 
     </x-app-layout>
