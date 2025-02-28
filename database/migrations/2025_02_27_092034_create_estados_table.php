@@ -25,9 +25,5 @@ return new class extends Migration
             ['nombre' => 'Completado'],
         ]);
     }
-
-    /**
-     * Reverse the migrations.
-     */
-   
+ 
 };
