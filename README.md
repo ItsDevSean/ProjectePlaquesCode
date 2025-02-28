@@ -67,6 +67,6 @@ En aquest segon sprint, hem seguit amb el curs que vam començar el sprint anter
 
 - **Sprint 4:** (17/2/25 - 28/2/25)
 
+En aquest tercer sprint, hem seguit implementant el formulari de creació de projecte, un mòdul nou per afegir plaques, implementacions de CSS, i més important, tenim un domini propi on tenim el projecte pujat.
+
 [Snapshot4](docs/sprintSnapshot/Snapshot4.md)
-
-
