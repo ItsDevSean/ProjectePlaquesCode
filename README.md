@@ -65,3 +65,8 @@ En aquest segon sprint, hem seguit amb el curs que vam començar el sprint anter
 [Snapshot3](docs/sprintSnapshot/Snapshot3.md)
 
 
+- **Sprint 4:** (17/2/25 - 28/2/25)
+
+[Snapshot4](docs/sprintSnapshot/Snapshot4.md)
+
+
