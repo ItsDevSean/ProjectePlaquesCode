@@ -26,28 +26,19 @@ Aquesta pagina ens ha costat bastant fer-la ja que es on es emmagatzeman els pro
 També té implementat un side-panel on es mostra l'informació amb més detall. Tota aquesta informacio es guarda en la BD...
 ![image](https://github.com/user-attachments/assets/4ed70aa3-d140-4749-81df-fefd2b5caa7c)
 
-
+### Pagina de Plans:
+Hem implementat una pagina amb els plans mensuals de compra. Només esta feta la part de front-end, ja que no tenim implementat el Stripe. Es per fer-ha servir d'exemple.
 ![image](https://github.com/user-attachments/assets/031b29dd-99d1-4e3e-bec8-e723e5164a6b)
 
-
-
-
-
+### Formulari dades client.
+Aquest es el nostre formulari principal del projecte, on movem les dades i les enmmagatzem tant en les taules com les mostrem en la view de proyectes.
 
 ![image](https://github.com/user-attachments/assets/e836890c-6e08-4506-ba3a-585c9a23d1fe)
 
-![image](https://github.com/user-attachments/assets/6da89fc4-df69-4bd8-8733-d6080a5bf3c9)
 
-![image](https://github.com/user-attachments/assets/514f24ae-8f32-460f-90d1-78ff8112b1da)
-
-
-
-![image](https://github.com/user-attachments/assets/480d5db0-fc89-4a60-b4d1-8c9731c2395e)
 
 ### Creació de projecte d'instal·lació de plaques solars
 Les Apis que anteriorment ja havíem implementat, ara he pogut configurar-les perquè ja funcionin.
-
-![image](https://github.com/user-attachments/assets/e836890c-6e08-4506-ba3a-585c9a23d1fe)
 
 El mòdul per al càlcul de l'àrea i cerca ubicacions del mapa ja funciona.
 ![image](https://github.com/user-attachments/assets/514f24ae-8f32-460f-90d1-78ff8112b1da)
