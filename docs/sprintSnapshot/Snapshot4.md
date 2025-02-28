@@ -5,12 +5,12 @@
 
 ![image](https://github.com/user-attachments/assets/3296c25a-1600-4396-9a8a-9f9d3899a819)
 
-Hem implementat un nou modul per afegir noves plaques solars. Es aquesta la screen, sera, un cop afageixis una placa, es veura les noves.
-
-![image](https://github.com/user-attachments/assets/61841129-1891-4b32-980b-1f72df90cd61)
-
-
+Hem implementat un nou mòdul per afegir noves plaques solars per poder escollir-les un cop que estàs fent la transició de la instal·lació. 
+En el següent formulari, és on afegeixes les noves plaques.
 ![image](https://github.com/user-attachments/assets/95b239c2-9941-4de9-83a5-10c6fc5445c9)
+
+És aquesta la screen on, un cop afegeixis una placa, es veuran les noves plaques.
+![image](https://github.com/user-attachments/assets/61841129-1891-4b32-980b-1f72df90cd61)
 
 ![image](https://github.com/user-attachments/assets/031b29dd-99d1-4e3e-bec8-e723e5164a6b)
 
