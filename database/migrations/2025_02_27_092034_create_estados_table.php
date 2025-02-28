@@ -25,12 +25,5 @@ return new class extends Migration
             ['nombre' => 'Completado'],
         ]);
     }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('estados');
-    }
+ 
 };

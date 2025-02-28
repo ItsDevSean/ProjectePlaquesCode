@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 class DadesClient extends Model
 {
     use HasFactory;
@@ -11,17 +12,18 @@ class DadesClient extends Model
     protected $table = "dades_clients";
 
     protected $fillable = [
-        'nombre',
-        'email',
-        'telefono',
-        'direccion',
-        'ciudad',
-        'codigo_postal',
-        'proyecto_id'
+        'nombre', 'email', 'telefono', 'direccion', 'ciudad', 'codigo_postal',
+        'nombre_proyecto', 'descripcion_proyecto', 'tarifa', 'tipo_instalacion',
+        'user_id', 'estado_id'
     ];
-    public function proyecto()
+
+    public function user()
     {
-        return $this->belongsTo(Proyecto::class, 'proyecto_id');
+        return $this->belongsTo(User::class);
     }
-    
+
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class);
+    }
 }
