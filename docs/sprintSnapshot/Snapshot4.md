@@ -18,3 +18,5 @@ Hem implementat un nou modul per afegir noves plaques solars. Es aquesta la scre
 
 ![image](https://github.com/user-attachments/assets/0c642851-8f9c-46f0-a286-8f8536c724ff)
 
+![image](https://github.com/user-attachments/assets/480d5db0-fc89-4a60-b4d1-8c9731c2395e)
+
