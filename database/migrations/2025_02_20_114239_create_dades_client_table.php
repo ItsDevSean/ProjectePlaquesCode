@@ -19,8 +19,10 @@ return new class extends Migration
             $table->string('direccion');
             $table->string('ciudad');
             $table->integer('codigo_postal');
-            $table->unsignedBigInteger('proyecto_id')->unique(); // Columna para la clave foránea
-            $table->foreign('proyecto_id')->references('id')->on('proyectos')->onDelete('cascade'); // Relación con la tabla proyectos
+            $table->string('nombre_proyecto');
+            $table->string('descripcion_proyecto');
+            $table->string('tarifa');
+            $table->string('tipo_instalacion');
             $table->timestamps();
         });
     }

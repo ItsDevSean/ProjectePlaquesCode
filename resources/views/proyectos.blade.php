@@ -16,9 +16,11 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    
-                    <a href="{{ route('proyectos.create') }}" class="button button-primary mb-4 inline-block text-emerald-600 hover:text-emerald-900 mr-3">Crear Proyecto</a>
 
+                    <!-- Botón para crear un nuevo proyecto -->
+                
+
+                    <!-- Tabla de proyectos -->
                     <table class="tabla min-w-full divide-y">
                         <thead>
                             <tr>
@@ -29,7 +31,7 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                            @foreach ($proyectos as $proyecto)
+                            @foreach ($clientes as $proyecto)
                                 <tr class="project-row" data-id="{{ $proyecto->id }}">
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->user?->name ?? 'Usuario no disponible' }}</td>
                                     
@@ -43,11 +45,11 @@
                                         </select>
                                     </td>
 
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre_proyecto }}</td>
 
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <a href="{{ route('proyectos.edit', $proyecto->id) }}" class="text-green-600 hover:text-green-900 mr-3">Editar</a>
-                                        <form action="{{ route('proyectos.destroy', $proyecto->id) }}" method="POST" class="inline-block">
+                                        <a href="{{ route('dades_clients.edit', $proyecto->id) }}" class="text-green-600 hover:text-green-900 mr-3">Editar</a>
+                                        <form action="{{ route('dades_clients.destroy', $proyecto->id) }}" method="POST" class="inline-block">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-600 hover:text-red-900">Eliminar</button>
@@ -57,78 +59,76 @@
                             @endforeach
                         </tbody>
                     </table>
-                    
+
+                    <!-- Paginación -->
                     <div class="mt-6">
-                        {{ $proyectos->links() }}
+                        {{ $clientes->links() }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
- 
-    <div id="overlay" class="overlay"></div>
 
+    <!-- Overlay y Side Panel -->
+    <div id="overlay" class="overlay"></div>
     <div id="sidePanel" class="side-panel">
         <div class="side-panel-content">
-            <!-- Contenedor para el mapa de Google -->
             <div id="map" style="width: 100%; height: 100%;"></div>
             <button class="close-btn" onclick="closeSidePanel()">X</button>
         </div>
     </div>
 
+    <!-- Script para manejar el side panel -->
     <script>
-document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function() {
     const projectRows = document.querySelectorAll('.project-row');
     const sidePanel = document.getElementById('sidePanel');
     const overlay = document.getElementById('overlay');
     const closeButton = document.querySelector('.close-btn');
 
     projectRows.forEach(row => {
-    row.addEventListener('click', function(event) {
-        // Evitar que el clic en el select dispare el evento
-        if (event.target.closest('select.estado-select')) {
-            return;
-        }
+        row.addEventListener('click', function(event) {
+            // Evitar que el clic en el select dispare el evento
+            if (event.target.closest('select.estado-select')) {
+                return;
+            }
 
-        const projectId = row.getAttribute('data-id');
+            const projectId = row.getAttribute('data-id'); // Obtener el ID del proyecto
 
-        fetch(`/proyectos/${projectId}/details`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error en la solicitud');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.error) {
-                    sidePanel.querySelector('.side-panel-content').innerHTML = `<p>${data.error}</p>`;
-                } else {
-                    const projectDetailsContent = `
-                        <h3>Detalles del Proyecto</h3>
-                        <p>ID del Proyecto: ${data.proyecto.id}</p>
-                        <p>Nombre del Proyecto: ${data.proyecto.nombre}</p>
-                        <h4>Datos del Cliente</h4>
-                        <p>Nombre: ${data.dadesClient?.nombre ?? 'No disponible'}</p>
-                        <p>Email: ${data.dadesClient?.email ?? 'No disponible'}</p>
-                        <p>Teléfono: ${data.dadesClient?.telefono ?? 'No disponible'}</p>
-                        <p>Dirección: ${data.dadesClient?.direccion ?? 'No disponible'}</p>
-                        <p>Ciudad: ${data.dadesClient?.ciudad ?? 'No disponible'}</p>
-                        <p>Código Postal: ${data.dadesClient?.codigo_postal ?? 'No disponible'}</p>
-                    `;
+            fetch(`/dades_clients/${projectId}/details`) // Usar projectId en la URL
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la solicitud');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        sidePanel.querySelector('.side-panel-content').innerHTML = `<p>${data.error}</p>`;
+                    } else {
+                        const projectDetailsContent = `
+                            <h3>Detalles del Proyecto</h3>
+                            <p>ID del Proyecto: ${data.dadesClient.id}</p>
+                            <p>Nombre del Proyecto: ${data.dadesClient.nombre_proyecto}</p>
+                            <h4>Datos del Cliente</h4>
+                            <p>Nombre: ${data.dadesClient?.nombre ?? 'No disponible'}</p>
+                            <p>Dirección: ${data.dadesClient?.direccion ?? 'No disponible'}</p>
+                            <p>Ciudad: ${data.dadesClient?.ciudad ?? 'No disponible'}</p>
+                        `;
 
-                    sidePanel.querySelector('.side-panel-content').innerHTML = projectDetailsContent;
+                        sidePanel.querySelector('.side-panel-content').innerHTML = projectDetailsContent;
+                        sidePanel.classList.add('show');
+                        overlay.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error); // Mostrar el error en la consola
+                    sidePanel.querySelector('.side-panel-content').innerHTML = `<p>Error al cargar los detalles del proyecto.</p>`;
                     sidePanel.classList.add('show');
                     overlay.style.display = 'block';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                sidePanel.querySelector('.side-panel-content').innerHTML = `<p>Error al cargar los detalles del proyecto.</p>`;
-                sidePanel.classList.add('show');
-                overlay.style.display = 'block';
-            });
+                });
+        });
     });
-});
 
     closeButton.addEventListener('click', function() {
         sidePanel.classList.remove('show');
@@ -151,7 +151,5 @@ document.addEventListener("DOMContentLoaded", function() {
         event.stopPropagation();
     });
 });
-
-    </script>    
-
+    </script>
 </x-app-layout>

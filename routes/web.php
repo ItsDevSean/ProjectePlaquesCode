@@ -106,9 +106,14 @@ Route::post('/guardar-informacionElectrica', [InformacionElectricaPanelControlle
 
 Route::post('/guardar-dades', [DadesClientController::class, 'store'])->name('guardar.dades');
 
-Route::resource('proyectos', ProyectoController::class);
+Route::resource('dades_clients', DadesClientController::class);
 
+// En tu archivo de rutas
+Route::get('/proyectos', [DadesClientController::class, 'index'])->name('proyectos');
 
-Route::get('/proyectos/{id}/details', [ProyectoController::class, 'details'])->name('proyectos.details');
+ 
+
+Route::get('/dades_clients/{id}/details', [DadesClientController::class, 'details'])->name('dades_clients.details');
+
 
 

@@ -61,8 +61,8 @@
         <!-- Formulari del client -->
         <div class="max-w-6xl mx-auto p-4 mt-6 bg-white shadow-md rounded-lg dark:bg-gray-800">
             <h2 class="text-xl font-semibold text-center mb-4 dark:text-white">Dades del Client</h2>
-            <form action="" method="post" id="clientForm">
-                @csrf
+            <form action="{{ route('guardar.dades') }}" method="post" id="clientForm">
+                @csrf 
 
                 <!-- Secció Dades del Client -->
                 <div class="mb-6">
@@ -123,7 +123,7 @@
                                 Descripció del Projecte
                             </label>
                             <textarea class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" 
-                                id="descripcion" name="descripcion" rows="3" placeholder="Descripció del projecte..."></textarea>
+                                id="descripcion" name="descripcion_proyecto" rows="3" placeholder="Descripció del projecte..."></textarea>
                             <small class="text-gray-500 dark:text-gray-400">Aquest camp és opcional.</small>
                         </div>
                         
@@ -137,7 +137,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="mb-4">
                             <label for="tarifa_acceso" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tarifa d'Accés</label>
-                            <input type="text" class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="tarifa_acceso" name="tarifa_acceso" placeholder="Exemple: 2.0A" required>
+                            <input type="text" class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="tarifa_acceso" name="tarifa" placeholder="Exemple: 2.0A" required>
                             <span class="error-message text-red-500 text-sm hidden">La tarifa d'accés és obligatòria.</span>
                         </div>
 
@@ -152,16 +152,18 @@
                     </div>
                 </div>
 
-                <!-- Botó de submisió -->
-                <button type="submit" class="w-full bg-white border-2 border-emerald-400 text-emerald-500 font-semibold py-2 px-4 rounded-lg transition duration-300 hover:bg-emerald-400 hover:text-white" id="submitButton">
+                <button type="submit" class="w-full bg-white border-2 border-emerald-400 text-emerald-500 font-semibold py-2 px-4 rounded-lg transition duration-300 hover:bg-emerald-400 hover:text-white">
                     Seguent
                 </button>
+              
             </form>
         </div>
 
         <!-- Scripts -->
+         <!--
         <script src="build/js/generalScript.js"></script>
         <script src="build/js/dades.js"></script>
+        -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDu3ReEUVEQANj_h1EAtfe4-zyarcb3X04&libraries=places&callback=initMap"></script>
         <script src="https://solar.googleapis.com/v1/buildingInsights:findClosest?key=AIzaSyDu3ReEUVEQANj_h1EAtfe4-zyarcb3X04"></script>
     </x-app-layout>
