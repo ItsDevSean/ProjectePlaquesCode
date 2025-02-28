@@ -5,6 +5,7 @@
 
 ![image](https://github.com/user-attachments/assets/3296c25a-1600-4396-9a8a-9f9d3899a819)
 
+### Afegir noves plaques:
 Hem implementat un nou mòdul per afegir noves plaques solars per poder escollir-les un cop que estàs fent la transició de la instal·lació. 
 En el següent formulari, és on afegeixes les noves plaques.
 ![image](https://github.com/user-attachments/assets/95b239c2-9941-4de9-83a5-10c6fc5445c9)
