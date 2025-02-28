@@ -1,9 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
         <link rel="stylesheet" href="build/css/styles.css">
+        <link rel="stylesheet" href="build/css/proyectosStyle.css">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Listado de Proyectos') }}
         </h2>
+        
     </x-slot>
 
     <div class="py-12">
