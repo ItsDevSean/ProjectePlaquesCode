@@ -5,6 +5,7 @@
 
 ![image](https://github.com/user-attachments/assets/3296c25a-1600-4396-9a8a-9f9d3899a819)
 
+Hem implementat un nou modul per afegir noves plaques solars. Es aquesta la screen, sera, un cop afageixis una placa, es veura les noves.
 
 ![image](https://github.com/user-attachments/assets/61841129-1891-4b32-980b-1f72df90cd61)
 
