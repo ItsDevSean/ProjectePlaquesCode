@@ -87,14 +87,15 @@
                         <input type="text" name="manufacturer"class="border p-2 rounded w-full">
                     </div>
                 
-                    <div> <!--toDO: aqui: geting values from db, ep. 40, min 4-->
+                    {{-- <div> 
                         <label>Tipo de Panel*</label>
                         <select name="panel_type"class="border p-2 rounded w-full">
-                            @foreach ($panelType as $panelType => $id)
-                                <option value="{{ $id }}">{{$panelType}}</option>
+                            <label>{{ $panelType }}</label>
+                            @foreach ($panelType as $panel_type => $id)
+                                <option value="{{ $id }}">{{$panel_type}}</option>
                             @endforeach
                         </select> 
-                    </div>
+                    </div> --}}
                     <div>
                     <label for="date">Fecha de Fabricación:</label>
                     <input type="date" name="date_manufacturer" class="border p-2 rounded w-full">

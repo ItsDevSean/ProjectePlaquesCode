@@ -25,7 +25,7 @@ class SolarPanelsController extends Controller
     {
         $panelType = PanelType::pluck('panel_type', 'id');
 
-        return view('panels', compact('panelType'));
+        return view('tools.panels', compact('panelType'));
     }
 
     /**

@@ -53,11 +53,14 @@ Route::get('/vue', function(){
     return view('vue');
 });
 
+//toDO: [SolarPanelsController::class, 'index'] he de posar aixo per fer el get.
 Route::get('/herramientas/paneles', function(){
     return view('tools.panels');
 })->name('panels');
 
 Route::post('/herramientas/paneles/resultado', [SolarPanelsController::class, 'store'])->name('paneles.resultado');
+
+
 
 Route::get('/dades', function(){
     return view('dadesClient');
