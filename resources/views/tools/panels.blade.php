@@ -41,20 +41,35 @@
                 <table class="w-full text-left mb-4">
                     <thead>
                         <tr class="text-gray-600">
-                            <th class="py-2">Nombre</th>
-                            <th class="py-2">Potencia pico (Wp)</th>
-                            <th class="py-2">Eficiencia (%)</th>
-                            <th class="py-2">Dimensiones (mm)</th>
+                            <th class="py-2">Modelo</th>
                             <th class="py-2">Fabricante</th>
-                            <th class="py-2">Fecha de creación</th>
+                            <th class="py-2">Tipo</th>
+                            <th class="py-2">Fecha de Fabricación</th>
+                            <th class="py-2">Garantía Producto (años)</th>
+                            <th class="py-2">Garantía Rendimiento (años)</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        @foreach ($panels as $p)
+                        <tr class="text-center">
+                            <td class="border p-2">{{ $p->panel_model }}</td>
+                            <td class="border p-2">{{ $p->manufacturer }}</td>
+                            <td class="border p-2">{{ $p->panel_type }}</td>
+                            <td class="border p-2">{{ $p->date_manufacturer }}</td>
+                            <td class="border p-2">{{ $p->panel_warranty }}</td>
+                            <td class="border p-2">{{ $p->performance_warranty }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
                 </table>
                 
+                @if ($panels->isEmpty())
                 <div class="text-center py-8">
                     <p class="text-gray-500 mb-2">Aún no se ha creado ningún panel</p>
                     <button onclick="toggleModal()" class="bg-yellow-500 text-white py-2 px-4 rounded-lg">Crea el primero</button>
                 </div>
+                @endif
+                
             </div>
             
             <div class="text-right mt-4">
@@ -87,15 +102,13 @@
                         <input type="text" name="manufacturer"class="border p-2 rounded w-full">
                     </div>
                 
-                    {{-- <div> 
-                        <label>Tipo de Panel*</label>
-                        <select name="panel_type"class="border p-2 rounded w-full">
-                            <label>{{ $panelType }}</label>
-                            @foreach ($panelType as $panel_type => $id)
-                                <option value="{{ $id }}">{{$panel_type}}</option>
-                            @endforeach
-                        </select> 
-                    </div> --}}
+                   
+                    <label>Tipo de Panel*</label>
+                    <select name="panel_type"class="border p-2 rounded w-full">
+                        <option value="Yes">yes</option>
+                        <option value="Not">not</option>
+                    </select> 
+                   
                     <div>
                     <label for="date">Fecha de Fabricación:</label>
                     <input type="date" name="date_manufacturer" class="border p-2 rounded w-full">

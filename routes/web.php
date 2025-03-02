@@ -7,7 +7,7 @@ use App\Http\Controllers\DadesClientController;
 use App\Http\Controllers\ProyectoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\tools\SolarPanelsController;
-
+use App\Models\SolarPanelsModel;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,7 +55,8 @@ Route::get('/vue', function(){
 
 //toDO: [SolarPanelsController::class, 'index'] he de posar aixo per fer el get.
 Route::get('/herramientas/paneles', function(){
-    return view('tools.panels');
+    $panels = SolarPanelsModel::all();
+    return view('tools.panels', compact('panels'));
 })->name('panels');
 
 Route::post('/herramientas/paneles/resultado', [SolarPanelsController::class, 'store'])->name('paneles.resultado');
