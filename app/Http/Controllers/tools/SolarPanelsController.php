@@ -15,18 +15,17 @@ class SolarPanelsController extends Controller
      */
     public function index()
     {
-        #to Do, aun no se muy bien que agarrar de aqui:
-    }
+        $panelType = PanelType::all();
+        $panels = SolarPanelsModel::all();
+
+        return view('tools.panels', compact('panels', 'panelType'));    }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $panelType = PanelType::all();
-        $panels = SolarPanelsModel::all();
-
-        return view('tools.panels', compact('panels', 'panelType'));
+        //
     }
 
     /**
@@ -69,7 +68,7 @@ class SolarPanelsController extends Controller
      */
     public function update(Request $request, SolarPanelsModel $solarPanelsModel)
     {
-        //
+        
     }
 
     /**

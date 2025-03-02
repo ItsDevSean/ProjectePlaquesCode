@@ -47,6 +47,7 @@
                             <th class="py-2">Fecha de Fabricación</th>
                             <th class="py-2">Garantía Producto (años)</th>
                             <th class="py-2">Garantía Rendimiento (años)</th>
+                            <th class="py-2">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,6 +59,7 @@
                             <td class="border p-2">{{ $p->date_manufacturer }}</td>
                             <td class="border p-2">{{ $p->panel_warranty }}</td>
                             <td class="border p-2">{{ $p->performance_warranty }}</td>
+                            <td></td>
                         </tr>
                         @endforeach
                     </tbody>
