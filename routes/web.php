@@ -54,12 +54,7 @@ Route::get('/vue', function(){
     return view('vue');
 });
 
-//toDO: [SolarPanelsController::class, 'index'] he de posar aixo per fer el get.
-Route::get('/herramientas/paneles', function(){
-    $panels = SolarPanelsModel::all();
-    $panelType = PanelType::all();
-    return view('tools.panels', compact('panels', 'panelType'));
-})->name('panels');
+Route::get('/herramientas/paneles', [SolarPanelsController::class, 'create'])->name('panels');
 
 Route::post('/herramientas/paneles/resultado', [SolarPanelsController::class, 'store'])->name('paneles.resultado');
 
