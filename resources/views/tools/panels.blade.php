@@ -105,8 +105,10 @@
                    
                     <label>Tipo de Panel*</label>
                     <select name="panel_type"class="border p-2 rounded w-full">
-                        <option value="Yes">yes</option>
-                        <option value="Not">not</option>
+                        @foreach ($panelType as $pt)
+                            <option value="{{ $pt->panel_type }}">{{ $pt->panel_type }}</option>
+                        @endforeach
+                        
                     </select> 
                    
                     <div>
