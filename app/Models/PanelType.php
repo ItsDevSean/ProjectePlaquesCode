@@ -11,6 +11,4 @@ class PanelType extends Model
 
     protected $table = "panel_type";
 
-    
-
 }
