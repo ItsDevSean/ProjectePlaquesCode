@@ -76,16 +76,8 @@ Route::get('/electrico', function(){
     return view('caracElecPlac');
 });
 
-Route::get('/infobasica', function(){
-    return view('infoBasicPanel');
-});
-
 Route::get('/infoeco2', function(){
     return view('otraInfoEco');
-});
-
-Route::get('/infoadd', function(){
-    return view('infoAdd');
 });
 
 Route::get('/condicionesop', function(){
