@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form action="{{route('guardar.informacionElectrica')}}" method="post">
+    <form action="{{route('guardar.eco.resultado')}}" method="post">
         @csrf
         <h2 class="text-xl font-bold text-gray-700 mb-4 text-center underline underline-offset-8 decoration-green-200"> Información Económica </h2>
 

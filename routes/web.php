@@ -5,7 +5,7 @@ use App\Http\Controllers\InformacionFisicaPanelController;
 use App\Http\Controllers\InformacionElectricaPanelController;
 use App\Http\Controllers\infoEcoController;
 use App\Http\Controllers\DadesClientController;
-use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\infoEcoResultadoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\tools\SolarPanelsController;
 
@@ -114,6 +114,7 @@ Route::get('/proyectos', [DadesClientController::class, 'index'])->name('proyect
 
 Route::post('/guardar-eco', [infoEcoController::class, 'store'])->name('guardar.eco');
 
+Route::post('/guardar-eco-resultado', [infoEcoResultadoController::class, 'store'])->name('guardar.eco.resultado');
 
 Route::get('/dades_clients/{id}/details', [DadesClientController::class, 'details'])->name('dades_clients.details');
 

@@ -16,7 +16,7 @@ class infoEcoController extends Controller
             'email_proveedor' => 'required|email',
         ]);
     
-        // Convertir "si" en 1 y "no" en 0
+    
         $data = $request->all();
         $data['financiacion_disponible'] = $request->financiacion_disponible === 'si' ? 1 : 0;
     
