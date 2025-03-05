@@ -12,7 +12,7 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('proyectos')" :active="request()->routeIs('proyectos')" class="text-white hover:text-[#49DBA3]">
                         {{ __('Inici') }}
                     </x-nav-link>

@@ -126,34 +126,39 @@ function iniciarSeleccio(map) {
   window.clickListener = clickListener;
 }
 
-// Función para reiniciar todo el estado
 function reiniciarEstado(map) {
-  // Elimina todos los marcadores
-  if (window.selectedMarkers) {
-      window.selectedMarkers.forEach((marker) => marker.setMap(null));
-      window.selectedMarkers = [];
+    // Elimina todos los marcadores
+    if (window.selectedMarkers) {
+        window.selectedMarkers.forEach((marker) => marker.setMap(null));
+        window.selectedMarkers = [];
+    }
+  
+    // Elimina el polígono anterior
+    if (window.selectedPolygon) {
+        window.selectedPolygon.setMap(null);
+    }
+  
+    // Crea un nuevo array para los marcadores
+    window.selectedMarkers = [];
+  
+    // Crea un nuevo polígono (sin asignarlo todavía)
+    window.selectedPolygon = null;
+  
+    // Limpia el área mostrada
+    document.getElementById("areaResult").innerText = "";
+  
+    // Elimina el botón "Configurar pla:" si existe
+    const configurarPlaButton = document.querySelector(".configurar-pla-button");
+    if (configurarPlaButton) {
+        configurarPlaButton.remove();
+    }
+  
+    // Elimina el listener de clic anterior si existe
+    if (window.clickListener) {
+        google.maps.event.removeListener(window.clickListener);
+        window.clickListener = null;
+    }
   }
-
-  // Elimina el polígono anterior
-  if (window.selectedPolygon) {
-      window.selectedPolygon.setMap(null);
-  }
-
-  // Crea un nuevo array para los marcadores
-  window.selectedMarkers = [];
-
-  // Crea un nuevo polígono (sin asignarlo todavía)
-  window.selectedPolygon = null;
-
-  // Limpia el área mostrada
-  document.getElementById("areaResult").innerText = "";
-
-  // Elimina el listener de clic anterior si existe
-  if (window.clickListener) {
-      google.maps.event.removeListener(window.clickListener);
-      window.clickListener = null;
-  }
-}
 
 // Función para seleccionar puntos
 function seleccionarPunt(event, map) {
@@ -204,23 +209,53 @@ function dibuixarPoligon(map) {
       fillColor: "#00FF00",
       fillOpacity: 0.35,
       map: map,
-  });
+  });   
 
   if (coordinates.length >= 3) {
       calcularArea(window.selectedPolygon);
   }
 }
 
-// Calcula el área del polígón
 function calcularArea(selectedPolygon) {
-  const areaLabel = document.getElementById("areaResult");
-  if (selectedPolygon) {
-      const area = google.maps.geometry.spherical.computeArea(selectedPolygon.getPath());
-      areaLabel.innerText = `Àrea: ${area.toFixed(2)} m²`;
+    const areaLabel = document.getElementById("areaResult");
+    const areaLabelPanel = document.getElementById("areaResultPanel");
 
-      const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
-      edificiData.area = area.toFixed(2);
-      localStorage.setItem("edificiData", JSON.stringify(edificiData));
+    if (selectedPolygon) {
+        const area = google.maps.geometry.spherical.computeArea(selectedPolygon.getPath());
+        areaLabel.innerText = `Àrea: ${area.toFixed(2)} m²`;
+        areaLabelPanel.innerText = `Àrea: ${area.toFixed(2)} m²`;
+  
+        const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
+        edificiData.area = area.toFixed(2);
+        localStorage.setItem("edificiData", JSON.stringify(edificiData));
+  
+        // Crear el botón "Configurar pla:" solo si no existe
+        if (!document.querySelector(".configurar-pla-button")) {
+            const configurarPlaButton = document.createElement("button");
+            configurarPlaButton.innerText = "Configurar pla";
+            configurarPlaButton.className = "configurar-pla-button";
+            configurarPlaButton.addEventListener("click", () => {
+                // Abrir el side panel
+                const sidePanel = document.getElementById("sidePanel");
+                sidePanel.classList.add("open");
+            });
+  
+            // Añadir el botón al lado de "areaResult"
+            areaLabel.insertAdjacentElement("afterend", configurarPlaButton);
+        }
+    }
   }
-}
+
+// Cerrar el side panel
+document.getElementById("closePanelButton").addEventListener("click", () => {
+    const sidePanel = document.getElementById("sidePanel");
+    sidePanel.classList.remove("open");
+});
+
+
+
+document.getElementById("startSelection").addEventListener("click", () => {
+    reiniciarEstado(map); // Reinicia el estado, incluyendo eliminar el botón "Configurar pla:"
+    iniciarSeleccio(map); // Inicia una nueva selección
+  });
 

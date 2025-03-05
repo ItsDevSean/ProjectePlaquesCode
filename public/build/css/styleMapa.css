@@ -147,6 +147,53 @@
     width: 100%;
 }
 
+/* Estilos para el side panel */
+.side-panel {
+    position: fixed;
+    top: 0;
+    right: -400px; /* Oculta el panel fuera de la pantalla */
+    width: 400px;
+    height: 100%;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    padding: 20px;
+}
+
+/* Estilos para el botón de cerrar */
+.close-panel-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Clase para mostrar el panel */
+.side-panel.open {
+    right: 0;
+}
+
+.configurar-pla-button {
+    margin-left: 1px;
+    padding: 10px 15px;
+    width: auto; /* Se ajusta al contenido */
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #49DBA3;
+    color: black;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block; /* Para que no ocupe el 100% del ancho */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+}
+
+
+.configurar-pla-button:hover {
+    background-color: #49DBA3;
+}
 .btn-primary{
     background-color: rgba(255, 255, 255, 0.9);
     border: 2px solid #49DBA3;
