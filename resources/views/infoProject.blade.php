@@ -20,13 +20,12 @@
     @endif
 </head>
 <body>
-<h1>Hola</h1>
         <!-- Hero Section -->
-        <section class="bg-[url('/solar-bg.jpg')] bg-cover bg-center h-screen flex items-center justify-center text-white text-center px-4">
+        <section class="bg-[src('img/logo.png')] bg-cover bg-center h-screen flex items-center justify-center text-white text-center px-4">
         <div class="bg-black bg-opacity-50 p-8 rounded-xl">
             <h1 class="text-4xl md:text-6xl font-bold">Energía Solar para un Futuro Sostenible</h1>
             <p class="mt-4 text-lg md:text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <button class="mt-6 bg-yellow-500 text-black px-6 py-3 rounded-full text-lg font-semibold">Descubre Más</button>
+            <button class="mt-6 bg-yellow-500 text-black px-6 py-3 rounded-full text-lg font-semibold">Empieza ahora</button>
         </div>
     </section>
 
@@ -51,21 +50,21 @@
 
     <!-- Productos -->
     <section class="py-20 px-6 text-center">
-        <h2 class="text-3xl font-bold">Nuestros Productos</h2>
+        <h2 class="text-3xl font-bold">¿Cómo funciona?</h2>
         <div class="grid md:grid-cols-3 gap-6 mt-8">
             <div class="bg-gray-100 p-6 rounded-xl shadow-md">
                 <img src="/solar1.jpg" alt="Panel Solar" class="rounded-lg mb-4">
-                <h3 class="text-xl font-semibold">Panel Solar 1</h3>
+                <h3 class="text-xl font-semibold">1. Regístrate</h3>
                 <p class="mt-2 text-gray-600">Lorem ipsum dolor sit amet.</p>
             </div>
             <div class="bg-gray-100 p-6 rounded-xl shadow-md">
                 <img src="/solar2.jpg" alt="Panel Solar" class="rounded-lg mb-4">
-                <h3 class="text-xl font-semibold">Panel Solar 2</h3>
+                <h3 class="text-xl font-semibold">2. Selecciona el área</h3>
                 <p class="mt-2 text-gray-600">Lorem ipsum dolor sit amet.</p>
             </div>
             <div class="bg-gray-100 p-6 rounded-xl shadow-md">
                 <img src="/solar3.jpg" alt="Panel Solar" class="rounded-lg mb-4">
-                <h3 class="text-xl font-semibold">Panel Solar 3</h3>
+                <h3 class="text-xl font-semibold">3. Te ayudamos con la instalación</h3>
                 <p class="mt-2 text-gray-600">Lorem ipsum dolor sit amet.</p>
             </div>
         </div>
