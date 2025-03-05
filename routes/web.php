@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InformacionFisicaPanelController;
 use App\Http\Controllers\InformacionElectricaPanelController;
+use App\Http\Controllers\infoEcoController;
 use App\Http\Controllers\DadesClientController;
 use App\Http\Controllers\ProyectoController;
 use Illuminate\Support\Facades\Route;
@@ -111,7 +112,8 @@ Route::resource('dades_clients', DadesClientController::class);
 // En tu archivo de rutas
 Route::get('/proyectos', [DadesClientController::class, 'index'])->name('proyectos');
 
- 
+Route::post('/guardar-eco', [infoEcoController::class, 'store'])->name('guardar.eco');
+
 
 Route::get('/dades_clients/{id}/details', [DadesClientController::class, 'details'])->name('dades_clients.details');
 
