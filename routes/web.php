@@ -116,4 +116,6 @@ Route::get('/proyectos', [DadesClientController::class, 'index'])->name('proyect
 Route::get('/dades_clients/{id}/details', [DadesClientController::class, 'details'])->name('dades_clients.details');
 
 
-
+Route::get('/infoProject', function(){
+    return view('infoProject');
+});
