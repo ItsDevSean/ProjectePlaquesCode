@@ -20,8 +20,8 @@ return new class extends Migration
 
         // Insertar estados iniciales
         DB::table('estados')->insert([
-            ['nombre' => 'Pendiente'],
             ['nombre' => 'Iniciado'],
+            ['nombre' => 'Pendiente'],  
             ['nombre' => 'Completado'],
         ]);
     }

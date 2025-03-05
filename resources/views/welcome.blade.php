@@ -16,12 +16,16 @@
 
     <!-- Styles / Scripts -->
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/welcome.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/welcome.js', 'resources/js/scroll.js'])
     @endif
 </head>
 
 <body class="font-sans antialiased">
     <style>
+    html {
+        scroll-behavior: smooth;
+    }
+
     #background {
         position: relative;
         width: 100%;
@@ -111,16 +115,35 @@
     .animate-marquee {
         animation: marquee 20s linear infinite;
     }
+
+    /* Hacemos la web responsiva */
+    @media (max-width: 768px) {
+        .hero h1 {
+            font-size: 2rem;
+        }
+    }
+
+    .content {
+        padding: 20px;
+        text-align: center;
+    }
+    
+    /* Efecto parallax */
+    .parallax {
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
     </style>
 
     <div class="bg-transparent">
-        <div class="video-container">
-            <!-- Botones de autenticación -->
+    <div class="video-container parallax" style="background-image: url('{{ asset('build/img/video.mp4.mp4') }}');">            <!-- Botones de autenticación -->
             @if (Route::has('login'))
             <nav class="auth-buttons">
                 @auth
                 <a href="{{ url('/proyectos') }}"
-                class="rounded-md px-3 py-2 text-white bg-[#4adba4] ring-1 ring-[#4adba4] transition hover:bg-transparent hover:text-white focus:outline-none focus-visible:ring-[#4adba4] mr-2">
+                    class="rounded-md px-3 py-2 text-white bg-[#4adba4] ring-1 ring-[#4adba4] transition hover:bg-transparent hover:text-white focus:outline-none focus-visible:ring-[#4adba4] mr-2">
                     Començar
                 </a>
                 @else
@@ -240,7 +263,7 @@
         </div>
 
         <!-- Incluiremos una foto con un efecto parallax -->
-        <div class="relative h-[80vh] w-full overflow-hidden">
+        <div class="relative h-[60vh] w-full overflow-hidden">
             <div class="absolute inset-0" style="height: 200%;">
                 <img src="{{ asset('build/img/pexels-pixabay-371917.jpg') }}" class="w-full h-full object-cover"
                     style="transform: translateY(var(--parallax-offset, 0)); will-change: transform;" id="parallaxImage"
@@ -352,7 +375,7 @@
                 <img src="{{ asset('build/img/colaboradores/col6.jpg') }}" alt="Logo 6"
                     class="w-28 h-28 object-contain">
                 <img src="{{ asset('build/img/colaboradores/col7.jpg') }}" alt="Logo 7"
-                    class="w-28 h-28 object-contain">
+                    class="w-28 h-28 object-contain"> 
                 <img src="{{ asset('build/img/colaboradores/col8.jpg') }}" alt="Logo 8"
                     class="w-28 h-28 object-contain">
                 <img src="{{ asset('build/img/colaboradores/col9.jpg') }}" alt="Logo 9"
@@ -408,7 +431,8 @@
 
             <!-- Redes sociales -->
             <div class="flex justify-center space-x-6">
-                <a href="https://x.com/i/flow/login?redirect_after_login=%2FLeniumG" class="text-white hover:text-gray-300">
+                <a href="https://x.com/i/flow/login?redirect_after_login=%2FLeniumG"
+                    class="text-white hover:text-gray-300">
                     <i class="fab fa-twitter"></i>
                 </a>
                 <a href="https://www.linkedin.com/company/lenium-group/" class="text-white hover:text-gray-300">

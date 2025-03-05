@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('ciudad');
             $table->integer('codigo_postal');
             $table->string('nombre_proyecto');
-            $table->string('descripcion_proyecto');
+            $table->string('descripcion_proyecto')->nullable();
             $table->string('tarifa');
             $table->string('tipo_instalacion');
             $table->timestamps();

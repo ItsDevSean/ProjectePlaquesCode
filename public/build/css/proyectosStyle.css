@@ -25,6 +25,9 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
+    border-left: 4px solid #49DBA3; /* Borde izquierdo con el color #49DBA3 */
+    border-top-left-radius: 12px; /* Esquina superior izquierda redondeada */
+    border-bottom-left-radius: 12px; /* Esquina inferior izquierda redondeada */
 }
 
 .side-panel.show {
@@ -42,7 +45,7 @@
     position: absolute;
     top: 20px;
     right: 20px;
-    background-color: #ff4444;
+    background-color: #49DBA3; /* Fondo con el color #49DBA3 */
     color: white;
     border: none;
     border-radius: 50%;
@@ -53,10 +56,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.3s ease; /* Transición suave para el hover */
 }
 
 .close-btn:hover {
-    background-color: #cc0000; /* Cambia el color al pasar el mouse */
+    background-color: #3bbd8d; /* Color más oscuro al hacer hover */
 }
 
 /* Estilos para el contenido dentro del panel */
