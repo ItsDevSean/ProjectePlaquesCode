@@ -45,7 +45,7 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('panels')" class="text-gray-700 hover:bg-[#49DBA3] hover:text-white">
+                            <x-dropdown-link :href="route('panels')" class="text-gray-700 hover:bg-[#49DBA3] hover:text-black">
                                 Paneles
                             </x-dropdown-link>
                         </x-slot>
@@ -56,15 +56,17 @@
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dades')" :active="request()->routeIs('dadesClient')" class="hover:no-underline">
+                    <a href="dades" class="hover:no-underline focus:outline-none focus:ring-0">
                         <button class="px-4 py-2 bg-[#49DBA3] text-white rounded-lg shadow-lg hover:bg-[#36B89A] transition-all duration-300">
                             <i class="fas fa-plus"></i> {{ __(' Nuevo Proyecto') }}
                         </button>
-                    </x-nav-link>
+                    </a>
                 </div>
+                
+                
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-[#2C3E50] hover:bg-[#34495E] focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-[#34495E] hover:bg-[#2C3E50] focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -75,12 +77,12 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')" class="text-gray-700 hover:bg-[#49DBA3] hover:text-white">
+                        <x-dropdown-link :href="route('profile.edit')" class="text-gray-700 hover:bg-[#49DBA3] hover:text-black">
                             {{ __('Profile') }}
                         </x-dropdown-link>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <x-dropdown-link :href="route('logout')" class="text-gray-700 hover:bg-[#49DBA3] hover:text-white" onclick="event.preventDefault(); this.closest('form').submit();">
+                            <x-dropdown-link :href="route('logout')" class="text-gray-700 hover:bg-[#49DBA3] hover:text-black" onclick="event.preventDefault(); this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
