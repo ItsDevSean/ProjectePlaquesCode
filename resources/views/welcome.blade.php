@@ -240,7 +240,7 @@
         </div>
 
         <!-- Incluiremos una foto con un efecto parallax -->
-        <div class="relative h-[80vh] w-full overflow-hidden">
+        <div class="relative h-[60vh] w-full overflow-hidden">
             <div class="absolute inset-0" style="height: 200%;">
                 <img src="{{ asset('build/img/pexels-pixabay-371917.jpg') }}" class="w-full h-full object-cover"
                     style="transform: translateY(var(--parallax-offset, 0)); will-change: transform;" id="parallaxImage"
