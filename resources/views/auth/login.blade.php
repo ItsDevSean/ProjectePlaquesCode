@@ -4,6 +4,7 @@
         <!-- Logo img -->
         <div class="text-center mb-4">
             <img src="{{ asset('img/logo.png') }}" alt="Logo" class="w-20 h-20 mx-auto">
+            <h1 class="text-3x1">Inicia sesión</h1>
         </div>
     <form method="POST" action="{{ route('login') }}">
         @csrf
@@ -37,6 +38,9 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
+            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-800  dark:focus:ring-offset-gray-800" href="{{ route('register') }}">
+                {{ __('¿No tienes cuenta?') }}
+            </a>
             @if (Route::has('password.request'))
                 <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-800 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
                     {{ __('Recuperar contraseña') }}
