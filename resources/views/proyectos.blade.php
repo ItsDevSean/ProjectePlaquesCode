@@ -34,18 +34,22 @@
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->user?->name ?? 'Usuario no disponible' }}</td>
                                     
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <select name="estado_id" class="estado-select focus:outline-none focus:ring-0 text-sm font-semibold focus:outline-none appearance-none bg-transparent cursor-pointer border-none" data-id="{{ $proyecto->id }}" onchange="setColor(this)">
+                                        <select name="estado_id" class="estado-select focus:outline-none focus:ring-0 text-sm font-semibold appearance-none bg-transparent cursor-pointer border-none transition-colors duration-300 ease-in-out" data-id="{{ $proyecto->id }}" onchange="setColor(this)">
                                             @foreach(App\Models\Estado::all() as $estado)
                                                 <option 
                                                     value="{{ $estado->id }}" 
                                                     {{ $proyecto->estado_id == $estado->id ? 'selected' : '' }}
                                                     data-color="{{ strtolower($estado->nombre) }}"
-                                                    class="text-{{ strtolower($estado->nombre) == 'completado' ? 'red-500' : (strtolower($estado->nombre) == 'iniciado' ? 'green-500' : 'orange-500') }}">
-                                                    &#9679; {{ ucfirst($estado->nombre) }}
+                                                    class="py-2 px-4 hover:bg-gray-100 transition-all duration-300 flex items-center gap-2" 
+                                                    style="color: #333;">
+                                                    <span class="inline-block w-2 h-2 rounded-full" style="background-color: {{ strtolower($estado->nombre) == 'completado' ? 'red' : (strtolower($estado->nombre) == 'iniciado' ? 'green' : 'orange') }};"></span>
+                                                    {{ ucfirst($estado->nombre) }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </td>
+                                    
+                                    
                                     
 
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre_proyecto }}</td>
