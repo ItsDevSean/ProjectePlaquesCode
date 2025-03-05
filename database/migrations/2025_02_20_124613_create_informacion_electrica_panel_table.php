@@ -17,8 +17,9 @@ return new class extends Migration
             $table->integer('corriente_punto_maxima_potencia');
             $table->integer('tension_circuito_abierto');
             $table->integer('corriente_cortocircuito');
+            $table->integer('eficencia_panel');
             $table->integer('coeficiente_temp_pmax');
-            $table->integer('coeficiente_temp_vox');
+            $table->integer('coeficiente_temp_voc');
             $table->integer('coeficiente_temp_isc'); 
             $table->timestamps();
         });
