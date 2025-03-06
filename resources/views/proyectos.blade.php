@@ -24,7 +24,10 @@
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Usuario</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Estado</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">N.Cliente</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nombre Proyecto</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Tarifa</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Creado</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Acciones</th>
                             </tr>
                         </thead>
@@ -49,17 +52,23 @@
                                     
                                     
                                     
-
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre_proyecto }}</td>
-
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->tarifa }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-500">{{ $proyecto->created_at->format('d/m/Y') }}</div> <!-- Timestamp -->
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <a href="{{ route('dades_clients.edit', $proyecto->id) }}" class="text-green-600 hover:text-green-900 mr-3">Editar</a>
-                                        <form action="{{ route('dades_clients.destroy', $proyecto->id) }}" method="POST" class="inline-block">
+                                        <!-- El formulario de eliminación ahora está debajo de "Editar" -->
+                                        <form action="{{ route('dades_clients.destroy', $proyecto->id) }}" method="POST" class="inline-block mt-2">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-600 hover:text-red-900">Eliminar</button>
                                         </form>
                                     </td>
+
+
                                 </tr>
                             @endforeach
                         </tbody>
