@@ -110,5 +110,8 @@ Route::post('/guardar-eco-resultado', [infoEcoResultadoController::class, 'store
 
 Route::get('/dades_clients/{id}/details', [DadesClientController::class, 'details'])->name('dades_clients.details');
 
+Route::post('/proyectos/estado/{id}', [DadesClientController::class, 'updateEstado'])->name('proyectos.updateEstado');
+
+
 
 
