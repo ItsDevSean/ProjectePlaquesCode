@@ -24,11 +24,6 @@
                     </x-nav-link>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('open')" :active="request()->routeIs('open')" class="text-white hover:text-[#49dba3]">
-                        {{ __('OpenCV') }}
-                    </x-nav-link>
-                </div>
 
                 <!-- Tools Dropdown -->
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
