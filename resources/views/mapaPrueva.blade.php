@@ -75,22 +75,10 @@
 
     
 
-    <!-- Side Panel -->
     <div id="sidePanel" class="side-panel">
         <button id="closePanelButton" class="close-panel-button">×</button>
         <div>
             <form action="" class="form-container">
-                <h3 class="form-title">Introduïu les dades de la ubicació</h3>
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="latitud" class="form-label">Latitud</label>
-                        <input type="text" class="form-control" id="latitud" name="latitud" placeholder="Exemple: 41.40338" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="longitud" class="form-label">Longitud</label>
-                        <input type="text" class="form-control" id="longitud" name="longitud" placeholder="Exemple: 2.17403" required>
-                    </div>
-                </div>
                 <h3 class="form-title2">Dades de les plaques solars</h3>
                 <div class="row mb-3">
                     <div class="col-md-4">
@@ -111,7 +99,14 @@
                         <input type="number" class="form-control" id="inclinacion" name="inclinacion" placeholder="Exemple: 30" required>
                     </div>
                 </div>
-                
+                <!-- Agregar el slider aquí -->
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="placaSlider" class="form-label">Nombre de plaques:</label>
+                        <input type="range" class="form-range" id="placaSlider" min="0" max="1" step="1">
+                        <span id="placaCount">0</span>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -119,7 +114,7 @@
 </x-app-layout>
     
     <script src="build/js/mapa.js"></script>
-    <script src="build/js/formulari.js"></script>
+    <script src="build/js/formulariSidePanel.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9dnmay3GsjXeiIqbmYoJ3FJ95rDo6hoY&libraries=places&callback=initMap"></script>
     <script src="https://solar.googleapis.com/v1/buildingInsights:findClosest?key=AIzaSyB9dnmay3GsjXeiIqbmYoJ3FJ95rDo6hoY"></script>
 </body>

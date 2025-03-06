@@ -151,8 +151,8 @@
 .side-panel {
     position: fixed;
     top: 0;
-    right: -400px; /* Oculta el panel fuera de la pantalla */
-    width: 400px;
+    right: -450px; /* Oculta el panel fuera de la pantalla */
+    width: 450px;
     height: 100%;
     background-color: white;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
