@@ -20,14 +20,46 @@
     @endif
 </head>
 <body>
+    <!-- Nav -->
+    @if (Route::has('login'))
+        <nav
+        class="auth-buttons bg-slate-50 p-4 flex items-center shadow-lg fixed top-0 left-0 w-full z-50"
+        >
+            <div class="flex items-center space-x-2">
+                <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-12 w-12">
+            </div>
+            <div class="container mx-auto flex justify-end items-center">
+                
+                <a href="/" class="rounded-md px-3 py-2 text-white bg-[#4adba4] ring-1 ring-[#4adba4] transition hover:bg-transparent hover:text-black focus:outline-none focus-visible:ring-[#4adba4] mr-2">Pàgina principal</a>
+                @auth
+                <a href="{{ url('/proyectos') }}"
+                class="rounded-md px-3 py-2 text-white bg-[#4adba4] ring-1 ring-[#4adba4] transition hover:bg-transparent hover:text-black focus:outline-none focus-visible:ring-[#4adba4] mr-2">
+                    Començar
+                </a>
+                @else
+                <a href="{{ route('login') }}"
+                    class="rounded-md px-3 py-2 text-white bg-[#4adba4] ring-1 ring-[#4adba4] transition hover:bg-transparent hover:text-black focus:outline-none focus-visible:ring-[#4adba4] mr-2">
+                    Log in
+                </a>
+
+                @if (Route::has('register'))
+                <a href="{{ route('register') }}"
+                    class="rounded-md px-3 py-2 text-white bg-[#4adba4] ring-1 ring-[#4adba4] transition hover:bg-transparent hover:text-black focus:outline-none focus-visible:ring-[#4adba4] mr-2">
+                    Register
+                </a>
+                @endif
+                @endauth 
+            </div>
+        </nav>
+     @endif
         <!-- Hero Section -->
         <section class="bg-[src('img/logo.png')] bg-cover bg-center h-screen flex items-center justify-center text-white text-center px-4">
         <div class="bg-black bg-opacity-50 p-8 rounded-xl">
             <h1 class="text-4xl md:text-6xl font-bold">Energía Solar para un Futuro Sostenible</h1>
             <p class="mt-4 text-lg md:text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <button class="mt-6 bg-yellow-500 text-black px-6 py-3 rounded-full text-lg font-semibold">Empieza ahora</button>
+            <button class="mt-6 bg-green-100 text-black px-6 py-3 rounded-full text-lg font-semibold">Empieza ahora</button>
         </div>
-    </section>
+         </section>
 
     <!-- Beneficios -->
     <section class="py-20 px-6 bg-gray-100 text-center">
@@ -53,7 +85,7 @@
         <h2 class="text-3xl font-bold">¿Cómo funciona?</h2>
         <div class="grid md:grid-cols-3 gap-6 mt-8">
             <div class="bg-gray-100 p-6 rounded-xl shadow-md">
-                <img src="/solar1.jpg" alt="Panel Solar" class="rounded-lg mb-4">
+                <img src="public/img/placas-fotovoltaicas.png" alt="Panel Solar" class="rounded-lg mb-4">
                 <h3 class="text-xl font-semibold">1. Regístrate</h3>
                 <p class="mt-2 text-gray-600">Lorem ipsum dolor sit amet.</p>
             </div>
@@ -64,7 +96,7 @@
             </div>
             <div class="bg-gray-100 p-6 rounded-xl shadow-md">
                 <img src="/solar3.jpg" alt="Panel Solar" class="rounded-lg mb-4">
-                <h3 class="text-xl font-semibold">3. Te ayudamos con la instalación</h3>
+                <h3 class="text-xl font-semibold">3. Confirma</h3>
                 <p class="mt-2 text-gray-600">Lorem ipsum dolor sit amet.</p>
             </div>
         </div>
