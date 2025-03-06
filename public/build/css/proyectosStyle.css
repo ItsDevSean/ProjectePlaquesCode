@@ -8,78 +8,74 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
-    cursor: pointer; /* Cambia el cursor para indicar que se puede hacer clic */
+    cursor: pointer;
 }
 
 /* Estilos para el Side Panel */
 .side-panel {
     position: fixed;
     top: 0;
-    right: -400px; /* Inicialmente oculto fuera de la pantalla */
-    width: 400px; /* Ancho del panel */
+    right: -400px;
+    width: 400px;
     height: 100%;
     background-color: #fff;
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
-    transition: right 0.3s ease-in-out; /* Animación suave */
-    z-index: 1001; /* Asegura que esté por encima del overlay */
-    padding: 20px;
+    transition: right 0.3s ease-in-out;
+    z-index: 1001;
+    padding: 10px; /* Reducir padding general */
     display: flex;
     flex-direction: column;
-    border-left: 4px solid #49DBA3; /* Borde izquierdo con el color #49DBA3 */
-    border-top-left-radius: 12px; /* Esquina superior izquierda redondeada */
-    border-bottom-left-radius: 12px; /* Esquina inferior izquierda redondeada */
+    border-left: 4px solid #49DBA3;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
 }
 
 .side-panel.show {
-    right: 0; /* Muestra el panel deslizándolo hacia la derecha */
-}
-
-/* Contenido del Side Panel */
-.side-panel-content {
-    flex: 1;
-    overflow-y: auto; /* Permite el desplazamiento si el contenido es largo */
+    right: 0;
 }
 
 /* Botón de cierre */
 .close-btn {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #49DBA3; /* Fondo con el color #49DBA3 */
+    top: 8px;
+    right: 8px;
+    background-color: #49DBA3;
     color: white;
     border: none;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    font-size: 16px;
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s ease; /* Transición suave para el hover */
+    transition: background-color 0.3s ease;
 }
 
 .close-btn:hover {
-    background-color: #3bbd8d; /* Color más oscuro al hacer hover */
+    background-color: #3bbd8d;
 }
 
 /* Estilos para el contenido dentro del panel */
 .side-panel-content h3 {
     margin-top: 0;
-    font-size: 24px;
+    margin-bottom: 5px; /* Reducir margen inferior */
+    font-size: 20px; /* Reducir tamaño de fuente */
     color: #333;
 }
 
 .side-panel-content p {
-    font-size: 16px;
+    font-size: 16px; /* Reducir tamaño de fuente */
     color: #555;
-    margin: 10px 0;
+    margin: 3px 0; /* Reducir margen superior e inferior */
 }
 
 .side-panel-content h4 {
-    font-size: 20px;
+    font-size: 18px; /* Reducir tamaño de fuente */
     color: #333;
-    margin-top: 20px;
+    margin-top: 5px; /* Reducir margen superior */
+    margin-bottom: 5px; /* Reducir margen inferior */
 }
 
 /* Estilos para las filas de la tabla */
@@ -88,5 +84,71 @@
 }
 
 .project-row:hover {
-    background-color: #f3f4f6; /* Cambia el color de fondo al pasar el mouse */
+    background-color: #f3f4f6;
+}
+
+/* Contenedor para los botones en el side panel */
+.side-panel-content .buttons {
+    margin-top: auto; /* Empuja los botones hacia abajo */
+    display: flex;
+    justify-content: flex-start; /* Alinea los botones a la izquierda */
+    gap: 8px; /* Ajustar espacio entre botones */
+}
+
+/* Estilo de los botones */
+/* Estilo de los botones */
+/* Estilo de los botones */
+.side-panel-content .buttons a,
+.side-panel-content .buttons button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center; /* Centra el contenido dentro de los botones */
+    padding: 6px 12px; /* Igualar el padding */
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    font-size: 18px; /* Igualar el tamaño de la fuente */
+    min-width: 100px; /* Igualar el ancho mínimo */
+    height: 40px; /* Asegura que ambos botones tengan la misma altura */
+}
+
+/* Contenedor para los botones en el side panel */
+.side-panel-content .buttons {
+    margin-top: auto; /* Empuja los botones hacia abajo */
+    display: flex;
+    justify-content: flex-start; /* Alinea los botones a la izquierda */
+    gap: 8px; /* Espacio entre botones */
+    align-items: flex-end; /* Asegura que los botones estén alineados en la parte inferior */
+}
+
+
+
+.side-panel-content .buttons a {
+    background-color: #49DBA3;
+    color: white;
+}
+
+.side-panel-content .buttons a:hover {
+    background-color: #3bbd8d;
+}
+
+.side-panel-content .buttons button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+}
+
+.side-panel-content .buttons button:hover {
+    background-color: #e60000;
+}
+
+/* Asegúrate de que el panel se vea correctamente */
+.side-panel-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Cambiar para alineación más ajustada */
+    height: 100%;
+    padding-bottom: 10px; /* Reducir espacio para los botones */
+    overflow-y: auto;
 }

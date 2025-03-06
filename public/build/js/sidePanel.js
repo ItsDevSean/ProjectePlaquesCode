@@ -28,15 +28,31 @@ document.addEventListener("DOMContentLoaded", function() {
                             <h3>Detalles del Proyecto</h3>
                             <p>ID del Proyecto: ${data.dadesClient.id}</p>
                             <p>Nombre del Proyecto: ${data.dadesClient.nombre_proyecto}</p>
+                            <hr>
                             <h4>Datos del Cliente</h4>
                             <p>Nombre: ${data.dadesClient?.nombre ?? 'No disponible'}</p>
                             <p>Dirección: ${data.dadesClient?.direccion ?? 'No disponible'}</p>
                             <p>Ciudad: ${data.dadesClient?.ciudad ?? 'No disponible'}</p>
+                            
+                            <!-- Contenedor de los botones -->
+                            <div class="buttons">
+                                <a href="{{ route('dades_clients.edit', $proyecto->id) }}" class="text-green-600 hover:text-green-900 mr-3">
+                                    <i class="fas fa-edit"></i> <!-- Icono de editar -->
+                                </a>
+                                
+                                <!-- Formulario de eliminación con icono -->
+                                <form action="{{ route('dades_clients.destroy', $proyecto->id) }}" method="POST" class="inline-block mt-2">
+                                    <button type="submit" class="text-red-600 hover:text-red-900">
+                                        <i class="fas fa-trash-alt"></i> <!-- Icono de eliminar -->
+                                    </button>
+                                </form>
+                            </div>
                         `;
 
-                        sidePanel.querySelector('.side-panel-content').innerHTML = projectDetailsContent;
-                        sidePanel.classList.add('show');
-                        overlay.style.display = 'block';
+                    sidePanel.querySelector('.side-panel-content').innerHTML = projectDetailsContent;
+                    sidePanel.classList.add('show');
+                    overlay.style.display = 'block';
+
                     }
                 })
                 .catch(error => {
