@@ -101,7 +101,7 @@
                 </div>
                 <!-- Agregar el slider aquí -->
                 <div class="row mb-3">
-                    <div class="col-md-12">
+                    <div class="slider-container">
                         <label for="placaSlider" class="form-label">Nombre de plaques:</label>
                         <input type="range" class="form-range" id="placaSlider" min="0" max="1" step="1">
                         <span id="placaCount">0</span>
@@ -113,6 +113,33 @@
 
 </x-app-layout>
     
+    <script>
+    const slider = document.getElementById("placaSlider");
+    const placaCount = document.getElementById("placaCount");
+    let value = 0
+    // Funció per actualitzar el fons del slider
+    function actualitzarFonsSlider() {
+        if (value === 0) {  
+            slider.style.background = '#e0e0e0';   
+        } else {
+            slider.style.background = `linear-gradient(to right, #49DBA3 ${value}%, #e0e0e0 ${value}%)`;
+        }
+        value = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+    }
+
+    // Inicialitza el fons del slider al carregar la pàgina
+    window.addEventListener("load", function () {
+        placaCount.innerText = slider.value;  // Mostra el valor inicial del comptador
+        actualitzarFonsSlider();  // Cridem la funció per actualitzar el fons amb el valor inicial
+    });
+
+    // Actualitza el fons i el comptador quan es mou el slider
+    slider.addEventListener("input", function () {
+        actualitzarFonsSlider();  // Actualitza el fons del slider
+        placaCount.innerText = this.value;  // Actualitza el comptador de plaques
+    });
+
+    </script>
     <script src="build/js/mapa.js"></script>
     <script src="build/js/formulariSidePanel.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9dnmay3GsjXeiIqbmYoJ3FJ95rDo6hoY&libraries=places&callback=initMap"></script>

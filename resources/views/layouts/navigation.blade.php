@@ -13,19 +13,19 @@
 
                 <!-- Navigation Links -->
                 <div class="space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('proyectos')" :active="request()->routeIs('proyectos')" class="text-white hover:text-[#49DBA3]">
+                    <x-nav-link :href="route('proyectos')" :active="request()->routeIs('proyectos')" class="text-white hover:text-[#49dba3]">
                         {{ __('Inici') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('preus')" :active="request()->routeIs('preus')" class="text-white hover:text-[#49DBA3]">
+                    <x-nav-link :href="route('preus')" :active="request()->routeIs('preus')" class="text-white hover:text-[#49dba3]">
                         {{ __('Plans') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('open')" :active="request()->routeIs('open')" class="text-white hover:text-[#49DBA3]">
+                    <x-nav-link :href="route('open')" :active="request()->routeIs('open')" class="text-white hover:text-[#49dba3]">
                         {{ __('OpenCV') }}
                     </x-nav-link>
                 </div>
