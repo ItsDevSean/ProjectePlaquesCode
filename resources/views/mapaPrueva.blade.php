@@ -79,7 +79,12 @@
         <button id="closePanelButton" class="close-panel-button">×</button>
         <div>
             <form action="" class="form-container">
-                <h3 class="form-title2">Dades de les plaques solars</h3>
+                <div class = "row">
+                    <div class="title-container">
+                        <img src="/img/panelSolar2.png" alt="vf" class="panel-img" width="30" height="auto">
+                        <h3 class="form-title2">Dades de les plaques solars</h3>
+                    </div>
+                </div>
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <label for="area" class="form-label">Àrea de les plaques (m²)</label>

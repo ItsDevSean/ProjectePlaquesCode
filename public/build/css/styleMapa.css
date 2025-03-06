@@ -101,7 +101,7 @@
     margin-top: 40px;
 }
 
-.form-title, .form-title2 {
+.form-title {
     font-size: 20px;
     font-weight: bold;
     color: #333;
@@ -109,6 +109,29 @@
     border-bottom: 3px solid #49DBA3;
     padding-bottom: 8px;
 }
+
+.form-title2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;  /* Elimina margen extra en el título */
+}
+
+.title-container {
+    display: flex;
+    align-items: center;  /* Alinea la imagen con el texto */
+    gap: 10px;  /* Añade espacio entre la imagen y el título */
+    border-bottom: 3px solid #49DBA3;  /* Línea debajo del contenedor */
+    padding-bottom: 8px;  /* Separación entre el contenido y la línea */
+}
+
+
+.panel-img {
+    width: 30px;  /* Ajusta el tamaño de la imagen */
+    height: auto;
+     /* Asegura que la línea esté justo debajo de la imagen */
+}
+
 
 .form-control, .form-select {
     border-radius: 8px;
