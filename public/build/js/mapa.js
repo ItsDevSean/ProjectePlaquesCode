@@ -188,7 +188,7 @@ function seleccionarPunt(event, map) {
         dibuixarPoligon(map);
     });
 
-    if (window.selectedMarkers.length >= 3) {
+    if (window.selectedMarkers.length >= 2) {
         dibuixarPoligon(map);
     }
 }
@@ -223,6 +223,27 @@ function dibuixarPoligon(map) {
   }
 }
 
+// Función para calcular el número máximo de placas
+function calcularMaxPlacas(areaTotal) {
+    const areaPlaca = 1.7; // Área de una placa en m²
+    return Math.floor(areaTotal / areaPlaca);
+}
+
+// Función para actualizar el slider
+function actualizarSlider(maxPlacas) {
+    const slider = document.getElementById("placaSlider");
+    const placaCount = document.getElementById("placaCount");
+
+    slider.max = maxPlacas;
+    slider.value = 0;
+    placaCount.innerText = "0";
+
+    slider.addEventListener("input", function () {
+        placaCount.innerText = this.value;
+    });
+}
+
+// Modificar la función calcularArea para actualizar el slider
 function calcularArea(selectedPolygon) {
     const areaLabel = document.getElementById("areaResult");
 
@@ -230,11 +251,13 @@ function calcularArea(selectedPolygon) {
         const area = google.maps.geometry.spherical.computeArea(selectedPolygon.getPath());
         areaLabel.innerText = `Àrea: ${area.toFixed(2)} m²`;
 
+        const maxPlacas = calcularMaxPlacas(area);
+        actualizarSlider(maxPlacas);
+
         const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
         edificiData.area = area.toFixed(2);
         localStorage.setItem("edificiData", JSON.stringify(edificiData));
 
-        // Crear el botón "Configurar pla:" solo si no existe
         // Crear el botón "Configurar pla:" solo si no existe
         if (!document.querySelector(".configurar-pla-button")) {
             const configurarPlaButton = document.createElement("button");
@@ -254,8 +277,6 @@ function calcularArea(selectedPolygon) {
                 // Rellenar el formulario con los datos guardados
                 const edificiData = JSON.parse(localStorage.getItem("edificiData"));
                 if (edificiData) {
-                    document.getElementById("latitud").value = edificiData.lat;
-                    document.getElementById("longitud").value = edificiData.lng;
                     document.getElementById("inclinacion").value = edificiData.inclinacion;
                     document.getElementById("area").value = edificiData.area;
                 }
