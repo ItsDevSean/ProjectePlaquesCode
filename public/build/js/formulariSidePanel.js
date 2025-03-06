@@ -22,4 +22,4 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("inclinacion").value = inclinacion;
       document.getElementById("area").value = area; 
     }
-  });
+});
