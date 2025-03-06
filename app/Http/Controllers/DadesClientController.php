@@ -8,10 +8,14 @@ use Illuminate\Support\Facades\Auth;
 class DadesClientController extends Controller
 {
     public function index()
-    {
-        $clientes = DadesClient::with(['user', 'estado'])->paginate(10);
-        return view('proyectos', compact('clientes'));
-    }
+{
+    $clientes = DadesClient::with(['user', 'estado'])
+        ->where('user_id', Auth::id()) 
+        ->paginate(10);
+
+    return view('proyectos', compact('clientes'));
+}
+
 
     public function store(Request $request)
 {
@@ -65,5 +69,23 @@ public function destroy($id)
     return redirect()->route('proyectos')->with('success', 'Proyecto eliminado correctamente');
 }
 
+
+public function updateEstado(Request $request, $id)
+{
+    $request->validate([
+        'estado_id' => 'required|exists:estados,id', 
+    ]);
+
+    $proyecto = DadesClient::where('id', $id)->where('user_id', Auth::id())->first();
+
+    if (!$proyecto) {
+        return response()->json(['error' => 'Proyecto no encontrado'], 404);
+    }
+
+    $proyecto->estado_id = $request->estado_id;
+    $proyecto->save();
+
+    return response()->json(['message' => 'Estado actualizado correctamente']);
+}
 
 }

@@ -9,11 +9,15 @@ use Illuminate\Support\Facades\Auth;
 class ProyectoController extends Controller
 {
     public function index()
-    {
-      
-        $proyectos = Proyecto::with('user','dadesClient')->paginate(10);
-        return view('proyectos', compact('proyectos'));
-    }
+{
+    // Obtener solo los proyectos del usuario autenticado y paginar
+    $proyectos = Proyecto::with('user', 'dadesClient')
+                         ->where('user_id', Auth::id()) // Filtra solo los del usuario autenticado
+                         ->paginate(10);
+
+    return view('proyectos', compact('proyectos'));
+}
+
 
     public function create()
     {
