@@ -162,28 +162,35 @@ function reiniciarEstado(map) {
 
 // Función para seleccionar puntos
 function seleccionarPunt(event, map) {
-  const marker = new google.maps.Marker({
-      position: event.latLng,
-      map: map,
-      icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 6,
-          fillColor: "red",
-          fillOpacity: 1,
-          strokeWeight: 1,
-      },
-      draggable: true,
-  });
+    const sidePanel = document.getElementById("sidePanel");
 
-  window.selectedMarkers.push(marker);
+    // Evitar añadir puntos si el side panel está abierto
+    if (sidePanel.classList.contains("open")) {
+        return;
+    }
 
-  marker.addListener("dragend", function () {
-      dibuixarPoligon(map);
-  });
+    const marker = new google.maps.Marker({
+        position: event.latLng,
+        map: map,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 6,
+            fillColor: "red",
+            fillOpacity: 1,
+            strokeWeight: 1,
+        },
+        draggable: true,
+    });
 
-  if (window.selectedMarkers.length >= 3) {
-      dibuixarPoligon(map);
-  }
+    window.selectedMarkers.push(marker);
+
+    marker.addListener("dragend", function () {
+        dibuixarPoligon(map);
+    });
+
+    if (window.selectedMarkers.length >= 3) {
+        dibuixarPoligon(map);
+    }
 }
 
 // Función para dibujar el polígono
@@ -218,17 +225,16 @@ function dibuixarPoligon(map) {
 
 function calcularArea(selectedPolygon) {
     const areaLabel = document.getElementById("areaResult");
-    const areaLabelPanel = document.getElementById("areaResultPanel");
 
     if (selectedPolygon) {
         const area = google.maps.geometry.spherical.computeArea(selectedPolygon.getPath());
         areaLabel.innerText = `Àrea: ${area.toFixed(2)} m²`;
-        areaLabelPanel.innerText = `Àrea: ${area.toFixed(2)} m²`;
-  
+
         const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
         edificiData.area = area.toFixed(2);
         localStorage.setItem("edificiData", JSON.stringify(edificiData));
-  
+
+        // Crear el botón "Configurar pla:" solo si no existe
         // Crear el botón "Configurar pla:" solo si no existe
         if (!document.querySelector(".configurar-pla-button")) {
             const configurarPlaButton = document.createElement("button");
@@ -238,13 +244,29 @@ function calcularArea(selectedPolygon) {
                 // Abrir el side panel
                 const sidePanel = document.getElementById("sidePanel");
                 sidePanel.classList.add("open");
+
+                // Desactivar la selección de puntos
+                if (window.clickListener) {
+                    google.maps.event.removeListener(window.clickListener);
+                    window.clickListener = null;
+                }
+
+                // Rellenar el formulario con los datos guardados
+                const edificiData = JSON.parse(localStorage.getItem("edificiData"));
+                if (edificiData) {
+                    document.getElementById("latitud").value = edificiData.lat;
+                    document.getElementById("longitud").value = edificiData.lng;
+                    document.getElementById("inclinacion").value = edificiData.inclinacion;
+                    document.getElementById("area").value = edificiData.area;
+                }
             });
-  
+
             // Añadir el botón al lado de "areaResult"
+            const areaLabel = document.getElementById("areaResult");
             areaLabel.insertAdjacentElement("afterend", configurarPlaButton);
         }
     }
-  }
+}
 
 // Cerrar el side panel
 document.getElementById("closePanelButton").addEventListener("click", () => {
@@ -258,4 +280,21 @@ document.getElementById("startSelection").addEventListener("click", () => {
     reiniciarEstado(map); // Reinicia el estado, incluyendo eliminar el botón "Configurar pla:"
     iniciarSeleccio(map); // Inicia una nueva selección
   });
+
+// Cerrar el side panel al hacer clic fuera de él
+document.addEventListener("click", (event) => {
+    const sidePanel = document.getElementById("sidePanel");
+    const closePanelButton = document.getElementById("closePanelButton");
+    const configurarPlaButton = document.querySelector(".configurar-pla-button");
+
+    // Verificar si el clic fue fuera del side panel y no en los botones relacionados
+    if (
+        !sidePanel.contains(event.target) && // Clic fuera del side panel
+        !closePanelButton.contains(event.target) && // No es el botón de cerrar
+        !configurarPlaButton.contains(event.target) // No es el botón "Configurar pla"
+    ) {
+        sidePanel.classList.remove("open"); // Cerrar el side panel
+    }
+});
+
 
