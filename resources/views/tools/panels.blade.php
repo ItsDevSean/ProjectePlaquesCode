@@ -122,11 +122,7 @@
                         @endforeach
                         
                     </select> 
-                   
-                    <div>
-                        <label>Tipo de Panel <span class="text-red-500">*</span></label>
-                        <input type="text" name="panel_type" class="border p-2 rounded w-full">
-                    </div>
+             
                     <div>
                         <label for="date">Fecha de Fabricación:</label>
                         <input type="date" name="date_manufacturer" class="border p-2 rounded w-full">
@@ -139,12 +135,6 @@
                         <label>Garantía de rendimiento (años):</label>
                         <input type="number" name="performance_warranty" class="border p-2 rounded w-full">
                     </div>
-
-                    <div class="flex justify-end space-x-2 mt-4">
-                        <button type="reset" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
-                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Enviar</button>
-                    </div>
-
     
                     <div class="flex justify-end mt-4 space-x-4">
                         <button onclick="toggleModal()" class="text-gray-500 hover:bg-gray-500 hover:text-white py-2 px-4 rounded-lg">Cancelar</button>
