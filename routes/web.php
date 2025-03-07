@@ -53,11 +53,14 @@ Route::get('/vue', function(){
     return view('vue');
 });
 
-Route::get('/herramientas/paneles', function(){
-    return view('tools.panels');
-})->name('panels');
+Route::get('/herramientas/paneles', [SolarPanelsController::class, 'index'])->name('panels');
+
+Route::get('/herramientas/paneles/editar', [SolarPanelsController::class, 'edit'])->name('panelsEdit');
+
 
 Route::post('/herramientas/paneles/resultado', [SolarPanelsController::class, 'store'])->name('paneles.resultado');
+
+
 
 Route::get('/dades', function(){
     return view('dadesClient');
