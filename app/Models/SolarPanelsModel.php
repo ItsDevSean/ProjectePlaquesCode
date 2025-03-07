@@ -12,7 +12,12 @@ class SolarPanelsModel extends Model
     protected $table = "solar_panels_tabel";
     
     protected $fillable = [
-        'panel_model', 'manufacturer', 'panel_type', 
+        'user_id', 'panel_model', 'manufacturer', 'panel_type', 
         'date_manufacturer', 'panel_warranty', 'performance_warranty'
     ];
+
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

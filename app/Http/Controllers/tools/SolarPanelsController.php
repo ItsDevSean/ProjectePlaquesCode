@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PanelType;
 use App\Models\SolarPanelsModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class SolarPanelsController extends Controller
@@ -15,8 +16,9 @@ class SolarPanelsController extends Controller
      */
     public function index()
     {
-        $panelType = PanelType::all();
-        $panels = SolarPanelsModel::all();
+        $panelType = PanelType::all();            
+        $panels = SolarPanelsModel::all()
+        ->where('user_id', Auth::id());
 
         return view('tools.panels', compact('panels', 'panelType'));    }
 
@@ -39,10 +41,11 @@ class SolarPanelsController extends Controller
             'panel_type' => 'required|string|min:2|max:50',
             'date_manufacturer' => 'required|date',
             'panel_warranty' => 'required|integer',
-            'performance_warranty' => 'required|integer',
+            'performance_warranty' => 'required|integer'
+
         ]);
 
-        SolarPanelsModel::create($request->all());
+        SolarPanelsModel::create($request->all() + ['user_id' => Auth::id()]);
 
         return to_route('panels');    
     }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('solar_panels_tabel', function (Blueprint $table) {
             $table->id();
-            $table->string('panel_model',500);
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');            $table->string('panel_model',500);
             $table->string('manufacturer',500);
             $table->string('panel_type',500);
             $table->date('date_manufacturer');
@@ -30,4 +30,6 @@ return new class extends Migration
     {
         Schema::dropIfExists('solar_panels_tabel');
     }
+
+
 };
