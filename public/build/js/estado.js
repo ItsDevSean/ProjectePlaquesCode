@@ -48,6 +48,6 @@ function getColor(nombre) {
         case "iniciado":
             return "green";
         default:
-            return "orange"; 
+            return "#E17400"; 
     }
 }

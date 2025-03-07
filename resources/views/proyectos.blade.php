@@ -59,7 +59,8 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
     
-                                    <a href="{{ route('dades_clients.edit', $proyecto->id) }}" class="text-green-600 hover:text-green-900 mr-3">
+                                    <a href="{{ route('dades_clients.edit', $proyecto->id) }}" 
+                                    class="text-green-600 hover:text-green-900 mr-3 no-underline" >
                                         <i class="fas fa-edit"></i> <!-- Icono de editar -->
                                     </a>
                                     

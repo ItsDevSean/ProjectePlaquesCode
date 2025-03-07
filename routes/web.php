@@ -39,8 +39,6 @@ Route::get('/open', function () {
 })->name('open');
 
 
-
-
 Route::get('/edificis', function () {
     return view('editarEdificis');
 })->name('edificis');

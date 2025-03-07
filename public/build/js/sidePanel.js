@@ -6,14 +6,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
     projectRows.forEach(row => {
         row.addEventListener('click', function(event) {
-            // Evitar que el clic en el select dispare el evento
+           
             if (event.target.closest('select.estado-select')) {
                 return;
             }
 
-            const projectId = row.getAttribute('data-id'); // Obtener el ID del proyecto
+            const projectId = row.getAttribute('data-id'); 
 
-            fetch(`/dades_clients/${projectId}/details`) // Usar projectId en la URL
+            fetch(`/dades_clients/${projectId}/details`) 
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Error en la solicitud');
@@ -37,13 +37,13 @@ document.addEventListener("DOMContentLoaded", function() {
                             <!-- Contenedor de los botones -->
                             <div class="buttons">
                                 <a href="{{ route('dades_clients.edit', $proyecto->id) }}" class="text-green-600 hover:text-green-900 mr-3">
-                                    <i class="fas fa-edit"></i> <!-- Icono de editar -->
+                                    <i class="fas fa-edit"></i> 
                                 </a>
                                 
                                 <!-- Formulario de eliminación con icono -->
                                 <form action="{{ route('dades_clients.destroy', $proyecto->id) }}" method="POST" class="inline-block mt-2">
                                     <button type="submit" class="text-red-600 hover:text-red-900">
-                                        <i class="fas fa-trash-alt"></i> <!-- Icono de eliminar -->
+                                        <i class="fas fa-trash-alt"></i> 
                                     </button>
                                 </form>
                             </div>
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error); // Mostrar el error en la consola
+                    console.error('Error:', error); 
                     sidePanel.querySelector('.side-panel-content').innerHTML = `<p>Error al cargar los detalles del proyecto.</p>`;
                     sidePanel.classList.add('show');
                     overlay.style.display = 'block';
