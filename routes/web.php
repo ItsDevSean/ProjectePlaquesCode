@@ -53,14 +53,10 @@ Route::get('/vue', function(){
     return view('vue');
 });
 
-//toDo: crear ediat y elimnar ep. 53 min. 3:30
 Route::get('/herramientas/paneles', [SolarPanelsController::class, 'index'])->name('panels');
 
-// Route::get('/herramientas/paneles')->group(function () {
-//     Route::get([SolarPanelsController::class, 'index'])->name('panels.get');
-//     Route::patch([SolarPanelsController::class, 'update'])->name('profile.update');
-//     Route::delete([SolarPanelsController::class, 'destroy'])->name('profile.destroy');
-// });
+Route::get('/herramientas/paneles/editar', [SolarPanelsController::class, 'edit'])->name('panelsEdit');
+
 
 Route::post('/herramientas/paneles/resultado', [SolarPanelsController::class, 'store'])->name('paneles.resultado');
 

@@ -58,9 +58,11 @@ class SolarPanelsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SolarPanelsModel $solarPanelsModel)
+    public function edit(SolarPanelsModel $newPanel) //toDo: aqui para la edicion: ep 53 min 6:14
     {
-        //
+        $oldPanels = SolarPanelsModel::all();
+        $panelType = PanelType::all();
+        return view('tools.panelsEdit', compact('oldPanels', 'newPanel', 'panelType'));
     }
 
     /**
@@ -68,7 +70,8 @@ class SolarPanelsController extends Controller
      */
     public function update(Request $request, SolarPanelsModel $solarPanelsModel)
     {
-        
+        $solarPanelsModel->update($request->validate());
+        return to_route('panels'); 
     }
 
     /**
