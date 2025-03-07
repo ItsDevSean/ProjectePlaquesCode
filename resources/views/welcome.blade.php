@@ -120,18 +120,18 @@
             <nav class="auth-buttons">
                 @auth
                 <a href="{{ url('/proyectos') }}"
-                class="rounded-md px-3 py-2 text-white bg-[#4adba4] ring-1 ring-[#4adba4] transition hover:bg-transparent hover:text-white focus:outline-none focus-visible:ring-[#4adba4] mr-2">
+                class="rounded-md px-3 py-2 text-white bg-transparent ring-1 ring-[#4adba4] transition hover:bg-[#4adba4] hover:text-white focus:outline-none focus-visible:ring-[#4adba4] mr-2">
                     Començar
                 </a>
                 @else
                 <a href="{{ route('login') }}"
-                    class="rounded-md px-3 py-2 text-white bg-[#4adba4] ring-1 ring-[#4adba4] transition hover:bg-transparent hover:text-white focus:outline-none focus-visible:ring-[#4adba4] mr-2">
+                    class="rounded-md px-3 py-2 text-white bg-transparent ring-1 ring-[#4adba4] transition hover:bg-[#4adba4] hover:text-white focus:outline-none focus-visible:ring-[#4adba4] mr-2">
                     Log in
                 </a>
 
                 @if (Route::has('register'))
                 <a href="{{ route('register') }}"
-                    class="rounded-md px-3 py-2 text-white bg-[#4adba4] ring-1 ring-[#4adba4] transition hover:bg-transparent hover:text-white focus:outline-none focus-visible:ring-[#4adba4] mr-2">
+                    class="rounded-md px-3 py-2 text-white bg-transparent ring-1 ring-[#4adba4] transition hover:bg-[#4adba4] hover:text-white focus:outline-none focus-visible:ring-[#4adba4] mr-2">
                     Register
                 </a>
                 @endif

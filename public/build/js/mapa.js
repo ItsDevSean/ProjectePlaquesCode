@@ -17,12 +17,12 @@ window.initMap = function () {
 
 // Funció per inicialitzar Autocomplete
 function initAutocomplete(map) {
-  const autocomplete = new google.maps.places.Autocomplete(
-      document.getElementById("address"),
-      { types: ["geocode"] }
-  );
+    const autocomplete = new google.maps.places.Autocomplete(
+        document.getElementById("address"),
+        { types: ["geocode"] }
+    );
 
-  autocomplete.addListener("place_changed", function () {
+    autocomplete.addListener("place_changed", function () {
       const place = autocomplete.getPlace();
 
       if (!place.geometry) {
@@ -36,9 +36,9 @@ function initAutocomplete(map) {
 
       map.setCenter(place.geometry.location);
       crearMarcador(map, place.geometry.location);
-  });
+    });
 
-  return autocomplete;
+    return autocomplete;
 }
 
 // Funció per geolocalitzar una adreça introduïda
@@ -66,15 +66,10 @@ function geocodeAddress(map) {
 
 // Función para crear un marcador
 function crearMarcador(map, latLng) {
-  const nomEdifici = prompt("Introdueix el nom de l'edifici:");
-  if (nomEdifici) {
-      if (window.marcadorExistente) {
-          window.marcadorExistente.setMap(null);
-      }
-      window.marcadorExistente = new google.maps.Marker({
-          position: latLng,
-          map: map,
-          title: nomEdifici,
+  
+    window.marcadorExistente = new google.maps.Marker({
+        position: latLng,
+        map: map,
       });
 
       map.setCenter(latLng);
@@ -86,7 +81,6 @@ function crearMarcador(map, latLng) {
           id: window.edificis ? window.edificis.length + 1 : 1,
           lat: latLng.lat(),
           lng: latLng.lng(),
-          nom: nomEdifici,
           inclinacion: latLng.lat().toFixed(0),
           area: areaValue, 
       };
@@ -100,16 +94,12 @@ function crearMarcador(map, latLng) {
 
       const url = `/formulari?lat=${edifici.lat}&lng=${edifici.lng}&inclinacion=${edifici.inclinacion}&area=${edifici.area}`;
 
-      if (nomEdifici && nomEdifici.toLowerCase().includes("edifici")) {
-          alert(nomEdifici + " creat!");
-      } else {
-          alert("Edifici " + nomEdifici + " creat!");
-      }
+      
 
       updateEdificiSelect(edifici);
       document.getElementById("edifici").value = edifici.id;
       obtenirDadesEdifici(latLng.lat(), latLng.lng());
-  }
+  
 }
 
 // Comienza la selección de puntos
@@ -281,7 +271,6 @@ function calcularArea(selectedPolygon) {
                     document.getElementById("area").value = edificiData.area;
                 }
             });
-
             // Añadir el botón al lado de "areaResult"
             const areaLabel = document.getElementById("areaResult");
             areaLabel.insertAdjacentElement("afterend", configurarPlaButton);
