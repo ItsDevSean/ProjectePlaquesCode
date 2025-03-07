@@ -1,59 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caracteristicas electricas panel</title>
-    <link rel="stylesheet" type="text/css" href="build/css/fisico.css">
-    <style></style>
-</head>
-<body>
-    
+<x-guest-layout>
 
     <form action="{{ route('guardar.informacionElectrica') }}" method="post">
-    @csrf
-        {{--  Campo numérico en vatios (W). --}}
-        <p>Potencia Máxima (Pmax)</p>
-        <input type="text" name="potencia_maxima"/>
+        @csrf
+        
+        <h2 class="text-xl font-bold text-gray-700 mb-4 text-center underline underline-offset-8 decoration-green-200">Datos del Panel Solar</h2>
 
-        {{-- Campo numérico en voltios (V). --}}
-        <p>Tension en Punto de Máxima Potencia (Vmp)</p>
-        <input type="text" name="tension_maxima_potencia"/>
+        <div>
+            <x-input-label for="potencia_maxima" :value="__('Potencia Máxima (Pmax)')" />
+            <x-text-input id="potencia_maxima" class="block mt-1 w-full focus:ring-green-500 dark:focus:ring-green-600 dark:focus:ring-offset-green-800" type="number" name="potencia_maxima" required />
+        </div>
 
-        {{--  Campo numérico en amperios (A). --}}
-        <p>Corriente en Punto de Máxima  (Imp)</p>
-        <input type="text" name="corriente_punto_maxima_potencia"/>
+        <div class="mt-4">
+            <x-input-label for="tension_maxima_potencia" :value="__('Tensión en Punto de Máxima Potencia (Vmp)')" />
+            <x-text-input id="tension_maxima_potencia" class="block mt-1 w-full focus:ring-green-500 dark:focus:ring-green-600 dark:focus:ring-offset-green-800" type="number" name="tension_maxima_potencia" required />
+        </div>
 
-        {{-- Campo numérico en voltios (V). --}}
-        <p>Tensión de Circuito Abierto (Voc)</p>
-        <input type="text" name="tension_circuito_abierto"/>
+        <div class="mt-4">
+            <x-input-label for="corriente_punto_maxima_potencia" :value="__('Corriente en Punto de Máxima Potencia (Imp)')" />
+            <x-text-input id="corriente_punto_maxima_potencia" class="block mt-1 w-full focus:ring-green-500 dark:focus:ring-green-600 dark:focus:ring-offset-green-800" type="number" name="corriente_punto_maxima_potencia" required />
+        </div>
 
-        {{-- Campo numérico en amperios (A). --}}
-        <p>Corriente de Cortocircuito (Isc)</p>
-        <input type="text" name="corriente_cortocircuito"/>
+        <div class="mt-4">
+            <x-input-label for="tension_circuito_abierto" :value="__('Tensión de Circuito Abierto (Voc)')" />
+            <x-text-input id="tension_circuito_abierto" class="block mt-1 w-full focus:ring-green-500 dark:focus:ring-green-600 dark:focus:ring-offset-green-800" type="number" name="tension_circuito_abierto" required />
+        </div>
 
-        {{-- Campo numérico en porcentaje (%) --}}
-        <p>Eficencia del Panel</p>
-        <input type="text" name="eficencia_panel"/>
+        <div class="mt-4">
+            <x-input-label for="corriente_cortocircuito" :value="__('Corriente de Cortocircuito (Isc)')" />
+            <x-text-input id="corriente_cortocircuito" class="block mt-1 w-full focus:ring-green-500 dark:focus:ring-green-600 dark:focus:ring-offset-green-800" type="number" name="corriente_cortocircuito" required />
+        </div>
 
-        {{-- Campo numérico en %/°C --}}
-        <p>Coeficiente de Temperatura de Pmax</p>
-        <input type="text" name="coeficiente_temp_pmax"/>
+        <div class="mt-4">
+            <x-input-label for="eficencia_panel" :value="__('Eficiencia del Panel (%)')" />
+            <x-text-input id="eficencia_panel" class="block mt-1 w-full focus:ring-green-500 dark:focus:ring-green-600 dark:focus:ring-offset-green-800" type="number" name="eficencia_panel" required />
+        </div>
 
-        {{-- Campo numérico en %/°C --}}
-        <p>Coeficiente de Temperatura de Voc</p>
-        <input type="text" name="coeficiente_temp_voc"/>
+        <div class="mt-4">
+            <x-input-label for="coeficiente_temp_pmax" :value="__('Coeficiente de Temperatura de Pmax (%/°C)')" />
+            <x-text-input id="coeficiente_temp_pmax" class="block mt-1 w-full focus:ring-green-500 dark:focus:ring-green-600 dark:focus:ring-offset-green-800" type="number" name="coeficiente_temp_pmax" required />
+        </div>
 
-        {{-- Campo numérico en %/°C --}}
-        <p>Coeficiente de Temperatura de</p>
-        <input type="text" name="coeficiente_temp_isc"/>
+        <div class="mt-4">
+            <x-input-label for="coeficiente_temp_voc" :value="__('Coeficiente de Temperatura de Voc (%/°C)')" />
+            <x-text-input id="coeficiente_temp_voc" class="block mt-1 w-full focus:ring-green-500 dark:focus:ring-green-600 dark:focus:ring-offset-green-800" type="number" name="coeficiente_temp_voc" required />
+        </div>
 
-        <button type="submit" name="Guardar"> Guardar </button>
-      
+        <div class="mt-4">
+            <x-input-label for="coeficiente_temp_isc" :value="__('Coeficiente de Temperatura de Isc (%/°C)')" />
+            <x-text-input id="coeficiente_temp_isc" class="block mt-1 w-full focus:ring-green-500 dark:focus:ring-green-600 dark:focus:ring-offset-green-800" type="number" name="coeficiente_temp_isc" required />
+        </div>
 
-
+        <div class="flex items-center justify-end mt-4">
+            <x-primary-button class="ms-3">
+                {{ __('Guardar') }}
+            </x-primary-button>
+        </div>
     </form>
-
-    
-</body>
-</html>
+</x-guest-layout>

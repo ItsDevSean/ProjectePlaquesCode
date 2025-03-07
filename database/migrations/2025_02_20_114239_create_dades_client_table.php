@@ -11,13 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('DadesClient', function (Blueprint $table) {
+        Schema::create('dades_clients', function (Blueprint $table) {
+            $table->id(); // Añade un ID autoincremental como clave primaria
             $table->string('nombre');
             $table->string('email');
             $table->integer('telefono');
             $table->string('direccion');
             $table->string('ciudad');
             $table->integer('codigo_postal');
+            $table->string('nombre_proyecto');
+            $table->string('descripcion_proyecto')->nullable();
+            $table->string('tarifa');
+            $table->string('tipo_instalacion');
             $table->timestamps();
         });
     }
@@ -27,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('DadesClient');
+        Schema::dropIfExists('dades_clients');
     }
 };

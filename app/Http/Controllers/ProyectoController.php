@@ -9,11 +9,15 @@ use Illuminate\Support\Facades\Auth;
 class ProyectoController extends Controller
 {
     public function index()
-    {
-      
-        $proyectos = Proyecto::with('user')->paginate(10);
-        return view('proyectos', compact('proyectos'));
-    }
+{
+    // Obtener solo los proyectos del usuario autenticado y paginar
+    $proyectos = Proyecto::with('user', 'dadesClient')
+                         ->where('user_id', Auth::id()) // Filtra solo los del usuario autenticado
+                         ->paginate(10);
+
+    return view('proyectos', compact('proyectos'));
+}
+
 
     public function create()
     {
@@ -32,7 +36,8 @@ class ProyectoController extends Controller
        
         Proyecto::create([
             'nombre' => $request->nombre,
-            'user_id' => Auth::id(),  
+            'user_id' => Auth::id(),
+            'estado_id' => 1, 
         ]);
 
         return redirect()->route('proyectos.index')->with('status', 'Proyecto creado con éxito');
@@ -70,5 +75,34 @@ class ProyectoController extends Controller
 
         return redirect()->route('proyectos.index')->with('status', 'Proyecto eliminado con éxito');
     }
+
+    public function details($id)
+{
+    $proyecto = Proyecto::with(['user', 'dadesClient'])->find($id);
+
+    if (!$proyecto) {
+        return response()->json(['error' => 'Proyecto no encontrado'], 404);
+    }
+
+    // Verifica si 'dadesClient' existe antes de devolver los datos
+    $dadesClient = $proyecto->dadesClient ? $proyecto->dadesClient : null;
+
+    return response()->json([
+        'proyecto' => $proyecto,
+        'dadesClient' => $dadesClient
+    ]);
+}
+
+public function showForm($proyecto_id)
+{
+    $proyecto = Proyecto::find($proyecto_id);
+
+    if (!$proyecto) {
+        return redirect()->back()->with('error', 'Proyecto no encontrado');
+    }
+
+    return view('dadesClient', compact('proyecto'));
+}
+
 }
 
