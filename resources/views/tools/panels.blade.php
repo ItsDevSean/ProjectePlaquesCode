@@ -34,7 +34,6 @@
             
             <h2 class="text-xl font-bold text-[#49DBA3] mb-4 text-center">Tus paneles individuales</h2>
             
-<<<<<<< HEAD
             <div class="bg-white border rounded-lg shadow p-4">
                 <table class="w-full text-left mb-4">
                     <thead>
@@ -60,38 +59,6 @@
                             <td></td>
                         </tr>
                         @endforeach
-=======
-            <div class="bg-white border rounded-lg shadow p-4 overflow-x-auto">
-                <table class="w-full text-left text-sm">
-                    <thead class="text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr class="text-gray-800 text-xs md:text-sm">
-                            <th class="py-2 px-2">Nombre</th>
-                            <th class="py-2 px-2">Potencia (Wp)</th>
-                            <th class="py-2 px-2">Eficiencia (%)</th>
-                            <th class="py-2 px-2">Dimensiones (mm)</th>
-                            <th class="py-2 px-2 hidden md:table-cell">Fabricante</th>
-                            <th class="py-2 px-2 hidden md:table-cell">Fecha</th>
-                            <th class="py-2 px-2">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 text-xs md:text-sm">
-                            <td class="text-gray-600 py-4 px-2">Hola</td>
-                            <td class="text-gray-600 py-4 px-2">Hola</td>
-                            <td class="text-gray-600 py-4 px-2">Hola</td>
-                            <td class="text-gray-600 py-4 px-2">Hola</td>
-                            <td class="text-gray-600 py-4 px-2 hidden md:table-cell">Hola</td>
-                            <td class="text-gray-600 py-4 px-2 hidden md:table-cell">Hola</td>
-                            <td class="flex gap-2 justify-center">
-                                <button class="text-red-500 hover:text-red-700">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                                <button class="text-blue-500 hover:text-blue-700">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                        </tr>
->>>>>>> origin/ProjectePlaques
                     </tbody>
                 </table>
                 
@@ -129,15 +96,11 @@
                         <i class="fas fa-times text-gray-500 text-2xl"></i>
                     </button>
                 </div>
-<<<<<<< HEAD
 
                 @include('fragments._errors-form')
 
                 <form action="{{ route('paneles.resultado')}}" method="POST">
                     
-=======
-                <form action="{{ route('paneles.resultado')}}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
->>>>>>> origin/ProjectePlaques
                     @csrf
 
                     @method('POST')
@@ -147,7 +110,6 @@
                         <input type="text" name="panel_model" class="border p-2 rounded w-full">
                     </div>
                     <div>
-<<<<<<< HEAD
                         <label>Fabricante*</label>
                         <input type="text" name="manufacturer"class="border p-2 rounded w-full">
                     </div>
@@ -161,11 +123,6 @@
                         
                     </select> 
                    
-=======
-                        <label>Fabricante <span class="text-red-500">*</span></label>
-                        <input type="text" name="manufacturer" class="border p-2 rounded w-full">
-                    </div>
->>>>>>> origin/ProjectePlaques
                     <div>
                         <label>Tipo de Panel <span class="text-red-500">*</span></label>
                         <input type="text" name="panel_type" class="border p-2 rounded w-full">
@@ -178,7 +135,6 @@
                         <label>Garantía del producto (años) <span class="text-red-500">*</span></label>
                         <input type="number" name="panel_warranty" class="border p-2 rounded w-full">
                     </div>
-<<<<<<< HEAD
                     <div>
                         <label>Garantía de rendimiento (años):</label>
                         <input type="number" name="performance_warranty" class="border p-2 rounded w-full">
@@ -190,8 +146,6 @@
                     </div>
 
     
-=======
->>>>>>> origin/ProjectePlaques
                     <div class="flex justify-end mt-4 space-x-4">
                         <button onclick="toggleModal()" class="text-gray-500 hover:bg-gray-500 hover:text-white py-2 px-4 rounded-lg">Cancelar</button>
                         <button class="bg-[#49DBA3] hover:bg-[#193849] text-white py-2 px-4 rounded-lg" type="submit">Confirmar</button>
