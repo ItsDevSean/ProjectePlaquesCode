@@ -12,6 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('estados');
+
         Schema::create('estados', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->unique(); // Estado único (ejemplo: pendiente, en progreso, completado)
@@ -24,6 +26,14 @@ return new class extends Migration
             ['nombre' => 'Pendiente'],  
             ['nombre' => 'Completado'],
         ]);
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('estados');
     }
  
 };
