@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('InformacionFisicaPanel');
+
         Schema::create('InformacionFisicaPanel', function (Blueprint $table) {
             $table->id();
             $table->decimal('longitud', 10, 2);

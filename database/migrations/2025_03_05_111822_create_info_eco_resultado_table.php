@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('info_eco_resultados');
+
         Schema::create('info_eco_resultados', function (Blueprint $table) {
             $table->id();
             $table->decimal('precio_modulo', 10, 2);

@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\InformacionFisicaPanelController;
 use App\Http\Controllers\InformacionElectricaPanelController;
 use App\Http\Controllers\infoEcoController;
 use App\Http\Controllers\DadesClientController;
@@ -95,8 +94,6 @@ Route::get('/infoEco', function(){
     return view('infoEco');
 });
 
-
-Route::post('/guardar-informacionFisica', [InformacionFisicaPanelController::class, 'store'])->name('guardar.informacionFisica');
 
 Route::post('/guardar-informacionElectrica', [InformacionElectricaPanelController::class, 'store'])->name('guardar.informacionElectrica');
 

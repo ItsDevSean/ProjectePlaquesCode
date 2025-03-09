@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('solar_panels_tabel');
+
         Schema::create('solar_panels_tabel', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');            
@@ -20,6 +22,16 @@ return new class extends Migration
             $table->date('date_manufacturer');
             $table->integer('panel_warranty');
             $table->integer('performance_warranty');
+            $table->decimal('longitud', 10, 2);
+            $table->decimal('anchura', 10, 2);
+            $table->decimal('espesor', 10, 2);
+            $table->decimal('peso', 10, 2); 
+            $table->decimal('superficie', 10, 2);
+            $table->string('descripcion')->nullable();
+            $table->string('url_fabricante')->nullable();
+            $table->string('imagen_panel')->nullable();
+            $table->string('material_marco');
+            $table->string('color_panel') ->nullable();
             $table->timestamps();
         });
     }
