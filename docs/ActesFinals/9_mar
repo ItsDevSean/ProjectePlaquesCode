@@ -1,0 +1,26 @@
+Assistents: Seán
+
+Implementacions:
+* He posat un drop table al principi de la majoria de migracions, 
+per evitar conflictes amb "table alredy exist" a la hora de fer les cmd:
+php artisan migrate
+or 
+php artisan migrate:refresh
+
+* He fusionat la view, controller i model de carateristicasFisicasPanel i 
+SolarPanelTable, per tindre tota la info centralitzada
+
+* He eliminat la view, controller i del de caracterisitcasFiscasPanel,
+pq ja no es feien servir.
+
+* He fet merg entre la branca amb que he fet tots aquets canvis amb 
+ProjectePlaques.
+
+* He creat una nova branca i noves tasques al proofhub per seguir treballant 
+en aspectes que he vist que falten.
+Problemes:
+*El fornt end de la pantalla tools/panels hi han aspectes per canviar:
+	La vista de les instancies fer-ho com en la pantalla de inici.
+	El icone de la aplaciació no es veu bé.
+	Fer el fomulari en dues columnes en comptes de una.
+
