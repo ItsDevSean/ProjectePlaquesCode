@@ -99,48 +99,7 @@
 
                 @include('fragments._errors-form')
 
-                <form action="{{ route('paneles.resultado')}}" method="POST">
-                    
-                    @csrf
-
-                    @method('POST')
-
-                    <div>
-                        <label>Nombre del Modelo <span class="text-red-500">*</span></label>
-                        <input type="text" name="panel_model" class="border p-2 rounded w-full">
-                    </div>
-                    <div>
-                        <label>Fabricante*</label>
-                        <input type="text" name="manufacturer"class="border p-2 rounded w-full">
-                    </div>
-                
-                   
-                    <label>Tipo de Panel*</label>
-                    <select name="panel_type"class="border p-2 rounded w-full">
-                        @foreach ($panelType as $pt)
-                            <option value="{{ $pt->panel_type }}">{{ $pt->panel_type }}</option>
-                        @endforeach
-                        
-                    </select> 
-             
-                    <div>
-                        <label for="date">Fecha de Fabricación:</label>
-                        <input type="date" name="date_manufacturer" class="border p-2 rounded w-full">
-                    </div>
-                    <div>
-                        <label>Garantía del producto (años) <span class="text-red-500">*</span></label>
-                        <input type="number" name="panel_warranty" class="border p-2 rounded w-full">
-                    </div>
-                    <div>
-                        <label>Garantía de rendimiento (años):</label>
-                        <input type="number" name="performance_warranty" class="border p-2 rounded w-full">
-                    </div>
-    
-                    <div class="flex justify-end mt-4 space-x-4">
-                        <button onclick="toggleModal()" class="text-gray-500 hover:bg-gray-500 hover:text-white py-2 px-4 rounded-lg">Cancelar</button>
-                        <button class="bg-[#49DBA3] hover:bg-[#193849] text-white py-2 px-4 rounded-lg" type="submit">Confirmar</button>
-                    </div>
-                </form>
+                @include('fragments._newPanel')
             </div>
         </div>
     </x-app-layout>
