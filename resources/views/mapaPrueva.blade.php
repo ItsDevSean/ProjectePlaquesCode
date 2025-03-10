@@ -103,49 +103,40 @@
                         <label for="inclinacion" class="form-label">Inclinació (°)</label>
                         <input type="number" class="form-control" id="inclinacion" name="inclinacion" placeholder="Exemple: 30" required>
                     </div>
-                </div>
-                <!-- Agregar el slider aquí -->
-               
-
+                </div>              
                 <!-- Nueva Sección: Selecciona Panel -->
             </form>
-            <form form action="" class="form-container">
-            <div class = "row">
-                    <div class="title-container">
-                        <img src="/img/panelSolar2.png" alt="vf" class="panel-img" width="30" height="auto">
-                        <h3 class="form-title2">Selecció de plaques</h3>
+            <form action="" class="form-container">
+                <div class="mb-4">
+                    <div class="flex items-center gap-2">
+                        <img src="/img/panelSolar2.png" alt="panel solar" class="w-8 h-auto">
+                        <h3 class="text-lg font-semibold text-gray-800">Selecció de plaques</h3>
+                    </div>
+                    <hr class="border-t-2 border-emerald-400 mt-2">
+                </div>
+            
+                <div class="mb-4">
+                    <label for="panel_model" class="block text-sm font-medium text-gray-700">Selecciona Panel</label>
+                    <select class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500" id="panel_model" name="panel_model" required>
+                        <option value="">-- Selecciona un modelo --</option>
+                        @foreach($panels as $panel)
+                            <option value="{{ $panel->id }}">{{ $panel->panel_model }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            
+                <div class="text-center mb-4">
+                    <a href="{{ route('panels') }}" class="text-emerald-500 font-medium hover:underline">+ Nuevo panel</a>
+                </div>
+            
+                <div class="mb-4">
+                    <label for="placaSlider" class="block text-sm font-medium text-gray-700">Nombre de plaques:</label>
+                    <div class="flex items-center gap-4 mt-2">
+                        <input type="range" class="w-full cursor-pointer accent-emerald-500" id="placaSlider" min="0" max="1" step="1">
+                        <input type="number" id="placaCount" class="w-24 p-2 text-center border border-gray-300 rounded-lg">
                     </div>
                 </div>
-            <div class="row mb-3">
-                    <div class="col-md-12">
-                        <label for="panel_model" class="form-label">Selecciona Panel</label>
-                        <select class="form-select" id="panel_model" name="panel_model" required>
-                            <option value="">-- Selecciona un modelo --</option>
-                            @foreach($panels as $panel)
-                                <option value="{{ $panel->id }}">{{ $panel->panel_model }}</option>
-                            @endforeach
-                        </select>
-                        <div class="text-center">
-                            <a href="{{ route('panels') }}" 
-                            class="form-title2 text-black hover:text-emerald-500 transition-colors duration-300">
-                            Nuevo panel
-                            </a>
-                        </div>
-
-
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="row mb-3">
-                        <div class="slider-container">
-                            <label for="placaSlider" class="form-label">Nombre de plaques:</label>
-                            <input type="range" class="form-range custom-slider" id="placaSlider" min="0" max="1" step="1">
-                            <input type="number" id="placaCount" class="form-control" min="0" max="1" value="0">
-                        </div>
-                    </div>
-                </div>
-            </form>
+            </form>            
         </div>
     </div>
 

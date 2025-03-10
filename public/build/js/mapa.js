@@ -267,7 +267,6 @@ function calcularArea(selectedPolygon) {
 }
 
 // Función para actualizar el slider y el input de número de placas
-// Función para actualizar el slider y el input de número de placas
 function actualizarSlider(maxPlacas) {
     const slider = document.getElementById("placaSlider");
     const placaCount = document.getElementById("placaCount");
@@ -289,17 +288,35 @@ function actualizarSlider(maxPlacas) {
         actualizarEstiloSlider(this); // Actualizar el estilo del slider
     });
 
-    // Actualizar el slider solo cuando el usuario presione Enter o el input pierda el foco
-    placaCount.addEventListener("keypress", function (e) {
-        if (e.key === "Enter") {
-            actualizarValorSlider(placaCount, slider);
-        }
+    // Actualizar el slider cuando el input manual cambia
+    placaCount.addEventListener("input", function () {
+        const newValue = Math.min(Math.max(parseInt(this.value, 10), 0), parseInt(this.max, 10));
+        this.value = newValue; // Asegurarse de que el valor esté dentro del rango
+        slider.value = newValue;
+        actualizarEstiloSlider(slider); // Actualizar el estilo del slider
     });
 
-    placaCount.addEventListener("blur", function () {
-        actualizarValorSlider(placaCount, slider);
+    // Actualizar el slider cuando el input manual pierde el foco (evento "change")
+    placaCount.addEventListener("change", function () {
+        const newValue = Math.min(Math.max(parseInt(this.value, 10), 0), parseInt(this.max, 10));
+        this.value = newValue; // Asegurarse de que el valor esté dentro del rango
+        slider.value = newValue;
+        actualizarEstiloSlider(slider); // Actualizar el estilo del slider
+    });
+
+    // Actualizar el slider solo cuando el usuario presione Enter
+    placaCount.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault(); // Prevenir el envío del formulario
+            const newValue = Math.min(Math.max(parseInt(this.value, 10), 0), parseInt(this.max, 10));
+            this.value = newValue; // Asegurarse de que el valor esté dentro del rango
+            slider.value = newValue;
+            actualizarEstiloSlider(slider); // Actualizar el estilo del slider
+        }
     });
 }
+
+
 
 // Función para actualizar el valor del slider
 function actualizarValorSlider(placaCount, slider) {
@@ -307,6 +324,14 @@ function actualizarValorSlider(placaCount, slider) {
     placaCount.value = newValue; // Asegurarse de que el valor esté dentro del rango
     slider.value = newValue;
     actualizarEstiloSlider(slider); // Actualizar el estilo del slider
+}
+
+// Función para actualizar el estilo del slider
+function actualizarEstiloSlider(slider) {
+    const value = slider.value;
+    const max = slider.max;
+    const progress = (value / max) * 100 + "%"; // Calcular el porcentaje de progreso
+    slider.style.background = `linear-gradient(to right, #49DBA3 ${progress}, #e0e0e0 ${progress})`; // Actualizar el fondo del slider
 }
 
 // Función para actualizar el estilo del slider
