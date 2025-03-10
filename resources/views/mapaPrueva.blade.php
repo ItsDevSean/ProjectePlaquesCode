@@ -105,6 +105,37 @@
                     </div>
                 </div>
                 <!-- Agregar el slider aquí -->
+               
+
+                <!-- Nueva Sección: Selecciona Panel -->
+            </form>
+            <form form action="" class="form-container">
+            <div class = "row">
+                    <div class="title-container">
+                        <img src="/img/panelSolar2.png" alt="vf" class="panel-img" width="30" height="auto">
+                        <h3 class="form-title2">Selecció de plaques</h3>
+                    </div>
+                </div>
+            <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="panel_model" class="form-label">Selecciona Panel</label>
+                        <select class="form-select" id="panel_model" name="panel_model" required>
+                            <option value="">-- Selecciona un modelo --</option>
+                            @foreach($panels as $panel)
+                                <option value="{{ $panel->id }}">{{ $panel->panel_model }}</option>
+                            @endforeach
+                        </select>
+                        <div class="text-center">
+                            <a href="{{ route('panels') }}" 
+                            class="form-title2 text-black hover:text-emerald-500 transition-colors duration-300">
+                            Nuevo panel
+                            </a>
+                        </div>
+
+
+                    </div>
+                </div>
+
                 <div class="row mb-3">
                     <div class="row mb-3">
                         <div class="slider-container">
@@ -114,20 +145,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Nueva Sección: Selecciona Panel -->
-                <div class="row mb-3">
-                    <div class="col-md-12">
-                        <label for="panel_model" class="form-label">Selecciona Panel</label>
-                        <select class="form-select" id="panel_model" name="panel_model" required>
-                            <option value="">-- Selecciona un modelo --</option>
-                            @foreach($panels as $panel)
-                                <option value="{{ $panel->id }}">{{ $panel->panel_model }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
             </form>
         </div>
     </div>
