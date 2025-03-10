@@ -105,18 +105,18 @@
                     </div>
                 </div>
                 <!-- Agregar el slider aquí -->
-                <div class="row mb-3">
-                    <div class="row mb-3">
-                        <div class="slider-container">
-                            <label for="placaSlider" class="form-label">Nombre de plaques:</label>
-                            <input type="range" class="form-range custom-slider" id="placaSlider" min="0" max="1" step="1">
-                            <input type="number" id="placaCount" class="form-control" min="0" max="1" value="0">
-                        </div>
-                    </div>
-                </div>
+               
 
                 <!-- Nueva Sección: Selecciona Panel -->
-                <div class="row mb-3">
+            </form>
+            <form form action="" class="form-container">
+            <div class = "row">
+                    <div class="title-container">
+                        <img src="/img/panelSolar2.png" alt="vf" class="panel-img" width="30" height="auto">
+                        <h3 class="form-title2">Selecció de plaques</h3>
+                    </div>
+                </div>
+            <div class="row mb-3">
                     <div class="col-md-12">
                         <label for="panel_model" class="form-label">Selecciona Panel</label>
                         <select class="form-select" id="panel_model" name="panel_model" required>
@@ -128,6 +128,15 @@
                     </div>
                 </div>
 
+                <div class="row mb-3">
+                    <div class="row mb-3">
+                        <div class="slider-container">
+                            <label for="placaSlider" class="form-label">Nombre de plaques:</label>
+                            <input type="range" class="form-range custom-slider" id="placaSlider" min="0" max="1" step="1">
+                            <input type="number" id="placaCount" class="form-control" min="0" max="1" value="0">
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
