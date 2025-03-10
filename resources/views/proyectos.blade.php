@@ -55,7 +55,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre_proyecto }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->tarifa }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-500">{{ $proyecto->created_at->format('d/m/Y') }}</div> <!-- Timestamp -->
+                                        <div class="text-sm text-gray-500">{{ $proyecto->created_at->format('d/m/Y') }}</div> 
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
     
@@ -63,16 +63,16 @@
                                         @csrf
                                         @method('PUT')
                                         <button type="submit" class="text-green-600 hover:text-green-900 mr-3 no-underline">
-                                            <i class="fas fa-edit"></i> <!-- Icono de editar -->
+                                            <i class="fas fa-edit"></i>
                                         </button>
                                     </form>
                                     
-                                    <!-- Formulario de eliminación con icono -->
+                                 
                                     <form action="{{ route('dades_clients.destroy', $proyecto->id) }}" method="POST" class="inline-block mt-2">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-red-600 hover:text-red-900">
-                                            <i class="fas fa-trash-alt"></i> <!-- Icono de eliminar -->
+                                            <i class="fas fa-trash-alt"></i> 
                                         </button>
                                     </form>
                                 </td>
