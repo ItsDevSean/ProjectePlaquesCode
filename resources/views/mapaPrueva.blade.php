@@ -114,6 +114,20 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Nueva Sección: Selecciona Panel -->
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="panel_model" class="form-label">Selecciona Panel</label>
+                        <select class="form-select" id="panel_model" name="panel_model" required>
+                            <option value="">-- Selecciona un modelo --</option>
+                            @foreach($panels as $panel)
+                                <option value="{{ $panel->id }}">{{ $panel->panel_model }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
             </form>
         </div>
     </div>
