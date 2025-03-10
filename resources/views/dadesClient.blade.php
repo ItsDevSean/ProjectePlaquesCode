@@ -71,7 +71,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div class="mb-4">
                             <label for="nombre" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nom Complet</label>
-                            <input type="text" class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="nombre" name="nombre" placeholder="Exemple: Juan Pérez" required>
+                            <input type="text" class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="nombre" name="nombre" placeholder="Exemple: Juan Pérez" value="{{ old('nombre') }}" required>
                             <span class="error-message text-red-500 text-sm hidden">El nom és obligatori.</span>
                         </div>
 
@@ -159,11 +159,7 @@
             </form>
         </div>
 
-        <!-- Scripts -->
-         <!--
-        <script src="build/js/generalScript.js"></script>
         <script src="build/js/dades.js"></script>
-        -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDu3ReEUVEQANj_h1EAtfe4-zyarcb3X04&libraries=places&callback=initMap"></script>
         <script src="https://solar.googleapis.com/v1/buildingInsights:findClosest?key=AIzaSyDu3ReEUVEQANj_h1EAtfe4-zyarcb3X04"></script>
     </x-app-layout>

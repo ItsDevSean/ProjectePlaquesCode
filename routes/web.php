@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\InformacionFisicaPanelController;
 use App\Http\Controllers\InformacionElectricaPanelController;
 use App\Http\Controllers\infoEcoController;
 use App\Http\Controllers\DadesClientController;
@@ -52,11 +51,14 @@ Route::get('/vue', function(){
     return view('vue');
 });
 
-Route::get('/herramientas/paneles', function(){
-    return view('tools.panels');
-})->name('panels');
+Route::get('/herramientas/paneles', [SolarPanelsController::class, 'index'])->name('panels');
+
+Route::get('/herramientas/paneles/editar', [SolarPanelsController::class, 'edit'])->name('panelsEdit');
+
 
 Route::post('/herramientas/paneles/resultado', [SolarPanelsController::class, 'store'])->name('paneles.resultado');
+
+
 
 Route::get('/dades', function(){
     return view('dadesClient');
@@ -90,8 +92,6 @@ Route::get('/infoEco', function(){
     return view('infoEco');
 });
 
-
-Route::post('/guardar-informacionFisica', [InformacionFisicaPanelController::class, 'store'])->name('guardar.informacionFisica');
 
 Route::post('/guardar-informacionElectrica', [InformacionElectricaPanelController::class, 'store'])->name('guardar.informacionElectrica');
 

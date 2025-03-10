@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('info_ecos');
+
         Schema::create('info_ecos', function (Blueprint $table) {
             $table->id();
             $table->boolean("financiacion_disponible");
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('info_basica_panel');
+        Schema::dropIfExists('info_ecos');
     }
 };

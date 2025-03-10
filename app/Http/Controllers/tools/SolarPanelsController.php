@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\tools;
 
 use App\Http\Controllers\Controller;
+use App\Models\PanelType;
 use App\Models\SolarPanelsModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class SolarPanelsController extends Controller
@@ -14,26 +16,25 @@ class SolarPanelsController extends Controller
      */
     public function index()
     {
-        #to Do, aun no se muy bien que agarrar de aqui:
-    }
+        $panelType = PanelType::all();            
+        $panels = SolarPanelsModel::all()
+        ->where('user_id', Auth::id());
+
+        return view('tools.panels', compact('panels', 'panelType'));    }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('panels');
+        //
     }
-
-    
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-
-
         $request->validate([
             'panel_model' => 'required|string|min:2|max:100',
             'manufacturer' => 'required|string|min:2|max:100',
@@ -41,16 +42,19 @@ class SolarPanelsController extends Controller
             'date_manufacturer' => 'required|date',
             'panel_warranty' => 'required|integer',
             'performance_warranty' => 'required|integer',
-            'maximum_power' => 'required|integer',
-            'voltage_maximum_power_point' => 'required|integer',
-            'current_maximum_power_point' => 'required|integer',
-            'open_circuit_voltage' => 'required|integer',
-            'short_circuit_current' => 'required|integer',
-            'panel_efficiency' => 'required|integer'
+            'longitud' => 'required|numeric|min:0',
+            'anchura' => 'required|numeric|min:0',
+            'espesor' => 'required|numeric|min:0',
+            'peso' => 'required|numeric|min:0',
+            'superficie' => 'required|numeric|min:0',
+            'descripcion' => 'nullable|string',
+            'url_fabricante' => 'nullable|string',
+            'imagen_panel' => 'nullable|string',
+            'material_marco' => 'required|string',
+            'color_panel' => 'nullable|string'
         ]);
 
-
-        SolarPanelsModel::create($request->all());
+        SolarPanelsModel::create($request->all() + ['user_id' => Auth::id()]);
 
         return to_route('panels');    
     }
@@ -66,9 +70,11 @@ class SolarPanelsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SolarPanelsModel $solarPanelsModel)
+    public function edit(SolarPanelsModel $newPanel) //toDo: aqui para la edicion: ep 53 min 6:14
     {
-        //
+        $oldPanels = SolarPanelsModel::all();
+        $panelType = PanelType::all();
+        return view('tools.panelsEdit', compact('oldPanels', 'newPanel', 'panelType'));
     }
 
     /**
@@ -76,7 +82,8 @@ class SolarPanelsController extends Controller
      */
     public function update(Request $request, SolarPanelsModel $solarPanelsModel)
     {
-        //
+        $solarPanelsModel->update($request->validate());
+        return to_route('panels'); 
     }
 
     /**

@@ -36,7 +36,6 @@
                 {{ $slot }}
             </main>
 
-            @include('layouts.footer')
         </div>
 
         <!-- Bootstrap 5 JS -->

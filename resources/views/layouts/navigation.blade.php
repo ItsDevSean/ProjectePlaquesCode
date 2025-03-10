@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="build/css/header.css">
 <nav x-data="{ open: false }" class="bg-[#34495E] border-b border-gray-200 shadow-sm">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,13 +14,13 @@
 
                 <!-- Navigation Links -->
                 <div class="space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('proyectos')" :active="request()->routeIs('proyectos')" class="text-white hover:text-[#49dba3]">
+                    <x-nav-link :href="route('proyectos')" :active="request()->routeIs('proyectos')" class="itemsHeader">
                         {{ __('Inici') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('preus')" :active="request()->routeIs('preus')" class="text-white hover:text-[#49dba3]">
+                    <x-nav-link :href="route('preus')" :active="request()->routeIs('preus')" class="itemsHeader">
                         {{ __('Plans') }}
                     </x-nav-link>
                 </div>
