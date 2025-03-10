@@ -96,8 +96,13 @@ Route::get('/infoEco', function(){
 Route::post('/guardar-informacionElectrica', [InformacionElectricaPanelController::class, 'store'])->name('guardar.informacionElectrica');
 
 Route::post('/guardar-dades', [DadesClientController::class, 'store'])->name('guardar.dades');
+Route::put('/dades_clients/{id}', [DadesClientController::class, 'update'])->name('dades_clients.update');
+Route::get('/dades_clients/{id}/edit', [DadesClientController::class, 'edit'])->name('dades_clients.edit');
 
 Route::resource('dades_clients', DadesClientController::class);
+
+
+
 
 // En tu archivo de rutas
 Route::get('/proyectos', [DadesClientController::class, 'index'])->name('proyectos');

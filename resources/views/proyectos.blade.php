@@ -59,10 +59,13 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
     
-                                    <a href="{{ route('dades_clients.edit', $proyecto->id) }}" 
-                                    class="text-green-600 hover:text-green-900 mr-3 no-underline" >
-                                        <i class="fas fa-edit"></i> <!-- Icono de editar -->
-                                    </a>
+                                    <form action="{{ route('dades_clients.update', $proyecto->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="text-green-600 hover:text-green-900 mr-3 no-underline">
+                                            <i class="fas fa-edit"></i> <!-- Icono de editar -->
+                                        </button>
+                                    </form>
                                     
                                     <!-- Formulario de eliminación con icono -->
                                     <form action="{{ route('dades_clients.destroy', $proyecto->id) }}" method="POST" class="inline-block mt-2">

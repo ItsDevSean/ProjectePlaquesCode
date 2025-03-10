@@ -69,6 +69,31 @@ public function destroy($id)
     return redirect()->route('proyectos')->with('success', 'Proyecto eliminado correctamente');
 }
 
+public function update(Request $request, $id)
+{
+    // Buscar el proyecto por su ID
+    $proyecto = DadesClient::find($id);
+
+    // Verificar si el proyecto existe
+    if (!$proyecto) {
+        return redirect()->route('proyectos')->with('error', 'Proyecto no encontrado');
+    }
+
+    // Actualizar los campos del proyecto
+    $proyecto->update($request->all() + ['user_id' => Auth::id(), 'estado_id' => 1]);
+    // Redirigir al listado de proyectos con un mensaje de éxito
+    return redirect()->route('dades_clients.edit', $id)->with('success', 'Proyecto actualizado correctamente');
+}
+
+public function edit($id)
+{
+    $proyecto = DadesClient::find($id);
+    if (!$proyecto) {
+        return redirect()->route('proyectos')->with('error', 'Proyecto no encontrado');
+    }
+    return view('dadesClient', compact('proyecto'));
+}
+
 
 public function updateEstado(Request $request, $id)
 {

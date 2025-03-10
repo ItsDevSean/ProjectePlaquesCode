@@ -41,17 +41,21 @@ document.addEventListener("DOMContentLoaded", function() {
                             
                             <!-- Contenedor de los botones -->
                             <div class="buttons">
-                                <a href="{{ route('dades_clients.edit', $proyecto->id) }}" class="text-green-600 hover:text-green-900 mr-3">
-                                    <i class="fas fa-edit"></i> 
-                                </a>
+                                <form action="{{ route('dades_clients.update', $proyecto->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="text-green-600 hover:text-green-900 mr-3 no-underline">
+                                            <i class="fas fa-edit"></i> <!-- Icono de editar -->
+                                        </button>
+                                </form>
                                 
                                 <!-- Formulario de eliminación con icono -->
-                                <form action="{{ route('dades_clients.destroy', $proyecto->id) }}" method="POST" class="inline-block mt-2" onsubmit="event.stopPropagation();">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-900">
-                                        <i class="fas fa-trash-alt"></i> 
-                                    </button>
+                                <form action="{{ route('dades_clients.destroy', $proyecto->id) }}" method="POST" class="inline-block mt-2">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:text-red-900">
+                                            <i class="fas fa-trash-alt"></i> <!-- Icono de eliminar -->
+                                        </button>
                                 </form>
                             </div>
                         `;
