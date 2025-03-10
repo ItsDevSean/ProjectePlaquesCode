@@ -11,6 +11,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 return;
             }
 
+            // Evita que el sidePanel se abra cuando se hace clic en el botón de eliminar
+            if (event.target.closest('.fas.fa-trash-alt')) {
+                return; // No hace nada si el clic es en el icono de eliminar
+            }
+
             const projectId = row.getAttribute('data-id'); 
 
             fetch(`/dades_clients/${projectId}/details`) 
@@ -41,7 +46,9 @@ document.addEventListener("DOMContentLoaded", function() {
                                 </a>
                                 
                                 <!-- Formulario de eliminación con icono -->
-                                <form action="{{ route('dades_clients.destroy', $proyecto->id) }}" method="POST" class="inline-block mt-2">
+                                <form action="{{ route('dades_clients.destroy', $proyecto->id) }}" method="POST" class="inline-block mt-2" onsubmit="event.stopPropagation();">
+                                    @csrf
+                                    @method('DELETE')
                                     <button type="submit" class="text-red-600 hover:text-red-900">
                                         <i class="fas fa-trash-alt"></i> 
                                     </button>
@@ -49,10 +56,9 @@ document.addEventListener("DOMContentLoaded", function() {
                             </div>
                         `;
 
-                    sidePanel.querySelector('.side-panel-content').innerHTML = projectDetailsContent;
-                    sidePanel.classList.add('show');
-                    overlay.style.display = 'block';
-
+                        sidePanel.querySelector('.side-panel-content').innerHTML = projectDetailsContent;
+                        sidePanel.classList.add('show');
+                        overlay.style.display = 'block';
                     }
                 })
                 .catch(error => {
