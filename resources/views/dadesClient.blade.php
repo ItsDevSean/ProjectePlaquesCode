@@ -133,7 +133,7 @@
                 <!-- Secció Dades de la Instal·lació -->
                 <div class="mb-6">
                     <h3 class="text-lg font-semibold text-gray-700 dark:text-white mb-2">Dades de la Instal·lació</h3>
-                    <div class="border-b-2 border-emerald-400 mb-4"></div> <!-- Línia divisòria -->
+                    <div class="border-b-2 border-emerald-400 mb-4"></div> 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="mb-4">
                             <label for="tarifa_acceso" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tarifa d'Accés</label>
@@ -159,6 +159,9 @@
             </form>
         </div>
 
+        <script>
+            window.userId = "{{ Auth::id() }}";
+        </script>
         <script src="build/js/dades.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDu3ReEUVEQANj_h1EAtfe4-zyarcb3X04&libraries=places&callback=initMap"></script>
         <script src="https://solar.googleapis.com/v1/buildingInsights:findClosest?key=AIzaSyDu3ReEUVEQANj_h1EAtfe4-zyarcb3X04"></script>

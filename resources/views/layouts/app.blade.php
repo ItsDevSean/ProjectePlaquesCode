@@ -18,7 +18,7 @@
         <!-- Bootstrap 5 CSS -->
     </head>
     <body class="font-sans antialiased">
-        <div class="d-flex flex-column min-vh-100 bg-[#F5F5F5] dark:bg-gray-900">
+        <div class="d-flex flex-column min-vh-100 bg-[#E9F0F4] dark:bg-gray-900">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
