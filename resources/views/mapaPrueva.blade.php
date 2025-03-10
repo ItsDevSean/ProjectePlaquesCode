@@ -106,10 +106,12 @@
                 </div>
                 <!-- Agregar el slider aquí -->
                 <div class="row mb-3">
-                    <div class="slider-container">
-                        <label for="placaSlider" class="form-label">Nombre de plaques:</label>
-                        <input type="range" class="form-range" id="placaSlider" min="0" max="1" step="1">
-                        <span id="placaCount">0</span>
+                    <div class="row mb-3">
+                        <div class="slider-container">
+                            <label for="placaSlider" class="form-label">Nombre de plaques:</label>
+                            <input type="range" class="form-range custom-slider" id="placaSlider" min="0" max="1" step="1">
+                            <input type="number" id="placaCount" class="form-control" min="0" max="1" value="0">
+                        </div>
                     </div>
                 </div>
             </form>
@@ -134,14 +136,14 @@
 
     // Inicialitza el fons del slider al carregar la pàgina
     window.addEventListener("load", function () {
-        placaCount.innerText = slider.value;  // Mostra el valor inicial del comptador
-        actualitzarFonsSlider();  // Cridem la funció per actualitzar el fons amb el valor inicial
+        placaCount.innerText = slider.value;  
+        actualitzarFonsSlider();  
     });
 
     // Actualitza el fons i el comptador quan es mou el slider
     slider.addEventListener("input", function () {
-        actualitzarFonsSlider();  // Actualitza el fons del slider
-        placaCount.innerText = this.value;  // Actualitza el comptador de plaques
+        actualitzarFonsSlider();  
+        placaCount.innerText = this.value;
     });
 
     </script>

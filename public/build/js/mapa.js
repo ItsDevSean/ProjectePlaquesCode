@@ -219,19 +219,7 @@ function calcularMaxPlacas(areaTotal) {
     return Math.floor(areaTotal / areaPlaca);
 }
 
-// Función para actualizar el slider
-function actualizarSlider(maxPlacas) {
-    const slider = document.getElementById("placaSlider");
-    const placaCount = document.getElementById("placaCount");
 
-    slider.max = maxPlacas;
-    slider.value = 0;
-    placaCount.innerText = "0";
-
-    slider.addEventListener("input", function () {
-        placaCount.innerText = this.value;
-    });
-}
 
 // Modificar la función calcularArea para actualizar el slider
 function calcularArea(selectedPolygon) {
@@ -276,6 +264,57 @@ function calcularArea(selectedPolygon) {
             areaLabel.insertAdjacentElement("afterend", configurarPlaButton);
         }
     }
+}
+
+// Función para actualizar el slider y el input de número de placas
+// Función para actualizar el slider y el input de número de placas
+function actualizarSlider(maxPlacas) {
+    const slider = document.getElementById("placaSlider");
+    const placaCount = document.getElementById("placaCount");
+
+    // Actualizar el rango del slider y el input
+    slider.max = maxPlacas;
+    placaCount.max = maxPlacas;
+
+    // Inicializar el valor del slider y el input
+    slider.value = 0;
+    placaCount.value = 0;
+
+    // Actualizar el estilo del slider al cargar la página
+    actualizarEstiloSlider(slider);
+
+    // Actualizar el input cuando se mueve el slider
+    slider.addEventListener("input", function () {
+        placaCount.value = this.value;
+        actualizarEstiloSlider(this); // Actualizar el estilo del slider
+    });
+
+    // Actualizar el slider solo cuando el usuario presione Enter o el input pierda el foco
+    placaCount.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            actualizarValorSlider(placaCount, slider);
+        }
+    });
+
+    placaCount.addEventListener("blur", function () {
+        actualizarValorSlider(placaCount, slider);
+    });
+}
+
+// Función para actualizar el valor del slider
+function actualizarValorSlider(placaCount, slider) {
+    const newValue = Math.min(Math.max(parseInt(placaCount.value, 10), 0), parseInt(placaCount.max, 10));
+    placaCount.value = newValue; // Asegurarse de que el valor esté dentro del rango
+    slider.value = newValue;
+    actualizarEstiloSlider(slider); // Actualizar el estilo del slider
+}
+
+// Función para actualizar el estilo del slider
+function actualizarEstiloSlider(slider) {
+    const value = slider.value;
+    const max = slider.max;
+    const progress = (value / max) * 100 + "%"; // Calcular el porcentaje de progreso
+    slider.style.setProperty("--slider-progress", progress); // Actualizar la variable CSS
 }
 
 // Cerrar el side panel
