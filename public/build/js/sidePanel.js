@@ -12,6 +12,10 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             // Evita que el sidePanel se abra cuando se hace clic en el botón de eliminar
+            if (event.target.closest('.fas.fa-edit')) {
+                return; // No hace nada si el clic es en el icono de eliminar
+            }
+
             if (event.target.closest('.fas.fa-trash-alt')) {
                 return; // No hace nada si el clic es en el icono de eliminar
             }
@@ -41,21 +45,21 @@ document.addEventListener("DOMContentLoaded", function() {
                             
                             <!-- Contenedor de los botones -->
                             <div class="buttons">
-                                <form action="{{ route('dades_clients.update', $proyecto->id) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('PUT')
-                                        <button type="submit" class="text-green-600 hover:text-green-900 mr-3 no-underline">
-                                            <i class="fas fa-edit"></i> <!-- Icono de editar -->
-                                        </button>
-                                </form>
+                                <a href="{{ route('dades_clients.update', $proyecto->id) }}" class="text-green-600 hover:text-green-900 mr-3">
+                                    <i class="fas fa-edit"></i> 
+                                </a>
                                 
                                 <!-- Formulario de eliminación con icono -->
-                                <form action="{{ route('dades_clients.destroy', $proyecto->id) }}" method="POST" class="inline-block mt-2">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">
-                                            <i class="fas fa-trash-alt"></i> <!-- Icono de eliminar -->
-                                        </button>
+                                <form action="{{ route('dades_clients.destroy', $proyecto->id) }}" method="POST" class="inline-block mt-2" onsubmit="event.stopPropagation();">
+                                    
+                                <!-- Formulario de eliminación con icono
+                                 @csrf
+
+                                 @method('DELETE')
+                                -->
+                                    <button type="submit" class="text-red-600 hover:text-red-900">
+                                        <i class="fas fa-trash-alt"></i> 
+                                    </button>
                                 </form>
                             </div>
                         `;
