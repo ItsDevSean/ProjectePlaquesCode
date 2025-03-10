@@ -125,6 +125,14 @@
                                 <option value="{{ $panel->id }}">{{ $panel->panel_model }}</option>
                             @endforeach
                         </select>
+                        <div class="text-center">
+                            <a href="{{ route('panels') }}" 
+                            class="form-title2 text-black hover:text-emerald-500 transition-colors duration-300">
+                            Nuevo panel
+                            </a>
+                        </div>
+
+
                     </div>
                 </div>
 
