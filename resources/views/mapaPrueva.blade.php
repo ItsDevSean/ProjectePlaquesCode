@@ -133,7 +133,7 @@
                     <label for="placaSlider" class="block text-sm font-medium text-gray-700">Nombre de plaques:</label>
                     <div class="flex items-center gap-4 mt-2">
                         <input type="range" class="w-full cursor-pointer accent-emerald-500" id="placaSlider" min="0" max="1" step="1">
-                        <input type="number" id="placaCount" class="w-24 p-2 text-center border border-gray-300 rounded-lg">
+                        <input type="number" id="placaCount" class="w-40 p-2 text-center border border-gray-300 rounded-lg">
                     </div>
                 </div>
             </form>            

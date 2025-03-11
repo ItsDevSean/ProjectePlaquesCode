@@ -235,7 +235,7 @@ input[type="range"]:hover {
 }
 
 #placaCount {
-    width: 6ch; /* Canvia el 6 pel nombre màxim de dígits esperat */
+    width: 80px;
     text-align: center;
     border: 1px solid #ccc;
     border-radius: 8px;
