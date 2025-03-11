@@ -117,13 +117,7 @@
     margin: 0;  /* Elimina margen extra en el título */
 }
 
-.title-container {
-    display: flex;
-    align-items: center;  /* Alinea la imagen con el texto */
-    gap: 10px;  /* Añade espacio entre la imagen y el título */
-    border-bottom: 3px solid #49DBA3;  /* Línea debajo del contenedor */
-    padding-bottom: 8px;  /* Separación entre el contenido y la línea */
-}
+
 
 
 .panel-img {

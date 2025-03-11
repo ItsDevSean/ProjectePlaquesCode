@@ -80,13 +80,13 @@
         <div>
             <form action="" class="form-container">
                 <div class = "row">
-                    <div class="title-container">
-                        <img src="/img/panelSolar2.png" alt="vf" class="panel-img" width="30" height="auto">
-                        <h3 class="form-title2">Dades de les plaques solars</h3>
+                    <div class="flex items-center gap-2 border-b-[3px] border-[#49DBA3] pb-2">
+                        <img src="/img/iconSup3.png" alt="vf" class="panel-img" width="30" height="auto">
+                        <h3 class="form-title2">Dades de la superficie</h3>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-md-4">
+                    <div class="col-md-4 mt-3">
                         <label for="area" class="form-label">Àrea de les plaques (m²)</label>
                         <input type="text" class="form-control" id="area" name="area" placeholder="Exemple: 50" required>
                     </div>
@@ -108,11 +108,10 @@
             </form>
             <form action="" class="form-container">
                 <div class="mb-4">
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2 border-b-[3px] border-[#49DBA3] pb-2">
                         <img src="/img/panelSolar2.png" alt="panel solar" class="w-8 h-auto">
                         <h3 class="text-lg font-semibold text-gray-800">Selecció de plaques</h3>
                     </div>
-                    <hr class="border-t-2 border-emerald-400 mt-2">
                 </div>
             
                 <div class="mb-4">
