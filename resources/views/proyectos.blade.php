@@ -95,13 +95,40 @@
 
     <!-- Overlay y Side Panel -->
     <div id="overlay" class="overlay"></div>
-    <div id="sidePanel" class="side-panel">
-        <div class="side-panel-content">
-            <div id="map" style="width: 100%; height: 100%;"></div>
-            <button class="close-btn" onclick="closeSidePanel()">X</button>
+        <div id="sidePanel" class="side-panel">
+            <div class="side-panel-content">
+                <h3>Detalles del Proyecto</h3>
+                <p>ID del Proyecto: <span id="projectId">Cargando...</span></p>
+                <p>Nombre del Proyecto: <span id="projectName">Cargando...</span></p>
+                <div class="description-container">
+                    <h4>Descripción del Proyecto</h4>
+                    <div id="descriptionProject" class="description-content">
+                        
+                    </div>
+                </div>
+                <hr>
+                <h4>Datos del Cliente</h4>
+                <p>Nombre: <span id="clientName">Cargando...</span></p>
+                <p>Dirección: <span id="clientAddress">Cargando...</span></p>
+                <p>Ciudad: <span id="clientCity">Cargando...</span></p>
+                
+                <div class="buttons">
+                    <a href="#" id="editProjectLink" class="text-green-600 hover:text-green-900 mr-3">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                    <form id="deleteProjectForm" method="POST" class="inline-block mt-2" onsubmit="event.stopPropagation();">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-red-600 hover:text-red-900">
+                            <i class="fas fa-trash-alt"></i> Eliminar
+                        </button>
+                    </form>
+                </div>
+                
+                <button class="close-btn" onclick="closeSidePanel()">X</button>
+            </div>
         </div>
     </div>
-
 <script src="build/js/sidePanel.js"></script>
 <script src="build/js/estado.js"></script>
     
