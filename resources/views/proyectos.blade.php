@@ -94,23 +94,28 @@
     </div class>
 
     <!-- Overlay y Side Panel -->
-    <div id="overlay" class="overlay"></div>
+    <div id="overlay" class="overlay">
         <div id="sidePanel" class="side-panel">
             <div class="side-panel-content">
-                <h3>Detalles del Proyecto</h3>
-                <p>ID del Proyecto: <span id="projectId">Cargando...</span></p>
-                <p>Nombre del Proyecto: <span id="projectName">Cargando...</span></p>
+                <h4>Detalles del Proyecto</h4>
+                <h3>ID del Proyecto:</h3>
+                <span id="projectId">Cargando...</span>
+                <h3>Nombre del Proyecto: </h3>
+                <span id="projectName">Cargando...</span>
                 <div class="description-container">
-                    <h4>Descripción del Proyecto</h4>
+                    <h3>Descripción del Proyecto</h3>
                     <div id="descriptionProject" class="description-content">
                         
                     </div>
                 </div>
                 <hr>
                 <h4>Datos del Cliente</h4>
-                <p>Nombre: <span id="clientName">Cargando...</span></p>
-                <p>Dirección: <span id="clientAddress">Cargando...</span></p>
-                <p>Ciudad: <span id="clientCity">Cargando...</span></p>
+                <h3>Nombre: </h3>
+                <span id="clientName">Cargando...</span>
+                <h3>Dirección: </h3>
+                <span id="clientAddress">Cargando...</span>
+                <h3>Ciudad: </h3>
+                <span id="clientCity">Cargando...</span>
                 
                 <div class="buttons">
                     <a href="#" id="editProjectLink" class="text-green-600 hover:text-green-900 mr-3">
@@ -122,7 +127,7 @@
                         <button type="submit" class="text-red-600 hover:text-red-900">
                             <i class="fas fa-trash-alt"></i> Eliminar
                         </button>
-                    </form>
+                    </form>  
                 </div>
                 
                 <button class="close-btn" onclick="closeSidePanel()">X</button>
