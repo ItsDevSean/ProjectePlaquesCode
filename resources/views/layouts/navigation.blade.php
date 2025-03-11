@@ -52,7 +52,7 @@
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <a href="dades" class="hover:no-underline focus:outline-none focus:ring-0">
+                    <a href="{{ asset('dades') }}" class="hover:no-underline focus:outline-none focus:ring-0">
                         <button class="px-4 py-2 bg-[#49DBA3] text-white rounded-lg shadow-lg hover:bg-[#36B89A] transition-all duration-300">
                             <i class="fas fa-plus"></i> {{ __(' Nuevo Proyecto') }}
                         </button>
