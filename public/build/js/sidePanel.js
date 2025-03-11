@@ -42,7 +42,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         // Actualiza el contenido del side panel
                         projectIdElement.textContent = data.dadesClient.id;
                         projectNameElement.textContent = data.dadesClient.nombre_proyecto;
-                        descriptionProjectElement.textContent = data.dadesClient?.descripcion_proyecto ?? 'Vacio';
+                        descriptionProjectElement.innerHTML = data.dadesClient?.descripcion_proyecto 
+                        ? `<p>${data.dadesClient.descripcion_proyecto}</p>` 
+                        : '<p style="color: gray; font-style: italic;">No hay descripción disponible.</p>';
                         clientNameElement.textContent = data.dadesClient?.nombre ?? 'No disponible';
                         clientAddressElement.textContent = data.dadesClient?.direccion ?? 'No disponible';
                         clientCityElement.textContent = data.dadesClient?.ciudad ?? 'No disponible';
