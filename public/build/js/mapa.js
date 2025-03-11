@@ -334,14 +334,6 @@ function actualizarEstiloSlider(slider) {
     slider.style.background = `linear-gradient(to right, #49DBA3 ${progress}, #e0e0e0 ${progress})`; // Actualizar el fondo del slider
 }
 
-// Función para actualizar el estilo del slider
-function actualizarEstiloSlider(slider) {
-    const value = slider.value;
-    const max = slider.max;
-    const progress = (value / max) * 100 + "%"; // Calcular el porcentaje de progreso
-    slider.style.setProperty("--slider-progress", progress); // Actualizar la variable CSS
-}
-
 // Cerrar el side panel
 document.getElementById("closePanelButton").addEventListener("click", () => {
     const sidePanel = document.getElementById("sidePanel");
