@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<link rel="stylesheet" href="build/css/header.css">
+<link rel="stylesheet" href="{{ asset('build/css/header.css') }}">
 <nav x-data="{ open: false }" class="bg-[#34495E] border-b border-gray-200 shadow-sm">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -8,7 +8,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('welcome') }}">
-                        <img id="logo" src="img/logo.png" alt="foto" class="h-10">
+                        <img id="logo" src="{{ asset('img/logo.png')}}" alt="foto" class="h-10">
                     </a>
                 </div>
 

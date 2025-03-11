@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dades del Client</title>
-    <link rel="stylesheet" href="build/css/styleDades.css">
+    <link rel="stylesheet" href="{{ asset('build/css/styleDades.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
@@ -62,6 +62,7 @@
         <div class="max-w-6xl mx-auto p-4 mt-6 bg-white shadow-md rounded-lg dark:bg-gray-800">
             <h2 class="text-xl font-semibold text-center mb-4 dark:text-white">Dades del Client</h2>
             <form action="{{ isset($proyecto) ? route('dades_clients.update', $proyecto->id) : route('guardar.dades') }}" method="POST" id="clientForm">
+                
                 @csrf
                 @if(isset($proyecto)) 
                     @method('PUT') <!-- Método PUT para actualización -->
