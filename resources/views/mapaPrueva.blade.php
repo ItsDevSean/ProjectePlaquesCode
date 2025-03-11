@@ -120,7 +120,7 @@
                     <select class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500" id="panel_model" name="panel_model" required>
                         <option value="">-- Selecciona un modelo --</option>
                         @foreach($panels as $panel)
-                            <option value="{{ $panel->id }}">{{ $panel->panel_model }}</option>
+                            <option value="{{ $panel->id }}" data-surface="{{ $panel->superficie }}">{{ $panel->panel_model }}</option>
                         @endforeach
                     </select>
                 </div>

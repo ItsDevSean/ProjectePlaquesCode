@@ -215,13 +215,39 @@ function dibuixarPoligon(map) {
 
 // Función para calcular el número máximo de placas
 function calcularMaxPlacas(areaTotal) {
-    const areaPlaca = 1.7; // Área de una placa en m²
+    const selectPanel = document.getElementById('panel_model');
+    const selectedOption = selectPanel.options[selectPanel.selectedIndex];
+    const areaPlaca = parseFloat(selectedOption.getAttribute('data-surface'));
+
+    if (isNaN(areaPlaca) || areaPlaca <= 0) {
+        console.error('No se ha seleccionado un panel válido o la superficie no está definida.');
+        return 0;
+    }
+
     return Math.floor(areaTotal / areaPlaca);
 }
 
+// Escuchar cambios en el select
+const selectPanel = document.getElementById('panel_model');
+selectPanel.addEventListener('change', function () {
+    // Obtener el área total desde localStorage o desde la función calcularArea
+    const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
+    const areaTotal = parseFloat(edificiData.area);
 
+    if (isNaN(areaTotal) || areaTotal <= 0) {
+        console.error('No se ha calculado un área válida.');
+        return;
+    }
 
-// Modificar la función calcularArea para actualizar el slider
+    // Calcular el número máximo de placas
+    const maxPlacas = calcularMaxPlacas(areaTotal);
+    console.log('Número máximo de placas:', maxPlacas);
+
+    // Actualizar el slider (si es necesario)
+    actualizarSlider(maxPlacas);
+});
+
+// Función para calcular el área del polígono
 function calcularArea(selectedPolygon) {
     const areaLabel = document.getElementById("areaResult");
 
@@ -229,12 +255,14 @@ function calcularArea(selectedPolygon) {
         const area = google.maps.geometry.spherical.computeArea(selectedPolygon.getPath());
         areaLabel.innerText = `Àrea: ${area.toFixed(2)} m²`;
 
-        const maxPlacas = calcularMaxPlacas(area);
-        actualizarSlider(maxPlacas);
-
+        // Guardar el área en localStorage
         const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
         edificiData.area = area.toFixed(2);
         localStorage.setItem("edificiData", JSON.stringify(edificiData));
+
+        // Calcular el número máximo de placas con el área actual
+        const maxPlacas = calcularMaxPlacas(area);
+        actualizarSlider(maxPlacas);
 
         // Crear el botón "Configurar pla:" solo si no existe
         if (!document.querySelector(".configurar-pla-button")) {
@@ -259,8 +287,8 @@ function calcularArea(selectedPolygon) {
                     document.getElementById("area").value = edificiData.area;
                 }
             });
+
             // Añadir el botón al lado de "areaResult"
-            const areaLabel = document.getElementById("areaResult");
             areaLabel.insertAdjacentElement("afterend", configurarPlaButton);
         }
     }
