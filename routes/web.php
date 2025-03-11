@@ -97,7 +97,6 @@ Route::post('/guardar-informacionElectrica', [InformacionElectricaPanelControlle
 
 Route::post('/guardar-dades', [DadesClientController::class, 'store'])->name('guardar.dades');
 Route::put('/dades_clients/{id}', [DadesClientController::class, 'update'])->name('dades_clients.update');
-Route::get('/dades_clients/{id}/edit', [DadesClientController::class, 'edit'])->name('dades_clients.edit');
 
 Route::resource('dades_clients', DadesClientController::class);
 
