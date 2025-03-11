@@ -94,8 +94,8 @@
 /* Contenedor para los botones */
 .side-panel-content .buttons {
     margin-top: auto;
+    justify-content: space-between;
     display: flex;
-    justify-content: flex-start;
     gap: 12px;
 }
 
@@ -113,7 +113,7 @@
     font-size: 14px;
     min-width: 100px;
     height: 36px;
-    border: 1px solid #ddd; /* Borde sutil */
+    border: 1px solid #60f399; /* Borde sutil */
     background-color: #f9f9f9; /* Fondo claro */
     color: #333; /* Texto oscuro */
 }
