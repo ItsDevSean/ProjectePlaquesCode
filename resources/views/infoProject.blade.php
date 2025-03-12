@@ -52,14 +52,7 @@
             </div>
         </nav>
      @endif
-        <!-- Hero Section -->
-        <section class="bg-[src('img/logo.png')] bg-cover bg-center h-screen flex items-center justify-center text-white text-center px-4">
-        <div class="bg-black bg-opacity-50 p-8 rounded-xl">
-            <h1 class="text-4xl md:text-6xl font-bold">Energía Solar para un Futuro Sostenible</h1>
-            <p class="mt-4 text-lg md:text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <button class="mt-6 bg-green-100 text-black px-6 py-3 rounded-full text-lg font-semibold">Empieza ahora</button>
-        </div>
-         </section>
+        
 
     <!-- Beneficios -->
     <section class="py-20 px-6 bg-gray-100 text-center">
@@ -82,49 +75,44 @@
 
     <!-- Productos -->
     <section class="py-20 px-6 text-center">
-        <h2 class="text-3xl font-bold">¿Cómo funciona?</h2>
+        <h2 class="text-3xl font-bold">¿Cómo funciona nuestra aplicación?</h2>
         <div class="grid md:grid-cols-3 gap-6 mt-8">
             <div class="bg-gray-100 p-6 rounded-xl shadow-md">
-                <img src="public/img/placas-fotovoltaicas.png" alt="Panel Solar" class="rounded-lg mb-4">
                 <h3 class="text-xl font-semibold">1. Regístrate</h3>
-                <p class="mt-2 text-gray-600">Lorem ipsum dolor sit amet.</p>
+                <p class="mt-2 text-gray-600">Inicia sesión con nosotros.</p>
+                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800  dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
+                {{ __('Inicia sesión aquí') }}
+            </a>
+
             </div>
             <div class="bg-gray-100 p-6 rounded-xl shadow-md">
-                <img src="/solar2.jpg" alt="Panel Solar" class="rounded-lg mb-4">
                 <h3 class="text-xl font-semibold">2. Selecciona el área</h3>
-                <p class="mt-2 text-gray-600">Lorem ipsum dolor sit amet.</p>
+                <p class="mt-2 text-gray-600">Selecciona el área del mapa que te interesa.</p>
             </div>
             <div class="bg-gray-100 p-6 rounded-xl shadow-md">
-                <img src="/solar3.jpg" alt="Panel Solar" class="rounded-lg mb-4">
                 <h3 class="text-xl font-semibold">3. Confirma</h3>
-                <p class="mt-2 text-gray-600">Lorem ipsum dolor sit amet.</p>
+                <p class="mt-2 text-gray-600">Confirma los datos y nos pondremos a trabajar.</p>
             </div>
         </div>
     </section>
 
-    <!-- Testimonios -->
-    <section class="py-20 px-6 bg-gray-100 text-center">
-        <h2 class="text-3xl font-bold">Lo que dicen nuestros clientes</h2>
-        <div class="grid md:grid-cols-2 gap-6 mt-8">
-            <div class="bg-white p-6 rounded-xl shadow-md">
-                <p class="text-gray-600 italic">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
-                <h3 class="mt-4 text-xl font-semibold">Juan Pérez</h3>
-            </div>
-            <div class="bg-white p-6 rounded-xl shadow-md">
-                <p class="text-gray-600 italic">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
-                <h3 class="mt-4 text-xl font-semibold">Ana López</h3>
-            </div>
+    <!-- Hero Section -->
+    <section class=" flex items-center justify-center text-white text-center px-4 p-7 h-3/4">
+        <div class="bg-black bg-opacity-50 p-8 rounded-xl">
+            <h1 class="text-4xl md:text-6xl font-bold">Energía Solar para un Futuro Sostenible</h1>
+            <p class="mt-4 text-lg md:text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <button class="mt-6 bg-[#4adba4] text-black px-6 py-3 rounded-full text-lg font-semibold">Empieza ahora</button>
         </div>
-    </section>
+         </section>
 
     <!-- Contacto -->
-    <section class="py-20 px-6 text-center">
+    <section class="py-20 px-6 text-center  bg-gray-100 ">
         <h2 class="text-3xl font-bold">Contáctanos</h2>
         <form class="mt-8 max-w-lg mx-auto bg-white p-6 rounded-xl shadow-md">
             <input type="text" placeholder="Nombre" class="w-full p-3 mb-4 border rounded-lg">
             <input type="email" placeholder="Correo Electrónico" class="w-full p-3 mb-4 border rounded-lg">
             <textarea placeholder="Mensaje" class="w-full p-3 mb-4 border rounded-lg" rows="4"></textarea>
-            <button class="bg-yellow-500 text-black px-6 py-3 rounded-full text-lg font-semibold">Enviar</button>
+            <button class="bg-[#4adba4] text-black px-6 py-3 rounded-full text-lg font-semibold">Enviar</button>
         </form>
     </section>
 </body>
