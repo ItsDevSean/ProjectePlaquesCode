@@ -55,43 +55,48 @@
         
 
     <!-- Beneficios -->
-    <section class="py-20 px-6 bg-gray-100 text-center">
+    <section class="py-20 px-6 bg-gray-100 text-center"
+    >
         <h2 class="text-3xl font-bold">Beneficios de la Energía Solar</h2>
         <div class="grid md:grid-cols-3 gap-6 mt-8">
             <div class="bg-white p-6 rounded-xl shadow-md">
                 <h3 class="text-xl font-semibold">Ahorro Energético</h3>
-                <p class="mt-2 text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p class="mt-2 text-gray-600">Reduce significativamente tu factura eléctrica al generar tu propia energía.</p>
             </div>
             <div class="bg-white p-6 rounded-xl shadow-md">
                 <h3 class="text-xl font-semibold">Energía Renovable</h3>
-                <p class="mt-2 text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p class="mt-2 text-gray-600">Aprovecha una fuente inagotable y sostenible que ayuda a cuidar el planeta.</p>
             </div>
             <div class="bg-white p-6 rounded-xl shadow-md">
                 <h3 class="text-xl font-semibold">Bajo Mantenimiento</h3>
-                <p class="mt-2 text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p class="mt-2 text-gray-600">Los paneles solares requieren poca intervención y ofrecen gran durabilidad.</p>
             </div>
         </div>
     </section>
+
 
     <!-- Productos -->
     <section class="py-20 px-6 text-center">
         <h2 class="text-3xl font-bold">¿Cómo funciona nuestra aplicación?</h2>
         <div class="grid md:grid-cols-3 gap-6 mt-8">
-            <div class="bg-gray-100 p-6 rounded-xl shadow-md">
-                <h3 class="text-xl font-semibold">1. Regístrate</h3>
-                <p class="mt-2 text-gray-600">Inicia sesión con nosotros.</p>
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800  dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
+            <div class="bg-gray-100 p-6 rounded-xl shadow-md"
+            style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('{{ asset('img/registroFrom.jpg') }} '); background-size: cover; background-position: center;">
+                <h3 class="text-xl text-white font-semibold">1. Regístrate</h3>
+                <p class="mt-2 text-white">Inicia sesión con nosotros.</p>
+                <a class="underline text-sm text-white dark:text-gray-400 hover:text-green-100 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800  dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
                 {{ __('Inicia sesión aquí') }}
             </a>
 
             </div>
-            <div class="bg-gray-100 p-6 rounded-xl shadow-md">
-                <h3 class="text-xl font-semibold">2. Selecciona el área</h3>
-                <p class="mt-2 text-gray-600">Selecciona el área del mapa que te interesa.</p>
+            <div class="bg-gray-100 p-6 rounded-xl shadow-md"
+            style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ asset('img/registroCalle.jpg') }} '); background-size: cover; background-position: center;">
+                <h3 class="text-xl text-white font-semibold">2. Selecciona el área</h3>
+                <p class="mt-2 text-white">Selecciona el área del mapa que te interesa.</p>
             </div>
-            <div class="bg-gray-100 p-6 rounded-xl shadow-md">
-                <h3 class="text-xl font-semibold">3. Confirma</h3>
-                <p class="mt-2 text-gray-600">Confirma los datos y nos pondremos a trabajar.</p>
+            <div class="bg-gray-100 p-6 rounded-xl shadow-md"
+            style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ asset('img/placas-fotovoltaicas.png') }} '); background-size: cover; background-position: center;">
+                <h3 class="text-xl text-white font-semibold">3. Confirma</h3>
+                <p class="mt-2 text-white">Confirma los datos y nos pondremos a trabajar.</p>
             </div>
         </div>
     </section>
@@ -100,10 +105,10 @@
     <section class=" flex items-center justify-center text-white text-center px-4 p-7 h-3/4">
         <div class="bg-black bg-opacity-50 p-8 rounded-xl">
             <h1 class="text-4xl md:text-6xl font-bold">Energía Solar para un Futuro Sostenible</h1>
-            <p class="mt-4 text-lg md:text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <button class="mt-6 bg-[#4adba4] text-black px-6 py-3 rounded-full text-lg font-semibold">Empieza ahora</button>
+            <p class="mt-4 text-lg md:text-xl"></p>
+            <button class="mt-6 bg-[#4adba4] text-black px-6 py-3 rounded-full text-lg font-semibold"><a href="{{ route('login') }}">Empieza ahora</a></button>
         </div>
-         </section>
+    </section>
 
     <!-- Contacto -->
     <section class="py-20 px-6 text-center  bg-gray-100 ">
