@@ -1,11 +1,19 @@
 let projectNameToDelete = '';
-        let projectIdToDelete = '';
+let projectIdToDelete = '';
 
         function openModal(nombreProyecto, idProyecto) {
             projectNameToDelete = nombreProyecto;
             projectIdToDelete = idProyecto;
             document.getElementById('projectoName').textContent = nombreProyecto;
-            document.getElementById('deleteProjectForm').action = `{{ route('dades_clients.destroy', '') }}/${idProyecto}`;
+        
+            
+            const deleteForm = document.getElementById('deleteProjectForm');
+            const baseRoute = deleteForm.getAttribute('data-route');
+        
+            
+            deleteForm.action = `${baseRoute}/${idProyecto}`;
+        
+            
             document.getElementById('modal').classList.remove('hidden');
         }
 
