@@ -87,7 +87,6 @@
         </div>
     </div>
 
-    <!-- Overlay y Side Panel -->
     <div id="overlay" class="overlay">
         <div id="sidePanel" class="side-panel">
             <div class="side-panel-content">
@@ -115,21 +114,16 @@
                     <a href="#" id="editProjectLink" class="text-green-600 hover:text-green-900 mr-3">
                         <i class="fas fa-edit"></i> Editar
                     </a>
-                    @if (!$clientes->isEmpty())
-                        <button
-                            onclick="openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}')"
-                            class="text-red-600 hover:text-red-900"
-                        >
-                            <i class="fas fa-trash-alt"></i> Eliminar
-                        </button>
-                    @endif
+                    <!-- Botón de eliminar dinámico -->
+                    <button id="deleteProjectButton" class="text-red-600 hover:text-red-900 hidden">
+                        <i class="fas fa-trash-alt"></i> Eliminar
+                    </button>
                 </div>
                 
                 <button class="close-btn" onclick="closeSidePanel()">X</button>
             </div>
         </div>
     </div>
-
     <!-- Modal de confirmación de eliminación -->
     <div id="modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
