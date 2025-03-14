@@ -49,7 +49,7 @@
                     {{ __('Registrarse') }}
             </a>
             </div>
-            <x-primary-button class="ms-3">
+            <x-primary-button class="ms-3" href="{{ route('welcome') }}">
                 {{ __('Iniciar sesión') }}
             </x-primary-button>
         </div>
