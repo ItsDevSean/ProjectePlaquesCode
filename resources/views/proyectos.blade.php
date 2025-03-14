@@ -63,10 +63,7 @@
                                             </form>
                                             
                                             <!-- Botón para abrir el modal de eliminación -->
-                                            <button
-                                                onclick="openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}')"
-                                                class="text-red-600 hover:text-red-900"
-                                            >
+                                            <button onclick="openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}')" class="text-red-600 hover:text-red-900">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>
