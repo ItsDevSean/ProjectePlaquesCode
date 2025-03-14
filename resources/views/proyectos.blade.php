@@ -94,46 +94,59 @@
     </div class>
 
     <!-- Overlay y Side Panel -->
-    <div id="overlay" class="overlay">
-        <div id="sidePanel" class="side-panel">
-            <div class="side-panel-content">
-                <h4>Detalles del Proyecto</h4>
-                <h3>ID del Proyecto:</h3>
-                <span id="projectId">Cargando...</span>
-                <h3>Nombre del Proyecto: </h3>
-                <span id="projectName">Cargando...</span>
-                <div class="description-container">
-                    <h3>Descripción del Proyecto</h3>
-                    <div id="descriptionProject" class="description-content">
-                        
-                    </div>
-                </div>
-                <hr>
-                <h4>Datos del Cliente</h4>
-                <h3>Nombre: </h3>
-                <span id="clientName">Cargando...</span>
-                <h3>Dirección: </h3>
-                <span id="clientAddress">Cargando...</span>
-                <h3>Ciudad: </h3>
-                <span id="clientCity">Cargando...</span>
-                
-                <div class="buttons">
-                    <a href="#" id="editProjectLink" class="text-green-600 hover:text-green-900 mr-3">
-                        <i class="fas fa-edit"></i> Editar
-                    </a>
-                    <form id="deleteProjectForm" method="POST" class="inline-block mt-2" onsubmit="event.stopPropagation();">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-red-600 hover:text-red-900">
-                            <i class="fas fa-trash-alt"></i> Eliminar
-                        </button>
-                    </form>  
-                </div>
-                
-                <button class="close-btn" onclick="closeSidePanel()">X</button>
+<div id="overlay" class="overlay" onclick="closeSidePanel()"></div>
+<div id="sidePanel" class="side-panel">
+    <div class="side-panel-content">
+        <button class="close-btn" onclick="closeSidePanel()">×</button>
+        
+        <h4 class="section-title">Detalles del Proyecto</h4>
+        
+        <div class="info-group">
+            <h3>ID del Proyecto:</h3>
+            <span id="projectId">Cargando...</span>
+        </div>
+        <div class="info-group">
+            <h3>Nombre del Proyecto:</h3>
+            <span id="projectName">Cargando...</span>
+        </div>
+        
+        <div class="description-container">
+            <h3>Descripción del Proyecto</h3>
+            <div id="descriptionProject" class="description-content">
+                <span class="placeholder">Cargando...</span>
             </div>
         </div>
+        
+        <h4 class="section-title">Datos del Cliente</h4>
+        
+        <div class="info-group">
+            <h3>Nombre:</h3>
+            <span id="clientName">Cargando...</span>
+        </div>
+        <div class="info-group">
+            <h3>Dirección:</h3>
+            <span id="clientAddress">Cargando...</span>
+        </div>
+        <div class="info-group">
+            <h3>Ciudad:</h3>
+            <span id="clientCity">Cargando...</span>
+        </div>
+        
+        <div class="buttons">
+            <a href="#" id="editProjectLink" class="btn edit-btn">
+                <i class="fas fa-edit"></i> Editar
+            </a>
+            <form id="deleteProjectForm" method="POST" onsubmit="event.stopPropagation();">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn delete-btn">
+                    <i class="fas fa-trash-alt"></i> Eliminar
+                </button>
+            </form>
+        </div>
     </div>
+</div>
+
 <script src="build/js/sidePanel.js"></script>
 <script src="build/js/estado.js"></script>
     
