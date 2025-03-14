@@ -1,26 +1,34 @@
 let projectNameToDelete = '';
 let projectIdToDelete = '';
+        const modalOverlay = document.getElementById('modal');
 
+       
         function openModal(nombreProyecto, idProyecto) {
             projectNameToDelete = nombreProyecto;
             projectIdToDelete = idProyecto;
             document.getElementById('projectoName').textContent = nombreProyecto;
-        
-            
+
             const deleteForm = document.getElementById('deleteProjectForm');
             const baseRoute = deleteForm.getAttribute('data-route');
-        
-            
             deleteForm.action = `${baseRoute}/${idProyecto}`;
+
+           
+            modalOverlay.classList.remove('hidden');
+        }
+
         
-            
-            document.getElementById('modal').classList.remove('hidden');
-        }
-
         function closeModal() {
-            document.getElementById('modal').classList.add('hidden');
+            modalOverlay.classList.add('hidden');
         }
 
+       
+        modalOverlay.addEventListener('click', function (event) {
+            if (event.target === modalOverlay) {
+                closeModal();
+            }
+        });
+
+        // Función para confirmar la eliminación
         function confirmDeletion() {
             const userInput = document.getElementById('confirmationInput').value;
 
@@ -30,7 +38,6 @@ let projectIdToDelete = '';
                 alert('El nombre del proyecto no coincide. Eliminación cancelada.');
             }
         }
-
       
         function openSidePanel(projectId) {
 

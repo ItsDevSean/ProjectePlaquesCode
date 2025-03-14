@@ -140,40 +140,19 @@
                 Para confirmar la eliminación, escribe el nombre del proyecto:
                 <strong id="projectoName"></strong>.
             </p>
-            <input
-                type="text"
-                id="confirmationInput"
-                class="w-full p-2 border border-gray-300 rounded mb-4"
-                placeholder="Escribe el nombre del proyecto"
-            />
+            <input type="text" id="confirmationInput" class="w-full p-2 border border-gray-300 rounded mb-4"placeholder="Escribe el nombre del proyecto"/>
             <div class="flex justify-end space-x-4">
-                <button
-                    onclick="closeModal()"
-                    class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
-                >
-                    Cancelar
-                </button>
-                <button
-                    onclick="confirmDeletion()"
-                    class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-                >
-                    Eliminar
-                </button>
+                <button onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Cancelar</button>
+                <button onclick="confirmDeletion()" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Eliminar</button>
             </div>
         </div>
     </div>
 
     <!-- Formulario de eliminación -->
-    <form
-    id="deleteProjectForm"
-    action=""
-    method="POST"
-    class="hidden"
-    data-route="{{ route('dades_clients.destroy', '') }}"
->
+    <form id="deleteProjectForm" action="" method="POST" class="hidden" data-route="{{ route('dades_clients.destroy', '') }}">
     @csrf
     @method('DELETE')
-</form>
+    </form>
     
     <script src="build/js/sidePanel.js"></script>
     <script src="build/js/modal.js"></script>
