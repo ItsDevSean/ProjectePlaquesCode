@@ -65,7 +65,7 @@
                 
                 @csrf
                 @if(isset($proyecto)) 
-                    @method('PUT') <!-- Método PUT para actualización -->
+                    @method('PUT')
                 @endif
 
                 <!-- Secció Dades del Client -->

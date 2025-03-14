@@ -35,7 +35,8 @@ class DadesClientController extends Controller
 
     DadesClient::create($request->all() + ['user_id' => Auth::id(), 'estado_id' => 1]);
     
-    return response()->json(['message' =>'Datos guardados.']);
+    return redirect()->route('proyectos')->with('success', 'Proyecto creado correctamente.');
+
 }
 public function details($id)
 {
