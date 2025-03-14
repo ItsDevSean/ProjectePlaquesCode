@@ -5,7 +5,6 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Listado de Proyectos') }}
         </h2>
-        
     </x-slot>
 
     <div class="py-12 m-10">
@@ -17,7 +16,6 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                
 
                     <table class="tabla min-w-full divide-y">
                         <thead>
@@ -32,122 +30,107 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                            @foreach ($clientes as $proyecto)
-                                <tr class="project-row" data-id="{{ $proyecto->id }}">
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->user?->name ?? 'Usuario no disponible' }}</td>
-                                    
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                    <select name="estado_id" class="estado-select focus:outline-none focus:ring-0 text-sm font-semibold appearance-none bg-transparent cursor-pointer border-none transition-colors duration-300 ease-in-out" data-id="{{ $proyecto->id }}">
-                                        @foreach(App\Models\Estado::all() as $estado)
-                                            <option 
-                                                value="{{ $estado->id }}" 
-                                                data-color="{{ $estado->nombre }}" 
-                                                {{ $proyecto->estado_id == $estado->id ? 'selected' : '' }}>
-                                                {{ ucfirst($estado->nombre) }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                    
-                                    
-                                    
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre_proyecto }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->tarifa }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-500">{{ $proyecto->created_at->format('d/m/Y') }}</div> 
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-    
-                                    <form action="{{ route('dades_clients.update', $proyecto->id) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('PUT')
-                                        <button type="submit" class="text-green-600 hover:text-green-900 mr-3 no-underline">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                    </form>
-                                    
-                                 
-                                    <form action="{{ route('dades_clients.destroy', $proyecto->id) }}" method="POST" class="inline-block mt-2">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">
-                                            <i class="fas fa-trash-alt"></i> 
-                                        </button>
-                                    </form>
-                                </td>
-
-
-
+                            @if ($clientes->isEmpty())
+                                <tr>
+                                    <td colspan="7" class="px-6 py-4 text-center">No hay proyectos disponibles.</td>
                                 </tr>
-                            @endforeach
+                            @else
+                                @foreach ($clientes as $proyecto)
+                                    <tr class="project-row" data-id="{{ $proyecto->id }}">
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->user?->name ?? 'Usuario no disponible' }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <select name="estado_id" class="estado-select focus:outline-none focus:ring-0 text-sm font-semibold appearance-none bg-transparent cursor-pointer border-none transition-colors duration-300 ease-in-out" data-id="{{ $proyecto->id }}">
+                                                @foreach(App\Models\Estado::all() as $estado)
+                                                    <option 
+                                                        value="{{ $estado->id }}" 
+                                                        data-color="{{ $estado->nombre }}" 
+                                                        {{ $proyecto->estado_id == $estado->id ? 'selected' : '' }}>
+                                                        {{ ucfirst($estado->nombre) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre_proyecto }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->tarifa }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-500">{{ $proyecto->created_at->format('d/m/Y') }}</div> 
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <form action="{{ route('dades_clients.update', $proyecto->id) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="text-green-600 hover:text-green-900 mr-3 no-underline">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </form>
+                                            
+                                            <!-- Botón para abrir el modal de eliminación -->
+                                            <button
+                                                onclick="openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}')"
+                                                class="text-red-600 hover:text-red-900"
+                                            >
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
 
-                
+
                     <div class="mt-6">
                         {{ $clientes->links() }}
                     </div>
                 </div>
             </div>
         </div>
-    </div class>
+    </div>
 
     <!-- Overlay y Side Panel -->
-<div id="overlay" class="overlay" onclick="closeSidePanel()"></div>
-<div id="sidePanel" class="side-panel">
-    <div class="side-panel-content">
-        <button class="close-btn" onclick="closeSidePanel()">×</button>
-        
-        <h4 class="section-title">Detalles del Proyecto</h4>
-        
-        <div class="info-group">
-            <h3>ID del Proyecto:</h3>
-            <span id="projectId">Cargando...</span>
-        </div>
-        <div class="info-group">
-            <h3>Nombre del Proyecto:</h3>
-            <span id="projectName">Cargando...</span>
-        </div>
-        
-        <div class="description-container">
-            <h3>Descripción del Proyecto</h3>
-            <div id="descriptionProject" class="description-content">
-                <span class="placeholder">Cargando...</span>
+    <div id="overlay" class="overlay">
+        <div id="sidePanel" class="side-panel">
+            <div class="side-panel-content">
+                <h4>Detalles del Proyecto</h4>
+                <h3>ID del Proyecto:</h3>
+                <span id="projectId">Cargando...</span>
+                <h3>Nombre del Proyecto: </h3>
+                <span id="projectName">Cargando...</span>
+                <div class="description-container">
+                    <h3>Descripción del Proyecto</h3>
+                    <div id="descriptionProject" class="description-content">
+                        <!-- Descripción del proyecto -->
+                    </div>
+                </div>
+                <hr>
+                <h4>Datos del Cliente</h4>
+                <h3>Nombre: </h3>
+                <span id="clientName">Cargando...</span>
+                <h3>Dirección: </h3>
+                <span id="clientAddress">Cargando...</span>
+                <h3>Ciudad: </h3>
+                <span id="clientCity">Cargando...</span>
+                
+                <div class="buttons">
+                    <a href="#" id="editProjectLink" class="text-green-600 hover:text-green-900 mr-3">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                    @if (!$clientes->isEmpty())
+                        <button
+                            onclick="openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}')"
+                            class="text-red-600 hover:text-red-900"
+                        >
+                            <i class="fas fa-trash-alt"></i> Eliminar
+                        </button>
+                    @endif
+                </div>
+                
+                <button class="close-btn" onclick="closeSidePanel()">X</button>
             </div>
         </div>
-        
-        <h4 class="section-title">Datos del Cliente</h4>
-        
-        <div class="info-group">
-            <h3>Nombre:</h3>
-            <span id="clientName">Cargando...</span>
-        </div>
-        <div class="info-group">
-            <h3>Dirección:</h3>
-            <span id="clientAddress">Cargando...</span>
-        </div>
-        <div class="info-group">
-            <h3>Ciudad:</h3>
-            <span id="clientCity">Cargando...</span>
-        </div>
-        
-        <div class="buttons">
-            <a href="#" id="editProjectLink" class="btn edit-btn">
-                <i class="fas fa-edit"></i> Editar
-            </a>
-            <form id="deleteProjectForm" method="POST" onsubmit="event.stopPropagation();">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn delete-btn">
-                    <i class="fas fa-trash-alt"></i> Eliminar
-                </button>
-            </form>
-        </div>
     </div>
-</div>
-
-<script src="build/js/sidePanel.js"></script>
-<script src="build/js/estado.js"></script>
-    
 </x-app-layout>
+    <script src="build/js/sidePanel.js"></script>
+    <script src="build/js/modal.js"></script>
+    <script src="build/js/estado.js"></script>
