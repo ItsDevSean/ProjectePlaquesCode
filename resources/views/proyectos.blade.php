@@ -79,6 +79,7 @@
                         </tbody>
                     </table>
 
+
                     <div class="mt-6">
                         {{ $clientes->links() }}
                     </div>
@@ -129,53 +130,7 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal de confirmación de eliminación -->
-    <div id="modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
-            <h2 class="text-xl font-bold mb-4">¿Estás seguro?</h2>
-            <p class="mb-4">
-                Eliminación del proyecto.<br><br>
-                Esta acción no puede deshacerse.<br><br>
-                Para confirmar la eliminación, escribe el nombre del proyecto:
-                <strong id="projectoName"></strong>.
-            </p>
-            <input
-                type="text"
-                id="confirmationInput"
-                class="w-full p-2 border border-gray-300 rounded mb-4"
-                placeholder="Escribe el nombre del proyecto"
-            />
-            <div class="flex justify-end space-x-4">
-                <button
-                    onclick="closeModal()"
-                    class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
-                >
-                    Cancelar
-                </button>
-                <button
-                    onclick="confirmDeletion()"
-                    class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-                >
-                    Eliminar
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Formulario de eliminación -->
-    <form
-    id="deleteProjectForm"
-    action=""
-    method="POST"
-    class="hidden"
-    data-route="{{ route('dades_clients.destroy', '') }}"
->
-    @csrf
-    @method('DELETE')
-</form>
-    
+</x-app-layout>
     <script src="build/js/sidePanel.js"></script>
     <script src="build/js/modal.js"></script>
     <script src="build/js/estado.js"></script>
-</x-app-layout>
