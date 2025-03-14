@@ -117,8 +117,8 @@
                     </a>
                     @if (!$clientes->isEmpty())
                         <button
-                            onclick="openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}')"
-                            class="text-red-600 hover:text-red-900"
+                        onclick="closeSidePanel(); setTimeout(() => openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}'), 300);"
+                        class="text-red-600 hover:text-red-900"
                         >
                             <i class="fas fa-trash-alt"></i> Eliminar
                         </button>
@@ -153,7 +153,7 @@
     @csrf
     @method('DELETE')
     </form>
-    
+
     <script src="build/js/sidePanel.js"></script>
     <script src="build/js/modal.js"></script>
     <script src="build/js/estado.js"></script>

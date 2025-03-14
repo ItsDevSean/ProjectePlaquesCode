@@ -76,8 +76,9 @@ document.addEventListener("DOMContentLoaded", function () {
         event.stopPropagation();
     });
 
-    // Función para cerrar el side panel
     function closeSidePanel() {
+        const sidePanel = document.getElementById('sidePanel');
+        const overlay = document.getElementById('overlay');
         sidePanel.classList.remove('show');
         overlay.style.display = 'none';
     }
