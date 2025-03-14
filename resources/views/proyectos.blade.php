@@ -41,10 +41,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <select name="estado_id" class="estado-select focus:outline-none focus:ring-0 text-sm font-semibold appearance-none bg-transparent cursor-pointer border-none transition-colors duration-300 ease-in-out" data-id="{{ $proyecto->id }}">
                                                 @foreach(App\Models\Estado::all() as $estado)
-                                                    <option 
-                                                        value="{{ $estado->id }}" 
-                                                        data-color="{{ $estado->nombre }}" 
-                                                        {{ $proyecto->estado_id == $estado->id ? 'selected' : '' }}>
+                                                    <option value="{{ $estado->id }}" data-color="{{ $estado->nombre }}" {{ $proyecto->estado_id == $estado->id ? 'selected' : '' }}>
                                                         {{ ucfirst($estado->nombre) }}
                                                     </option>
                                                 @endforeach
@@ -98,7 +95,6 @@
                 <div class="description-container">
                     <h3>Descripción del Proyecto</h3>
                     <div id="descriptionProject" class="description-content">
-                        <!-- Descripción del proyecto -->
                     </div>
                 </div>
                 <hr>
@@ -114,7 +110,7 @@
                     <a href="#" id="editProjectLink" class="text-green-600 hover:text-green-900 mr-3">
                         <i class="fas fa-edit"></i> Editar
                     </a>
-                    <!-- Botón de eliminar dinámico -->
+                    
                     <button id="deleteProjectButton" class="text-red-600 hover:text-red-900 hidden">
                         <i class="fas fa-trash-alt"></i> Eliminar
                     </button>
@@ -129,8 +125,10 @@
         <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
             <h2 class="text-xl font-bold mb-4">¿Estás seguro?</h2>
             <p class="mb-4">
-                Eliminación del proyecto.<br><br>
-                Esta acción no puede deshacerse.<br><br>
+                Eliminación del proyecto.
+                <br><br>
+                Esta acción no puede deshacerse.
+                <br><br>
                 Para confirmar la eliminación, escribe el nombre del proyecto:
                 <strong id="projectoName"></strong>.
             </p>

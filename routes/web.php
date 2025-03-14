@@ -68,9 +68,6 @@ Route::get('/preus', function(){
     return view('preus');
 })->name('preus');
 
-Route::get('/fisico', function(){
-    return view('caracFisiPlac');
-});
 
 Route::get('/electrico', function(){
     return view('caracElecPlac');

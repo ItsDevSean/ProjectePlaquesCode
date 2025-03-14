@@ -81,7 +81,7 @@ public function update(Request $request, $id)
     }
 
     // Actualizar los campos del proyecto
-    $proyecto->update($request->all() + ['user_id' => Auth::id(), 'estado_id' => 1]);
+    $proyecto->update($request->all());
     // Redirigir al listado de proyectos con un mensaje de éxito
     return redirect()->route('dades_clients.edit', $id)->with('success', 'Proyecto actualizado correctamente');
 }
