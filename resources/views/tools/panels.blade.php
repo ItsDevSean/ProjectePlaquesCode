@@ -80,14 +80,6 @@
             <div class="bg-white rounded-lg p-6 w-full max-w-2xl max-h-screen overflow-y-auto">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-bold">Creación de nuevo panel:</h3>
-                     <!-- toDO: reutilzable -->
-                        @if ($errors->any())
-                            @foreach ($errors->all() as $e)
-                                <div>
-                                    {{ $e }}
-                                </div>
-                            @endforeach
-                        @endif
                     <button onclick="toggleModal()" class="text-gray-500">
                         <i class="fas fa-times text-gray-500 text-2xl"></i>
                     </button>
