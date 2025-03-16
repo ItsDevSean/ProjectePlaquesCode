@@ -8,11 +8,7 @@
     <!-- Aplicar el css de nuestra aplicación-->
 
     <link rel="stylesheet" href="build/css/styles.css"> 
-    <script>
-        function toggleModal() {
-            document.getElementById('modal').classList.toggle('hidden');
-        }
-    </script>
+    <script src="{{asset('build/js/panels.js')}}"></script>
 </head>
 <body class="bg-gray-50">
     <x-app-layout>
