@@ -45,13 +45,13 @@
 
     <div>
         <label>Longitud (mm):</label>
-        <input type="number" name="longitud" class="border p-2 rounded w-full">
+        <input type="number" id="longitud" name="longitud" class="border p-2 rounded w-full">
     </div>
 
 
     <div>
         <label>Anchura (mm)</label>
-        <input type="number" name="anchura" class="border p-2 rounded w-full">
+        <input type="number" id="anchura" name="anchura" class="border p-2 rounded w-full">
     </div>
 
     <div>
@@ -66,7 +66,7 @@
 
     <div>
         <label>Superficie (m²)</label>
-        <input type="number" name="superficie" class="border p-2 rounded w-full">
+        <input type="number" id="superficie" name="superficie" class="border p-2 rounded w-full">
     </div>
 
 
