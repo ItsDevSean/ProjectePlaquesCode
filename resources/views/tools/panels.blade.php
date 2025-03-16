@@ -34,13 +34,13 @@
                 <table class="w-full text-left mb-4">
                     <thead>
                         <tr class="text-gray-600">
-                            <th class="py-2">Modelo</th>
-                            <th class="py-2">Fabricante</th>
-                            <th class="py-2">Tipo</th>
-                            <th class="py-2">Fecha de Fabricación</th>
-                            <th class="py-2">Garantía Producto (años)</th>
-                            <th class="py-2">Garantía Rendimiento (años)</th>
-                            <th class="py-2">Opciones</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Modelo</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Fabricante</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Tipo</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Fecha de Fabricación</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Garantía Producto (años)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Garantía Rendimiento (años)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
