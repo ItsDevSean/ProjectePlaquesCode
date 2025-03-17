@@ -115,6 +115,8 @@ function iniciarSeleccio(map) {
 
   // Guarda el listener para poder eliminarlo después
   window.clickListener = clickListener;
+
+  
 }
 
 function reiniciarEstado(map) {
@@ -410,17 +412,19 @@ function estaPoligonDins(polygonPrincipal, polygonObstacle) {
 
 // Funció per iniciar la selecció d'obstacles
 function iniciarSeleccioObstacle(map) {
-    let selectedMarkers = []; // Marcadors seleccionats per a l'obstacle
-    let selectedPolygon = null; // Polígon de l'obstacle actual
+    let selectedMarkers = [];
+    let selectedPolygon = null;
 
-    // Eliminar qualsevol listener de clic existent
     if (window.clickListener) {
         google.maps.event.removeListener(window.clickListener);
     }
 
-    // Funció per seleccionar punts de l'obstacle
     function seleccionarPuntObstacle(event) {
-        // Verifica si el punto está dentro del polígono principal
+        if (!window.selectedPolygon) {
+            alert("Primer has de crear el polígon principal.");
+            return;
+        }
+
         if (!google.maps.geometry.poly.containsLocation(event.latLng, window.selectedPolygon)) {
             alert("El punt ha d'estar dins del polígon principal.");
             return;
@@ -436,7 +440,7 @@ function iniciarSeleccioObstacle(map) {
                 fillOpacity: 1,
                 strokeWeight: 1,
             },
-            draggable: true,
+            draggable: false,
         });
 
         selectedMarkers.push(marker);
@@ -445,12 +449,11 @@ function iniciarSeleccioObstacle(map) {
         if (selectedMarkers.length >= 2) dibuixarPoligonObstacle();
     }
 
-    // Funció per dibuixar el polígon de l'obstacle
     function dibuixarPoligonObstacle() {
-        if (selectedPolygon) selectedPolygon.setMap(null); // Elimina el polígon anterior
+        if (selectedPolygon) selectedPolygon.setMap(null);
 
         const coordinates = selectedMarkers.map((marker) => marker.getPosition());
-        if (coordinates.length >= 3) coordinates.push(coordinates[0]); // Tanca el polígon
+        if (coordinates.length >= 3) coordinates.push(coordinates[0]);
 
         selectedPolygon = new google.maps.Polygon({
             paths: coordinates,
@@ -463,19 +466,17 @@ function iniciarSeleccioObstacle(map) {
         });
 
         if (coordinates.length >= 3) {
-            // Verifica si l'obstacle està dins del polígon principal
             if (estaPoligonDins(window.selectedPolygon, selectedPolygon)) {
                 calcularAreaObstacle(selectedPolygon);
             } else {
                 alert("L'obstacle ha d'estar completament dins del polígon principal.");
-                selectedPolygon.setMap(null); // Elimina l'obstacle si no està dins
-                selectedMarkers.forEach((marker) => marker.setMap(null)); // Elimina els marcadors
-                selectedMarkers = []; // Reinicia els marcadors
+                selectedPolygon.setMap(null);
+                selectedMarkers.forEach((marker) => marker.setMap(null));
+                selectedMarkers = [];
             }
         }
     }
 
-    // Funció per calcular l'àrea de l'obstacle i restar-la de l'àrea principal
     function calcularAreaObstacle(polygon) {
         const areaLabel = document.getElementById("areaResult");
         if (!areaLabel || !polygon) return;
@@ -486,20 +487,16 @@ function iniciarSeleccioObstacle(map) {
 
         areaLabel.innerText = `Àrea: ${novaAreaTotal.toFixed(2)} m²`;
 
-        // Guardar l'àrea actualitzada a localStorage
         const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
         edificiData.area = novaAreaTotal.toFixed(2);
         localStorage.setItem("edificiData", JSON.stringify(edificiData));
 
-        // Actualitzar el nombre màxim de plaques amb l'àrea actualitzada
         const maxPlacas = calcularMaxPlacas(novaAreaTotal);
         actualizarSlider(maxPlacas);
     }
 
-    // Afegir event listener per al clic al mapa
     window.clickListener = map.addListener("click", seleccionarPuntObstacle);
 
-    // Retornem una funció per netejar l'estat si és necessari
     return () => {
         google.maps.event.removeListener(window.clickListener);
         selectedMarkers.forEach((marker) => marker.setMap(null));
@@ -507,18 +504,16 @@ function iniciarSeleccioObstacle(map) {
     };
 }
 
-// Afegir event listener per al botó de nou obstacle
 document.getElementById("nouObstacleButton").addEventListener("click", () => {
     const sidePanel = document.getElementById("sidePanel");
-    sidePanel.classList.remove("open"); // Tanca el side panel
+    sidePanel.classList.remove("open");
 
-    // Obtenir el polígon principal
     const polygonPrincipal = window.selectedPolygon;
 
-    if (!polygonPrincipal) {
-        alert("Primer has de crear el polígon principal.");
+    if (!polygonPrincipal || polygonPrincipal.getPath().getLength() < 3) {
+        alert("Primer has de crear el polígon principal amb almenys 3 punts.");
         return;
     }
 
-    
+    iniciarSeleccioObstacle(map);
 });
