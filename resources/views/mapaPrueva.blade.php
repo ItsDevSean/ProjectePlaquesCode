@@ -135,7 +135,21 @@
                         <input type="number" id="placaCount" class="w-40 p-2 text-center border border-gray-300 rounded-lg">
                     </div>
                 </div>
-            </form>            
+            </form>
+            <div action="" class="form-container">
+                <div class="mb-4">
+                    <div class="flex items-center gap-2 border-b-[3px] border-[#49DBA3] pb-2">
+                        <img src="/img/iconObstaculo.png" alt="panel solar" class="w-8 h-auto">
+                        <h3 class="text-lg font-semibold text-gray-800">Selecció de obstacles</h3>
+                    </div>
+                </div>
+            
+                <div class="mb-4">
+                    <button id="nouObstacleButton" class="w-full bg-white border-2 border-emerald-400 text-emerald-500 font-semibold py-2 px-4 rounded-lg transition duration-300 hover:bg-emerald-400 hover:text-white">
+                        Nou obstacle
+                    </button>
+                </div>
+            </div>            
         </div>
     </div>
 
