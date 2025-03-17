@@ -1,4 +1,4 @@
-<form action="{{ route('paneles.resultado')}}" method="POST">
+<form action="{{ route('paneles.resultado')}}" method="POST" id="panelForm">
                     
     @csrf
 
@@ -98,7 +98,7 @@
 
     <div class="flex justify-end mt-4 space-x-4">
         <button onclick="toggleModal()" class="text-gray-500 hover:bg-gray-500 hover:text-white py-2 px-4 rounded-lg">Cancelar</button>
-        <button class="bg-[#49DBA3] hover:bg-[#193849] text-white py-2 px-4 rounded-lg" type="submit">Confirmar</button>
+        <button type="submit" class="bg-[#49DBA3] hover:bg-[#193849] text-white py-2 px-4 rounded-lg">Confirmar</button>
     </div>
 
 </form>
