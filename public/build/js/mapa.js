@@ -13,6 +13,7 @@ window.initMap = function () {
   const autocomplete = initAutocomplete(map);
   document.getElementById("startSelection").addEventListener("click", () => iniciarSeleccio(map));
   document.getElementById("buttonBuscar").addEventListener("click", () => geocodeAddress(map));
+  document.getElementById("nouObstacleButton").addEventListener("click", () => iniciarSeleccioObstacle(map));
 };
 
 // Funció per inicialitzar Autocomplete
@@ -206,6 +207,7 @@ function dibuixarPoligon(map) {
       fillColor: "#00FF00",
       fillOpacity: 0.35,
       map: map,
+      clickable: false,
   });   
 
   if (coordinates.length >= 3) {
@@ -392,3 +394,131 @@ document.addEventListener("click", (event) => {
 });
 
 
+// Funció per verificar si un polígon està completament dins d'un altre polígon
+function estaPoligonDins(polygonPrincipal, polygonObstacle) {
+    const paths = polygonObstacle.getPaths();
+    for (let i = 0; i < paths.getLength(); i++) {
+        const path = paths.getAt(i);
+        for (let j = 0; j < path.getLength(); j++) {
+            if (!google.maps.geometry.poly.containsLocation(path.getAt(j), polygonPrincipal)) {
+                return false; // Si algun punt no està dins, retorna false
+            }
+        }
+    }
+    return true; // Tots els punts estan dins
+}
+
+// Funció per iniciar la selecció d'obstacles
+function iniciarSeleccioObstacle(map) {
+    let selectedMarkers = []; // Marcadors seleccionats per a l'obstacle
+    let selectedPolygon = null; // Polígon de l'obstacle actual
+
+    // Eliminar qualsevol listener de clic existent
+    if (window.clickListener) {
+        google.maps.event.removeListener(window.clickListener);
+    }
+
+    // Funció per seleccionar punts de l'obstacle
+    function seleccionarPuntObstacle(event) {
+        // Verifica si el punto está dentro del polígono principal
+        if (!google.maps.geometry.poly.containsLocation(event.latLng, window.selectedPolygon)) {
+            alert("El punt ha d'estar dins del polígon principal.");
+            return;
+        }
+
+        const marker = new google.maps.Marker({
+            position: event.latLng,
+            map: map,
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 6,
+                fillColor: "red",
+                fillOpacity: 1,
+                strokeWeight: 1,
+            },
+            draggable: true,
+        });
+
+        selectedMarkers.push(marker);
+
+        marker.addListener("dragend", () => dibuixarPoligonObstacle());
+        if (selectedMarkers.length >= 2) dibuixarPoligonObstacle();
+    }
+
+    // Funció per dibuixar el polígon de l'obstacle
+    function dibuixarPoligonObstacle() {
+        if (selectedPolygon) selectedPolygon.setMap(null); // Elimina el polígon anterior
+
+        const coordinates = selectedMarkers.map((marker) => marker.getPosition());
+        if (coordinates.length >= 3) coordinates.push(coordinates[0]); // Tanca el polígon
+
+        selectedPolygon = new google.maps.Polygon({
+            paths: coordinates,
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#FF0000",
+            fillOpacity: 0.35,
+            map: map,
+        });
+
+        if (coordinates.length >= 3) {
+            // Verifica si l'obstacle està dins del polígon principal
+            if (estaPoligonDins(window.selectedPolygon, selectedPolygon)) {
+                calcularAreaObstacle(selectedPolygon);
+            } else {
+                alert("L'obstacle ha d'estar completament dins del polígon principal.");
+                selectedPolygon.setMap(null); // Elimina l'obstacle si no està dins
+                selectedMarkers.forEach((marker) => marker.setMap(null)); // Elimina els marcadors
+                selectedMarkers = []; // Reinicia els marcadors
+            }
+        }
+    }
+
+    // Funció per calcular l'àrea de l'obstacle i restar-la de l'àrea principal
+    function calcularAreaObstacle(polygon) {
+        const areaLabel = document.getElementById("areaResult");
+        if (!areaLabel || !polygon) return;
+
+        const areaObstacle = google.maps.geometry.spherical.computeArea(polygon.getPath());
+        const areaPrincipal = parseFloat(areaLabel.innerText.replace("Àrea: ", "").replace(" m²", ""));
+        const novaAreaTotal = areaPrincipal - areaObstacle;
+
+        areaLabel.innerText = `Àrea: ${novaAreaTotal.toFixed(2)} m²`;
+
+        // Guardar l'àrea actualitzada a localStorage
+        const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
+        edificiData.area = novaAreaTotal.toFixed(2);
+        localStorage.setItem("edificiData", JSON.stringify(edificiData));
+
+        // Actualitzar el nombre màxim de plaques amb l'àrea actualitzada
+        const maxPlacas = calcularMaxPlacas(novaAreaTotal);
+        actualizarSlider(maxPlacas);
+    }
+
+    // Afegir event listener per al clic al mapa
+    window.clickListener = map.addListener("click", seleccionarPuntObstacle);
+
+    // Retornem una funció per netejar l'estat si és necessari
+    return () => {
+        google.maps.event.removeListener(window.clickListener);
+        selectedMarkers.forEach((marker) => marker.setMap(null));
+        if (selectedPolygon) selectedPolygon.setMap(null);
+    };
+}
+
+// Afegir event listener per al botó de nou obstacle
+document.getElementById("nouObstacleButton").addEventListener("click", () => {
+    const sidePanel = document.getElementById("sidePanel");
+    sidePanel.classList.remove("open"); // Tanca el side panel
+
+    // Obtenir el polígon principal
+    const polygonPrincipal = window.selectedPolygon;
+
+    if (!polygonPrincipal) {
+        alert("Primer has de crear el polígon principal.");
+        return;
+    }
+
+    
+});
