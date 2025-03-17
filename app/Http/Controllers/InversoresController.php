@@ -26,16 +26,17 @@ class InversoresController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre_bateria' => 'required|string|min:2|max:100',
-            'coste' => 'required|string|min:2|max:100',
-            'garantia_fabricante' => 'required|string|min:2|max:50',
-            'descripcion' => 'required|date',
-            'id_referencia' => 'required|integer',
-            'capacidad' => 'required|integer',
+            'nombre_inversor' => 'required|string|min:2|max:100',
+            'eficencia' => 'required|string|min:2|max:100',
+            'tipo_instalacion' => 'required|string',
+            'garantia_material' => 'nullable|date',
+            'potencia_nominal' => 'required|integer',
+            'descripcion' => 'required|integer',
             'fabricante' => 'required|numeric|min:0',
-            'garantia_material' => 'required|numeric|min:0',
-            'imagen_bateria' => 'required|numeric|min:0',
-
+            'microinversor' => 'required|numeric|min:0',
+            'garantia_fabricante' => 'required|numeric|min:0',
+            'imagen_inversor' => 'required|numeric|min:0',
+            'id_referencia' => 'required|numeric|min:0',
         ]);
 
         Inversores::create($request->all());

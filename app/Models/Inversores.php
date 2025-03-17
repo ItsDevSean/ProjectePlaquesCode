@@ -9,7 +9,7 @@ class Inversores extends Model
     protected $table = "inversores";
 
     protected $fillable = [
-        'nombre',
+        'nombre_inversor',
         'eficencia',
         'tipo_instalacion',
         'garantia_material',

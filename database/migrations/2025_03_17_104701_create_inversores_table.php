@@ -13,7 +13,20 @@ return new class extends Migration
     {
         Schema::create('inversores', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre_inversor');
+            $table->decimal('eficiencia', 5, 2);
+            $table->enum('tipo_instalacion', ['monofasica', 'trifasica']);
+            $table->integer('garantia_material')->nullable();
+            $table->decimal('potencia_nominal', 10, 2);
+            $table->text('descripcion')->nullable();
+            $table->unsignedBigInteger('fabricante');
+            $table->boolean('microinversor')->default(false);
+            $table->integer('garantia_fabricante')->nullable();
+            $table->string('imagen_inversor')->nullable();
+            $table->string('id_referencia')->nullable();
             $table->timestamps();
+
+            $table->foreign('fabricante')->references('id')->on('fabricantes')->onDelete('cascade');
         });
     }
 
