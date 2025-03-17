@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('id_referencia')->nullable();
             $table->timestamps();
 
-            $table->foreign('fabricante')->references('id')->on('fabricantes')->onDelete('cascade');
+            //$table->foreign('fabricante')->references('id')->on('fabricantes')->onDelete('cascade');
         });
     }
 
