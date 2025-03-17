@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\BateriasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InformacionElectricaPanelController;
 use App\Http\Controllers\infoEcoController;
 use App\Http\Controllers\DadesClientController;
 use App\Http\Controllers\infoEcoResultadoController;
+use App\Http\Controllers\InversoresController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\tools\SolarPanelsController;
 
@@ -58,6 +60,9 @@ Route::get('/herramientas/paneles/editar', [SolarPanelsController::class, 'edit'
 
 Route::post('/herramientas/paneles/resultado', [SolarPanelsController::class, 'store'])->name('paneles.resultado');
 
+Route::get('baterias', [BateriasController::class, 'index'])->name('baterias');
+
+Route::get('inversores', [InversoresController::class, 'index'])->name('inversores');
 
 
 Route::get('/dades', function(){
