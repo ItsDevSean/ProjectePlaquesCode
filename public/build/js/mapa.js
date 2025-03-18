@@ -20,6 +20,8 @@ window.initMap = function () {
     if (button.textContent === "Reiniciar selecció") {
       button.textContent = "Seleccionar area"; // Torna a canviar el text del botó
       reiniciarEstado(map);
+      const sidePanel = document.getElementById("sidePanel");
+      sidePanel.classList.remove("open");
     } else {
       button.textContent = "Reiniciar selecció"; // Canvia el text del botó
       iniciarSeleccio(map); // Inicia la selecció d'una nova àrea
