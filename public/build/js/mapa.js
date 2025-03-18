@@ -11,7 +11,17 @@ window.initMap = function () {
   });
 
   const autocomplete = initAutocomplete(map);
-  document.getElementById("startSelection").addEventListener("click", () => iniciarSeleccio(map));
+  document.getElementById("startSelection").addEventListener("click", () => {
+    const button = document.getElementById("startSelection");
+  
+    if (button.textContent === "Reiniciar selecció") {
+      button.textContent = "Seleccionar area"; // Torna a canviar el text del botó
+      reiniciarEstado(map);
+    } else {
+      button.textContent = "Reiniciar selecció"; // Canvia el text del botó
+      iniciarSeleccio(map); // Inicia la selecció d'una nova àrea
+    }
+  });
   document.getElementById("buttonBuscar").addEventListener("click", () => geocodeAddress(map));
   document.getElementById("nouObstacleButton").addEventListener("click", () => iniciarSeleccioObstacle(map));
 };
@@ -125,33 +135,40 @@ function reiniciarEstado(map) {
         window.selectedMarkers.forEach((marker) => marker.setMap(null));
         window.selectedMarkers = [];
     }
-  
+
     // Elimina el polígono anterior
     if (window.selectedPolygon) {
         window.selectedPolygon.setMap(null);
     }
-  
+
     // Crea un nuevo array para los marcadores
     window.selectedMarkers = [];
-  
-    // Crea un nuevo polígono (sin asignarlo todavía)
+
+    // Crea un nuevo polígono (sin assignarlo todavía)
     window.selectedPolygon = null;
-  
+
     // Limpia el área mostrada
     document.getElementById("areaResult").innerText = "";
-  
+
     // Elimina el botón "Configurar pla:" si existe
     const configurarPlaButton = document.querySelector(".configurar-pla-button");
     if (configurarPlaButton) {
         configurarPlaButton.remove();
     }
-  
+
     // Elimina el listener de clic anterior si existe
     if (window.clickListener) {
         google.maps.event.removeListener(window.clickListener);
         window.clickListener = null;
     }
-  }
+
+    // Elimina todos los polígonos de los obstáculos
+    if (window.obstaclePolygons) {
+        window.obstaclePolygons.forEach((polygon) => polygon.setMap(null));
+        window.obstaclePolygons = [];
+    }
+}
+
 
 // Función para seleccionar puntos
 function seleccionarPunt(event, map) {
@@ -374,10 +391,7 @@ document.getElementById("closePanelButton").addEventListener("click", () => {
 
 
 
-document.getElementById("startSelection").addEventListener("click", () => {
-    reiniciarEstado(map); // Reinicia el estado, incluyendo eliminar el botón "Configurar pla:"
-    iniciarSeleccio(map); // Inicia una nueva selección
-  });
+
 
 // Cerrar el side panel al hacer clic fuera de él
 document.addEventListener("click", (event) => {

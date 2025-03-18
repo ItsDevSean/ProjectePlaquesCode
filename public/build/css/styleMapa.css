@@ -92,7 +92,7 @@
     max-width: 800px;
 }
 
-/* Resto de estilos (formulario, etc.) */
+
 .form-container {
     background-color: #ffffff;
     padding: 30px;
@@ -111,21 +111,16 @@
 }
 
 .form-title2 {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: bold;
     color: #333;
-    margin: 0;  /* Elimina margen extra en el título */
+    margin: 0;  
 }
-
-
-
 
 .panel-img {
-    width: 30px;  /* Ajusta el tamaño de la imagen */
+    width: 30px;
     height: auto;
-     /* Asegura que la línea esté justo debajo de la imagen */
 }
-
 
 .form-control, .form-select {
     border-radius: 8px;
