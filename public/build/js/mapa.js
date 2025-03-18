@@ -28,7 +28,20 @@ window.initMap = function () {
     }
   });
   document.getElementById("buttonBuscar").addEventListener("click", () => geocodeAddress(map));
-  document.getElementById("nouObstacleButton").addEventListener("click", () => iniciarSeleccioObstacle(map));
+  document.getElementById("nouObstacleButton").addEventListener("click", () => {
+    const sidePanel = document.getElementById("sidePanel");
+    sidePanel.classList.remove("open");
+
+    const polygonPrincipal = window.selectedPolygon;
+
+    if (!polygonPrincipal || polygonPrincipal.getPath().getLength() < 3) {
+        alert("Primer has de crear el polígon principal amb almenys 3 punts.");
+        return;
+    }
+
+    iniciarSeleccioObstacle(map);
+});
+
 };
 
 // Funció per inicialitzar Autocomplete
@@ -187,8 +200,11 @@ function reiniciarEstado(map) {
 
     // Limpia el localStorage si es necesario
     localStorage.removeItem("edificiData");
-}
 
+    // Limpia la lista de obstáculos
+    const obstaclesList = document.getElementById("obstaclesList");
+    obstaclesList.innerHTML = "";
+}
 
 // Función para seleccionar puntos
 function seleccionarPunt(event, map) {
@@ -444,23 +460,78 @@ function estaPoligonDins(polygonPrincipal, polygonObstacle) {
     return true; // Tots els punts estan dins
 }
 
-// Funció per iniciar la selecció d'obstacles
 function iniciarSeleccioObstacle(map) {
-    let selectedMarkers = [];
-    let selectedPolygon = null;
-
-    if (!window.obstaclePolygons) {
-        window.obstaclePolygons = [];
+    // Netejar l'estat anterior
+    if (window.obstacleMarkers) {
+        window.obstacleMarkers.forEach((marker) => marker.setMap(null));
+        window.obstacleMarkers = [];
     }
 
-    if (!window.obstacleMarkers) {
-        window.obstacleMarkers = [];
+    if (window.obstaclePolygons) {
+        window.obstaclePolygons.forEach((polygon) => polygon.setMap(null));
+        window.obstaclePolygons = [];
     }
 
     if (window.clickListener) {
         google.maps.event.removeListener(window.clickListener);
     }
 
+    // Mostrar el botó "Tancar polígon"
+    const tancarPoligonButton = document.getElementById("tancarPoligonButton");
+    tancarPoligonButton.style.display = "block";
+
+    // Eliminar qualsevol listener anterior del botó "Tancar polígon"
+    tancarPoligonButton.removeEventListener("click", tancarPoligonHandler);
+
+    // Funció per gestionar el tancament del polígon
+    function tancarPoligonHandler() {
+        if (window.obstacleMarkers.length >= 3) {
+            // Desactivar el botó per evitar múltiples clics
+            tancarPoligonButton.style.display = "none";
+
+            // Crear el polígon de l'obstacle
+            const coordinates = window.obstacleMarkers.map((marker) => marker.getPosition());
+            if (coordinates.length >= 3) coordinates.push(coordinates[0]);
+
+            const obstaclePolygon = new google.maps.Polygon({
+                paths: coordinates,
+                strokeColor: "#FF0000",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#FF0000",
+                fillOpacity: 0.35,
+                map: map,
+            });
+
+            // Verificar si el polígon està dins del polígon principal
+            if (estaPoligonDins(window.selectedPolygon, obstaclePolygon)) {
+                // Afegir el polígon a la llista global
+                window.obstaclePolygons.push(obstaclePolygon);
+
+                // Afegir l'obstacle a la llista visual
+                const obstaclesList = document.getElementById("obstaclesList");
+                const obstacleItem = document.createElement("div");
+                obstacleItem.className = "obstacle-item";
+                obstacleItem.innerText = `Obstacle ${window.obstaclePolygons.length}`;
+                obstaclesList.appendChild(obstacleItem);
+
+                // Calcular l'àrea de l'obstacle
+                calcularAreaObstacle(obstaclePolygon);
+
+                alert("Polígon tancat. No es poden afegir més punts a aquest obstacle.");
+            } else {
+                alert("L'obstacle ha d'estar completament dins del polígon principal.");
+                obstaclePolygon.setMap(null);
+            }
+        } else {
+            alert("Necessiteu almenys 3 punts per tancar el polígon.");
+        }
+    }
+
+    // Afegir el nou listener al botó "Tancar polígon"
+    tancarPoligonButton.addEventListener("click", tancarPoligonHandler);
+
+    // Funció per seleccionar punts de l'obstacle
     function seleccionarPuntObstacle(event) {
         if (!window.selectedPolygon) {
             alert("Primer has de crear el polígon principal.");
@@ -485,20 +556,26 @@ function iniciarSeleccioObstacle(map) {
             draggable: false,
         });
 
-        selectedMarkers.push(marker);
         window.obstacleMarkers.push(marker);
 
-        marker.addListener("dragend", () => dibuixarPoligonObstacle());
-        if (selectedMarkers.length >= 2) dibuixarPoligonObstacle();
+        // Dibuixar el polígon de l'obstacle si hi ha suficients punts
+        if (window.obstacleMarkers.length >= 2) {
+            dibuixarPoligonObstacle();
+        }
     }
 
+    // Funció per dibuixar el polígon de l'obstacle
     function dibuixarPoligonObstacle() {
-        if (selectedPolygon) selectedPolygon.setMap(null);
+        // Eliminar el polígon anterior si existeix
+        if (window.obstaclePolygons.length > 0) {
+            window.obstaclePolygons[window.obstaclePolygons.length - 1].setMap(null);
+        }
 
-        const coordinates = selectedMarkers.map((marker) => marker.getPosition());
+        const coordinates = window.obstacleMarkers.map((marker) => marker.getPosition());
         if (coordinates.length >= 3) coordinates.push(coordinates[0]);
 
-        selectedPolygon = new google.maps.Polygon({
+        // Crear un nou polígon temporal
+        const tempPolygon = new google.maps.Polygon({
             paths: coordinates,
             strokeColor: "#FF0000",
             strokeOpacity: 0.8,
@@ -508,20 +585,14 @@ function iniciarSeleccioObstacle(map) {
             map: map,
         });
 
-        if (coordinates.length >= 3) {
-            if (estaPoligonDins(window.selectedPolygon, selectedPolygon)) {
-                calcularAreaObstacle(selectedPolygon);
-                window.obstaclePolygons.push(selectedPolygon);
-                
-            } else {
-                alert("L'obstacle ha d'estar completament dins del polígon principal.");
-                selectedPolygon.setMap(null);
-                selectedMarkers.forEach((marker) => marker.setMap(null));
-                selectedMarkers = [];
-            }
-        }
+        // Afegir el polígon temporal a la llista global
+        window.obstaclePolygons.push(tempPolygon);
     }
 
+    // Afegir el listener per seleccionar punts
+    window.clickListener = map.addListener("click", seleccionarPuntObstacle);
+
+    // Funció per calcular l'àrea de l'obstacle
     function calcularAreaObstacle(polygon) {
         const areaLabel = document.getElementById("areaResult");
         if (!areaLabel || !polygon) return;
@@ -539,26 +610,7 @@ function iniciarSeleccioObstacle(map) {
         const maxPlacas = calcularMaxPlacas(novaAreaTotal);
         actualizarSlider(maxPlacas);
     }
-
-    window.clickListener = map.addListener("click", seleccionarPuntObstacle);
-
-    return () => {
-        google.maps.event.removeListener(window.clickListener);
-        selectedMarkers.forEach((marker) => marker.setMap(null));
-        if (selectedPolygon) selectedPolygon.setMap(null);
-    };
 }
 
-document.getElementById("nouObstacleButton").addEventListener("click", () => {
-    const sidePanel = document.getElementById("sidePanel");
-    sidePanel.classList.remove("open");
 
-    const polygonPrincipal = window.selectedPolygon;
 
-    if (!polygonPrincipal || polygonPrincipal.getPath().getLength() < 3) {
-        alert("Primer has de crear el polígon principal amb almenys 3 punts.");
-        return;
-    }
-
-    iniciarSeleccioObstacle(map);
-});
