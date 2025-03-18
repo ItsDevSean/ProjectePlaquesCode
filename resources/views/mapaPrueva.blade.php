@@ -71,6 +71,11 @@
         </div>
         <div id="map">
         </div>
+
+        <!-- Botó "Tancar polígon" -->
+        <button id="tancarPoligonButton" class="tancar-poligon-button">
+            Tancar polígon
+        </button>
     </div>
 
     
@@ -142,6 +147,10 @@
                         <img src="/img/iconObstaculo.png" alt="panel solar" class="w-8 h-auto">
                         <h3 class="text-lg font-semibold text-gray-800">Selecció de obstacles</h3>
                     </div>
+                </div>
+
+                <div id="obstaclesList" class="obstacles-list">
+                    <!-- Aquí se mostrarán los obstáculos creados -->
                 </div>
             
                 <div class="mb-4">

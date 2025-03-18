@@ -152,7 +152,7 @@
         </div>
 
         <div class="content-section">
-            <h2 class="text-3xl font-bold text-center mb-8 text-[#4adba4]">LENIO</h2>
+            <h2 class="text-3xl font-bold text-center mb-8 text-[#4adba4]">LENIUM</h2>
 
             <div class="max-w-4xl mx-auto space-y-6 text-gray-700">
                 <p class="text-lg text-center">
