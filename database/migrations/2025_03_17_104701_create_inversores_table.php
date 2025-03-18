@@ -17,16 +17,20 @@ return new class extends Migration
             $table->decimal('eficiencia', 5, 2);
             $table->enum('tipo_instalacion', ['monofasica', 'trifasica']);
             $table->integer('garantia_material')->nullable();
-            $table->decimal('potencia_nominal', 10, 2);
+            $table->decimal('potencia_nominal', 10, 2); 
             $table->text('descripcion')->nullable();
-            $table->unsignedBigInteger('fabricante');
+            $table->unsignedBigInteger('fabricante_id'); 
             $table->boolean('microinversor')->default(false);
             $table->integer('garantia_fabricante')->nullable();
             $table->string('imagen_inversor')->nullable();
             $table->string('id_referencia')->nullable();
             $table->timestamps();
 
-            //$table->foreign('fabricante')->references('id')->on('fabricantes')->onDelete('cascade');
+       
+            $table->foreign('fabricante_id') 
+                ->references('id')         
+                ->on('fabricantes')       
+                ->onDelete('cascade');     
         });
     }
 

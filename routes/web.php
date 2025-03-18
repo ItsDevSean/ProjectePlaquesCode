@@ -7,6 +7,7 @@ use App\Http\Controllers\infoEcoController;
 use App\Http\Controllers\DadesClientController;
 use App\Http\Controllers\infoEcoResultadoController;
 use App\Http\Controllers\InversoresController;
+use App\Http\Controllers\FabricanteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\tools\SolarPanelsController;
 
@@ -104,7 +105,7 @@ Route::put('/dades_clients/{id}', [DadesClientController::class, 'update'])->nam
 Route::resource('dades_clients', DadesClientController::class);
 
 
-
+Route::post('/fabricantes', [FabricanteController::class, 'store'])->name('fabricantes.store');
 
 // En tu archivo de rutas
 Route::get('/proyectos', [DadesClientController::class, 'index'])->name('proyectos');
