@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Baterias;
 use Illuminate\Http\Request;
 
@@ -9,15 +10,15 @@ class BateriasController extends Controller
     public function index()
     {
         $baterias = Baterias::all();            
-
-        return view('baterias', compact('baterias', 'baterias'));    }
+        return view('baterias', compact('baterias'));
+    }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -27,19 +28,24 @@ class BateriasController extends Controller
     {
         $request->validate([
             'nombre_bateria' => 'required|string|min:2|max:100',
-            'coste' => 'required|string|min:2|max:100',
-            'garantia_fabricante' => 'required|string|min:2|max:50',
-            'descripcion' => 'required|date',
-            'id_referencia' => 'required|integer',
-            'capacidad' => 'required|integer',
-            'fabricante' => 'required|numeric|min:0',
-            'garantia_material' => 'required|numeric|min:0',
-            'imagen_bateria' => 'required|numeric|min:0',
-
+            'coste' => 'required|numeric|min:0',
+            'garantia_fabricante' => 'nullable|integer|min:0',
+            'descripcion' => 'required|string|min:5',
+            'id_referencia' => 'nullable|string|max:50',
+            'capacidad' => 'required|integer|min:0',
+            'fabricante' => 'required|integer|exists:fabricantes,id',
+            'garantia_material' => 'nullable|integer|min:0',
+            'imagen_bateria' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        Baterias::create($request->all());
+        $data = $request->all();
 
-        return to_route('baterias');    
+        if ($request->hasFile('imagen_bateria')) {
+            $data['imagen_bateria'] = $request->file('imagen_bateria')->store('baterias', 'public');
+        }
+
+        Baterias::create($data);
+
+        return redirect()->route('baterias.index')->with('success', 'Batería creada correctamente.');
     }
 }

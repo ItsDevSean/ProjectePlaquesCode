@@ -64,6 +64,7 @@ Route::get('baterias', [BateriasController::class, 'index'])->name('baterias');
 
 Route::get('inversores', [InversoresController::class, 'index'])->name('inversores');
 
+Route::post('inversores', [InversoresController::class, 'store'])->name('inversores.store');
 
 Route::get('/dades', function(){
     return view('dadesClient');
