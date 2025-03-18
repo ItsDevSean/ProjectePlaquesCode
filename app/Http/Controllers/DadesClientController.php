@@ -11,7 +11,7 @@ class DadesClientController extends Controller
 {
     $clientes = DadesClient::with(['user', 'estado'])
         ->where('user_id', Auth::id()) 
-        ->paginate(4);
+        ->paginate(10);
 
     return view('proyectos', compact('clientes'));
 }
@@ -35,8 +35,7 @@ class DadesClientController extends Controller
 
     DadesClient::create($request->all() + ['user_id' => Auth::id(), 'estado_id' => 1]);
     
-    return redirect()->route('proyectos')->with('success', 'Proyecto creado correctamente.');
-
+    return response()->json(['message' =>'Datos guardados.']);
 }
 public function details($id)
 {
@@ -81,7 +80,7 @@ public function update(Request $request, $id)
     }
 
     // Actualizar los campos del proyecto
-    $proyecto->update($request->all());
+    $proyecto->update($request->all() + ['user_id' => Auth::id(), 'estado_id' => 1]);
     // Redirigir al listado de proyectos con un mensaje de éxito
     return redirect()->route('dades_clients.edit', $id)->with('success', 'Proyecto actualizado correctamente');
 }
