@@ -30,46 +30,46 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                            @if ($clientes->isEmpty())
-                                <tr>
-                                    <td colspan="7" class="px-6 py-4 text-center">No hay proyectos disponibles.</td>
-                                </tr>
-                            @else
-                                @foreach ($clientes as $proyecto)
-                                    <tr class="project-row" data-id="{{ $proyecto->id }}">
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->user?->name ?? 'Usuario no disponible' }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <select name="estado_id" class="estado-select focus:outline-none focus:ring-0 text-sm font-semibold appearance-none bg-transparent cursor-pointer border-none transition-colors duration-300 ease-in-out" data-id="{{ $proyecto->id }}">
-                                                @foreach(App\Models\Estado::all() as $estado)
-                                                    <option value="{{ $estado->id }}" data-color="{{ $estado->nombre }}" {{ $proyecto->estado_id == $estado->id ? 'selected' : '' }}>
-                                                        {{ ucfirst($estado->nombre) }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre_proyecto }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->tarifa }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-500">{{ $proyecto->created_at->format('d/m/Y') }}</div> 
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <form action="{{ route('dades_clients.update', $proyecto->id) }}" method="POST" class="inline">
-                                                @csrf
-                                                @method('PUT')
-                                                <button type="submit" class="text-green-600 hover:text-green-900 mr-3 no-underline">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                            </form>
-                                            
-                                            <!-- Botón para abrir el modal de eliminación -->
-                                            <button onclick="openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}')" class="text-red-600 hover:text-red-900">
-                                                <i class="fas fa-trash-alt"></i>
+                            @foreach ($clientes as $proyecto)
+                                <tr class="project-row" data-id="{{ $proyecto->id }}">
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->user?->name ?? 'Usuario no disponible' }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <select name="estado_id" class="estado-select focus:outline-none focus:ring-0 text-sm font-semibold appearance-none bg-transparent cursor-pointer border-none transition-colors duration-300 ease-in-out" data-id="{{ $proyecto->id }}">
+                                            @foreach(App\Models\Estado::all() as $estado)
+                                                <option 
+                                                    value="{{ $estado->id }}" 
+                                                    data-color="{{ $estado->nombre }}" 
+                                                    {{ $proyecto->estado_id == $estado->id ? 'selected' : '' }}>
+                                                    {{ ucfirst($estado->nombre) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre_proyecto }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->tarifa }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-500">{{ $proyecto->created_at->format('d/m/Y') }}</div> 
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <form action="{{ route('dades_clients.update', $proyecto->id) }}" method="POST" class="inline">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit" class="text-green-600 hover:text-green-900 mr-3 no-underline">
+                                                <i class="fas fa-edit"></i>
                                             </button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endif
+                                        </form>
+                                        
+                                        <!-- Botón para abrir el modal de eliminación -->
+                                        <button
+                                            onclick="openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}')"
+                                            class="text-red-600 hover:text-red-900"
+                                        >
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
 
@@ -81,6 +81,7 @@
         </div>
     </div>
 
+    <!-- Overlay y Side Panel -->
     <div id="overlay" class="overlay">
         <div id="sidePanel" class="side-panel">
             <div class="side-panel-content">
@@ -92,6 +93,7 @@
                 <div class="description-container">
                     <h3>Descripción del Proyecto</h3>
                     <div id="descriptionProject" class="description-content">
+                        <!-- Descripción del proyecto -->
                     </div>
                 </div>
                 <hr>
@@ -107,46 +109,63 @@
                     <a href="#" id="editProjectLink" class="text-green-600 hover:text-green-900 mr-3">
                         <i class="fas fa-edit"></i> Editar
                     </a>
-                    @if (!$clientes->isEmpty())
-                        <button
-                        onclick="closeSidePanel(); setTimeout(() => openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}'), 300);"
+                    <button
+                        onclick="openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}')"
                         class="text-red-600 hover:text-red-900"
-                        >
-                            <i class="fas fa-trash-alt"></i> Eliminar
-                        </button>
-                    @endif
+                    >
+                        <i class="fas fa-trash-alt"></i> Eliminar
+                    </button>
                 </div>
                 
                 <button class="close-btn" onclick="closeSidePanel()">X</button>
             </div>
         </div>
     </div>
-    <!-- Modal de confirmación de eliminación -->
+
+   
     <div id="modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
             <h2 class="text-xl font-bold mb-4">¿Estás seguro?</h2>
             <p class="mb-4">
-                Eliminación del proyecto.
-                <br><br>
-                Esta acción no puede deshacerse.
-                <br><br>
+                Eliminación del proyecto.<br><br>
+                Esta acción no puede deshacerse.<br><br>
                 Para confirmar la eliminación, escribe el nombre del proyecto:
                 <strong id="projectoName"></strong>.
             </p>
-            <input type="text" id="confirmationInput" class="w-full p-2 border border-gray-300 rounded mb-4"placeholder="Escribe el nombre del proyecto"/>
+            <input
+                type="text"
+                id="confirmationInput"
+                class="w-full p-2 border border-gray-300 rounded mb-4"
+                placeholder="Escribe el nombre del proyecto"
+            />
             <div class="flex justify-end space-x-4">
-                <button onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Cancelar</button>
-                <button onclick="confirmDeletion()" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Eliminar</button>
+                <button
+                    onclick="closeModal()"
+                    class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+                >
+                    Cancelar
+                </button>
+                <button
+                    onclick="confirmDeletion()"
+                    class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                >
+                    Eliminar
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Formulario de eliminación -->
-    <form id="deleteProjectForm" action="" method="POST" class="hidden" data-route="{{ route('dades_clients.destroy', '') }}">
-    @csrf
-    @method('DELETE')
-    </form>
-
+ 
+    <form
+        id="deleteProjectForm"
+        action=""
+        method="POST"
+        class="hidden"
+    >
+        @csrf
+        @method('DELETE')
+    </form> 
+    
     <script src="build/js/sidePanel.js"></script>
     <script src="build/js/modal.js"></script>
     <script src="build/js/estado.js"></script>
