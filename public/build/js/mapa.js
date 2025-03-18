@@ -10,8 +10,23 @@ window.initMap = function () {
       heading: 0,
   });
 
+    window.obstacleMarkers = [];
+    window.obstaclePolygons = [];
+
   const autocomplete = initAutocomplete(map);
-  document.getElementById("startSelection").addEventListener("click", () => iniciarSeleccio(map));
+  document.getElementById("startSelection").addEventListener("click", () => {
+    const button = document.getElementById("startSelection");
+  
+    if (button.textContent === "Reiniciar selecció") {
+      button.textContent = "Seleccionar area"; // Torna a canviar el text del botó
+      reiniciarEstado(map);
+      const sidePanel = document.getElementById("sidePanel");
+      sidePanel.classList.remove("open");
+    } else {
+      button.textContent = "Reiniciar selecció"; // Canvia el text del botó
+      iniciarSeleccio(map); // Inicia la selecció d'una nova àrea
+    }
+  });
   document.getElementById("buttonBuscar").addEventListener("click", () => geocodeAddress(map));
   document.getElementById("nouObstacleButton").addEventListener("click", () => iniciarSeleccioObstacle(map));
 };
@@ -115,8 +130,6 @@ function iniciarSeleccio(map) {
 
   // Guarda el listener para poder eliminarlo después
   window.clickListener = clickListener;
-
-  
 }
 
 function reiniciarEstado(map) {
@@ -125,33 +138,57 @@ function reiniciarEstado(map) {
         window.selectedMarkers.forEach((marker) => marker.setMap(null));
         window.selectedMarkers = [];
     }
-  
-    // Elimina el polígono anterior
+
+    // Elimina el polígono principal anterior
     if (window.selectedPolygon) {
         window.selectedPolygon.setMap(null);
+        window.selectedPolygon = null;
     }
-  
+
     // Crea un nuevo array para los marcadores
     window.selectedMarkers = [];
-  
-    // Crea un nuevo polígono (sin asignarlo todavía)
-    window.selectedPolygon = null;
-  
+
     // Limpia el área mostrada
     document.getElementById("areaResult").innerText = "";
-  
+
     // Elimina el botón "Configurar pla:" si existe
     const configurarPlaButton = document.querySelector(".configurar-pla-button");
     if (configurarPlaButton) {
         configurarPlaButton.remove();
     }
-  
+
     // Elimina el listener de clic anterior si existe
     if (window.clickListener) {
         google.maps.event.removeListener(window.clickListener);
         window.clickListener = null;
     }
-  }
+
+    // Elimina todos los polígonos de los obstáculos
+    if (window.obstaclePolygons) {
+        window.obstaclePolygons.forEach((polygon) => polygon.setMap(null));
+        window.obstaclePolygons = [];
+    }
+
+    if (window.obstacleMarkers) {
+        window.obstacleMarkers.forEach((marker) => marker.setMap(null));
+        window.obstacleMarkers = [];
+    }
+
+    // Elimina cualquier marcador o polígono adicional que pueda haber
+    if (window.marcadorExistente) {
+        window.marcadorExistente.setMap(null);
+        window.marcadorExistente = null;
+    }
+
+    // Reinicia cualquier otro estado que pueda ser necesario
+    if (window.edificis) {
+        window.edificis = [];
+    }
+
+    // Limpia el localStorage si es necesario
+    localStorage.removeItem("edificiData");
+}
+
 
 // Función para seleccionar puntos
 function seleccionarPunt(event, map) {
@@ -374,10 +411,7 @@ document.getElementById("closePanelButton").addEventListener("click", () => {
 
 
 
-document.getElementById("startSelection").addEventListener("click", () => {
-    reiniciarEstado(map); // Reinicia el estado, incluyendo eliminar el botón "Configurar pla:"
-    iniciarSeleccio(map); // Inicia una nueva selección
-  });
+
 
 // Cerrar el side panel al hacer clic fuera de él
 document.addEventListener("click", (event) => {
@@ -415,6 +449,14 @@ function iniciarSeleccioObstacle(map) {
     let selectedMarkers = [];
     let selectedPolygon = null;
 
+    if (!window.obstaclePolygons) {
+        window.obstaclePolygons = [];
+    }
+
+    if (!window.obstacleMarkers) {
+        window.obstacleMarkers = [];
+    }
+
     if (window.clickListener) {
         google.maps.event.removeListener(window.clickListener);
     }
@@ -444,6 +486,7 @@ function iniciarSeleccioObstacle(map) {
         });
 
         selectedMarkers.push(marker);
+        window.obstacleMarkers.push(marker);
 
         marker.addListener("dragend", () => dibuixarPoligonObstacle());
         if (selectedMarkers.length >= 2) dibuixarPoligonObstacle();
@@ -468,6 +511,8 @@ function iniciarSeleccioObstacle(map) {
         if (coordinates.length >= 3) {
             if (estaPoligonDins(window.selectedPolygon, selectedPolygon)) {
                 calcularAreaObstacle(selectedPolygon);
+                window.obstaclePolygons.push(selectedPolygon);
+                
             } else {
                 alert("L'obstacle ha d'estar completament dins del polígon principal.");
                 selectedPolygon.setMap(null);
