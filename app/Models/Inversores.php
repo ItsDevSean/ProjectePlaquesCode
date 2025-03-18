@@ -10,7 +10,7 @@ class Inversores extends Model
 
     protected $fillable = [
         'nombre_inversor',
-        'eficincia',
+        'eficiencia',
         'tipo_instalacion',
         'garantia_material',
         'potencia_nominal',
@@ -24,6 +24,6 @@ class Inversores extends Model
 
     public function fabricante()
     {
-        return $this->belongsTo(Fabricante::class, 'fabricante');
+        return $this->belongsTo(Fabricante::class, 'fabricante_id');
     }
 }

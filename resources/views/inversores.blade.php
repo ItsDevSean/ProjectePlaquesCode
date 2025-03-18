@@ -49,14 +49,6 @@
                                 <td class="px-6 py-3">{{ number_format($inversor->coste, 2) }} €</td>
                                 <td class="px-6 py-3">{{ $inversor->fabricante }}</td>
                                 <td class="px-6 py-3">{{ $inversor->created_at->format('d/m/Y') }}</td>
-                                <td class="px-6 py-3">
-                                    <a href="{{ route('inversores.edit', $inversor->id) }}" class="text-blue-500 hover:underline">Editar</a>
-                                    <form action="{{ route('inversores.destroy', $inversor->id) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-500 hover:underline">Eliminar</button>
-                                    </form>
-                                </td>
                             </tr>
                         @endforeach
                     @endif

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class InversoresController extends Controller
 {
     public function index()
-    {
+    {    
         $inversores = Inversores::all();            
         $fabricantes = Fabricante::all(); 
     return view('inversores', compact('inversores', 'fabricantes'));

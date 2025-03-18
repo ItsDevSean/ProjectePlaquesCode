@@ -30,46 +30,53 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                            @foreach ($clientes as $proyecto)
-                                <tr class="project-row" data-id="{{ $proyecto->id }}">
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->user?->name ?? 'Usuario no disponible' }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <select name="estado_id" class="estado-select focus:outline-none focus:ring-0 text-sm font-semibold appearance-none bg-transparent cursor-pointer border-none transition-colors duration-300 ease-in-out" data-id="{{ $proyecto->id }}">
-                                            @foreach(App\Models\Estado::all() as $estado)
-                                                <option 
-                                                    value="{{ $estado->id }}" 
-                                                    data-color="{{ $estado->nombre }}" 
-                                                    {{ $proyecto->estado_id == $estado->id ? 'selected' : '' }}>
-                                                    {{ ucfirst($estado->nombre) }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre_proyecto }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->tarifa }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-500">{{ $proyecto->created_at->format('d/m/Y') }}</div> 
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <form action="{{ route('dades_clients.update', $proyecto->id) }}" method="POST" class="inline">
-                                            @csrf
-                                            @method('PUT')
-                                            <button type="submit" class="text-green-600 hover:text-green-900 mr-3 no-underline">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                        </form>
-                                        
-                                        <!-- Botón para abrir el modal de eliminación -->
-                                        <button
-                                            onclick="openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}')"
-                                            class="text-red-600 hover:text-red-900"
-                                        >
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
+                            @if ($clientes->isEmpty())
+                                <tr>
+                                    <td colspan="7" class="px-6 py-4 text-center text-gray-500">
+                                        No hay proyectos disponibles.
                                     </td>
                                 </tr>
-                            @endforeach
+                            @else
+                                @foreach ($clientes as $proyecto)
+                                    <tr class="project-row" data-id="{{ $proyecto->id }}">
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->user?->name ?? 'Usuario no disponible' }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <select name="estado_id" class="estado-select focus:outline-none focus:ring-0 text-sm font-semibold appearance-none bg-transparent cursor-pointer border-none transition-colors duration-300 ease-in-out" data-id="{{ $proyecto->id }}">
+                                                @foreach(App\Models\Estado::all() as $estado)
+                                                    <option 
+                                                        value="{{ $estado->id }}" 
+                                                        data-color="{{ $estado->nombre }}" 
+                                                        {{ $proyecto->estado_id == $estado->id ? 'selected' : '' }}>
+                                                        {{ ucfirst($estado->nombre) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre_proyecto }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->tarifa }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-500">{{ $proyecto->created_at->format('d/m/Y') }}</div> 
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <form action="{{ route('dades_clients.update', $proyecto->id) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="text-green-600 hover:text-green-900 mr-3 no-underline">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </form>
+                                            
+                                            <button
+                                                onclick="openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}')"
+                                                class="text-red-600 hover:text-red-900"
+                                            >
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
 
@@ -109,12 +116,14 @@
                     <a href="#" id="editProjectLink" class="text-green-600 hover:text-green-900 mr-3">
                         <i class="fas fa-edit"></i> Editar
                     </a>
-                    <button
-                        onclick="openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}')"
-                        class="text-red-600 hover:text-red-900"
-                    >
-                        <i class="fas fa-trash-alt"></i> Eliminar
-                    </button>
+                    @if (!$clientes->isEmpty())
+                        <button
+                            onclick="openModal('{{ $clientes->first()->nombre_proyecto }}', '{{ $clientes->first()->id }}')"
+                            class="text-red-600 hover:text-red-900"
+                        >
+                            <i class="fas fa-trash-alt"></i> Eliminar
+                        </button>
+                    @endif
                 </div>
                 
                 <button class="close-btn" onclick="closeSidePanel()">X</button>
@@ -122,7 +131,7 @@
         </div>
     </div>
 
-   
+    <!-- Modal de confirmación de eliminación -->
     <div id="modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
             <h2 class="text-xl font-bold mb-4">¿Estás seguro?</h2>
@@ -155,7 +164,7 @@
         </div>
     </div>
 
- 
+    <!-- Formulario de eliminación -->
     <form
         id="deleteProjectForm"
         action=""
