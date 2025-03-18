@@ -74,7 +74,7 @@
                     </button>
                 </div>
 
-                <form action="{{ route('inversores.store') }}" method="POST" enctype="multipart/form-data" class="mt-4">
+                <form action="{{ route('inversores.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="grid grid-cols-2 gap-4">
                         <div>
@@ -84,7 +84,7 @@
 
                         <div>
                             <label for="eficiencia" class="block text-sm font-medium text-gray-700">Eficiencia</label>
-                            <input type="text" name="eficiencia" id="eficiencia" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                            <input type="text" name="eficiencia" id="eficiencia" placeholder="Eficiencia del inversor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                         </div>
 
                         <div>
@@ -144,7 +144,7 @@
 
                         <div>
                             <label for="imagen_inversor" class="block text-sm font-medium text-gray-700">Imagen del Inversor</label>
-                            <input type="file" name="imagen_inversor" id="imagen_inversor" accept="image/*" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                            <input type="text" name="imagen_inversor" id="imagen_inversor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                             <img id="preview" class="mt-2 hidden w-32 h-32 object-cover">
                         </div>
                     </div>
