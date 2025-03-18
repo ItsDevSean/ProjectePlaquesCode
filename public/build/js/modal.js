@@ -5,7 +5,11 @@ let projectIdToDelete = '';
             projectNameToDelete = nombreProyecto;
             projectIdToDelete = idProyecto;
             document.getElementById('projectoName').textContent = nombreProyecto;
-            document.getElementById('deleteProjectForm').action = `{{ route('dades_clients.destroy', '') }}/${idProyecto}`;
+
+            // Establecer correctamente la URL de eliminación
+            document.getElementById('deleteProjectForm').action = "/dades_clients/" + idProyecto;
+
+            // Mostrar el modal
             document.getElementById('modal').classList.remove('hidden');
         }
 
