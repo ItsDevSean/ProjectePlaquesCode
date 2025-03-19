@@ -120,23 +120,13 @@ function crearMarcador(map, latLng) {
       window.edificis.push(edifici);
 
       localStorage.setItem("edificiData", JSON.stringify(edifici));
-
-      const url = `/formulari?lat=${edifici.lat}&lng=${edifici.lng}&inclinacion=${edifici.inclinacion}&area=${edifici.area}`;
-
-      
-
-      updateEdificiSelect(edifici);
-      document.getElementById("edifici").value = edifici.id;
-      obtenirDadesEdifici(latLng.lat(), latLng.lng());
-  
+      console.log(localStorage)  
 }
 
 // Comienza la selección de puntos
 function iniciarSeleccio(map) {
-  // Reinicia todo el estado
-  reiniciarEstado(map);
-
   // Añade un nuevo evento de clic
+  window.selectedMarkers = [];
   const clickListener = map.addListener("click", (event) => {
       seleccionarPunt(event, map);
   });
@@ -149,7 +139,7 @@ function reiniciarEstado(map) {
     // Elimina todos los marcadores
     if (window.selectedMarkers) {
         window.selectedMarkers.forEach((marker) => marker.setMap(null));
-        window.selectedMarkers = [];
+        
     }
 
     // Elimina el polígono principal anterior
@@ -229,11 +219,11 @@ function seleccionarPunt(event, map) {
     });
 
     window.selectedMarkers.push(marker);
-
+    console.log(selectedMarkers.length)
     marker.addListener("dragend", function () {
         dibuixarPoligon(map);
     });
-
+    
     if (window.selectedMarkers.length >= 2) {
         dibuixarPoligon(map);
     }
@@ -311,12 +301,18 @@ function calcularArea(selectedPolygon) {
     if (selectedPolygon) {
         const area = google.maps.geometry.spherical.computeArea(selectedPolygon.getPath());
         areaLabel.innerText = `Àrea: ${area.toFixed(2)} m²`;
+        
 
-        // Guardar el área en localStorage
+        // Obtener los datos existentes de edificiData
+        console.log(localStorage)
         const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
+        
+        // Actualizar solo la propiedad 'area' sin sobrescribir las demás
         edificiData.area = area.toFixed(2);
-        localStorage.setItem("edificiData", JSON.stringify(edificiData));
 
+        // Guardar el objeto actualizado en localStorage
+        localStorage.setItem("edificiData", JSON.stringify(edificiData));
+        console.log(localStorage);
         // Calcular el número máximo de placas con el área actual
         const maxPlacas = calcularMaxPlacas(area);
         actualizarSlider(maxPlacas);
@@ -340,6 +336,7 @@ function calcularArea(selectedPolygon) {
                 // Rellenar el formulario con los datos guardados
                 const edificiData = JSON.parse(localStorage.getItem("edificiData"));
                 if (edificiData) {
+                    // Asignar el valor de inclinacion al campo del formulario
                     document.getElementById("inclinacion").value = edificiData.inclinacion;
                     document.getElementById("area").value = edificiData.area;
                 }
@@ -461,27 +458,12 @@ function estaPoligonDins(polygonPrincipal, polygonObstacle) {
 }
 
 function iniciarSeleccioObstacle(map) {
-    // Netejar l'estat anterior
-    if (window.obstacleMarkers) {
-        window.obstacleMarkers.forEach((marker) => marker.setMap(null));
-        window.obstacleMarkers = [];
-    }
-
-    if (window.obstaclePolygons) {
-        window.obstaclePolygons.forEach((polygon) => polygon.setMap(null));
-        window.obstaclePolygons = [];
-    }
-
-    if (window.clickListener) {
-        google.maps.event.removeListener(window.clickListener);
-    }
+    // Eliminar qualsevol listener anterior del botó "Tancar polígon"
+    const tancarPoligonButton = document.getElementById("tancarPoligonButton");
+    tancarPoligonButton.removeEventListener("click", tancarPoligonHandler);
 
     // Mostrar el botó "Tancar polígon"
-    const tancarPoligonButton = document.getElementById("tancarPoligonButton");
     tancarPoligonButton.style.display = "block";
-
-    // Eliminar qualsevol listener anterior del botó "Tancar polígon"
-    tancarPoligonButton.removeEventListener("click", tancarPoligonHandler);
 
     // Funció per gestionar el tancament del polígon
     function tancarPoligonHandler() {
