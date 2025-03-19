@@ -7,8 +7,6 @@ function toggleModal() {
 function formSubmit(event) {
     event.preventDefault(); // Prevent default form submission
 
-    console.log("Hello World");
-
     const form = document.getElementById('panelForm');
     const superficieInput = document.getElementById('superficie'); 
 
@@ -16,8 +14,6 @@ function formSubmit(event) {
         console.error("Form not found!");
         return;
     }
-
-    console.log("Form found!", form);
 
     // Get the values from the form
     const longitudInput = document.getElementById('longitud');
@@ -31,19 +27,18 @@ function formSubmit(event) {
     // Calculate the area
     const longitud = parseFloat(longitudInput.value) || 0;
     const anchura = parseFloat(anchuraInput.value) || 0;
-    const area = (longitud * anchura)  // Convert mm² to m²
-    superficieInput.value = area
+    const area = (longitud * anchura)  
+    superficieInput.value = area //Update the area of the panel
 
-    // Log the values
-    console.log("L:", longitud);
-    console.log("A:", anchura);
-    console.log("Area:", superficieInput.value);
+    //Fetch the validation and only close the view
+    //if the validation is coorect
+
 
     // Now submit the form after updating the input
     form.submit();
 }
 
-// Attach the function to the submit button click
+// Triger the formSubmit when button is click
 document.addEventListener('DOMContentLoaded', function () {
     const submitButton = document.getElementById("submitButton");
     if (submitButton) {

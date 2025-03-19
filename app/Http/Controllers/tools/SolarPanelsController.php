@@ -42,8 +42,8 @@ class SolarPanelsController extends Controller
             'date_manufacturer' => 'required|date',
             'panel_warranty' => 'nullable|integer',
             'performance_warranty' => 'nullable|integer',
-            'longitud' => 'required|numeric|min:0',
-            'anchura' => 'required|numeric|min:0',
+            'longitud' => 'required|numeric|min:1|max:5',
+            'anchura' => 'required|numeric|min:1|max:5',
             'espesor' => 'required|numeric|min:0',
             'peso' => 'required|numeric|min:0',
             'superficie' => 'required|numeric|min:0',
@@ -56,7 +56,7 @@ class SolarPanelsController extends Controller
 
         SolarPanelsModel::create($request->all() + ['user_id' => Auth::id()]);
 
-        return to_route('panels');    
+        return to_route('panels')->with('success', 'Panel registrado correctamente.');;    
     }
 
     /**
