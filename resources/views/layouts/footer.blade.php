@@ -1,89 +1,70 @@
+<div class="bg-[#34495E] text-white py-6">
+    <!-- Logo de la empresa -->
+    <div class="max-w-screen-lg mx-auto px-4 sm:px-6 text-center mb-4">
+        <img src="{{ asset('build/img/logo.png') }}" alt="Lenium" class="w-20 h-20 mx-auto">
+    </div>
 
-<div class="bg-[#34495E] mx-auto text-center">
-    
-    <div class="max-w-screen-lg py-5 px-4 sm:px-6 text-white sm:flex justify-between mx-auto">
-        <div class="p-5 sm:w-2/12 border-r">
-            <div class="text-sm uppercase text-[#49DBA3] font-bold">Menu</div>
-            <ul>
-                <li class="my-2">
-                    <a class="hover:text-[#49DBA3]" href="#">Home</a>
-                </li>
-                <li class="my-2">
-                    <a class="hover:text-[#49DBA3]" href="#">Services</a>
-                </li>
-                <li class="my-2">
-                    <a class="hover:text-[#49DBA3]" href="#">Products</a>
-                </li>
-                <li class="my-2">
-                    <a class="hover:text-[#49DBA3]" href="#">Pricing</a>
-                </li>
+    <!-- Contenido del footer -->
+    <div class="max-w-screen-lg mx-auto px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-4 gap-6">
+        <!-- Columna 1: Información de la empresa -->
+        <div class="sm:col-span-1">
+            <h3 class="text-lg font-bold text-[#49DBA3] mb-2">LENIUM</h3>
+            <p class="text-xs">Leading renewable energy company. More than 28 years of work to improve the lives of our customers.</p>
+        </div>
+
+        <!-- Columna 2: Contacto -->
+        <div class="sm:col-span-1">
+            <h4 class="text-base font-bold text-[#49DBA3] mb-2">CONTACT</h4>
+            <p class="text-xs">Av. de la Meridiana 308, Ent-G51, 08027, Barcelona (España)</p>
+            <p class="text-xs">(+34) 667 957 521</p>
+            <p class="text-xs">29, Rue Amr Ibn Ass, Nº26, Tangier (Morocco)</p>
+            <p class="text-xs">(+212) 668 168 449</p>
+            <p class="text-xs">info@lenium.es</p>
+        </div>
+
+        <!-- Columna 3: Páginas de interés -->
+        <div class="sm:col-span-1">
+            <h4 class="text-base font-bold text-[#49DBA3] mb-2">INTERESTING PAGES</h4>
+            <ul class="text-xs">
+                <li class="mb-1"><a href="#" class="hover:text-[#49DBA3]">Lenium</a></li>
+                <li class="mb-1"><a href="#" class="hover:text-[#49DBA3]">Renewable energies</a></li>
+                <li class="mb-1"><a href="#" class="hover:text-[#49DBA3]">Financing</a></li>
+                <li class="mb-1"><a href="#" class="hover:text-[#49DBA3]">R&D</a></li>
+                <li class="mb-1"><a href="#" class="hover:text-[#49DBA3]">Projects</a></li>
+                <li class="mb-1"><a href="#" class="hover:text-[#49DBA3]">Blog</a></li>
             </ul>
         </div>
-        <div class="p-5 sm:w-7/12 border-r text-center">
-            <h3 class="font-bold text-xl text-[#49DBA3] mb-4">Componentity</h3>
-            <p class="text-gray-200 text-sm mb-10">Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-        </div>
-        <div class="p-5 sm:w-3/12">
-            <div class="text-sm uppercase text-[#49DBA3] font-bold">Contact Us</div>
-            <ul>
-                <li class="my-2">
-                    <a class="hover:text-[#49DBA3]" href="#">XXX XXXX, Floor 4 San Francisco, CA</a>
-                </li>
-                <li class="my-2">
-                    <a class="hover:text-[#49DBA3]" href="#">contact@company.com</a>
-                </li>
+
+        <!-- Columna 4: Redes sociales y legal -->
+        <div class="sm:col-span-1">
+            <h4 class="text-base font-bold text-[#49DBA3] mb-2">FOLLOW US ON</h4>
+            <div class="flex space-x-3">
+                <a href="#" class="text-white hover:text-[#49DBA3]">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+                    </svg>
+                </a>
+                <a href="#" class="text-white hover:text-[#49DBA3]">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <h4 class="text-base font-bold text-[#49DBA3] mt-4 mb-2">LANGUAGES</h4>
+            <p class="text-xs">■ 無</p>
+
+            <h4 class="text-base font-bold text-[#49DBA3] mt-4 mb-2">LEGAL</h4>
+            <ul class="text-xs">
+                <li class="mb-1"><a href="#" class="hover:text-[#49DBA3]">Legal Warning</a></li>
+                <li class="mb-1"><a href="#" class="hover:text-[#49DBA3]">Privacy Policy</a></li>
+                <li class="mb-1"><a href="#" class="hover:text-[#49DBA3]">Cookies Policy</a></li>
             </ul>
         </div>
     </div>
-    <div class="flex py-5 m-auto text-gray-800 text-sm flex-col items-center border-t max-w-screen-xl">
-        <div class="md:flex-auto md:flex-row-reverse mt-2 flex-row flex">
-            <a href="#" class="w-6 mx-1">
-                <svg class="fill-current cursor-pointer text-white hover:text-[#49DBA3]" width="100%" height="100%"
-                    viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
-                    style="fill-rule: evenodd; clip-rule: evenodd; stroke-linejoin: round; stroke-miterlimit: 2;">
-                    <path id="Twitter" d="M24,12c0,6.627 -5.373,12 -12,12c-6.627,0 -12,-5.373 -12,-12c0,-6.627
-                  5.373,-12 12,-12c6.627,0 12,5.373 12,12Zm-6.465,-3.192c-0.379,0.168
-                  -0.786,0.281 -1.213,0.333c0.436,-0.262 0.771,-0.676
-                  0.929,-1.169c-0.408,0.242 -0.86,0.418 -1.341,0.513c-0.385,-0.411
-                  -0.934,-0.667 -1.541,-0.667c-1.167,0 -2.112,0.945 -2.112,2.111c0,0.166
-                  0.018,0.327 0.054,0.482c-1.754,-0.088 -3.31,-0.929
-                  -4.352,-2.206c-0.181,0.311 -0.286,0.674 -0.286,1.061c0,0.733 0.373,1.379
-                  0.94,1.757c-0.346,-0.01 -0.672,-0.106 -0.956,-0.264c-0.001,0.009
-                  -0.001,0.018 -0.001,0.027c0,1.023 0.728,1.877 1.694,2.07c-0.177,0.049
-                  -0.364,0.075 -0.556,0.075c-0.137,0 -0.269,-0.014 -0.397,-0.038c0.268,0.838
-                  1.048,1.449 1.972,1.466c-0.723,0.566 -1.633,0.904 -2.622,0.904c-0.171,0
-                  -0.339,-0.01 -0.504,-0.03c0.934,0.599 2.044,0.949 3.237,0.949c3.883,0
-                  6.007,-3.217 6.007,-6.008c0,-0.091 -0.002,-0.183 -0.006,-0.273c0.413,-0.298
-                  0.771,-0.67 1.054,-1.093Z"></path>
-                </svg>
-            </a>
-            
-            
-            <a href="#" class="w-6 mx-1">
-                <svg class="fill-current cursor-pointer text-white hover:text-[#49DBA3]" width="100%" height="100%"
-                    viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
-                    style="fill-rule: evenodd; clip-rule: evenodd; stroke-linejoin: round; stroke-miterlimit: 2;">
-                    <path id="Shape" d="M7.3,0.9c1.5,-0.6 3.1,-0.9 4.7,-0.9c1.6,0 3.2,0.3 4.7,0.9c1.5,0.6 2.8,1.5
-                  3.8,2.6c1,1.1 1.9,2.3 2.6,3.8c0.7,1.5 0.9,3 0.9,4.7c0,1.7 -0.3,3.2
-                  -0.9,4.7c-0.6,1.5 -1.5,2.8 -2.6,3.8c-1.1,1 -2.3,1.9 -3.8,2.6c-1.5,0.7
-                  -3.1,0.9 -4.7,0.9c-1.6,0 -3.2,-0.3 -4.7,-0.9c-1.5,-0.6 -2.8,-1.5
-                  -3.8,-2.6c-1,-1.1 -1.9,-2.3 -2.6,-3.8c-0.7,-1.5 -0.9,-3.1 -0.9,-4.7c0,-1.6
-                  0.3,-3.2 0.9,-4.7c0.6,-1.5 1.5,-2.8 2.6,-3.8c1.1,-1 2.3,-1.9
-                  3.8,-2.6Zm-0.3,7.1c0.6,0 1.1,-0.2 1.5,-0.5c0.4,-0.3 0.5,-0.8 0.5,-1.3c0,-0.5
-                  -0.2,-0.9 -0.6,-1.2c-0.4,-0.3 -0.8,-0.5 -1.4,-0.5c-0.6,0 -1.1,0.2
-                  -1.4,0.5c-0.3,0.3 -0.6,0.7 -0.6,1.2c0,0.5 0.2,0.9 0.5,1.3c0.3,0.4 0.9,0.5
-                  1.5,0.5Zm1.5,10l0,-8.5l-3,0l0,8.5l3,0Zm11,0l0,-4.5c0,-1.4 -0.3,-2.5
-                  -0.9,-3.3c-0.6,-0.8 -1.5,-1.2 -2.6,-1.2c-0.6,0 -1.1,0.2 -1.5,0.5c-0.4,0.3
-                  -0.8,0.8 -0.9,1.3l-0.1,-1.3l-3,0l0.1,2l0,6.5l3,0l0,-4.5c0,-0.6 0.1,-1.1
-                  0.4,-1.5c0.3,-0.4 0.6,-0.5 1.1,-0.5c0.5,0 0.9,0.2 1.1,0.5c0.2,0.3 0.4,0.8
-                  0.4,1.5l0,4.5l2.9,0Z"></path>
-                </svg>
-            </a>
-            
-        </div>
-        <div class="my-5 text-white">© Copyright 2023. All Rights Reserved.</div>
+
+    <!-- Derechos de autor -->
+    <div class="border-t border-gray-700 mt-6 pt-4 text-center">
+        <p class="text-xs">&copy; 2025 Lenium | Todos los derechos reservados</p>
     </div>
 </div>
