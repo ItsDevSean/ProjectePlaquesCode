@@ -64,7 +64,7 @@
         <input type="number" name="peso" class="border p-2 rounded w-full">
     </div>
 
-    <div>
+    <div style="display: none;">
         <label>Superficie (m²)</label>
         <input type="number" id="superficie" name="superficie" class="border p-2 rounded w-full">
     </div>

@@ -40,8 +40,8 @@ class SolarPanelsController extends Controller
             'manufacturer' => 'required|string|min:2|max:100',
             'panel_type' => 'required|string|min:2|max:50',
             'date_manufacturer' => 'required|date',
-            'panel_warranty' => 'required|integer',
-            'performance_warranty' => 'required|integer',
+            'panel_warranty' => 'nullable|integer',
+            'performance_warranty' => 'nullable|integer',
             'longitud' => 'required|numeric|min:0',
             'anchura' => 'required|numeric|min:0',
             'espesor' => 'required|numeric|min:0',
@@ -50,7 +50,7 @@ class SolarPanelsController extends Controller
             'descripcion' => 'nullable|string',
             'url_fabricante' => 'nullable|string',
             'imagen_panel' => 'nullable|string',
-            'material_marco' => 'required|string',
+            'material_marco' => 'nullable|string',
             'color_panel' => 'nullable|string'
         ]);
 
