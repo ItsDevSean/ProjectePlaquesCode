@@ -12,6 +12,7 @@ class InversoresController extends Controller
     {    
         $inversores = Inversores::all();            
         $fabricantes = Fabricante::all(); 
+
     return view('inversores', compact('inversores', 'fabricantes'));
     }
 

@@ -10,7 +10,7 @@ class FabricanteController extends Controller
     public function index()
     {
         $fabricantes = Fabricante::all();
-        return response()->json($fabricantes);
+        return view('inversores', compact('inversores', 'fabricantes'));
     }
 
     public function store(Request $request)
