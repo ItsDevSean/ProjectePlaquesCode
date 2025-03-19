@@ -522,16 +522,33 @@ function iniciarSeleccioObstacle(map) {
                 // Afegir el polígon a l'obstacle actual
                 window.currentObstacle.polygons.push(obstaclePolygon);
     
+                // Calcular l'àrea de l'obstacle
+                const areaObstacle = google.maps.geometry.spherical.computeArea(obstaclePolygon.getPath());
+    
                 // Afegir l'obstacle a la llista visual (només un element)
                 const obstaclesList = document.getElementById("obstaclesList");
                 const obstacleItem = document.createElement("div");
                 obstacleItem.className = "obstacle-item";
-                obstacleItem.innerText = `Obstacle ${window.obstacles.length + 1}`; // +1 perquè comenci des de 1
+                obstacleItem.innerHTML = `
+                    <div>Obstacle ${window.obstacles.length + 1}</div>
+                    <div>Àrea: ${areaObstacle.toFixed(2)} m²</div>
+                `;
                 obstaclesList.appendChild(obstacleItem);
                 console.log("Afegint obstacle a la llista");
     
-                // Calcular l'àrea de l'obstacle
-                calcularAreaObstacle(obstaclePolygon);
+                // Actualitzar l'àrea total del polígon principal
+                const areaLabel = document.getElementById("areaResult");
+                const areaPrincipal = parseFloat(areaLabel.innerText.replace("Àrea: ", "").replace(" m²", ""));
+                const novaAreaTotal = areaPrincipal - areaObstacle;
+    
+                areaLabel.innerText = `Àrea: ${novaAreaTotal.toFixed(2)} m²`;
+    
+                const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
+                edificiData.area = novaAreaTotal.toFixed(2);
+                localStorage.setItem("edificiData", JSON.stringify(edificiData));
+    
+                const maxPlacas = calcularMaxPlacas(novaAreaTotal);
+                actualizarSlider(maxPlacas);
     
                 alert("Polígon tancat. No es poden afegir més punts a aquest obstacle.");
             } else {
@@ -542,7 +559,6 @@ function iniciarSeleccioObstacle(map) {
             alert("Necessiteu almenys 3 punts per tancar el polígon.");
         }
     }
-
     // Funció per seleccionar punts de l'obstacle
     function seleccionarPuntObstacle(event) {
         if (!window.selectedPolygon) {
