@@ -52,6 +52,19 @@
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $inversor->fabricante->nombre }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $inversor->tipo_instalacion }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $inversor->created_at->format('d/m/Y') }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                            <form action="{{ route('inversores.update', $inversor->id) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="text-green-600 hover:text-green-900 mr-3 no-underline">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </form>
+                                            
+                                            <button onclick="openModalElim('{{ $inversor->nombre_inversor }}', '{{ $inversor->id }}')" class="text-red-600 hover:text-red-900">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
                                         </tr>
                                     @endforeach
                                 @endif
@@ -64,7 +77,8 @@
                         <div class="bg-white rounded-lg shadow-lg w-full max-w-3xl p-6">
                             <div class="flex justify-between items-center border-b pb-4">
                                 <h2 class="text-xl font-semibold">Crear Nuevo Inversor</h2>
-                                
+                                <form action="{{ route('inversores.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
                                 <div class="flex items-center gap-8">
                                     <button type="submit" class="bg-[#49DBA3] text-white rounded-md hover:bg-[#36B89A] py-2 px-2 text-sm">
                                         Crear Inversor
@@ -75,9 +89,6 @@
                                     </button>
                                 </div>
                             </div>
-
-                            <form action="{{ route('inversores.store') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
                                 <div class="grid grid-cols-2 gap-10">
                                     <div>
                                         <label for="nombre_inversor" class="block text-sm font-medium text-gray-700">Nombre del Inversor</label>
@@ -90,6 +101,7 @@
                                     </div>
 
                                     <div>
+                                    <label for="garantia_material" class="block text-sm font-medium text-gray-700">Tipo de instalación</label>
                                     <select class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="tipo_instalacion" name="tipo_instalacion" required>
                                             <option value="monofasica" {{ (old('tipo_instalacion', $proyecto->tipo_instalacion ?? '') == 'monofasica') ? 'selected' : '' }}>Monofàsica</option>
                                             <option value="trifasica" {{ (old('tipo_instalacion', $proyecto->tipo_instalacion ?? '') == 'trifasica') ? 'selected' : '' }}>Trifàsica</option>
@@ -186,6 +198,36 @@
                             </form>
                         </div>
                     </div>
+
+                    <!-- Modal de Confirmación de Eliminación -->
+                    <div id="modalElim" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+                            <div class="flex justify-between items-center border-b pb-4">
+                                <h2 class="text-xl font-semibold">Confirmar Eliminación</h2>
+                                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+
+                            <p class="mt-4">¿Estás seguro de que deseas eliminar el inversor <span id="inversorName"></span>? Esta acción no se puede deshacer.</p>
+
+                            <input type="text" id="confirmationDeleteInput" class="mt-4 p-2 border rounded-md w-full" placeholder="Escribe el nombre del inversor para confirmar">
+
+                            <div class="flex justify-end mt-6">
+                                <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+                                    Cancelar
+                                </button>
+                                <form id="deleteInversorDeleteForm" action="" method="POST" class="ml-3 inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -201,7 +243,7 @@
             const fabricanteSelect = document.getElementById("fabricante");
 
           
-            const routeCrearFabricante = @json(route('fabricantes.store'));
+            const routeCrearFabricante = "{{ route('fabricantes.store') }}";
             const csrfToken = "{{ csrf_token() }}"; 
 
         
@@ -249,6 +291,7 @@
     </script>
 
         <script src="build/js/modalInversores.js"></script>
+        <script src="build/js/modalElimInver.js"></script>
     </x-app-layout>
 </body>
 </html>

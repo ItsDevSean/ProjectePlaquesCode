@@ -44,31 +44,42 @@ class InversoresController extends Controller
         return redirect()->route('inversores.index')->with('success', 'Inversor creado correctamente.');
     }
 
-        public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'nombre_inversor' => 'required|string|min:2|max:100',
-            'eficiencia' => 'required|numeric|between:0,999.99',
-            'tipo_instalacion' => 'required|string',
-            'garantia_material' => 'nullable|integer|min:0',
-            'potencia_nominal' => 'required|integer|min:1',
-            'descripcion' => 'nullable|string|min:0',
-            'fabricante_id' => 'required|integer|exists:fabricantes,id',
-            'microinversor' => 'required|boolean',
-            'garantia_fabricante' => 'required|integer|min:0',
-            'imagen_inversor' => 'nullable|url|max:2048',
-            'id_referencia' => 'nullable|string|max:50',
-        ]);
-
-        $inversor = Inversores::findOrFail($id);
-        $inversor->update($request->all());
-
-        return redirect()->route('inversores.index')->with('success', 'Inversor actualizado correctamente.');
+        $inversor = Inversores::find($id);
+    
+        if (!$inversor) {
+            return redirect()->route('inversores.index')->with('error', 'Proyecto no encontrado');
+        }
+    
+        
+        $inversor->update($request->all() + ['user_id' => Auth::id()]);
+        
+        return redirect()->route('inversores', $id)->with('success', 'Proyecto actualizado correctamente');
     }
 
     public function edit($id)
     {
-        $inversor = Inversores::findOrFail($id);
-        return response()->json($inversor);
+        $inversor = Inversores::find($id);
+        if (!$inversor) {
+            return redirect()->route('inversores.index')->with('error', 'Inversor no encontrado');
+        }
+    
+        $fabricantes = Fabricante::where('user_id', Auth::id())->get(); // Add this line to retrieve manufacturers
+    
+        return view('inversores.edit', compact('inversor', 'fabricantes')); // Pass 'fabricantes' as well
     }
+
+    public function destroy($id)
+{
+    $inversor = Inversores::find($id);
+
+    if (!$inversor) {
+        return redirect()->route('inversores.index')->with('error', 'inversor no encontrado');
+    }
+
+    $inversor->delete();
+
+    return redirect()->route('inversores.index')->with('success', 'inversor eliminado correctamente');
+}
 }
