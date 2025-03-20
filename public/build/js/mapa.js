@@ -67,6 +67,11 @@ function initAutocomplete(map) {
 
       map.setCenter(place.geometry.location);
       crearMarcador(map, place.geometry.location);
+
+      // Cambiar el mapa a modo satélite y desactivar etiquetas
+      map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+      map.setOptions({ styles: [{ featureType: "all", elementType: "labels", stylers: [{ visibility: "off" }] }] });
+      map.setZoom(18);
     });
 
     return autocomplete;
@@ -74,26 +79,31 @@ function initAutocomplete(map) {
 
 // Funció per geolocalitzar una adreça introduïda
 function geocodeAddress(map) {
-  const address = document.getElementById("address").value;
-
-  if (address === "") {
-      alert("Per favor, introduïu una adreça.");
-      return;
+    const address = document.getElementById("address").value;
+  
+    if (address === "") {
+        alert("Per favor, introduïu una adreça.");
+        return;
+    }
+  
+    const geocoder = new google.maps.Geocoder();
+  
+    geocoder.geocode({ address: address }, function (results, status) {
+        if (status === "OK") {
+            map.setCenter(results[0].geometry.location);
+            crearMarcador(map, results[0].geometry.location);
+            alert("Ubicació trobada");
+  
+            // Cambiar el mapa a modo satélite y desactivar etiquetas
+            map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+            map.setOptions({ styles: [{ featureType: "all", elementType: "labels", stylers: [{ visibility: "off" }] }] });
+            map.setZoom(18);
+        } else {
+            alert("No sa trobat la direcció, torna-ho a intentar.");
+            console.log(results);
+        }
+    });
   }
-
-  const geocoder = new google.maps.Geocoder();
-
-  geocoder.geocode({ address: address }, function (results, status) {
-      if (status === "OK") {
-          map.setCenter(results[0].geometry.location);
-          crearMarcador(map, results[0].geometry.location);
-          alert("Ubicació trobada");
-      } else {
-          alert("No sa trobat la direcció, torna-ho a intentar.");
-          console.log(results);
-      }
-  });
-}
 
 // Función para crear un marcador
 function crearMarcador(map, latLng) {
@@ -629,25 +639,6 @@ function iniciarSeleccioObstacle(map) {
     // Afegir el listener per seleccionar punts
     window.clickListener = map.addListener("click", seleccionarPuntObstacle);
 
-
-    // Funció per calcular l'àrea de l'obstacle
-    function calcularAreaObstacle(polygon) {
-        const areaLabel = document.getElementById("areaResult");
-        if (!areaLabel || !polygon) return;
-
-        const areaObstacle = google.maps.geometry.spherical.computeArea(polygon.getPath());
-        const areaPrincipal = parseFloat(areaLabel.innerText.replace("Àrea: ", "").replace(" m²", ""));
-        const novaAreaTotal = areaPrincipal - areaObstacle;
-
-        areaLabel.innerText = `Àrea: ${novaAreaTotal.toFixed(2)} m²`;
-
-        const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
-        edificiData.area = novaAreaTotal.toFixed(2);
-        localStorage.setItem("edificiData", JSON.stringify(edificiData));
-
-        const maxPlacas = calcularMaxPlacas(novaAreaTotal);
-        actualizarSlider(maxPlacas);
-    }
 }
 
 document.getElementById("obstaclesList").addEventListener("click", function (event) {
