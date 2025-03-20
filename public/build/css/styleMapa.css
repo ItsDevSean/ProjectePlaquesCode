@@ -375,3 +375,13 @@ input[type="range"]:hover {
     font-size: 14px;
     color: #333;
 }
+
+.delete-obstacle {
+    cursor: pointer;
+    color: #ff0000;
+    margin-left: 10px;
+}
+
+.delete-obstacle:hover {
+    color: #cc0000;
+}
