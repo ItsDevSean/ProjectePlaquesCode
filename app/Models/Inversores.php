@@ -19,11 +19,17 @@ class Inversores extends Model
         'microinversor',
         'garantia_fabricante',
         'imagen_inversor',
-        'id_referencia'
+        'id_referencia',
+        'user_id', 
     ];
 
     public function fabricante()
     {
         return $this->belongsTo(Fabricante::class, 'fabricante_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
