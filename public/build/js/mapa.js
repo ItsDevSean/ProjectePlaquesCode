@@ -532,9 +532,16 @@ function iniciarSeleccioObstacle(map) {
                 obstacleItem.innerHTML = `
                     <div>Obstacle ${window.obstacles.length + 1}</div>
                     <div>Àrea: ${areaObstacle.toFixed(2)} m²</div>
+                    <span class="delete-obstacle" data-area="${areaObstacle}">Eliminar</span>
                 `;
                 obstaclesList.appendChild(obstacleItem);
-                console.log("Afegint obstacle a la llista");
+    
+                // Guardar el índice del obstáculo en el atributo data-index
+                const obstacleIndex = window.obstacles.length;
+                obstacleItem.setAttribute("data-index", obstacleIndex);
+    
+                // Afegir l'obstacle a la llista global
+                window.obstacles.push(window.currentObstacle);
     
                 // Actualitzar l'àrea total del polígon principal
                 const areaLabel = document.getElementById("areaResult");
@@ -643,5 +650,59 @@ function iniciarSeleccioObstacle(map) {
     }
 }
 
+document.getElementById("obstaclesList").addEventListener("click", function (event) {
+    if (event.target.classList.contains("delete-obstacle")) {
+        const obstacleItem = event.target.closest(".obstacle-item");
+        const obstacleIndex = parseInt(obstacleItem.getAttribute("data-index"));
+        const areaObstacle = parseFloat(event.target.getAttribute("data-area"));
+
+        // Sumar el área del obstáculo al área total
+        const areaLabel = document.getElementById("areaResult");
+        const areaPrincipal = parseFloat(areaLabel.innerText.replace("Àrea: ", "").replace(" m²", ""));
+        const novaAreaTotal = areaPrincipal + areaObstacle;
+
+        areaLabel.innerText = `Àrea: ${novaAreaTotal.toFixed(2)} m²`;
+
+        const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
+        edificiData.area = novaAreaTotal.toFixed(2);
+        localStorage.setItem("edificiData", JSON.stringify(edificiData));
+
+        const maxPlacas = calcularMaxPlacas(novaAreaTotal);
+        actualizarSlider(maxPlacas);
+
+        // Obtener el obstáculo que se está eliminando
+        const obstacle = window.obstacles[obstacleIndex];
+
+        // Eliminar solo los marcadores y polígonos del obstáculo eliminado
+        if (obstacle) {
+            // Eliminar los marcadores del obstáculo
+            if (obstacle.markers && obstacle.markers.length > 0) {
+                obstacle.markers.forEach(marker => marker.setMap(null));
+            }
+
+            // Eliminar los polígonos del obstáculo
+            if (obstacle.polygons && obstacle.polygons.length > 0) {
+                obstacle.polygons.forEach(polygon => polygon.setMap(null));
+            }
+
+            // Eliminar el obstáculo de la lista global
+            window.obstacles.splice(obstacleIndex, 1);
+        }
+
+        // Eliminar el ítem del obstáculo de la lista visual
+        obstacleItem.remove();
+
+        // Actualizar los índices de los obstáculos restantes
+        const remainingObstacles = document.querySelectorAll(".obstacle-item");
+        remainingObstacles.forEach((item, index) => {
+            item.setAttribute("data-index", index); // Actualizar el índice en el DOM
+        });
+
+        // Actualizar los índices en la lista global de obstáculos
+        window.obstacles.forEach((obstacle, index) => {
+            obstacle.index = index; // Actualizar el índice en la lista global
+        });
+    }
+});
 
 
