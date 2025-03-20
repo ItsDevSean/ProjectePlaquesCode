@@ -26,11 +26,11 @@
                 <thead>
                         <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Inversor</th>
-                        <th class="px-9 py-3 text-left text-xs font-medium uppercase tracking-wider">Capacidad</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Coste</th>
+                        <th class="px-9 py-3 text-left text-xs font-medium uppercase tracking-wider">Potencia nominal</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Eficencia</th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Fabricante</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Tipo instalacion</th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Fecha de creacion</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Acciones</th>
                         </tr>
                 </thead>
 
@@ -45,9 +45,10 @@
                         @foreach ($inversores as $inversor)
                             <tr class="border-t">
                                 <td class="px-6 py-3">{{ $inversor->nombre_inversor }}</td>
-                                <td class="px-9 py-3">{{ $inversor->capacidad }} kWh</td>
-                                <td class="px-6 py-3">{{ number_format($inversor->coste, 2) }} €</td>
-                                <td class="px-6 py-3">{{ $inversor->fabricante }}</td>
+                                <td class="px-9 py-3">{{ $inversor->potencia_nominal }} kWh</td>
+                                <td class="px-6 py-3">{{ ($inversor->eficiencia) }} %</td>
+                                <td class="px-6 py-3">{{ $inversor->fabricante->nombre }}</td>
+                                <td class="px-6 py-3">{{ $inversor->tipo_instalacion }}</td>
                                 <td class="px-6 py-3">{{ $inversor->created_at->format('d/m/Y') }}</td>
                             </tr>
                         @endforeach

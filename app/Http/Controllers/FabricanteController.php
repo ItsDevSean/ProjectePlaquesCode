@@ -4,26 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Models\Fabricante;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FabricanteController extends Controller
 {
     public function index()
     {
-        $fabricantes = Fabricante::all();
-        return view('inversores', compact('inversores', 'fabricantes'));
+   
+        $fabricantes = Fabricante::where('user_id', Auth::id())->get();
+        return view('inversores', compact('fabricantes'));
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'nombre' => 'required|string|max:100|unique:fabricantes,nombre',
-    ]);
+    {
+        $request->validate([
+            'nombre' => 'required|string|max:100|unique:fabricantes,nombre',
+        ]);
 
-    $fabricante = Fabricante::create($request->all());
+      
+        $data = $request->all();
+        $data['user_id'] = Auth::id();
 
-    return response()->json([
-        'success' => true,
-        'fabricante' => $fabricante
-    ]);
-}
+        $fabricante = Fabricante::create($data);
+
+        return response()->json([
+            'success' => true,
+            'fabricante' => $fabricante
+        ]);
+    }
 }

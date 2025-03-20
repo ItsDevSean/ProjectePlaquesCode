@@ -7,11 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // Elementos del side panel
     const projectIdElement = document.getElementById('projectId');
     const projectNameElement = document.getElementById('projectName');
-    const descriptionProjectElement = document?.getElementById('descriptionProject')
+    const descriptionProjectElement = document.getElementById('descriptionProject');
     const clientNameElement = document.getElementById('clientName');
     const clientAddressElement = document.getElementById('clientAddress');
     const clientCityElement = document.getElementById('clientCity');
     const editProjectLink = document.getElementById('editProjectLink');
+    const deleteProjectButton = document.getElementById('deleteProjectButton');
     const deleteProjectForm = document.getElementById('deleteProjectForm');
 
     projectRows.forEach(row => {
@@ -19,8 +20,8 @@ document.addEventListener("DOMContentLoaded", function () {
             // Evita abrir el side panel si se hace clic en un select o en los botones de editar/eliminar
             if (
                 event.target.closest('select.estado-select') ||
-                event.target.closest('.fas.fa-edit') ||
-                event.target.closest('.fas.fa-trash-alt')
+                event.target.closest('.editProjectLink') ||
+                event.target.closest('button.text-red-600')
             ) {
                 return;
             }
@@ -43,8 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         projectIdElement.textContent = data.dadesClient.id;
                         projectNameElement.textContent = data.dadesClient.nombre_proyecto;
                         descriptionProjectElement.innerHTML = data.dadesClient?.descripcion_proyecto 
-                        ? `<p>${data.dadesClient.descripcion_proyecto}</p>` 
-                        : '<p style="color: gray; font-style: italic;">No hay descripción disponible.</p>';
+                            ? `<p>${data.dadesClient.descripcion_proyecto}</p>` 
+                            : '<p style="color: gray; font-style: italic;">No hay descripción disponible.</p>';
                         clientNameElement.textContent = data.dadesClient?.nombre ?? 'No disponible';
                         clientAddressElement.textContent = data.dadesClient?.direccion ?? 'No disponible';
                         clientCityElement.textContent = data.dadesClient?.ciudad ?? 'No disponible';
@@ -52,6 +53,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         // Actualiza los enlaces de editar y eliminar
                         editProjectLink.href = `/dades_clients/${projectId}/edit`;
                         deleteProjectForm.action = `/dades_clients/${projectId}`;
+
+                        // Actualiza el botón de eliminar
+                        deleteProjectButton.setAttribute('data-project-id', projectId);
+                        deleteProjectButton.setAttribute('data-project-name', data.dadesClient.nombre_proyecto);
 
                         // Muestra el side panel
                         sidePanel.classList.add('show');
@@ -81,4 +86,11 @@ document.addEventListener("DOMContentLoaded", function () {
         sidePanel.classList.remove('show');
         overlay.style.display = 'none';
     }
+
+    // Maneja el clic en el botón de eliminar
+    deleteProjectButton.addEventListener('click', function () {
+        const projectId = deleteProjectButton.getAttribute('data-project-id');
+        const projectName = deleteProjectButton.getAttribute('data-project-name');
+        openModal(projectName, projectId);
+    });
 });

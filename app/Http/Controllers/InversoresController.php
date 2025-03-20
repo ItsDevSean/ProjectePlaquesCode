@@ -5,20 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Inversores;
 use App\Models\Fabricante;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InversoresController extends Controller
 {
     public function index()
-    {    
-        $inversores = Inversores::all();            
-        $fabricantes = Fabricante::all(); 
+    {
+     
+        $inversores = Inversores::where('user_id', Auth::id())->get();
+     
+        $fabricantes = Fabricante::where('user_id', Auth::id())->get();
 
-    return view('inversores', compact('inversores', 'fabricantes'));
+        return view('inversores', compact('inversores', 'fabricantes'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -34,11 +34,10 @@ class InversoresController extends Controller
             'imagen_inversor' => 'nullable|url|max:2048',
             'id_referencia' => 'nullable|string|max:50',
         ]);
-        $data = $request->all();
 
-        if ($request->has('imagen_inversor')) {
-            $data['imagen_inversor'] = $request->input('imagen_inversor');
-        }
+        
+        $data = $request->all();
+        $data['user_id'] = Auth::id();
 
         Inversores::create($data);
 
