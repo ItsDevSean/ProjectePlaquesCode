@@ -43,4 +43,43 @@ class InversoresController extends Controller
 
         return redirect()->route('inversores.index')->with('success', 'Inversor creado correctamente.');
     }
+
+    public function update(Request $request, $id)
+    {
+        $inversor = Inversores::find($id);
+    
+        if (!$inversor) {
+            return redirect()->route('inversores.index')->with('error', 'Proyecto no encontrado');
+        }
+    
+        
+        $inversor->update($request->all() + ['user_id' => Auth::id()]);
+        
+        return redirect()->route('inversores', $id)->with('success', 'Proyecto actualizado correctamente');
+    }
+
+    public function edit($id)
+    {
+        $inversor = Inversores::find($id);
+        if (!$inversor) {
+            return redirect()->route('inversores.index')->with('error', 'Inversor no encontrado');
+        }
+    
+        $fabricantes = Fabricante::where('user_id', Auth::id())->get(); // Add this line to retrieve manufacturers
+    
+        return view('inversores.edit', compact('inversor', 'fabricantes')); // Pass 'fabricantes' as well
+    }
+
+    public function destroy($id)
+{
+    $inversor = Inversores::find($id);
+
+    if (!$inversor) {
+        return redirect()->route('inversores.index')->with('error', 'inversor no encontrado');
+    }
+
+    $inversor->delete();
+
+    return redirect()->route('inversores.index')->with('success', 'inversor eliminado correctamente');
+}
 }
