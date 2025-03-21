@@ -11,6 +11,22 @@
     width: 100%;
 }
 
+.map-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo negro con 70% de opacidad */
+    z-index: 1000; /* Asegura que esté por encima del mapa */
+    pointer-events: none; /* Permite que los eventos del mapa pasen a través */
+    transition: opacity 0.5s ease; /* Transición suave al desaparecer */
+}
+
+.map-overlay.hidden {
+    opacity: 0; /* Oculta la capa */
+}
+
 /* Encabezado del mapa (buscador y botones) */
 .map-header {
     display: flex;
@@ -24,7 +40,7 @@
     top: 120px; /* Ajustado para acercar a la barra de progreso */
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1000;
+    z-index: 1001;
     border-radius: 12px;
     width: 90%;
     max-width: 600px;
@@ -87,12 +103,23 @@
     top: 70px; /* Ajustado para acercar a la barra de dirección */
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1000;
+    z-index: 1001;
     width: 90%;
     max-width: 800px;
 }
 
-/* Resto de estilos (formulario, etc.) */
+.obstacle-item {
+    padding: 8px;
+    margin-bottom: 4px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.obstacle-item:hover {
+    background-color: #e0e0e0;
+}
+
 .form-container {
     background-color: #ffffff;
     padding: 30px;
@@ -101,13 +128,25 @@
     margin-top: 40px;
 }
 
-.form-title, .form-title2 {
+.form-title {
     font-size: 20px;
     font-weight: bold;
     color: #333;
     margin-bottom: 20px;
     border-bottom: 3px solid #49DBA3;
     padding-bottom: 8px;
+}
+
+.form-title2 {
+    font-size: 17px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;  
+}
+
+.panel-img {
+    width: 30px;
+    height: auto;
 }
 
 .form-control, .form-select {
@@ -147,6 +186,134 @@
     width: 100%;
 }
 
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Estils per al slider */
+/* Estils per al slider */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(to right, #49DBA3 var(--slider-progress), #e0e0e0 var(--slider-progress)); /* Fondo verde dinámico */
+    outline: none;
+    border-radius: 5px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #49DBA3;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #49DBA3;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+input[type="range"]::-ms-thumb {
+    width: 20px;
+    height: 20px;
+    background: #49DBA3;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+input[type="range"]:hover {
+    opacity: 1;
+}
+
+
+.form-label {
+    margin-bottom: 10px;  /* Distància entre el títol i el slider */
+}
+
+.form-range {
+    margin-bottom: 10px;  /* Distància entre el slider i el número */
+}
+
+#placaCount {
+    width: 80px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+
+/* Estilos para el side panel */
+.side-panel {
+    position: fixed;
+    top: 0;
+    right: -450px; /* Oculta el panel fuera de la pantalla */
+    width: 450px;
+    height: 100%;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: auto; /* Permite desplazamiento vertical */
+    max-height: 100vh; /* Asegura que el panel no sea más alto que la pantalla */
+    scrollbar-width: none; /* Oculta la barra de desplaçament a Firefox */
+    -ms-overflow-style: none;
+}
+
+/* Personalización opcional de la barra de desplazamiento */
+.side-panel::-webkit-scrollbar {
+    display: none; 
+}
+
+/* Estilos para el botón de cerrar */
+.close-panel-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Clase para mostrar el panel */
+.side-panel.open {
+    right: 0;
+}
+
+.configurar-pla-button {
+    margin-left: 1px;
+    padding: 10px 15px;
+    width: auto; /* Se ajusta al contenido */
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #49DBA3;
+    color: black;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block; /* Para que no ocupe el 100% del ancho */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+}
+
+
+.configurar-pla-button:hover {
+    background-color: #49DBA3;
+}
 .btn-primary{
     background-color: rgba(255, 255, 255, 0.9);
     border: 2px solid #49DBA3;
@@ -184,4 +351,53 @@
         flex-direction: row !important;
     }
 }
+/* Estils per al botó "Tancar polígon" */
+.tancar-poligon-button {
+    position: absolute;
+    bottom: 10%; /* Distància des de la part inferior */
+    left: 50%; /* Centrat horitzontalment */
+    transform: translateX(-50%); /* Centrat horitzontalment */
+    background-color: #49DBA3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 1000; /* Per sobre del mapa */
+    display: none; /* Ocult per defecte */
+    transition: background-color 0.3s ease;
+}
 
+.tancar-poligon-button:hover {
+    background-color: #3bb88f; /* Canvi de color al passar el ratolí */
+}
+
+.obstacle-item {
+    padding: 8px;
+    margin-bottom: 4px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.obstacle-item:hover {
+    background-color: #e0e0e0;
+}
+
+.obstacle-item div {
+    font-size: 14px;
+    color: #333;
+}
+
+.delete-obstacle {
+    cursor: pointer;
+    color: #ff0000;
+    margin-left: 10px;
+}
+
+.delete-obstacle:hover {
+    color: #cc0000;
+}
