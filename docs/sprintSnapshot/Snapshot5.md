@@ -36,6 +36,8 @@ Hem implementat l'opció de poder-hi treure de l'àrea principal l'àrea dels ob
 
 
 ### Numero de plaques:
+Amunt dels obstacles trobem el nombre de plaques que hi càpiguen en l'àrea seleccionada. Funciona de manera que calcula l'àrea seleccionada i la divideix entre l'àrea del panel / placa creada en la view de plaques. 
+![image](https://github.com/user-attachments/assets/181ab626-d20e-4098-970a-7cc28ca54cbe)
 
 
 ### Llistat de plaques
@@ -43,6 +45,10 @@ Aquest és el nostre llistat de plaques on les mostrem i les afegim. La intenci�
 ![image](https://github.com/user-attachments/assets/2eb2c125-25df-4c68-83d9-e21bd39fccb0)
 Aquest és el formulari de creació de les plaques, on s'afegeix a la BD i es mostra en la view.
 ![image](https://github.com/user-attachments/assets/525df154-687a-4256-983e-4ae735238913)
+I aquest és el resultat:
+![image](https://github.com/user-attachments/assets/e4508100-2391-4095-9ff3-13696f1b917f)
+
+
 
 
 
