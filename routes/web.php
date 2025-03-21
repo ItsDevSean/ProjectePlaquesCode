@@ -120,4 +120,6 @@ Route::post('/proyectos/estado/{id}', [DadesClientController::class, 'updateEsta
 
 
 
-
+Route::get('/infoProject', function(){
+    return view('infoProject');
+});

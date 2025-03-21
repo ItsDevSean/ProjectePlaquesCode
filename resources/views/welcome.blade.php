@@ -16,7 +16,7 @@
 
     <!-- Styles / Scripts -->
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/welcome.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/welcome.js', 'resources/js/scroll.js'])
     @endif
 
     <!-- Particles.js -->
@@ -26,6 +26,10 @@
 
 <body class="font-sans antialiased">
     <style>
+    html {
+        scroll-behavior: smooth;
+    }
+
     #background {
         position: relative;
         width: 100%;
@@ -120,6 +124,7 @@
         animation: marquee 20s linear infinite;
     }
 
+
     #particles-js {
         position: absolute;
         width: 100%;
@@ -136,18 +141,24 @@
         z-index: 0;
         top: 0;
         left: 0;
+
     }
     </style>
 
 
     <div class="bg-transparent">
-        <div class="video-container">
-            <!-- Botones de autenticación -->
+    <div class="video-container parallax" style="background-image: url('{{ asset('build/img/video.mp4.mp4') }}');">            <!-- Botones de autenticación -->
             @if (Route::has('login'))
             <nav class="auth-buttons">
+            <a href="{{ url('/infoProject') }}"
+                class="rounded-md px-3 py-2 text-white bg-[#4adba4] ring-1 ring-[#4adba4] transition hover:bg-transparent hover:text-white focus:outline-none focus-visible:ring-[#4adba4] mr-2">
+                    Més informació
+                </a>
                 @auth
                 <a href="{{ url('/proyectos') }}"
+
                     class="rounded-md px-3 py-2 text-white bg-transparent ring-1 ring-[#4adba4] transition hover:bg-[#4adba4] hover:text-white focus:outline-none focus-visible:ring-[#4adba4] mr-2">
+
                     Començar
                 </a>
                 @else
@@ -384,7 +395,7 @@
                 <img src="{{ asset('build/img/colaboradores/col6.jpg') }}" alt="Logo 6"
                     class="w-28 h-28 object-contain">
                 <img src="{{ asset('build/img/colaboradores/col7.jpg') }}" alt="Logo 7"
-                    class="w-28 h-28 object-contain">
+                    class="w-28 h-28 object-contain"> 
                 <img src="{{ asset('build/img/colaboradores/col8.jpg') }}" alt="Logo 8"
                     class="w-28 h-28 object-contain">
                 <img src="{{ asset('build/img/colaboradores/col9.jpg') }}" alt="Logo 9"
@@ -424,6 +435,7 @@
         </div>
 
     </div>
+
 
     <!-- Asegúrate de incluir Font Awesome para los íconos -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js" crossorigin="anonymous">
