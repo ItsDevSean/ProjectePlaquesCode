@@ -170,34 +170,7 @@
                         </div>
                         
 
-                    <!-- Modal para crear fabricante -->
-                    <div id="fabricanteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
-                        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
-                            <div class="flex justify-between items-center border-b pb-4">
-                                <h2 class="text-xl font-semibold">Crear Nuevo Fabricante</h2>
-                                <button id="closeFabricanteModal" class="text-gray-500 hover:text-gray-700">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-
-                            <form id="crearFabricanteForm" class="mt-4">
-                                @csrf
-                                <div>
-                                    <label for="nombre_fabricante" class="block text-sm font-medium text-gray-700">Nombre del Fabricante</label>
-                                    <input type="text" name="nombre" id="nombre_fabricante" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
-                                </div>
-
-                                <div class="flex justify-end mt-6">
-                                    <button type="button" id="closeFabricanteModalBtn" class="mr-2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
-                                        Cancelar
-                                    </button>
-                                    <button type="submit" class="px-4 py-2 bg-[#49DBA3] text-white rounded-lg hover:bg-[#36B89A]">
-                                        Crear Fabricante
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                    
 
                     <!-- Modal de Confirmación de Eliminación -->
                     <div id="modalElim" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
@@ -227,7 +200,34 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Modal para crear fabricante -->
+                    <div id="fabricanteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+                            <div class="flex justify-between items-center border-b pb-4">
+                                <h2 class="text-xl font-semibold">Crear Nuevo Fabricante</h2>
+                                <button id="closeFabricanteModal" class="text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
 
+                            <form id="crearFabricanteForm" class="mt-4">
+                                @csrf
+                                <div>
+                                    <label for="nombre_fabricante" class="block text-sm font-medium text-gray-700">Nombre del Fabricante</label>
+                                    <input type="text" name="nombre" id="nombre_fabricante" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                                </div>
+
+                                <div class="flex justify-end mt-6">
+                                    <button type="button" id="closeFabricanteModalBtn" class="mr-2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+                                        Cancelar
+                                    </button>
+                                    <button type="submit" class="px-4 py-2 bg-[#49DBA3] text-white rounded-lg hover:bg-[#36B89A]">
+                                        Crear Fabricante
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

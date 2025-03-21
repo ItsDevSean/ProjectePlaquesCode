@@ -17,11 +17,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     projectRows.forEach(row => {
         row.addEventListener('click', function (event) {
-            // Evita abrir el side panel si se hace clic en un select o en los botones de editar/eliminar
+            // Evita abrir el side panel si se hace clic en el select, en los botones de editar/eliminar o en el formulario de edición
             if (
                 event.target.closest('select.estado-select') ||
                 event.target.closest('.editProjectLink') ||
-                event.target.closest('button.text-red-600')
+                event.target.closest('button.text-red-600') ||
+                event.target.closest('form')
             ) {
                 return;
             }
