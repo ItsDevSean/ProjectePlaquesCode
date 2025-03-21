@@ -6,24 +6,35 @@ Aquest sprint ens hem enfocat en tenir establerta la web en el domini i tenir la
 
 En aquest sprint teniem que fer-hi la presentació de mitad de projecte i la presentació al client juntament amb el Ismab. Es per aixó que el nostre desenvolupament en aquest sprint ha sigut principalment en desarrollar la web per una mitllor mostra. 
 
-Les millores en aquest srpint son:
+Les millores en aquest sprint son:
 
 ### Multimenu:
-Aquest es el nostre domini web, on tenim que posar-nos en productor per a poder treballar en el domini. La web en el domini esta desactualitzada, per que primer estem avançant de forma local per a poder ir implementant en el domini poc a poc la web.
-![image](https://github.com/user-attachments/assets/0c642851-8f9c-46f0-a286-8f8536c724ff)
+Una implementació ha sigut aquest multimenu on aportem les views d'"Herramientas" tant com plaques, bateries o inversors..."
+![image](https://github.com/user-attachments/assets/10f5d474-8670-407b-960b-a337f94f1023)
+
 
 ### Inversors:
-Aquesta es la nostra Base de Dades. Es phpmyadmin, y per pujar les tables que tenim en local fem ús del mysqldump.
-![image](https://github.com/user-attachments/assets/d4df3899-0c7f-4f37-9e4b-f876eb7ce8f0)
+Com hem explicat abans, aquesta es la view d'inversors on té basicament el crud. (Encara no funciona completament, ja que queda validar les dades completament i fer-hi l'opció d'editar).
+Es composa d'un modal principal on te un formulari POST per pujar-hi les dades a la BD i mostrarles en la tabla.
+![image](https://github.com/user-attachments/assets/9902cdb2-5bf5-440c-8b88-0230d8e234c2)
+El modal de creació també té un altre modal on es seleccionen els fabricants o és creen (També desde la BD).
+![image](https://github.com/user-attachments/assets/917c4d46-e525-4505-ae34-4efdae74ed09)
+Aixi quedaria la tabla després de crear un inversor. Com podem observar té també els botons de editar i eliminar, encara que només funciona el de eliminar.
+![image](https://github.com/user-attachments/assets/b805d23c-ed95-40ed-8357-245fe714a56f)
+El botó d'eliminar genera aquest altre modal on es valida l'eliminació de dades ficant-li el nombre del inversor.
+![image](https://github.com/user-attachments/assets/dc0ccb3d-ff9c-45bd-b9eb-4bb833798b07)
+
 
 ### Pagina d'inici:
-Per poder tenir la web operativa vam tenir que subir el projecte al domini, usant filezilla. Al principi ens va costar bastant poder implementar-lo, ja que vam estar varis dies per poder fer que es mostrasi el nostre projecte a la web pero ho vam aconseguir fent us d'una bona enrutacio entre el index.html amb el index.php.
-![image](https://github.com/user-attachments/assets/ae20bc33-a93f-422e-86ac-8da3e040c92d)
+Aquesta es la nostra pagina d'inici terminada. Es la pagina que es mostra al accedir-hi a la web. Esta basada en la pagina de Lenium. L'objectiu es poder veure d'on prové el projecte i té l'opcions de loguejarte i registrarte. 
+![image](https://github.com/user-attachments/assets/08d6911b-7248-4fa3-8fb2-32e4ce8c262b)
+
 
 
 ### Obstacles:
-Hem millorat el welcome, basicament la primera ruta de la web. Aquesta mostra informacio (encara en canvis) sobre el projecte. També te el login i el register, que, si ja estas loguejat, et mostrarà el dashboard:
-![image](https://github.com/user-attachments/assets/480d5db0-fc89-4a60-b4d1-8c9731c2395e)
+Hem implementat l'opció de poder-hi treure del area principal l'area dels obstacles. Ho fem generant un altre poligon que al crear-se l'hi resta la seva area al total. També tens l'opcio d'eliminarlos, pasant la seva area al area total.
+![image](https://github.com/user-attachments/assets/655d18f7-d74d-4777-b0e8-718557731925)
+
 
 ### Numero de plaques:
 Aquesta pagina ens ha costat bastant fer-la ja que es on es emmagatzeman els projectes, toman dades del formulari de dades client, del user id i del estat ("Estado") del projecte....
@@ -31,6 +42,11 @@ Aquesta pagina ens ha costat bastant fer-la ja que es on es emmagatzeman els pro
 
 També té implementat un side-panel on es mostra l'informació amb més detall. Tota aquesta informacio es guarda en la BD...
 ![image](https://github.com/user-attachments/assets/4ed70aa3-d140-4749-81df-fefd2b5caa7c)
+
+### Llistat de plaques
+![image](https://github.com/user-attachments/assets/e2ee16fa-6377-4b02-bc80-03c172936ade)
+
+![image](https://github.com/user-attachments/assets/c563e452-e9e8-464c-83d2-4fcff0fa779c)
 
 
 
