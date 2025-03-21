@@ -18,6 +18,10 @@
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/welcome.js'])
     @endif
+
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
 </head>
 
 <body class="font-sans antialiased">
@@ -72,6 +76,10 @@
         z-index: 10;
     }
 
+
+
+    
+    
     .content-section3 {
         margin-top: 2rem;
         margin-bottom: 2rem;
@@ -111,7 +119,26 @@
     .animate-marquee {
         animation: marquee 20s linear infinite;
     }
+
+    #particles-js {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        top: 0;
+        left: 0;
+    }
+
+    .particles-js {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        top: 0;
+        left: 0;
+    }
     </style>
+
 
     <div class="bg-transparent">
         <div class="video-container">
@@ -120,7 +147,7 @@
             <nav class="auth-buttons">
                 @auth
                 <a href="{{ url('/proyectos') }}"
-                class="rounded-md px-3 py-2 text-white bg-transparent ring-1 ring-[#4adba4] transition hover:bg-[#4adba4] hover:text-white focus:outline-none focus-visible:ring-[#4adba4] mr-2">
+                    class="rounded-md px-3 py-2 text-white bg-transparent ring-1 ring-[#4adba4] transition hover:bg-[#4adba4] hover:text-white focus:outline-none focus-visible:ring-[#4adba4] mr-2">
                     Començar
                 </a>
                 @else
@@ -175,7 +202,9 @@
             </div>
         </div>
 
-        <div class="content-section2 bg-[#4adba4]">
+        <div class="content-section2 bg-[#4adba4] relative">
+            <div id="particles-js-1" class="particles-js"></div>
+
             <div class="max-w-5xl mx-auto flex items-center justify-between gap-8">
                 <div class="w-2/3 text-white">
                     <h2 class="text-3xl font-bold mb-6 text-center">ENERGÍAS RENOVABLES</h2>
@@ -192,6 +221,7 @@
                 </div>
             </div>
         </div>
+
 
         <div class="content-section3">
             <div class="max-w-5xl mx-auto flex items-center justify-between gap-8">
@@ -214,7 +244,8 @@
             </div>
         </div>
 
-        <div class="content-section4 bg-[#4adba4]">
+        <div class="content-section4 bg-[#4adba4] relative">
+            <div id="particles-js-2" class="particles-js"></div>
             <div class="max-w-5xl mx-auto flex items-center justify-between gap-8">
                 <div class="w-2/3 text-white">
                     <h2 class="text-3xl font-bold mb-6 text-center">Investigación y desarrollo</h2>
@@ -314,7 +345,8 @@
         </div>
 
 
-        <div class="content-section5 bg-[#4adba4]">
+        <div class="content-section5 bg-[#4adba4] relative">
+            <div id="particles-js-3" class="particles-js"></div>
             <div class="max-w-5xl mx-auto grid grid-cols-4 gap-8 text-white text-center">
                 <div class="counter-item">
                     <span class="text-4xl font-bold"><span class="counter" data-target="28">0</span>+</span>
@@ -393,35 +425,157 @@
 
     </div>
 
-
-    <!-- Footer -->
-    <!-- Footer -->
-    <footer class="bg-[#4adba4] h-[50vh] flex items-center justify-center text-white relative">
-        <div class="text-center m-4">
-            <p class="text-xl mb-4">
-                Empresa líder en energías renovables. Más de 28 años trabajando para mejorar la vida de nuestros
-                clientes.
-            </p>
-
-            <!-- Logo en la esquina superior izquierda con un mayor margen izquierdo -->
-            <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-16 mx-auto mt-10 absolute top-5 left-50">
-
-            <!-- Redes sociales -->
-            <div class="flex justify-center space-x-6">
-                <a href="https://x.com/i/flow/login?redirect_after_login=%2FLeniumG" class="text-white hover:text-gray-300">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="https://www.linkedin.com/company/lenium-group/" class="text-white hover:text-gray-300">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-            </div>
-        </div>
-    </footer>
-
     <!-- Asegúrate de incluir Font Awesome para los íconos -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js" crossorigin="anonymous">
     </script>
 
+
+
+    <!-- Configuración de partículas -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const particleContainers = document.querySelectorAll('.particles-js');
+
+        particleContainers.forEach((container, index) => {
+            container.id = `particles-js-${index + 1}`;
+            particlesJS(container.id, {
+                particles: {
+                    number: {
+                        value: 100,
+                        density: {
+                            enable: true,
+                            value_area: 800
+                        }
+                    },
+                    color: {
+                        value: '#ffffff'
+                    },
+                    shape: {
+                        type: 'polygon',
+                        stroke: {
+                            width: 0,
+                            color: '#000000'
+                        },
+                        polygon: {
+                            nb_sides: 5
+                        },
+                        image: {
+                            src: 'img/github.svg',
+                            width: 100,
+                            height: 100
+                        }
+                    },
+                    opacity: {
+                        value: 1,
+                        random: false,
+                        anim: {
+                            enable: false,
+                            speed: 0.9,
+                            opacity_min: 0.1,
+                            sync: false
+                        }
+                    },
+                    size: {
+                        value: 5,
+                        random: true,
+                        anim: {
+                            enable: false,
+                            speed: 90,
+                            size_min: 0.1,
+                            sync: false
+                        }
+                    },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: '#ffffff',
+                        opacity: 0.4,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 6,
+                        direction: 'none',
+                        random: false,
+                        straight: false,
+                        out_mode: 'out',
+                        bounce: false,
+                        attract: {
+                            enable: false,
+                            rotateX: 600,
+                            rotateY: 1200
+                        }
+                    }
+                },
+                interactivity: {
+                    detect_on: 'canvas',
+                    events: {
+                        onhover: {
+                            enable: true,
+                            mode: 'repulse'
+                        },
+                        onclick: {
+                            enable: true,
+                            mode: 'push'
+                        },
+                        resize: true
+                    },
+                    modes: {
+                        grab: {
+                            distance: 400,
+                            line_linked: {
+                                opacity: 1
+                            }
+                        },
+                        bubble: {
+                            distance: 400,
+                            size: 40,
+                            duration: 2,
+                            opacity: 8,
+                            speed: 3
+                        },
+                        repulse: {
+                            distance: 200,
+                            duration: 0.4
+                        },
+                        push: {
+                            particles_nb: 4
+                        },
+                        remove: {
+                            particles_nb: 2
+                        }
+                    }
+                },
+                retina_detect: true
+            });
+        });
+    });
+    </script>
 </body>
+
+
+<!-- Footer -->
+<footer class="bg-[#4adba4] h-[50vh] flex items-center justify-center text-white relative">
+    <div class="text-center m-4">
+        <div id="particles-js-4" class="particles-js"></div>
+        <p class="text-xl mb-4">
+            Empresa líder en energías renovables. Más de 28 años trabajando para mejorar la vida de nuestros
+            clientes.
+        </p>
+
+        <!-- Logo en la esquina superior izquierda con un mayor margen izquierdo -->
+        <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-16 mx-auto mt-10 absolute top-5 left-50">
+
+        <!-- Redes sociales -->
+        <div class="flex justify-center space-x-6">
+            <a href="https://x.com/i/flow/login?redirect_after_login=%2FLeniumG" class="text-white hover:text-gray-300">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/lenium-group/" class="text-white hover:text-gray-300">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+        </div>
+    </div>
+</footer>
 
 </html>
