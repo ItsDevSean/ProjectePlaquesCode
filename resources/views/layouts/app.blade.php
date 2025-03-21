@@ -14,9 +14,11 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <!-- Bootstrap 5 CSS -->
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-[#F5F5F5] dark:bg-gray-900">
+        <div class="d-flex flex-column min-vh-100 bg-[#E9F0F4] dark:bg-gray-900">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -29,9 +31,13 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main class="flex-grow-1">
                 {{ $slot }}
             </main>
+
         </div>
+
+        <!-- Bootstrap 5 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

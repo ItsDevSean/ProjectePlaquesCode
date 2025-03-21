@@ -17,11 +17,7 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array<string, array<int, string>>
      */
-    protected $listen = [
-        'App\Events\DadesClientCreated' => [
-            'App\Listeners\CreateProyectoForDadesClient',
-        ],
-    ];
+    protected $listen = [];
 
     /**
      * The subscribers to register.

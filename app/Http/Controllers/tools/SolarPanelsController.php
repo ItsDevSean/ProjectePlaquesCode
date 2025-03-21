@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\tools;
 
 use App\Http\Controllers\Controller;
+use App\Models\PanelType;
 use App\Models\SolarPanelsModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class SolarPanelsController extends Controller
@@ -14,45 +16,56 @@ class SolarPanelsController extends Controller
      */
     public function index()
     {
-        #to Do, aun no se muy bien que agarrar de aqui:
-    }
+        $panelType = PanelType::all();            
+        $panels = SolarPanelsModel::all()
+        ->where('user_id', Auth::id());
+
+        return view('tools.panels', compact('panels', 'panelType'));    }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('panels');
+        //
     }
-
-    
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-
-
         $request->validate([
             'panel_model' => 'required|string|min:2|max:100',
             'manufacturer' => 'required|string|min:2|max:100',
             'panel_type' => 'required|string|min:2|max:50',
             'date_manufacturer' => 'required|date',
-            'panel_warranty' => 'required|integer',
-            'performance_warranty' => 'required|integer',
-            'maximum_power' => 'required|integer',
-            'voltage_maximum_power_point' => 'required|integer',
-            'current_maximum_power_point' => 'required|integer',
-            'open_circuit_voltage' => 'required|integer',
-            'short_circuit_current' => 'required|integer',
-            'panel_efficiency' => 'required|integer'
+            'panel_warranty' => 'nullable|integer',
+            'performance_warranty' => 'nullable|integer',
+            'longitud' => 'required|numeric|min:1|max:5',
+            'anchura' => 'required|numeric|min:1|max:5',
+            'espesor' => 'required|numeric|min:0',
+            'peso' => 'required|numeric|min:0',
+            'superficie' => 'required|numeric|min:0',
+            'descripcion' => 'nullable|string',
+            'url_fabricante' => 'nullable|string',
+            'imagen_panel' => 'nullable|string',
+            'material_marco' => 'nullable|string',
+            'color_panel' => 'nullable|string',
+            'potencia_maxima' => 'required|numeric|min:0',
+            'tension_maxima_potencia' => 'required|numeric|min:0',
+            'corriente_punto_maxima_potencia' => 'required|numeric|min:0',
+            'tension_circuito_abierto' => 'required|numeric|min:0',
+            'corriente_cortocircuito' => 'required|numeric|min:0',
+            'eficencia_panel' => 'required|numeric|min:0|max:100',
+            'coeficiente_temp_pmax' => 'required|numeric|min:0|max:100',
+            'coeficiente_temp_voc' => 'required|numeric|min:0|max:100',
+            'coeficiente_temp_isc' => 'required|numeric|min:0|max:100',
         ]);
 
+        SolarPanelsModel::create($request->all() + ['user_id' => Auth::id()]);
 
-        SolarPanelsModel::create($request->all());
-
-        return to_route('panels');    
+        return to_route('panels')->with('success', 'Panel registrado correctamente.');;    
     }
 
     /**
@@ -66,9 +79,11 @@ class SolarPanelsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SolarPanelsModel $solarPanelsModel)
+    public function edit(SolarPanelsModel $newPanel) //toDo: aqui para la edicion: ep 53 min 6:14
     {
-        //
+        $oldPanels = SolarPanelsModel::all();
+        $panelType = PanelType::all();
+        return view('tools.panelsEdit', compact('oldPanels', 'newPanel', 'panelType'));
     }
 
     /**
@@ -76,7 +91,8 @@ class SolarPanelsController extends Controller
      */
     public function update(Request $request, SolarPanelsModel $solarPanelsModel)
     {
-        //
+        $solarPanelsModel->update($request->validate());
+        return to_route('panels'); 
     }
 
     /**

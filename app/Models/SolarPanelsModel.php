@@ -12,9 +12,17 @@ class SolarPanelsModel extends Model
     protected $table = "solar_panels_tabel";
     
     protected $fillable = [
-        'panel_model', 'manufacturer', 'panel_type', 
-        'date_manufacturer', 'panel_warranty', 'performance_warranty',
-        'maximum_power', 'voltage_maximum_power_point', 'current_maximum_power_point',
-        'open_circuit_voltage', 'short_circuit_current', 'panel_efficiency'
+        'user_id', 'panel_model', 'manufacturer', 'panel_type', 
+        'date_manufacturer', 'panel_warranty', 'performance_warranty', 
+        'longitud', 'anchura', 'espesor', 'peso', 'superficie', 'descripcion',
+        'url_fabricante', 'imagen_panel', 'material_marco', 'color_panel',
+        'potencia_maxima', 'tension_maxima_potencia', 'corriente_punto_maxima_potencia',
+        'tension_circuito_abierto', 'corriente_cortocircuito', 'eficencia_panel',
+        'coeficiente_temp_pmax', 'coeficiente_temp_voc', 'coeficiente_temp_isc',
     ];
+
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

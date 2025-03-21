@@ -1,0 +1,7 @@
+.itemsHeader {
+    color: white;
+}
+
+.itemsHeader:hover {
+    color: #49DBA3;
+}

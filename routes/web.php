@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\BateriasController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\InformacionFisicaPanelController;
 use App\Http\Controllers\InformacionElectricaPanelController;
 use App\Http\Controllers\infoEcoController;
 use App\Http\Controllers\DadesClientController;
 use App\Http\Controllers\infoEcoResultadoController;
+use App\Http\Controllers\InversoresController;
+use App\Http\Controllers\FabricanteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\tools\SolarPanelsController;
 
@@ -39,8 +41,6 @@ Route::get('/open', function () {
 })->name('open');
 
 
-
-
 Route::get('/edificis', function () {
     return view('editarEdificis');
 })->name('edificis');
@@ -54,11 +54,16 @@ Route::get('/vue', function(){
     return view('vue');
 });
 
-Route::get('/herramientas/paneles', function(){
-    return view('tools.panels');
-})->name('panels');
+Route::get('/herramientas/paneles', [SolarPanelsController::class, 'index'])->name('panels');
+
+Route::get('/herramientas/paneles/editar', [SolarPanelsController::class, 'edit'])->name('panelsEdit');
+
 
 Route::post('/herramientas/paneles/resultado', [SolarPanelsController::class, 'store'])->name('paneles.resultado');
+
+Route::get('baterias', [BateriasController::class, 'index'])->name('baterias');
+
+Route::resource('inversores', InversoresController::class);
 
 Route::get('/dades', function(){
     return view('dadesClient');
@@ -68,9 +73,6 @@ Route::get('/preus', function(){
     return view('preus');
 })->name('preus');
 
-Route::get('/fisico', function(){
-    return view('caracFisiPlac');
-});
 
 Route::get('/electrico', function(){
     return view('caracElecPlac');
@@ -93,13 +95,15 @@ Route::get('/infoEco', function(){
 });
 
 
-Route::post('/guardar-informacionFisica', [InformacionFisicaPanelController::class, 'store'])->name('guardar.informacionFisica');
-
 Route::post('/guardar-informacionElectrica', [InformacionElectricaPanelController::class, 'store'])->name('guardar.informacionElectrica');
 
 Route::post('/guardar-dades', [DadesClientController::class, 'store'])->name('guardar.dades');
+Route::put('/dades_clients/{id}', [DadesClientController::class, 'update'])->name('dades_clients.update');
 
 Route::resource('dades_clients', DadesClientController::class);
+
+
+Route::post('/fabricantes', [FabricanteController::class, 'store'])->name('fabricantes.store');
 
 // En tu archivo de rutas
 Route::get('/proyectos', [DadesClientController::class, 'index'])->name('proyectos');
@@ -109,6 +113,11 @@ Route::post('/guardar-eco', [infoEcoController::class, 'store'])->name('guardar.
 Route::post('/guardar-eco-resultado', [infoEcoResultadoController::class, 'store'])->name('guardar.eco.resultado');
 
 Route::get('/dades_clients/{id}/details', [DadesClientController::class, 'details'])->name('dades_clients.details');
+
+Route::delete('/dades_clients/{id}', [DadesClientController::class, 'destroy'])->name('dades_clients.destroy');
+
+Route::post('/proyectos/estado/{id}', [DadesClientController::class, 'updateEstado'])->name('proyectos.updateEstado');
+
 
 
 
