@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('garantia_fabricante')->nullable();
             $table->string('imagen_inversor')->nullable();
             $table->string('id_referencia')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
 
        

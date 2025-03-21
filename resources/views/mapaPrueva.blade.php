@@ -6,6 +6,7 @@
     <title>Buscador de Direcció</title>
     <link rel="stylesheet" href="build/css/styleMapa.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
@@ -69,9 +70,9 @@
                 <button id="saveAreaButton" style="display: none;">Guardar Área</button>
             </div>
         </div>
-        <div id="map">
-        </div>
-
+        <div id="mapOverlay" class="map-overlay"></div>
+        <div id="map"></div>
+        
         <!-- Botó "Tancar polígon" -->
         <button id="tancarPoligonButton" class="tancar-poligon-button">
             Tancar polígon

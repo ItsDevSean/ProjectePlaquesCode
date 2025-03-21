@@ -67,10 +67,7 @@
                                                 </button>
                                             </form>
                                             
-                                            <button
-                                                onclick="openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}')"
-                                                class="text-red-600 hover:text-red-900"
-                                            >
+                                            <button onclick="openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}')" class="text-red-600 hover:text-red-900">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>
@@ -113,17 +110,12 @@
                 <span id="clientCity">Cargando...</span>
                 
                 <div class="buttons">
-                    <a href="#" id="editProjectLink" class="text-green-600 hover:text-green-900 mr-3">
+                    <a href="#" id="editProjectLink" text-green-600 hover:text-green-900 mr-3">
                         <i class="fas fa-edit"></i> Editar
                     </a>
-                    @if (!$clientes->isEmpty())
-                        <button
-                            onclick="openModal('{{ $clientes->first()->nombre_proyecto }}', '{{ $clientes->first()->id }}')"
-                            class="text-red-600 hover:text-red-900"
-                        >
-                            <i class="fas fa-trash-alt"></i> Eliminar
-                        </button>
-                    @endif
+                    <button id="deleteProjectButton" class="text-red-600 hover:text-red-900">
+                        <i class="fas fa-trash-alt"></i> Eliminar
+                    </button>
                 </div>
                 
                 <button class="close-btn" onclick="closeSidePanel()">X</button>

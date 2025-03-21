@@ -12,10 +12,18 @@ class Fabricante extends Model
 
     protected $table = 'fabricantes';
 
-    protected $fillable = ['nombre'];
+    protected $fillable = [
+        'nombre',
+        'user_id', 
+    ];
 
     public function inversores()
     {
-        return $this->hasMany(Inversores::class, 'fabricante');
+        return $this->hasMany(Inversores::class, 'fabricante_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

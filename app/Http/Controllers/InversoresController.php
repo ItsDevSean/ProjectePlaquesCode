@@ -5,19 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Inversores;
 use App\Models\Fabricante;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InversoresController extends Controller
 {
     public function index()
-    {    
-        $inversores = Inversores::all();            
-        $fabricantes = Fabricante::all(); 
-    return view('inversores', compact('inversores', 'fabricantes'));
+    {
+     
+        $inversores = Inversores::where('user_id', Auth::id())->get();
+     
+        $fabricantes = Fabricante::where('user_id', Auth::id())->get();
+
+        return view('inversores', compact('inversores', 'fabricantes'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -33,14 +34,52 @@ class InversoresController extends Controller
             'imagen_inversor' => 'nullable|url|max:2048',
             'id_referencia' => 'nullable|string|max:50',
         ]);
-        $data = $request->all();
 
-        if ($request->has('imagen_inversor')) {
-            $data['imagen_inversor'] = $request->input('imagen_inversor');
-        }
+        
+        $data = $request->all();
+        $data['user_id'] = Auth::id();
 
         Inversores::create($data);
 
         return redirect()->route('inversores.index')->with('success', 'Inversor creado correctamente.');
     }
+
+    public function update(Request $request, $id)
+    {
+        $inversor = Inversores::find($id);
+    
+        if (!$inversor) {
+            return redirect()->route('inversores.index')->with('error', 'Proyecto no encontrado');
+        }
+    
+        
+        $inversor->update($request->all() + ['user_id' => Auth::id()]);
+        
+        return redirect()->route('inversores', $id)->with('success', 'Proyecto actualizado correctamente');
+    }
+
+    public function edit($id)
+    {
+        $inversor = Inversores::find($id);
+        if (!$inversor) {
+            return redirect()->route('inversores.index')->with('error', 'Inversor no encontrado');
+        }
+    
+        $fabricantes = Fabricante::where('user_id', Auth::id())->get(); // Add this line to retrieve manufacturers
+    
+        return view('inversores.edit', compact('inversor', 'fabricantes')); // Pass 'fabricantes' as well
+    }
+
+    public function destroy($id)
+{
+    $inversor = Inversores::find($id);
+
+    if (!$inversor) {
+        return redirect()->route('inversores.index')->with('error', 'inversor no encontrado');
+    }
+
+    $inversor->delete();
+
+    return redirect()->route('inversores.index')->with('success', 'inversor eliminado correctamente');
+}
 }
