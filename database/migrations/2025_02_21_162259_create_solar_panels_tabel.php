@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('manufacturer',500);
             $table->string('panel_type',500);
             $table->date('date_manufacturer');
-            $table->integer('panel_warranty');
-            $table->integer('performance_warranty');
+            $table->integer('panel_warranty')->nullable();
+            $table->integer('performance_warranty')->nullable();
             $table->decimal('longitud', 10, 2);
             $table->decimal('anchura', 10, 2);
             $table->decimal('espesor', 10, 2);
@@ -30,8 +30,17 @@ return new class extends Migration
             $table->string('descripcion')->nullable();
             $table->string('url_fabricante')->nullable();
             $table->string('imagen_panel')->nullable();
-            $table->string('material_marco');
-            $table->string('color_panel') ->nullable();
+            $table->string('material_marco')->nullable();
+            $table->string('color_panel')->nullable();
+            $table->integer('potencia_maxima');
+            $table->integer('tension_maxima_potencia');
+            $table->integer('corriente_punto_maxima_potencia');
+            $table->integer('tension_circuito_abierto');
+            $table->integer('corriente_cortocircuito');
+            $table->integer('eficencia_panel');
+            $table->integer('coeficiente_temp_pmax');
+            $table->integer('coeficiente_temp_voc');
+            $table->integer('coeficiente_temp_isc'); 
             $table->timestamps();
         });
     }

@@ -8,11 +8,7 @@
     <!-- Aplicar el css de nuestra aplicación-->
 
     <link rel="stylesheet" href="build/css/styles.css"> 
-    <script>
-        function toggleModal() {
-            document.getElementById('modal').classList.toggle('hidden');
-        }
-    </script>
+    <script src="{{asset('build/js/panels.js')}}"></script>
 </head>
 <body class="bg-gray-50">
     <x-app-layout>
@@ -38,18 +34,18 @@
                 <table class="w-full text-left mb-4">
                     <thead>
                         <tr class="text-gray-600">
-                            <th class="py-2">Modelo</th>
-                            <th class="py-2">Fabricante</th>
-                            <th class="py-2">Tipo</th>
-                            <th class="py-2">Fecha de Fabricación</th>
-                            <th class="py-2">Garantía Producto (años)</th>
-                            <th class="py-2">Garantía Rendimiento (años)</th>
-                            <th class="py-2">Opciones</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Modelo</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Fabricante</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Tipo</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Fecha de Fabricación</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Garantía Producto (años)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Garantía Rendimiento (años)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($panels as $p)
-                        <tr class="text-center">
+                        <tr onclick="openDetail({{$p}})" class="text-center hover:bg-[#b6b7b8]">
                             <td class="border p-2">{{ $p->panel_model }}</td>
                             <td class="border p-2">{{ $p->manufacturer }}</td>
                             <td class="border p-2">{{ $p->panel_type }}</td>
@@ -84,14 +80,6 @@
             <div class="bg-white rounded-lg p-6 w-full max-w-2xl max-h-screen overflow-y-auto">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-bold">Creación de nuevo panel:</h3>
-                     <!-- toDO: reutilzable -->
-                        @if ($errors->any())
-                            @foreach ($errors->all() as $e)
-                                <div>
-                                    {{ $e }}
-                                </div>
-                            @endforeach
-                        @endif
                     <button onclick="toggleModal()" class="text-gray-500">
                         <i class="fas fa-times text-gray-500 text-2xl"></i>
                     </button>
@@ -102,8 +90,11 @@
                 @include('fragments._newPanel')
             </div>
         </div>
+
+        <!-- Pop up with the detail of the panel -->
+        <div id="deteil" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex justify-center items-center">
+            @include('fragments._detailPanel')
+        </div>
     </x-app-layout>
 </body>
-
-
 </html>
