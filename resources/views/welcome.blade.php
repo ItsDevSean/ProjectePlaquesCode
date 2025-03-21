@@ -553,29 +553,7 @@
     </script>
 </body>
 
-
-<!-- Footer -->
-<footer class="bg-[#4adba4] h-[50vh] flex items-center justify-center text-white relative">
-    <div class="text-center m-4">
-        <div id="particles-js-4" class="particles-js"></div>
-        <p class="text-xl mb-4">
-            Empresa líder en energías renovables. Más de 28 años trabajando para mejorar la vida de nuestros
-            clientes.
-        </p>
-
-        <!-- Logo en la esquina superior izquierda con un mayor margen izquierdo -->
-        <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-16 mx-auto mt-10 absolute top-5 left-50">
-
-        <!-- Redes sociales -->
-        <div class="flex justify-center space-x-6">
-            <a href="https://x.com/i/flow/login?redirect_after_login=%2FLeniumG" class="text-white hover:text-gray-300">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="https://www.linkedin.com/company/lenium-group/" class="text-white hover:text-gray-300">
-                <i class="fab fa-linkedin-in"></i>
-            </a>
-        </div>
-    </div>
-</footer>
+<!-- incluir footer blade -->
+@include('layouts.footer')
 
 </html>
