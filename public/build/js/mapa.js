@@ -76,7 +76,8 @@ function geocodeAddress(map) {
             map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
             map.setOptions({ styles: [{ featureType: "all", elementType: "labels", stylers: [{ visibility: "off" }] }] });
             map.setZoom(18);
-
+            const mapOverlay = document.getElementById("mapOverlay");
+            mapOverlay.classList.add("hidden");
             
             enableMapInteractions(map)
             // Habilitar el botón "Seleccionar área"
@@ -113,6 +114,8 @@ function initAutocomplete(map) {
         map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
         map.setOptions({ styles: [{ featureType: "all", elementType: "labels", stylers: [{ visibility: "off" }] }] });
         map.setZoom(18);
+        const mapOverlay = document.getElementById("mapOverlay");
+        mapOverlay.classList.add("hidden");
         enableMapInteractions(map)
         // Habilitar el botón "Seleccionar área"
         document.getElementById("startSelection").disabled = false;

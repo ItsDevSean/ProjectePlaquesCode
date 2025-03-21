@@ -70,9 +70,9 @@
                 <button id="saveAreaButton" style="display: none;">Guardar Área</button>
             </div>
         </div>
-        <div id="map">
-        </div>
-
+        <div id="mapOverlay" class="map-overlay"></div>
+        <div id="map"></div>
+        
         <!-- Botó "Tancar polígon" -->
         <button id="tancarPoligonButton" class="tancar-poligon-button">
             Tancar polígon
