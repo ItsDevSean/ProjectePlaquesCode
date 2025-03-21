@@ -45,7 +45,7 @@
                     </thead>
                     <tbody>
                         @foreach ($panels as $p)
-                        <tr class="text-center">
+                        <tr onclick="openDetail({{$p}})" class="text-center hover:bg-[#b6b7b8]">
                             <td class="border p-2">{{ $p->panel_model }}</td>
                             <td class="border p-2">{{ $p->manufacturer }}</td>
                             <td class="border p-2">{{ $p->panel_type }}</td>
@@ -89,6 +89,11 @@
 
                 @include('fragments._newPanel')
             </div>
+        </div>
+
+        <!-- Pop up with the detail of the panel -->
+        <div id="deteil" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex justify-center items-center">
+            @include('fragments._detailPanel')
         </div>
     </x-app-layout>
 </body>

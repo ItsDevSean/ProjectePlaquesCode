@@ -4,6 +4,24 @@ function toggleModal() {
     document.getElementById('modal').classList.toggle('hidden');
 }
 
+function openDetail(panel) {
+    // Open pop up
+    toggleDetail();
+    
+    // Update the pop up with the panel data
+    document.getElementById('modalModel').textContent = panel.panel_model;
+    document.getElementById('modalManufacturer').textContent = panel.manufacturer;
+    document.getElementById('modalType').textContent = panel.panel_type;
+    document.getElementById('modalDate').textContent = panel.date_manufacturer;
+    document.getElementById('modalWarranty').textContent = panel.panel_warranty;
+    document.getElementById('modalPerformanceWarranty').textContent = panel.performance_warranty;
+}
+
+function toggleDetail() {
+    // Toggle the pop up:
+    document.getElementById('deteil').classList.toggle('hidden');
+}
+
 function formSubmit(event) {
     event.preventDefault(); // Prevent default form submission
 
