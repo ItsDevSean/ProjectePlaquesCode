@@ -1,98 +1,124 @@
 // Funció d'inicialització del mapa
 window.initMap = function () {
-  const centre = { lat: 41.3879, lng: 2.16992 };
+    const centre = { lat: 41.3879, lng: 2.16992 };
 
-  const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 15,
-      center: centre,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      tilt: 0,
-      heading: 0,
-  });
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: centre,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        tilt: 0,
+        heading: 0,
+    });
+
+    map.setOptions({ draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true });
+
     // Inicialització de variables globals
     window.obstacles = []; 
     window.currentObstacle = null; 
     window.obstacleMarkers = [];
     window.obstaclePolygons = [];
 
-  const autocomplete = initAutocomplete(map);
-  document.getElementById("startSelection").addEventListener("click", () => {
-    const button = document.getElementById("startSelection");
-  
-    if (button.textContent === "Reiniciar selecció") {
-      button.textContent = "Seleccionar area"; // Torna a canviar el text del botó
-      reiniciarEstado(map);
-      const sidePanel = document.getElementById("sidePanel");
-      sidePanel.classList.remove("open");
-    } else {
-      button.textContent = "Reiniciar selecció"; // Canvia el text del botó
-      iniciarSeleccio(map); // Inicia la selecció d'una nova àrea
-    }
-  });
-  document.getElementById("buttonBuscar").addEventListener("click", () => geocodeAddress(map));
-  document.getElementById("nouObstacleButton").addEventListener("click", () => {
-    const sidePanel = document.getElementById("sidePanel");
-    sidePanel.classList.remove("open");
+    // Crear el contador de IDs
+    const obstacleIdCounter = { value: 0 };
 
-    const polygonPrincipal = window.selectedPolygon;
+    const autocomplete = initAutocomplete(map);
+    const startSelectionButton = document.getElementById("startSelection");
+    startSelectionButton.disabled = true;
+    document.getElementById("startSelection").addEventListener("click", () => {
+        const button = document.getElementById("startSelection");
+    
+        if (button.textContent === "Reiniciar selecció") {
+            button.textContent = "Seleccionar area"; // Torna a canviar el text del botó
+            reiniciarEstado(map);
+            const sidePanel = document.getElementById("sidePanel");
+            sidePanel.classList.remove("open");
+        } else {
+            button.textContent = "Reiniciar selecció"; // Canvia el text del botó
+            iniciarSeleccio(map); // Inicia la selecció d'una nova àrea
+        }
+    });
 
-    if (!polygonPrincipal || polygonPrincipal.getPath().getLength() < 3) {
-        alert("Primer has de crear el polígon principal amb almenys 3 punts.");
-        return;
-    }
+    document.getElementById("buttonBuscar").addEventListener("click", () => geocodeAddress(map));
+    document.getElementById("nouObstacleButton").addEventListener("click", () => {
+        const sidePanel = document.getElementById("sidePanel");
+        sidePanel.classList.remove("open");
 
-    iniciarSeleccioObstacle(map);
-});
+        const polygonPrincipal = window.selectedPolygon;
 
+        if (!polygonPrincipal || polygonPrincipal.getPath().getLength() < 3) {
+            alert("Primer has de crear el polígon principal amb almenys 3 punts.");
+            return;
+        }
+
+        // Pasar el contador de IDs como parámetro
+        iniciarSeleccioObstacle(map, obstacleIdCounter);
+    });
 };
 
 // Funció per inicialitzar Autocomplete
-function initAutocomplete(map) {
-    const autocomplete = new google.maps.places.Autocomplete(
-        document.getElementById("address"),
-        { types: ["geocode"] }
-    );
-
-    autocomplete.addListener("place_changed", function () {
-      const place = autocomplete.getPlace();
-
-      if (!place.geometry) {
-          alert("No s'han trobat detalls per aquesta adreça.");
-          return;
-      }
-
-      console.log("Direcció seleccionada:", place.formatted_address);
-      console.log("Latitud:", place.geometry.location.lat());
-      console.log("Longitud:", place.geometry.location.lng());
-
-      map.setCenter(place.geometry.location);
-      crearMarcador(map, place.geometry.location);
-    });
-
-    return autocomplete;
-}
-
-// Funció per geolocalitzar una adreça introduïda
 function geocodeAddress(map) {
-  const address = document.getElementById("address").value;
+    const address = document.getElementById("address").value;
+  
+    if (address === "") {
+        alert("Per favor, introduïu una adreça.");
+        return;
+    }
+  
+    const geocoder = new google.maps.Geocoder();
+  
+    geocoder.geocode({ address: address }, function (results, status) {
+        if (status === "OK") {
+            map.setCenter(results[0].geometry.location);
+            crearMarcador(map, results[0].geometry.location);
+            alert("Ubicació trobada");
+  
+            // Cambiar el mapa a modo satélite, desactivar etiquetas y hacer zoom
+            map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+            map.setOptions({ styles: [{ featureType: "all", elementType: "labels", stylers: [{ visibility: "off" }] }] });
+            map.setZoom(18);
 
-  if (address === "") {
-      alert("Per favor, introduïu una adreça.");
-      return;
-  }
-
-  const geocoder = new google.maps.Geocoder();
-
-  geocoder.geocode({ address: address }, function (results, status) {
-      if (status === "OK") {
-          map.setCenter(results[0].geometry.location);
-          crearMarcador(map, results[0].geometry.location);
-          alert("Ubicació trobada");
-      } else {
-          alert("No sa trobat la direcció, torna-ho a intentar.");
-          console.log(results);
-      }
-  });
+            
+            enableMapInteractions(map)
+            // Habilitar el botón "Seleccionar área"
+            document.getElementById("startSelection").disabled = false;
+        } else {
+            alert("No sa trobat la direcció, torna-ho a intentar.");
+            console.log(results);
+        }
+    });
+}
+  
+function initAutocomplete(map) {
+      const autocomplete = new google.maps.places.Autocomplete(
+          document.getElementById("address"),
+          { types: ["geocode"] }
+      );
+  
+      autocomplete.addListener("place_changed", function () {
+        const place = autocomplete.getPlace();
+  
+        if (!place.geometry) {
+            alert("No s'han trobat detalls per aquesta adreça.");
+            return;
+        }
+  
+        console.log("Direcció seleccionada:", place.formatted_address);
+        console.log("Latitud:", place.geometry.location.lat());
+        console.log("Longitud:", place.geometry.location.lng());
+  
+        map.setCenter(place.geometry.location);
+        crearMarcador(map, place.geometry.location);
+  
+        // Cambiar el mapa a modo satélite y desactivar etiquetas
+        map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+        map.setOptions({ styles: [{ featureType: "all", elementType: "labels", stylers: [{ visibility: "off" }] }] });
+        map.setZoom(18);
+        enableMapInteractions(map)
+        // Habilitar el botón "Seleccionar área"
+        document.getElementById("startSelection").disabled = false;
+      });
+  
+      return autocomplete;
 }
 
 // Función para crear un marcador
@@ -476,9 +502,11 @@ function estaPoligonDins(polygonPrincipal, polygonObstacle) {
     return true; // Tots els punts estan dins
 }
 
-function iniciarSeleccioObstacle(map) {
+function iniciarSeleccioObstacle(map, obstacleIdCounter) {
     // Crear un nou obstacle
+    const obstacleId = obstacleIdCounter.value++; // Generar un ID único
     window.currentObstacle = {
+        id: obstacleId, // Asignar el ID único
         markers: [], // Marcadors d'aquest obstacle
         polygons: [] // Polígons d'aquest obstacle
     };
@@ -532,13 +560,9 @@ function iniciarSeleccioObstacle(map) {
                 obstacleItem.innerHTML = `
                     <div>Obstacle ${window.obstacles.length + 1}</div>
                     <div>Àrea: ${areaObstacle.toFixed(2)} m²</div>
-                    <span class="delete-obstacle" data-area="${areaObstacle}">Eliminar</span>
+                    <span class="delete-obstacle" data-area="${areaObstacle}" data-id="${obstacleId}">Eliminar</span>
                 `;
                 obstaclesList.appendChild(obstacleItem);
-    
-                // Guardar el índice del obstáculo en el atributo data-index
-                const obstacleIndex = window.obstacles.length;
-                obstacleItem.setAttribute("data-index", obstacleIndex);
     
                 // Afegir l'obstacle a la llista global
                 window.obstacles.push(window.currentObstacle);
@@ -566,6 +590,7 @@ function iniciarSeleccioObstacle(map) {
             alert("Necessiteu almenys 3 punts per tancar el polígon.");
         }
     }
+
     // Funció per seleccionar punts de l'obstacle
     function seleccionarPuntObstacle(event) {
         if (!window.selectedPolygon) {
@@ -629,31 +654,12 @@ function iniciarSeleccioObstacle(map) {
     // Afegir el listener per seleccionar punts
     window.clickListener = map.addListener("click", seleccionarPuntObstacle);
 
-
-    // Funció per calcular l'àrea de l'obstacle
-    function calcularAreaObstacle(polygon) {
-        const areaLabel = document.getElementById("areaResult");
-        if (!areaLabel || !polygon) return;
-
-        const areaObstacle = google.maps.geometry.spherical.computeArea(polygon.getPath());
-        const areaPrincipal = parseFloat(areaLabel.innerText.replace("Àrea: ", "").replace(" m²", ""));
-        const novaAreaTotal = areaPrincipal - areaObstacle;
-
-        areaLabel.innerText = `Àrea: ${novaAreaTotal.toFixed(2)} m²`;
-
-        const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
-        edificiData.area = novaAreaTotal.toFixed(2);
-        localStorage.setItem("edificiData", JSON.stringify(edificiData));
-
-        const maxPlacas = calcularMaxPlacas(novaAreaTotal);
-        actualizarSlider(maxPlacas);
-    }
 }
 
 document.getElementById("obstaclesList").addEventListener("click", function (event) {
     if (event.target.classList.contains("delete-obstacle")) {
         const obstacleItem = event.target.closest(".obstacle-item");
-        const obstacleIndex = parseInt(obstacleItem.getAttribute("data-index"));
+        const obstacleId = parseInt(event.target.getAttribute("data-id")); // Obtener el ID del obstáculo
         const areaObstacle = parseFloat(event.target.getAttribute("data-area"));
 
         // Sumar el área del obstáculo al área total
@@ -670,39 +676,33 @@ document.getElementById("obstaclesList").addEventListener("click", function (eve
         const maxPlacas = calcularMaxPlacas(novaAreaTotal);
         actualizarSlider(maxPlacas);
 
-        // Obtener el obstáculo que se está eliminando
-        const obstacle = window.obstacles[obstacleIndex];
+        // Buscar el obstáculo por su ID
+        const obstacleIndex = window.obstacles.findIndex(obstacle => obstacle.id === obstacleId);
+        if (obstacleIndex !== -1) {
+            const obstacle = window.obstacles[obstacleIndex];
 
-        // Eliminar solo los marcadores y polígonos del obstáculo eliminado
-        if (obstacle) {
-            // Eliminar los marcadores del obstáculo
-            if (obstacle.markers && obstacle.markers.length > 0) {
-                obstacle.markers.forEach(marker => marker.setMap(null));
+            // Eliminar solo los marcadores y polígonos del obstáculo eliminado
+            if (obstacle) {
+                // Eliminar los marcadores del obstáculo
+                if (obstacle.markers && obstacle.markers.length > 0) {
+                    obstacle.markers.forEach(marker => marker.setMap(null));
+                }
+
+                // Eliminar los polígonos del obstáculo
+                if (obstacle.polygons && obstacle.polygons.length > 0) {
+                    obstacle.polygons.forEach(polygon => polygon.setMap(null));
+                }
+
+                // Eliminar el obstáculo de la lista global
+                window.obstacles.splice(obstacleIndex, 1);
             }
-
-            // Eliminar los polígonos del obstáculo
-            if (obstacle.polygons && obstacle.polygons.length > 0) {
-                obstacle.polygons.forEach(polygon => polygon.setMap(null));
-            }
-
-            // Eliminar el obstáculo de la lista global
-            window.obstacles.splice(obstacleIndex, 1);
         }
 
         // Eliminar el ítem del obstáculo de la lista visual
         obstacleItem.remove();
-
-        // Actualizar los índices de los obstáculos restantes
-        const remainingObstacles = document.querySelectorAll(".obstacle-item");
-        remainingObstacles.forEach((item, index) => {
-            item.setAttribute("data-index", index); // Actualizar el índice en el DOM
-        });
-
-        // Actualizar los índices en la lista global de obstáculos
-        window.obstacles.forEach((obstacle, index) => {
-            obstacle.index = index; // Actualizar el índice en la lista global
-        });
     }
 });
 
-
+function enableMapInteractions(map) {
+    map.setOptions({ draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false });
+}
