@@ -6,17 +6,14 @@ document.addEventListener("DOMContentLoaded", function() {
     const crearFabricanteForm = document.getElementById("crearFabricanteForm");
     const fabricanteSelect = document.getElementById("fabricante");
 
-  
-    const routeCrearFabricante = "{{ route('fabricantes.store') }}";
-    const csrfToken = "{{ csrf_token() }}"; 
-
+    // Tomamos las variables definidas en el window global
+    const routeCrearFabricante = window.routeCrearFabricante;
+    const csrfToken = window.csrfToken;
 
     openFabricanteModalBtn.addEventListener("click", () => fabricanteModal.classList.remove("hidden"));
-
     closeFabricanteModalBtn.addEventListener("click", () => fabricanteModal.classList.add("hidden"));
     closeFabricanteModalByButton.addEventListener("click", () => fabricanteModal.classList.add("hidden"));
 
-   
     crearFabricanteForm.addEventListener("submit", function(event) {
         event.preventDefault(); 
 

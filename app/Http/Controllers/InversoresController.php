@@ -65,9 +65,8 @@ class InversoresController extends Controller
             return redirect()->route('inversores.index')->with('error', 'Inversor no encontrado');
         }
     
-        $fabricantes = Fabricante::where('user_id', Auth::id())->get(); // Add this line to retrieve manufacturers
-    
-        return view('inversores.edit', compact('inversor', 'fabricantes')); // Pass 'fabricantes' as well
+        $fabricantes = Fabricante::where('user_id', Auth::id())->get(); 
+        return view('inversores.edit', compact('inversor', 'fabricantes')); 
     }
 
     public function destroy($id)

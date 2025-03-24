@@ -45,8 +45,8 @@
                                     </tr>
                                 @else
                                     @foreach ($inversores as $inversor)
-                                        <tr class="border-t">
-                                            <td class="px-6 py-4 whitespace-nowrap">{{ $inversor->nombre_inversor }}</td>
+                                    <tr class="border-t cursor-pointer" onclick="openDetail({{$inversor}})">
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $inversor->nombre_inversor }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $inversor->potencia_nominal }} kWh</td>
                                             <td class="px-6 py-4 whitespace-nowrap-3">{{ ($inversor->eficiencia) }} %</td>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $inversor->fabricante->nombre }}</td>
@@ -230,67 +230,27 @@
                     </div>
                 </div>
             </div>
+            <div id="detail" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center hidden">
+                <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+                    <h2 class="text-lg font-bold mb-4">Detalles del Inversor</h2>
+                    <p><strong>Inversor:</strong> <span id="inversorDetail"></span></p>
+                    <p><strong>Potencia Nominal:</strong> <span id="potenciaDetail"></span> kWh</p>
+                    <p><strong>Eficiencia:</strong> <span id="eficienciaDetail"></span> %</p>
+                    <p><strong>Descripción:</strong> <span id="descripcionDetail"></span></p>
+                    <p><strong>Imagen Panel:</strong> <img id="imagenPanel" src="" alt="Imagen del inversor" class="max-w-xs h-auto mt-2 rounded border border-gray-200"></p>
+                    <p><strong>Garantia Material:</strong> <span id="garantiaMaterial"></span></p>
+                    <p><strong>Garantia Fabricante:</strong> <span id="garantiaFabricante"></span></p>
+                    <button onclick="toggleDetail()" class="mt-4 px-4 py-2 bg-red-600 text-white rounded">Cerrar</button>
+                </div>
+            </div>
         </div>
-
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const fabricanteModal = document.getElementById("fabricanteModal");
-            const openFabricanteModalBtn = document.getElementById("openFabricanteModal");
-            const closeFabricanteModalBtn = document.getElementById("closeFabricanteModal");
-            const closeFabricanteModalByButton = document.getElementById("closeFabricanteModalBtn");
-            const crearFabricanteForm = document.getElementById("crearFabricanteForm");
-            const fabricanteSelect = document.getElementById("fabricante");
-
-          
-            const routeCrearFabricante = "{{ route('fabricantes.store') }}";
-            const csrfToken = "{{ csrf_token() }}"; 
-
-        
-            openFabricanteModalBtn.addEventListener("click", () => fabricanteModal.classList.remove("hidden"));
-
-            closeFabricanteModalBtn.addEventListener("click", () => fabricanteModal.classList.add("hidden"));
-            closeFabricanteModalByButton.addEventListener("click", () => fabricanteModal.classList.add("hidden"));
-
-           
-            crearFabricanteForm.addEventListener("submit", function(event) {
-                event.preventDefault(); 
-
-                fetch(routeCrearFabricante, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": csrfToken  
-                    },
-                    body: JSON.stringify({
-                        nombre: document.getElementById("nombre_fabricante").value
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        fabricanteModal.classList.add("hidden");
-
-                        document.getElementById("nombre_fabricante").value = "";
-
-                        const newOption = document.createElement("option");
-                        newOption.value = data.fabricante.id;
-                        newOption.text = data.fabricante.nombre;
-                        fabricanteSelect.appendChild(newOption);
-
-                        fabricanteSelect.value = data.fabricante.id;
-                    } else {
-                        alert("Error al crear el fabricante.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                });
-            });
-        });
-    </script>
-
+        <script>
+            window.routeCrearFabricante = "{{ route('fabricantes.store') }}";
+            window.csrfToken = "{{ csrf_token() }}";
+        </script>
+        <script src="{{ asset('build/js/modalFabricante.js') }}"></script>
         <script src="build/js/modalInversores.js"></script>
+        <script src="build/js/inversores.js"></script>
         <script src="build/js/modalElimInver.js"></script>
     </x-app-layout>
 </body>
