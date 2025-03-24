@@ -19,8 +19,9 @@ class SolarPanelsController extends Controller
         $panelType = PanelType::all();            
         $panels = SolarPanelsModel::all()
         ->where('user_id', Auth::id());
-
-        return view('tools.panels', compact('panels', 'panelType'));    }
+        $nameAtributes = (new SolarPanelsModel)->getFillable();
+        return view('tools.panels', compact('panels', 'panelType', 'nameAtributes'));  
+    }
 
     /**
      * Show the form for creating a new resource.

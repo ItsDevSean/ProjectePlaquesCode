@@ -4,21 +4,25 @@ function toggleModal() {
     document.getElementById('modal').classList.toggle('hidden');
 }
 
-function openDetail(panel) {
-    // Open pop up
-    toggleDetail();
+document.addEventListener('DOMContentLoaded', function() {
+    function openDetail(panel, nameAtributes) {
+        toggleDetail();
     
-    // Update the pop up with the panel data
-    document.getElementById('modalModel').textContent = panel.panel_model;
-    document.getElementById('modalManufacturer').textContent = panel.manufacturer;
-    document.getElementById('modalType').textContent = panel.panel_type;
-    document.getElementById('modalDate').textContent = panel.date_manufacturer;
-    document.getElementById('modalWarranty').textContent = panel.panel_warranty;
-    document.getElementById('modalPerformanceWarranty').textContent = panel.performance_warranty;
-}
-
+        nameAtributes.forEach(na => {
+            // Ensure the element exists before setting textContent
+            const element = document.getElementById(na);
+            
+            if (element) {
+                element.textContent = panel[na] !== null ? panel[na] : 'N/A'; 
+                console.log("Set " + na + ": " + panel[na]); 
+            } else {
+                console.log("Element not found for: " + na);
+            }
+        });
+    }    
+});
+// Open and close the detail pop up
 function toggleDetail() {
-    // Toggle the pop up:
     document.getElementById('deteil').classList.toggle('hidden');
 }
 

@@ -6,10 +6,10 @@
             </button>
         </div>
         <div class="space-y-4">
-            <p><strong>Fabricante:</strong> <span id="modalManufacturer"></span></p>
-            <p><strong>Tipo:</strong> <span id="modalType"></span></p>
-            <p><strong>Fecha de Fabricación:</strong> <span id="modalDate"></span></p>
-            <p><strong>Garantía Producto (años):</strong> <span id="modalWarranty"></span></p>
-            <p><strong>Garantía Rendimiento (años):</strong> <span id="modalPerformanceWarranty"></span></p>
+            @foreach ($nameAtributes as $na)
+                <p><strong>{{ ucfirst(str_replace('_', ' ', $na)) }}:</strong>
+                    <span id="{{ $na }}"></span>
+                </p>
+            @endforeach
         </div>
     </div>

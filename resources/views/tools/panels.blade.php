@@ -45,15 +45,16 @@
                     </thead>
                     <tbody>
                         @foreach ($panels as $p)
-                        <tr onclick="openDetail({{$p}})" class="text-center hover:bg-[#b6b7b8]">
-                            <td class="border p-2">{{ $p->panel_model }}</td>
-                            <td class="border p-2">{{ $p->manufacturer }}</td>
-                            <td class="border p-2">{{ $p->panel_type }}</td>
-                            <td class="border p-2">{{ $p->date_manufacturer }}</td>
-                            <td class="border p-2">{{ $p->panel_warranty }}</td>
-                            <td class="border p-2">{{ $p->performance_warranty }}</td>
-                            <td></td>
-                        </tr>
+                            <!--ToDo: El problema ahora es que no hacede a la function-->
+                            <tr onclick="openDetail({{ $p }}, {{ json_encode($nameAtributes) }})" class="text-center hover:bg-[#b6b7b8]">
+                                <td class="border p-2">{{ $p->panel_model }}</td>
+                                <td class="border p-2">{{ $p->manufacturer }}</td>
+                                <td class="border p-2">{{ $p->panel_type }}</td>
+                                <td class="border p-2">{{ $p->date_manufacturer }}</td>
+                                <td class="border p-2">{{ $p->panel_warranty }}</td>
+                                <td class="border p-2">{{ $p->performance_warranty }}</td>
+                                <td></td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
