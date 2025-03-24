@@ -56,12 +56,12 @@
                                             <form action="{{ route('inversores.update', $inversor->id) }}" method="POST" class="inline">
                                                 @csrf
                                                 @method('PUT')
-                                                <button type="submit" class="text-green-600 hover:text-green-900 mr-3 no-underline">
+                                                <button type="button" onclick="event.stopPropagation();openEditModal({{ $inversor }})" class="text-green-600 hover:text-green-900 mr-3 no-underline">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
                                             </form>
                                             
-                                            <button onclick="openModalElim('{{ $inversor->nombre_inversor }}', '{{ $inversor->id }}')" class="text-red-600 hover:text-red-900">
+                                            <button onclick="event.stopPropagation();openModalElim('{{ $inversor->nombre_inversor }}', '{{ $inversor->id }}')" class="text-red-600 hover:text-red-900">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>
@@ -77,8 +77,9 @@
                         <div class="bg-white rounded-lg shadow-lg w-full max-w-3xl p-6">
                             <div class="flex justify-between items-center border-b pb-4">
                                 <h2 class="text-xl font-semibold">Crear Nuevo Inversor</h2>
-                                <form action="{{ route('inversores.store') }}" method="POST" enctype="multipart/form-data">
+                                <form id="inversorForm" action="{{ route('inversores.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
+                                <input type="hidden" id="formMethod" name="_method" value="POST">
                                 <div class="flex items-center gap-8">
                                     <button type="submit" class="bg-[#49DBA3] text-white rounded-md hover:bg-[#36B89A] py-2 px-2 text-sm">
                                         Crear Inversor
@@ -155,8 +156,6 @@
                                         <label for="id_referencia" class="block text-sm font-medium text-gray-700">ID Referencia</label>
                                         <input type="text" name="id_referencia" id="id_referencia" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                     </div>
-
-                                    
                                 </div>
                                 <div>
                                         <label for="imagen_inversor" class="block text-sm font-medium text-gray-700 flex justify-center mt-5">Imagen del Inversor</label>
@@ -230,6 +229,7 @@
                     </div>
                 </div>
             </div>
+            <!-- DETAIL-->
             <div id="detail" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center hidden">
                 <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
                     <h2 class="text-lg font-bold mb-4">Detalles del Inversor</h2>
