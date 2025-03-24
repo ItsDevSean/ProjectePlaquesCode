@@ -82,6 +82,7 @@ function geocodeAddress(map) {
             enableMapInteractions(map)
             // Habilitar el botón "Seleccionar área"
             document.getElementById("startSelection").disabled = false;
+            document.getElementById("startSelection").classList.remove("hidden");
         } else {
             alert("No sa trobat la direcció, torna-ho a intentar.");
             console.log(results);
@@ -119,6 +120,7 @@ function initAutocomplete(map) {
         enableMapInteractions(map)
         // Habilitar el botón "Seleccionar área"
         document.getElementById("startSelection").disabled = false;
+        document.getElementById("startSelection").classList.remove("hidden");
       });
   
       return autocomplete;
