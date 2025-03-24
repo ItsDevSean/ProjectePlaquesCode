@@ -1,5 +1,3 @@
-
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="{{ asset('build/css/header.css') }}">
 <script src="//unpkg.com/alpinejs"></script>
