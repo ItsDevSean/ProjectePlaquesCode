@@ -61,7 +61,7 @@ Route::get('/herramientas/paneles/editar', [SolarPanelsController::class, 'edit'
 
 Route::post('/herramientas/paneles/resultado', [SolarPanelsController::class, 'store'])->name('paneles.resultado');
 
-Route::get('baterias', [BateriasController::class, 'index'])->name('baterias');
+Route::resource('baterias',BateriasController::class);
 
 Route::resource('inversores', InversoresController::class);
 

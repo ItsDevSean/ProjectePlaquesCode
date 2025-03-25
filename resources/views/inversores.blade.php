@@ -249,10 +249,10 @@
             window.routeCrearFabricante = "{{ route('fabricantes.store') }}";
             window.csrfToken = "{{ csrf_token() }}";
         </script>
-        <script src="{{ asset('build/js/modalFabricante.js') }}"></script>
-        <script src="build/js/modalInversores.js"></script>
-        <script src="build/js/inversores.js"></script>
-        <script src="build/js/modalElimInver.js"></script>
+        <script src="{{ asset('build/js/inversores/modalFabricante.js') }}"></script>
+        <script src="build/js/inversores/modalInversores.js"></script>
+        <script src="build/js/inversores/inversores.js"></script>
+        <script src="build/js/inversores/modalElimInver.js"></script>
     </x-app-layout>
 </body>
 </html>
