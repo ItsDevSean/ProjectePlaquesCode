@@ -45,7 +45,6 @@
                     </thead>
                     <tbody>
                         @foreach ($panels as $p)
-                            <!--ToDo: El problema ahora es que no hacede a la function-->
                             <tr onclick="openDetail({{ $p }}, {{ json_encode($nameAtributes) }})" class="text-center hover:bg-[#b6b7b8]">
                                 <td class="border p-2">{{ $p->panel_model }}</td>
                                 <td class="border p-2">{{ $p->manufacturer }}</td>
