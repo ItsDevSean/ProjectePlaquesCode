@@ -61,7 +61,7 @@ Route::get('/herramientas/paneles/editar', [SolarPanelsController::class, 'edit'
 
 Route::post('/herramientas/paneles/resultado', [SolarPanelsController::class, 'store'])->name('paneles.resultado');
 
-Route::get('baterias', [BateriasController::class, 'index'])->name('baterias');
+Route::resource('baterias',BateriasController::class);
 
 Route::resource('inversores', InversoresController::class);
 
@@ -95,7 +95,6 @@ Route::get('/infoEco', function(){
 });
 
 
-Route::post('/guardar-informacionElectrica', [InformacionElectricaPanelController::class, 'store'])->name('guardar.informacionElectrica');
 
 Route::post('/guardar-dades', [DadesClientController::class, 'store'])->name('guardar.dades');
 Route::put('/dades_clients/{id}', [DadesClientController::class, 'update'])->name('dades_clients.update');

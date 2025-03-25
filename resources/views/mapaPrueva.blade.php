@@ -13,7 +13,7 @@
     <x-app-layout>
 
         <!-- Barra de progrés responsive -->
-        <div class="progress-bar-container mt-4 px-4"> <!-- Ajustado el margen superior -->
+        <div class="progress-bar-container mt-4 px-4"> 
             <div class="progress-bar bg-white border flex justify-center items-center mx-auto shadow-teal-300 shadow-md max-w-6xl p-2 rounded-lg dark:bg-gray-700 dark:text-gray-300">
                 <div class="w-full max-w-screen-2xl px-4 md:px-12 mx-auto overflow-x-auto overflow-y-hidden scrollbar-hide">
                     <ul class="w-full flex flex-nowrap justify-start md:justify-center items-center gap-6 sm:gap-10 md:gap-20 mt-2 md:mt-0 text-center whitespace-nowrap overflow-visible min-h-[4rem]">
@@ -64,8 +64,8 @@
         <div class="map-header">
             <div class="search-container">
                 <input type="text" id="address" placeholder="Escriu la teva direcció" autocomplete="off">
-                <button id="buttonBuscar">Buscar</button>
-                <button id="startSelection">Seleccionar area</button>
+                <button id="buttonBuscar">Buscar</button>              
+                <button id="startSelection" disabled class="hidden">Seleccionar area</button>
                 <span id="areaResult" style="display: none;"></span>
                 <button id="saveAreaButton" style="display: none;">Guardar Área</button>
             </div>
