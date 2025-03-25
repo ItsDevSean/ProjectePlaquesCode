@@ -70,3 +70,10 @@ En aquest segon sprint, hem seguit amb el curs que vam començar el sprint anter
 En aquest tercer sprint, hem seguit implementant el formulari de creació de projecte, un mòdul nou per afegir plaques, implementacions de CSS, i més important, tenim un domini propi on tenim el projecte pujat.
 
 [Snapshot4](docs/sprintSnapshot/Snapshot4.md)
+
+
+- **Sprint 5:** (28/2/25 - 21/3/25)
+En l'sprint 5 ens hem enfocat en desenvolupar l'app web per presentar-la tant a la presentació de mitjans d'sprint com a la presentació amb el institut Ismab.
+
+[Snapshot5](docs/sprintSnapshot/Snapshot5.md)
+
