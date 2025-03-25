@@ -12,7 +12,7 @@ class InversoresController extends Controller
     public function index()
     {
      
-        $inversores = Inversores::where('user_id', Auth::id())->get();
+        $inversores = Inversores::where('user_id', Auth::id())->paginate(3);
      
         $fabricantes = Fabricante::where('user_id', Auth::id())->get();
 

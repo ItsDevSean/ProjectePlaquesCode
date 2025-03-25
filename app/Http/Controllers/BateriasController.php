@@ -14,7 +14,8 @@ class BateriasController extends Controller
         
      
         $fabricantes = Fabricante::where('user_id', Auth::id())->get();
-        $baterias = Baterias::where('user_id', Auth::id())->get();     
+        $baterias = Baterias::where('user_id', Auth::id())->paginate(4);
+ 
 
         return view('baterias', compact('baterias','fabricantes'));
     }

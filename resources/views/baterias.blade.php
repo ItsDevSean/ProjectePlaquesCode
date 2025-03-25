@@ -45,7 +45,7 @@
                                     </tr>
                                 @else
                                     @foreach ($baterias as $bateria)
-                                    <tr class="border-t cursor-pointer" onclick="openDetail({{$bateria}})">
+                                    <tr class="border-t cursor-pointer hover:bg-gray-100" onclick="openDetail({{$bateria}})">
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $bateria->nombre_bateria }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $bateria->capacidad }} kWh</td>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $bateria->fabricante->nombre }}</td>
@@ -67,7 +67,13 @@
                                         </tr>
                                     @endforeach
                                 @endif
+                            @if ($baterias->hasPages())
+                            <div class="px-6 py-4 bg-white dark:bg-gray-800">
+                                    {{ $baterias->links() }}
+                            </div>
+                            @endif
                             </tbody>
+                            
                         </table>
 
                     

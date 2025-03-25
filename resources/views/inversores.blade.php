@@ -46,7 +46,7 @@
                                     </tr>
                                 @else
                                     @foreach ($inversores as $inversor)
-                                    <tr class="border-t cursor-pointer" onclick="openDetail({{$inversor}})">
+                                    <tr class="border-t cursor-pointer hover:bg-gray-100" onclick="openDetail({{$inversor}})">
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $inversor->nombre_inversor }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $inversor->potencia_nominal }} kWh</td>
                                             <td class="px-6 py-4 whitespace-nowrap-3">{{ ($inversor->eficiencia) }} %</td>
@@ -69,6 +69,11 @@
                                         </tr>
                                     @endforeach
                                 @endif
+                                @if ($inversores->hasPages())
+                            <div class="px-6 py-4 bg-white dark:bg-gray-800">
+                                    {{ $inversores->links() }}
+                            </div>
+                            @endif
                             </tbody>
                         </table>
 
