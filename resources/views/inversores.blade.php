@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="store-route" content="{{ route('inversores.store') }}">
     <title>Projecte Plaques</title>
     <link rel="stylesheet" href="{{ asset('build/css/styleDades.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -77,7 +78,7 @@
                         <div class="bg-white rounded-lg shadow-lg w-full max-w-3xl p-6">
                             <div class="flex justify-between items-center border-b pb-4">
                                 <h2 class="text-xl font-semibold">Crear Nuevo Inversor</h2>
-                                <form id="inversorForm" action="{{ route('inversores.store') }}" method="POST" enctype="multipart/form-data">
+                                <form id="inversorForm" action="" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" id="formMethod" name="_method" value="POST">
                                 <div class="flex items-center gap-8">

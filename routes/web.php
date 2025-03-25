@@ -95,7 +95,6 @@ Route::get('/infoEco', function(){
 });
 
 
-Route::post('/guardar-informacionElectrica', [InformacionElectricaPanelController::class, 'store'])->name('guardar.informacionElectrica');
 
 Route::post('/guardar-dades', [DadesClientController::class, 'store'])->name('guardar.dades');
 Route::put('/dades_clients/{id}', [DadesClientController::class, 'update'])->name('dades_clients.update');
