@@ -1,26 +1,33 @@
 
 
+
+// Open detail with the values of the panel
+function openDetail(panel, nameAtributes) {
+    processAttributes(panel,nameAtributes);
+    toggleDetail();
+}   
+function processAttributes(panel,nameAtributes) {
+    nameAtributes.forEach(na => {
+        // Ensure the element exists before setting textContent
+        const element = document.getElementById("detail_"+na);
+        if (element) {
+            element.textContent = panel[na] !== null ? panel[na] : 'N/A'; 
+            console.log("Set " + na + ": " + panel[na]); 
+        } else {
+            console.log("Element not found for: " + na);
+        }
+    });
+}
+// Open and close the detail pop up
+function toggleDetail() {
+    document.getElementById('detail').classList.toggle('hidden');
+}
+
+///-----------------------------
 function toggleModal() {
     document.getElementById('modal').classList.toggle('hidden');
 }
 
-function openDetail(panel) {
-    // Open pop up
-    toggleDetail();
-    
-    // Update the pop up with the panel data
-    document.getElementById('modalModel').textContent = panel.panel_model;
-    document.getElementById('modalManufacturer').textContent = panel.manufacturer;
-    document.getElementById('modalType').textContent = panel.panel_type;
-    document.getElementById('modalDate').textContent = panel.date_manufacturer;
-    document.getElementById('modalWarranty').textContent = panel.panel_warranty;
-    document.getElementById('modalPerformanceWarranty').textContent = panel.performance_warranty;
-}
-
-function toggleDetail() {
-    // Toggle the pop up:
-    document.getElementById('deteil').classList.toggle('hidden');
-}
 
 function formSubmit(event) {
     event.preventDefault(); // Prevent default form submission
@@ -34,7 +41,7 @@ function formSubmit(event) {
     }
 
     // Get the values from the form
-    const longitudInput = document.getElementById('longitud');
+    const longitudInput = document.getElementById('longitud_v2');
     const anchuraInput = document.getElementById('anchura');
 
     if (!longitudInput || !anchuraInput || !superficieInput) {
