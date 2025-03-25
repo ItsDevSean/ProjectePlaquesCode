@@ -8,7 +8,7 @@
         <div class="space-y-4">
             @foreach ($nameAtributes as $na)
                 <p><strong>{{ ucfirst(str_replace('_', ' ', $na)) }}:</strong>
-                    <span id="{{ $na }}"></span>
+                    <span id="detail_{{ $na }}"></span>
                 </p>
             @endforeach
         </div>

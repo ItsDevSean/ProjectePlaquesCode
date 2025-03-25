@@ -43,7 +43,7 @@ class SolarPanelsController extends Controller
             'date_manufacturer' => 'required|date',
             'panel_warranty' => 'nullable|integer',
             'performance_warranty' => 'nullable|integer',
-            'longitud' => 'required|numeric|min:1|max:5',
+            'longitud_v2' => 'required|numeric|min:1|max:5',
             'anchura' => 'required|numeric|min:1|max:5',
             'espesor' => 'required|numeric|min:0',
             'peso' => 'required|numeric|min:0',

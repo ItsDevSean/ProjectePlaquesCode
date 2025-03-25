@@ -7,8 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <!-- Aplicar el css de nuestra aplicación-->
 
-    <link rel="stylesheet" href="build/css/styles.css"> 
-    <script src="{{asset('build/js/panels.js')}}"></script>
+    <link rel="stylesheet" href="build/css/styles.css">     
 </head>
 <body class="bg-gray-50">
     <x-app-layout>
@@ -92,9 +91,10 @@
         </div>
 
         <!-- Pop up with the detail of the panel -->
-        <div id="deteil" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex justify-center items-center">
+        <div id="detail" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex justify-center items-center">
             @include('fragments._detailPanel')
         </div>
+        <script src="{{asset('build/js/panels.js')}}"></script>
     </x-app-layout>
 </body>
 </html>
