@@ -14,6 +14,11 @@ function formSubmit(event) {
         console.error("Missing required inputs!");
         return;
     }
+    if (longitudInput.value < 1000 || anchuraInput.value < 500) {
+        console.log("Litle");
+        document.getElementById('msg_error').textContent = "La altura o la anchura son demasiado pequeños.";
+        return;
+    }
     // Calculate the area
     const longitud = parseFloat(longitudInput.value) || 0;
     const anchura = parseFloat(anchuraInput.value) || 0;
