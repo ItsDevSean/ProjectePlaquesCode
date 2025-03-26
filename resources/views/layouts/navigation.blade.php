@@ -31,17 +31,17 @@
 
                 <!-- Tools Dropdown -->
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
-                            <button :class="{ navigationMenu=='learn-more', : navigationMenu!='learn-more' }" @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='learn-more'" @mouseleave="navigationMenuLeave()" class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md  focus:outline-none disabled:opacity-50 disabled:pointer-events-none group w-max  text-white ">
-                                <span>Herramientas</span>
+                            <button :class="{ navigationMenu=='learn-more', : navigationMenu!='learn-more' }" @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='learn-more'" @mouseleave="navigationMenuLeave()" class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md  focus:outline-none disabled:opacity-50 disabled:pointer-events-none group w-max  text-white" id="itemsHeader">
+                                <span class="cursor-pointer">Herramientas</span>
                                 <div class="ms-1">
 
-                                <svg :class="{ '-rotate-180' : navigationMenuOpen==true && navigationMenu == 'learn-more' }" class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline>
+                                <svg :class="{ '-rotate-180' : navigationMenuOpen==true && navigationMenu == 'learn-more' }" class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300 cursor-pointer    " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline>
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
 
                                 </div>
                             </button>
-                            <div x-ref="navigationDropdown" x-show="navigationMenuOpen"x-transition:enter="transition ease-out duration-100"x-transition:enter-start="opacity-0 scale-90"x-transition:enter-end="opacity-100 scale-100"x-transition:leave="transition ease-in duration-100"x-transition:leave-start="opacity-100 scale-100"x-transition:leave-end="opacity-0 scale-90"@mouseover="navigationMenuClearCloseTimeout()" @mouseleave="navigationMenuLeave()"class="absolute top-0 pt-3 duration-200 ease-out -translate-x-1/2 translate-y-11" x-cloak>
+                            <div x-ref="navigationDropdown" x-show="navigationMenuOpen"x-transition:enter="transition ease-out duration-100"x-transition:enter-start="opacity-0 scale-90"x-transition:enter-end="opacity-100 scale-100"x-transition:leave="transition ease-in duration-100"x-transition:leave-start="opacity-100 scale-100"x-transition:leave-end="opacity-0 scale-90" @mouseover="navigationMenuClearCloseTimeout()" @mouseleave="navigationMenuLeave()" class="dropdown-fixed" x-cloak>
                                 <div class="flex justify-center w-auto h-auto overflow-hidden bg-white border rounded-md shadow-sm border-neutral-200/70">
                                     <div x-show="navigationMenu == 'getting-started'" class="flex items-stretch justify-center w-full max-w-2xl p-6 gap-x-3">
                                         <div class="flex-shrink-0 w-48 rounded pt-28 pb-7 bg-gradient-to-br from-neutral-800 to-black">

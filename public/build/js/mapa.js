@@ -446,6 +446,7 @@ function actualizarSlider(maxPlacas) {
             actualizarEstiloSlider(slider); // Actualizar el estilo del slider
         }
     });
+    setupPlacaCountListener(placaCount, slider);  
 }
 
 
@@ -711,3 +712,24 @@ document.getElementById("obstaclesList").addEventListener("click", function (eve
 function enableMapInteractions(map) {
     map.setOptions({ draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false });
 }
+
+
+
+function setupPlacaCountListener(placaCount, slider) {
+    // Variable que almacenará el número de placas
+    let cantidadPlacas = 0;
+    // Función que actualiza la variable y muestra en consola
+    const actualizarPlacas = () => {
+        // Usamos el valor del input manual si tiene contenido, sino del slider
+        cantidadPlacas = placaCount.value || slider.value;
+        console.log('Placas seleccionadas:', cantidadPlacas);
+    };
+
+    // Configuramos los listeners
+    placaCount.addEventListener('input', actualizarPlacas);
+    slider.addEventListener('input', actualizarPlacas);
+
+    // Mostramos el valor inicial
+    actualizarPlacas();
+}
+

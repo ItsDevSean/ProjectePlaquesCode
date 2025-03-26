@@ -81,87 +81,183 @@
 
     
 
-    <div id="sidePanel" class="side-panel">
-        <button id="closePanelButton" class="close-panel-button">×</button>
-        <div>
-            <form action="" class="form-container">
-                <div class = "row">
-                    <div class="flex items-center gap-2 border-b-[3px] border-[#49DBA3] pb-2">
-                        <img src="/img/iconSup3.png" alt="vf" class="panel-img" width="30" height="auto">
-                        <h3 class="form-title2">Dades de la superficie</h3>
+    <div id="sidePanel" class="side-panel bg-white shadow-lg">
+        <button id="closePanelButton" class="close-panel-button bg-emerald-500 hover:bg-emerald-600 text-white">×</button>
+        <div class="space-y-2 p-2">
+            <!-- Sección 1: Dades de la superficie -->
+            <div class="accordion-section rounded-lg overflow-hidden border border-gray-200">
+                <button class="accordion-button flex items-center gap-3 w-full text-left p-4 bg-gradient-to-r from-emerald-50 to-white hover:from-emerald-100 transition-all duration-200">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100 text-emerald-600">
+                        <img src="/img/iconSup3.png" alt="Superficie" class="w-6 h-6">
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 flex-1">Dades de la superficie</h3>
+                    <span class="accordion-icon transform transition-transform duration-300 text-emerald-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                </button>
+                <div class="accordion-content bg-white">
+                    <form action="" class="form-container p-4 space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label for="area" class="block text-sm font-medium text-gray-700 mb-1">Àrea (m²)</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition" id="area" name="area" placeholder="Exemple: 50" required>
+                            </div>
+                            <div>
+                                <label for="orientacion" class="block text-sm font-medium text-gray-700 mb-1">Orientació</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition" id="orientacion" name="orientacion" required>
+                                    <option value="norte">Nord</option>
+                                    <option value="sur" selected>Sud</option>
+                                    <option value="este">Est</option>
+                                    <option value="oeste">Oest</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="inclinacion" class="block text-sm font-medium text-gray-700 mb-1">Inclinació (°)</label>
+                                <input type="number" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition" id="inclinacion" name="inclinacion" placeholder="Exemple: 30" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    
+            <!-- Sección 2: Selecció de plaques -->
+            <div class="accordion-section rounded-lg overflow-hidden border border-gray-200">
+                <button class="accordion-button flex items-center gap-3 w-full text-left p-4 bg-gradient-to-r from-emerald-50 to-white hover:from-emerald-100 transition-all duration-200">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100 text-emerald-600">
+                        <img src="/img/panelSolar2.png" alt="Plaques" class="w-6 h-6">
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 flex-1">Selecció de plaques</h3>
+                    <span class="accordion-icon transform transition-transform duration-300 text-emerald-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                </button>
+                <div class="accordion-content bg-white">
+                    <form action="" class="form-container p-4 space-y-4">
+                        <div>
+                            <label for="panel_model" class="block text-sm font-medium text-gray-700 mb-1">Selecciona Panel</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition" id="panel_model" name="panel_model" required>
+                                <option value="">-- Selecciona un modelo --</option>
+                                @foreach($panels as $panel)
+                                    <option value="{{ $panel->id }}" data-surface="{{ $panel->superficie }}">{{ $panel->panel_model }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+    
+                        <div class="text-center">
+                            <a href="{{ route('panels') }}" class="inline-flex items-center text-emerald-600 hover:text-emerald-800 font-medium transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                                </svg>
+                                Nuevo panel
+                            </a>
+                        </div>
+    
+                        <div>
+                            <label for="placaSlider" class="block text-sm font-medium text-gray-700 mb-2">Nombre de plaques:</label>
+                            <div class="flex items-center gap-4">
+                                <input type="range" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-emerald-500" id="placaSlider" min="0" max="1" step="1">
+                                <input type="number" id="placaCount" class="w-20 px-3 py-2 text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    
+            <!-- Sección 3: Selecció de obstacles -->
+            <div class="accordion-section rounded-lg overflow-hidden border border-gray-200">
+                <button class="accordion-button flex items-center gap-3 w-full text-left p-4 bg-gradient-to-r from-emerald-50 to-white hover:from-emerald-100 transition-all duration-200">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100 text-emerald-600">
+                        <img src="/img/iconObstaculo.png" alt="Obstacles" class="w-6 h-6">
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 flex-1">Selecció de obstacles</h3>
+                    <span class="accordion-icon transform transition-transform duration-300 text-emerald-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                </button>
+                <div class="accordion-content bg-white">
+                    <div class="form-container p-4 space-y-4">
+                        <div id="obstaclesList" class="space-y-3">
+                            <!-- Aquí se mostrarán los obstáculos creados -->
+                        </div>
+    
+                        <button id="nouObstacleButton" class="w-full flex items-center justify-center gap-2 bg-white border-2 border-emerald-400 text-emerald-600 font-semibold py-2 px-4 rounded-lg transition duration-300 hover:bg-emerald-50 hover:border-emerald-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                            </svg>
+                            Nou obstacle
+                        </button>
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-md-4 mt-3">
-                        <label for="area" class="form-label">Àrea de les plaques (m²)</label>
-                        <input type="text" class="form-control" id="area" name="area" placeholder="Exemple: 50" required>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="orientacion" class="form-label">Orientació</label>
-                        <select class="form-select" id="orientacion" name="orientacion" required>
-                            <option value="norte">Nord</option>
-                            <option value="sur" selected>Sud</option>
-                            <option value="este">Est</option>
-                            <option value="oeste">Oest</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="inclinacion" class="form-label">Inclinació (°)</label>
-                        <input type="number" class="form-control" id="inclinacion" name="inclinacion" placeholder="Exemple: 30" required>
-                    </div>
-                </div>              
-                <!-- Nueva Sección: Selecciona Panel -->
-            </form>
-            <form action="" class="form-container">
-                <div class="mb-4">
-                    <div class="flex items-center gap-2 border-b-[3px] border-[#49DBA3] pb-2">
-                        <img src="/img/panelSolar2.png" alt="panel solar" class="w-8 h-auto">
-                        <h3 class="text-lg font-semibold text-gray-800">Selecció de plaques</h3>
-                    </div>
-                </div>
-            
-                <div class="mb-4">
-                    <label for="panel_model" class="block text-sm font-medium text-gray-700">Selecciona Panel</label>
-                    <select class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500" id="panel_model" name="panel_model" required>
-                        <option value="">-- Selecciona un modelo --</option>
-                        @foreach($panels as $panel)
-                            <option value="{{ $panel->id }}" data-surface="{{ $panel->superficie }}">{{ $panel->panel_model }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            
-                <div class="text-center mb-4">
-                    <a href="{{ route('panels') }}" class="text-emerald-500 font-medium hover:underline">+ Nuevo panel</a>
-                </div>
-            
-                <div class="mb-4">
-                    <label for="placaSlider" class="block text-sm font-medium text-gray-700">Nombre de plaques:</label>
-                    <div class="flex items-center gap-4 mt-2">
-                        <input type="range" class="w-full cursor-pointer accent-emerald-500" id="placaSlider" min="0" max="1" step="1">
-                        <input type="number" id="placaCount" class="w-40 p-2 text-center border border-gray-300 rounded-lg">
-                    </div>
-                </div>
-            </form>
-            <div action="" class="form-container">
-                <div class="mb-4">
-                    <div class="flex items-center gap-2 border-b-[3px] border-[#49DBA3] pb-2">
-                        <img src="/img/iconObstaculo.png" alt="panel solar" class="w-8 h-auto">
-                        <h3 class="text-lg font-semibold text-gray-800">Selecció de obstacles</h3>
-                    </div>
-                </div>
-
-                <div id="obstaclesList" class="obstacles-list">
-                    <!-- Aquí se mostrarán los obstáculos creados -->
-                </div>
-            
-                <div class="mb-4">
-                    <button id="nouObstacleButton" class="w-full bg-white border-2 border-emerald-400 text-emerald-500 font-semibold py-2 px-4 rounded-lg transition duration-300 hover:bg-emerald-400 hover:text-white">
-                        Nou obstacle
-                    </button>
-                </div>
-            </div>            
+            </div>
         </div>
     </div>
+    
+    <style>
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    
+        .accordion-section.active .accordion-content {
+            max-height: 1000px;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    
+        .accordion-section.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+    
+        .close-panel-button {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+        }
+    
+        input:focus, select:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(73, 219, 163, 0.3);
+        }
+    </style>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+            
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const section = this.parentElement;
+                    section.classList.toggle('active');
+                    
+                    // Cerrar otras secciones al abrir una (opcional)
+                    if (section.classList.contains('active')) {
+                        document.querySelectorAll('.accordion-section').forEach(s => {
+                            if (s !== section && s.classList.contains('active')) {
+                                s.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            });
+    
+            // Abrir la primera sección por defecto
+            document.querySelector('.accordion-section').classList.add('active');
+        });
+    </script>
 
 </x-app-layout>
     

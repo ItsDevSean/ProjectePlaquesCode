@@ -348,7 +348,7 @@ input[type="range"]:hover {
         bottom: 20px !important; 
         top: auto !important; 
         left: 10px;
-        z-index: 1000 !important;
+        z-index: 1000;
         display: flex !important;
         flex-direction: row !important;
     }
