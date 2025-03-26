@@ -8,6 +8,8 @@ use App\Models\SolarPanelsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\UserImport;
 
 class SolarPanelsController extends Controller
 {
@@ -102,5 +104,27 @@ class SolarPanelsController extends Controller
     public function destroy(SolarPanelsModel $solarPanelsModel)
     {
         //
+    }
+
+    public function import(Request $request) 
+    {
+        // 1. Get the local file path
+        $filePath = app_path('Http/Controllers/tools/test.csv');
+            
+        // 2. Verify the file exists
+        if (!file_exists($filePath)) {
+            return back()->with('error', 'File not found!');
+        }
+
+        // 3. Create a UploadedFile instance manually
+        $file = new \Illuminate\Http\UploadedFile(
+            $filePath,
+            'test.csv',
+            'text/csv',
+            null,
+            true
+        );        
+        Excel::import(new UserImport, request()->file('test'),'csv');
+        return back()->with('success', 'CSV imported!');
     }
 }

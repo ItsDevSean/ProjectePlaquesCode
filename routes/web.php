@@ -58,6 +58,7 @@ Route::get('/herramientas/paneles', [SolarPanelsController::class, 'index'])->na
 
 Route::get('/herramientas/paneles/editar', [SolarPanelsController::class, 'edit'])->name('panelsEdit');
 
+Route::get('/herramientas/paneles/importar', [SolarPanelsController::class, 'import'])->name('panelsImport');
 
 Route::post('/herramientas/paneles/resultado', [SolarPanelsController::class, 'store'])->name('paneles.resultado');
 
