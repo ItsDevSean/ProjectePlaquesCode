@@ -9,6 +9,14 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('Usuario no autenticado.');
         return;
     }
+    
+    const tipusInstalacion = document.getElementById('tipo_instalacion');
+    tipusInstalacion.addEventListener('change', function () {
+        const selectedOption = tipusInstalacion.options[tipusInstalacion.selectedIndex];
+        const tipusInstalacionValue = selectedOption.textContent.trim();
+        localStorage.setItem('tipusInstalacion', tipusInstalacionValue);
+        console.log(localStorage)
+    });
 
     // Guardar el ID del usuario en el localStorage
     localStorage.setItem('userId', userId);

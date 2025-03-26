@@ -45,9 +45,9 @@ Route::get('/edificis', function () {
     return view('editarEdificis');
 })->name('edificis');
 
-Route::get('/formulari', function () {
-    return view('formulariProva');
-})->name('formulari');
+Route::get('/produccio', function () {
+    return view('produccio');
+})->name('produccio');
 
 
 Route::get('/vue', function(){

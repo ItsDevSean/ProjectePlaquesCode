@@ -61,6 +61,7 @@ window.initMap = function () {
 // Funció per inicialitzar Autocomplete
 function geocodeAddress(map) {
     const address = document.getElementById("address").value;
+    localStorage.setItem('direccion', address);
   
     if (address === "") {
         alert("Per favor, introduïu una adreça.");
@@ -94,6 +95,7 @@ function geocodeAddress(map) {
 }
   
 function initAutocomplete(map) {
+    
       const autocomplete = new google.maps.places.Autocomplete(
           document.getElementById("address"),
           { types: ["geocode"] }
@@ -106,7 +108,10 @@ function initAutocomplete(map) {
             alert("No s'han trobat detalls per aquesta adreça.");
             return;
         }
-  
+        
+        const address = place.formatted_address;
+        localStorage.setItem('direccion', address);
+
         console.log("Direcció seleccionada:", place.formatted_address);
         console.log("Latitud:", place.geometry.location.lat());
         console.log("Longitud:", place.geometry.location.lng());
@@ -312,7 +317,7 @@ function dibuixarPoligon(map) {
       calcularArea(window.selectedPolygon);
   }
 }
-
+ 
 // Función para calcular el número máximo de placas
 function calcularMaxPlacas(areaTotal) {
     const selectPanel = document.getElementById('panel_model');
@@ -327,9 +332,30 @@ function calcularMaxPlacas(areaTotal) {
     return Math.floor(areaTotal / areaPlaca);
 }
 
+const orientacion = document.getElementById('orientacion');
+orientacion.addEventListener('change', function () {
+    const selectedOption = orientacion.options[orientacion.selectedIndex];
+    const orientacionValue = selectedOption.textContent.trim();
+    localStorage.setItem('orientacion', orientacionValue);
+    
+});
+
+
+const inclinacion = document.getElementById('inclinacion');
+inclinacion.addEventListener('change', function () {
+    const inclinacionValue = inclinacion.value;
+    localStorage.setItem('inclinacion', inclinacionValue);
+});
+
+
 // Escuchar cambios en el select
 const selectPanel = document.getElementById('panel_model');
+
 selectPanel.addEventListener('change', function () {
+    const selectedOption = selectPanel.options[selectPanel.selectedIndex];
+    const panelModel = selectedOption.textContent.trim();
+    localStorage.setItem('panel_model', panelModel);
+    
     // Obtener el área total desde localStorage o desde la función calcularArea
     const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
     const areaTotal = parseFloat(edificiData.area);
@@ -385,7 +411,7 @@ function calcularArea(selectedPolygon) {
                     google.maps.event.removeListener(window.clickListener);
                     window.clickListener = null;
                 }
-
+                
                 // Rellenar el formulario con los datos guardados
                 const edificiData = JSON.parse(localStorage.getItem("edificiData"));
                 if (edificiData) {
