@@ -6,9 +6,10 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("openModal")?.addEventListener("click", function() {
         bateriaForm.reset();
         bateriaForm.action = window.bateriasStoreRoute; 
+        // Asegurarse que el método es POST para creación
+        document.querySelector('[name="_method"]').value = "POST";
         modal.classList.remove("hidden");
     });
-
     // Cerrar modal
     document.getElementById("closeModal")?.addEventListener("click", function() {
         modal.classList.add("hidden");
