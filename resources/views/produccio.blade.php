@@ -176,7 +176,6 @@
                             <p class="text-4xl font-black text-emerald-600">
                                 <span id="capacityFactor">18.2</span>%
                             </p>
-                            <div class="mt-2 w-12 h-1 bg-emerald-300 rounded-full"></div>
                         </div>
                         
                         <!-- Segundo cuadro -->
@@ -187,7 +186,6 @@
                             <p class="text-4xl font-black text-emerald-600">
                                 <span id="peakSunHours">1,598</span>
                             </p>
-                            <div class="mt-2 w-12 h-1 bg-emerald-300 rounded-full"></div>
                         </div>
                         
                         <!-- Tercer cuadro -->
@@ -198,7 +196,6 @@
                             <p class="text-4xl font-black text-emerald-600">
                                 <span id="systemEfficiency">78.5</span>%
                             </p>
-                            <div class="mt-2 w-12 h-1 bg-emerald-300 rounded-full"></div>
                         </div>
                     </div>
                 </div>
