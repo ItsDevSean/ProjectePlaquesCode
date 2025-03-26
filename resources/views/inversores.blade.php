@@ -104,7 +104,7 @@
 
                                     <div>
                                         <label for="eficiencia" class="block text-sm font-medium text-gray-700">Eficiencia</label>
-                                        <input type="text" name="eficiencia" id="eficiencia" placeholder="Eficiencia del inversor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                                        <input type="number" name="eficiencia" id="eficiencia" placeholder="Eficiencia del inversor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                     </div>
 
                                     <div>
@@ -160,7 +160,7 @@
 
                                     <div>
                                         <label for="id_referencia" class="block text-sm font-medium text-gray-700">ID Referencia</label>
-                                        <input type="text" name="id_referencia" id="id_referencia" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                        <input type="number" name="id_referencia" id="id_referencia" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                     </div>
                                 </div>
                                 <div>
@@ -187,7 +187,7 @@
                                 </button>
                             </div>
 
-                            <p class="mt-4">¿Estás seguro de que deseas eliminar el inversor <span id="inversorName"></span>? Esta acción no se puede deshacer.</p>
+                            <p class="mt-4">¿Estás seguro de que deseas eliminar el inversor <strong><span id="inversorName"></span></strong>? Esta acción no se puede deshacer.</p>
 
                             <input type="text" id="confirmationDeleteInput" class="mt-4 p-2 border rounded-md w-full" placeholder="Escribe el nombre del inversor para confirmar">
 
@@ -202,7 +202,7 @@
                                         Eliminar
                                     </button>
                                 </form>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                     <!-- Modal para crear fabricante -->

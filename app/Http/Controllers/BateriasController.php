@@ -27,7 +27,7 @@ class BateriasController extends Controller
             'nombre_bateria' => 'required|string|min:2|max:100',
             'coste' => 'required|numeric|min:0',
             'garantia_fabricante' => 'nullable|integer|min:0',
-            'descripcion' => 'required|string|min:5',
+            'descripcion' => 'nullable|string|min:0',
             'id_referencia' => 'nullable|string|max:50',
             'capacidad' => 'required|integer|min:0',
             'fabricante_id' => 'required|integer|exists:fabricantes,id',
