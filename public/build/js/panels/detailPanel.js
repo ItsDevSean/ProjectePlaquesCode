@@ -4,14 +4,17 @@ function openDetail(panel, nameAtributes) {
     toggleDetail();
 }   
 function processAttributes(panel,nameAtributes) {
+    document.getElementById('modalModel').textContent = panel.panel_model;
     nameAtributes.forEach(na => {
-        // Ensure the element exists before setting textContent
-        const element = document.getElementById("detail_"+na);
-        if (element) {
-            element.textContent = panel[na] !== null ? panel[na] : 'N/A'; 
-            console.log("Set " + na + ": " + panel[na]); 
-        } else {
-            console.log("Element not found for: " + na);
+        if (na != 'panel_model' && na != 'user_id') {
+            // Ensure the element exists before setting textContent
+            const element = document.getElementById("detail_"+na);
+            if (element) {
+                element.textContent = panel[na] !== null ? panel[na] : 'N/A'; 
+                console.log("Set " + na + ": " + panel[na]); 
+            } else {
+                console.log("Element not found for: " + na);
+            }
         }
     });
 }

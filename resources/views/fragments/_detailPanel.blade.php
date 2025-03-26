@@ -7,9 +7,11 @@
         </div>
         <div class="space-y-4">
             @foreach ($nameAtributes as $na)
-                <p><strong>{{ ucfirst(str_replace('_', ' ', $na)) }}:</strong>
-                    <span id="detail_{{ $na }}"></span>
-                </p>
+                @if ($na != 'panel_model' && $na != 'user_id')
+                    <p><strong>{{ ucfirst(str_replace('_', ' ', $na)) }}:</strong>
+                        <span id="detail_{{ $na }}"></span>
+                    </p>
+                @endif
             @endforeach
         </div>
     </div>
