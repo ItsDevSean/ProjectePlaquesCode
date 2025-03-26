@@ -52,7 +52,7 @@ function formSubmit(event) {
     // Calculate the area
     const longitud = parseFloat(longitudInput.value) || 0;
     const anchura = parseFloat(anchuraInput.value) || 0;
-    const area = (longitud * anchura)  
+    const area = ((longitud / 1000) * (anchura / 1000)) // convert mm to m
     superficieInput.value = area //Update the area of the panel
 
     //Fetch the validation and only close the view
