@@ -94,7 +94,8 @@
         <div id="detail" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex justify-center items-center">
             @include('fragments._detailPanel')
         </div>
-        <script src="{{asset('build/js/panels.js')}}"></script>
+        <script src="{{asset('build/js/panels/newPanel.js')}}"></script>
+        <script src="{{asset('build/js/panels/detailPanel.js')}}"></script>
     </x-app-layout>
 </body>
 </html>
