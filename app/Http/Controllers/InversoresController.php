@@ -12,7 +12,7 @@ class InversoresController extends Controller
     public function index()
     {
      
-        $inversores = Inversores::where('user_id', Auth::id())->get();
+        $inversores = Inversores::where('user_id', Auth::id())->paginate(3);
      
         $fabricantes = Fabricante::where('user_id', Auth::id())->get();
 
@@ -55,7 +55,7 @@ class InversoresController extends Controller
         
         $inversor->update($request->all() + ['user_id' => Auth::id()]);
         
-        return redirect()->route('inversores', $id)->with('success', 'Proyecto actualizado correctamente');
+        return redirect()->route('inversores.index', $id)->with('success', 'Proyecto actualizado correctamente');
     }
 
     public function edit($id)

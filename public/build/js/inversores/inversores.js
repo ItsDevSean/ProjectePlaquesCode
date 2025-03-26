@@ -1,5 +1,13 @@
-function openDetail(inversor) {
+function openDetail(inversor,event) {
     toggleDetail();
+
+    if (event && (
+        event.target.closest('button.text-green-600') || // Botón editar
+        event.target.closest('button.text-red-600') ||   // Botón eliminar
+        event.target.closest('form')                     // Formularios
+    )) {
+        return; // Salir de la función sin mostrar detalles
+    }
     
     // Llenar los datos
     document.getElementById('inversorDetail').textContent = inversor.nombre_inversor || 'N/A';

@@ -58,7 +58,7 @@
                                                 <span class="block mb-1 font-medium text-black">Paneles</span>
                                                 <span class="block font-light leading-5 opacity-50">Crear/Editar paneles</span>
                                                 </a>
-                                                <a href="{{ route('baterias') }}" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+                                                <a href="{{ route('baterias.index') }}" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
                                                 <span class="block mb-1 font-medium text-black">Baterias</span>
                                                 <span class="block font-light leading-5 opacity-50">Crear/Editar baterias</span>
                                                 </a>

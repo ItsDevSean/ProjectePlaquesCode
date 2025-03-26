@@ -10,7 +10,10 @@ window.initMap = function () {
         heading: 0,
     });
 
+
+
     map.setOptions({ draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true });
+
 
     // Inicialització de variables globals
     window.obstacles = []; 
@@ -732,4 +735,3 @@ function setupPlacaCountListener(placaCount, slider) {
     // Mostramos el valor inicial
     actualizarPlacas();
 }
-

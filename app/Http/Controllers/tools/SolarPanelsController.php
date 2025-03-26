@@ -19,8 +19,9 @@ class SolarPanelsController extends Controller
         $panelType = PanelType::all();            
         $panels = SolarPanelsModel::all()
         ->where('user_id', Auth::id());
-
-        return view('tools.panels', compact('panels', 'panelType'));    }
+        $nameAtributes = (new SolarPanelsModel)->getFillable();
+        return view('tools.panels', compact('panels', 'panelType', 'nameAtributes'));  
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -42,8 +43,8 @@ class SolarPanelsController extends Controller
             'date_manufacturer' => 'required|date',
             'panel_warranty' => 'nullable|integer',
             'performance_warranty' => 'nullable|integer',
-            'longitud' => 'required|numeric|min:1|max:5',
-            'anchura' => 'required|numeric|min:1|max:5',
+            'longitud_v2' => 'required|numeric|min:0',
+            'anchura' => 'required|numeric|min:0',
             'espesor' => 'required|numeric|min:0',
             'peso' => 'required|numeric|min:0',
             'superficie' => 'required|numeric|min:0',

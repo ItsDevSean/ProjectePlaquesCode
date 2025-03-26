@@ -3,27 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Baterias;
+use App\Models\Fabricante;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class BateriasController extends Controller
 {
     public function index()
     {
-        $baterias = Baterias::all();            
-        return view('baterias', compact('baterias'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
         
+     
+        $fabricantes = Fabricante::where('user_id', Auth::id())->get();
+        $baterias = Baterias::where('user_id', Auth::id())->paginate(4);
+ 
+
+        return view('baterias', compact('baterias','fabricantes'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+   
     public function store(Request $request)
     {
         $request->validate([
@@ -33,19 +30,54 @@ class BateriasController extends Controller
             'descripcion' => 'required|string|min:5',
             'id_referencia' => 'nullable|string|max:50',
             'capacidad' => 'required|integer|min:0',
-            'fabricante' => 'required|integer|exists:fabricantes,id',
+            'fabricante_id' => 'required|integer|exists:fabricantes,id',
             'garantia_material' => 'nullable|integer|min:0',
-            'imagen_bateria' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'imagen_bateria' => 'nullable|url|max:2048',
         ]);
 
         $data = $request->all();
-
-        if ($request->hasFile('imagen_bateria')) {
-            $data['imagen_bateria'] = $request->file('imagen_bateria')->store('baterias', 'public');
-        }
+        $data['user_id'] = Auth::id();
 
         Baterias::create($data);
 
         return redirect()->route('baterias.index')->with('success', 'Batería creada correctamente.');
     }
+
+    public function update(Request $request, $id)
+    {
+        $bateria = Baterias::find($id);
+    
+        if (!$bateria) {
+            return redirect()->route('baterias.index')->with('error', 'Proyecto no encontrado');
+        }
+    
+        
+        $bateria->update($request->all() + ['user_id' => Auth::id()]);
+        
+        return redirect()->route('baterias.index')->with('success', 'Proyecto actualizado correctamente');
+    }
+
+    public function edit($id)
+    {
+        $bateria = Baterias::find($id);
+        if (!$bateria) {
+            return redirect()->route('baterias.index')->with('error', 'bateria no encontrado');
+        }
+    
+        $fabricantes = Fabricante::where('user_id', Auth::id())->get(); 
+        return view('baterias.edit', compact('bateria', 'fabricantes')); 
+    }
+
+    public function destroy($id)
+{
+    $bateria = Baterias::find($id);
+
+    if (!$bateria) {
+        return redirect()->route('baterias.index')->with('error', 'bateria no encontrado');
+    }
+
+    $bateria->delete();
+
+    return redirect()->route('baterias.index')->with('success', 'bateria eliminado correctamente');
+}
 }

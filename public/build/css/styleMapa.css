@@ -342,6 +342,7 @@ input[type="range"]:hover {
 }
 
 
+
 @media (max-width: 1250px) {
     div.gmnoprint[role="menubar"] {
         position: absolute !important; 

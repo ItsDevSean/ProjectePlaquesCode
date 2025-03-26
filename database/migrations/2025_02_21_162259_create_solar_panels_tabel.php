@@ -22,7 +22,7 @@ return new class extends Migration
             $table->date('date_manufacturer');
             $table->integer('panel_warranty')->nullable();
             $table->integer('performance_warranty')->nullable();
-            $table->decimal('longitud', 10, 2);
+            $table->decimal('longitud_v2', 10, 2);
             $table->decimal('anchura', 10, 2);
             $table->decimal('espesor', 10, 2);
             $table->decimal('peso', 10, 2); 
