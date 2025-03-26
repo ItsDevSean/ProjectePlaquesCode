@@ -341,6 +341,8 @@ orientacion.addEventListener('change', function () {
 });
 
 
+
+
 const inclinacion = document.getElementById('inclinacion');
 inclinacion.addEventListener('change', function () {
     const inclinacionValue = inclinacion.value;
@@ -751,9 +753,9 @@ function setupPlacaCountListener(placaCount, slider) {
     const actualizarPlacas = () => {
         // Usamos el valor del input manual si tiene contenido, sino del slider
         cantidadPlacas = placaCount.value || slider.value;
-        console.log('Placas seleccionadas:', cantidadPlacas);
+        localStorage.setItem('placaCount', cantidadPlacas);
     };
-
+    
     // Configuramos los listeners
     placaCount.addEventListener('input', actualizarPlacas);
     slider.addEventListener('input', actualizarPlacas);

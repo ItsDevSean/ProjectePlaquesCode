@@ -41,8 +41,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const orientacion = localStorage.getItem('orientacion');
     const inclinacio = localStorage.getItem('inclinacion');
     const tipusInstalacio = localStorage.getItem('tipusInstalacion');
+    const placaCount = localStorage.getItem('placaCount');
     document.getElementById('location').textContent = savedLocation;
-    document.getElementById('panelCount').textContent = productionData.panelCount;
+    document.getElementById('panelCount').textContent = placaCount;
     document.getElementById('panelModel').textContent = panel_model;
     document.getElementById('orientation').textContent = orientacion;
     document.getElementById('tilt').textContent = inclinacio;
