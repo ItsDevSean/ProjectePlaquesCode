@@ -71,4 +71,21 @@
 #dailyPatternChart {
     width: 100%;
     height: 100%; 
-  }
+}
+
+.accordion-content {
+    transition: max-height 0.3s ease-out, opacity 0.2s ease;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+}
+.accordion-content.active {
+    max-height: 1000px; /* Ajusta según el contenido */
+    opacity: 1;
+}
+.accordion-icon {
+    transition: transform 0.3s ease;
+}
+.accordion-icon.active {
+    transform: rotate(180deg);
+}

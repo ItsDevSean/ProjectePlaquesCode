@@ -225,10 +225,16 @@
                 </div>
 
                 <!-- Taula de Dades Detallades -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden card">
+                <div class="bg-white rounded-xl shadow-md overflow-hidden card cursor-pointer accordion-card">
                     <div class="p-6">
-                        <h2 class="text-xl font-semibold text-gray-800 mb-4">Dades Detallades</h2>
-                        <div class="overflow-x-auto">
+                        <div class="flex justify-between items-center accordion-toggle">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-4">Dades Detallades</h2>
+                            <!-- Icono de flecha (se puede cambiar por +/−) -->
+                            <svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                        <div class="overflow-x-auto accordion-content hidden">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>

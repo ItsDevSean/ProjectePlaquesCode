@@ -162,3 +162,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 });
+
+const accordionCard = document.querySelector('.accordion-card');
+    
+    accordionCard.addEventListener('click', function() {
+        const content = this.querySelector('.accordion-content');
+        const icon = this.querySelector('.accordion-icon');
+        
+        content.classList.toggle('active');
+        content.classList.toggle('hidden'); // Por si usas Tailwind
+        icon.classList.toggle('active');
+    });
