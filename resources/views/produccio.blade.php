@@ -165,7 +165,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden p-8 max-w-4xl mx-auto">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden p-8 max-w-4xl mx-auto card">
                     <h2 class="text-xl font-semibold text-gray-800 mb-6 ">Mètriques de Rendiment</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <!-- Primer cuadro -->

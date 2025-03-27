@@ -42,12 +42,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const inclinacio = localStorage.getItem('inclinacion');
     const tipusInstalacio = localStorage.getItem('tipusInstalacion');
     const placaCount = localStorage.getItem('placaCount');
+    const potenciaMaxima = localStorage.getItem('panel_pot');
+    const prodAnualString = localStorage.getItem('radiacion') * ((localStorage.getItem('placaCount') * potenciaMaxima)/ 1000) * 0.8;
+    const prodAnual = prodAnualString.toFixed();
     document.getElementById('location').textContent = savedLocation;
     document.getElementById('panelCount').textContent = placaCount;
     document.getElementById('panelModel').textContent = panel_model;
     document.getElementById('orientation').textContent = orientacion;
     document.getElementById('tilt').textContent = inclinacio;
-    document.getElementById('annualProduction').textContent = productionData.annualProduction.toLocaleString();
+    document.getElementById('annualProduction').textContent = prodAnual.toLocaleString();
     document.getElementById('equivalentHomes').textContent = productionData.equivalentHomes;
     document.getElementById('annualSavings').textContent = productionData.annualSavings;
     document.getElementById('co2Saved').textContent = productionData.co2Saved.toLocaleString();
@@ -151,7 +154,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const circle = document.querySelector('.progress-ring__circle');
     const radius = circle.r.baseVal.value;
     const circumference = radius * 2 * Math.PI;
-    const offset = circumference - (productionData.annualProduction / 6000 * circumference);
+    prodAnualTotal = localStorage.getItem('radiacion') * ((localStorage.getItem('maxPlacas') * potenciaMaxima)/ 1000) * 0.8;
+    console.log(prodAnual)
+    const offset = circumference - (prodAnualString / prodAnualTotal * circumference);
     circle.style.strokeDasharray = `${circumference} ${circumference}`;
     circle.style.strokeDashoffset = offset;
+
+
 });

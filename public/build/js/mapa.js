@@ -87,6 +87,8 @@ function geocodeAddress(map) {
             // Habilitar el botón "Seleccionar área"
             document.getElementById("startSelection").disabled = false;
             document.getElementById("startSelection").classList.remove("hidden");
+            getSolarData(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+            
         } else {
             alert("No sa trobat la direcció, torna-ho a intentar.");
             console.log(results);
@@ -356,7 +358,11 @@ const selectPanel = document.getElementById('panel_model');
 selectPanel.addEventListener('change', function () {
     const selectedOption = selectPanel.options[selectPanel.selectedIndex];
     const panelModel = selectedOption.textContent.trim();
+    const panelId = selectedOption.value;
+    const potenciaMaxima = selectedOption.getAttribute('data-potencia-maxima')
+    localStorage.setItem('panel_pot', potenciaMaxima);
     localStorage.setItem('panel_model', panelModel);
+    localStorage.setItem('panel_id', panelId);
     
     // Obtener el área total desde localStorage o desde la función calcularArea
     const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
@@ -369,6 +375,7 @@ selectPanel.addEventListener('change', function () {
 
     // Calcular el número máximo de placas
     const maxPlacas = calcularMaxPlacas(areaTotal);
+    localStorage.setItem('maxPlacas', maxPlacas);
     console.log('Número máximo de placas:', maxPlacas);
 
     // Actualizar el slider (si es necesario)
@@ -763,3 +770,20 @@ function setupPlacaCountListener(placaCount, slider) {
     // Mostramos el valor inicial
     actualizarPlacas();
 }
+
+async function getSolarData(lat, lon) {
+    
+    const url = `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}&start_date=2024-01-01&end_date=2024-12-31&daily=shortwave_radiation_sum&timezone=auto`;
+  
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    // Suma total en Joules (convertir a kWh)
+    const annualRadiation_J = data.daily.shortwave_radiation_sum.reduce((a, b) => a + b, 0);
+    const annualRadiation_kWh = (annualRadiation_J / 3.6).toFixed(2); 
+    localStorage.setItem('radiacion', annualRadiation_kWh);
+  
+    console.log("☀️ Radiación anual real (Open-Meteo):", annualRadiation_kWh, "kWh/m²");
+    return annualRadiation_kWh;
+  }
+  
