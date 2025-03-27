@@ -138,34 +138,48 @@ function initAutocomplete(map) {
 
 // Función para crear un marcador
 function crearMarcador(map, latLng) {
-  
     window.marcadorExistente = new google.maps.Marker({
         position: latLng,
         map: map,
-      });
+    });
 
-      map.setCenter(latLng);
+    map.setCenter(latLng);
 
-      const areaText = document.getElementById("areaResult").innerText;
-      const areaValue = areaText.replace("Àrea: ", "").replace(" m²", ""); 
+    const areaText = document.getElementById("areaResult").innerText;
+    const areaValue = areaText.replace("Àrea: ", "").replace(" m²", ""); 
+    const estacio = localStorage.getItem('tipoEstacionalitat');
 
-      const edifici = {
-          id: window.edificis ? window.edificis.length + 1 : 1,
-          lat: latLng.lat(),
-          lng: latLng.lng(),
-          inclinacion: latLng.lat().toFixed(0),
-          area: areaValue, 
-      };
+    // Calcular la inclinació segons l'estacionalitat
+    let inclinacion;
+    const lat = latLng.lat();
+    
+    if (estacio === 'Estiu') {
+        inclinacion = lat - 10;  // Estiu: latitud -10
+    } else if (estacio === 'Hivern') {
+        inclinacion = lat + 10;  // Hivern: latitud +10
+    } else if (estacio === 'Tot l\'any') {
+        inclinacion = lat;       // Tot l'any: latitud sense canvis
+    } else {
+        console.log('No s\'ha seleccionat cap estacionalitat vàlida');
+        inclinacion = lat;       // Per defecte, si no hi ha estacionalitat vàlida
+    }
 
-      if (!window.edificis) {
-          window.edificis = [];
-      }
-      window.edificis.push(edifici);
+    const edifici = {
+        id: window.edificis ? window.edificis.length + 1 : 1,
+        lat: lat,
+        lng: latLng.lng(),
+        inclinacion: inclinacion.toFixed(0),  // Arrodonim a 0 decimals
+        area: areaValue, 
+    };
 
-      localStorage.setItem("edificiData", JSON.stringify(edifici));
-      console.log(localStorage)  
+    if (!window.edificis) {
+        window.edificis = [];
+    }
+    window.edificis.push(edifici);
+
+    localStorage.setItem("edificiData", JSON.stringify(edifici));
+    console.log(localStorage);
 }
-
 // Comienza la selección de puntos
 function iniciarSeleccio(map) {
   // Añade un nuevo evento de clic
