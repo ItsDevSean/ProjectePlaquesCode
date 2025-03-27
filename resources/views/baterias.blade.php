@@ -5,113 +5,245 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Búsqueda de Paneles</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="store-route" content="{{ route('baterias.store') }}">
+    <title>Projecte Plaques</title>
+    <link rel="stylesheet" href="{{ asset('build/css/styleDades.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="bg-gray-100 text-gray-800">
     <x-app-layout>
-        <div x-data="{ showModal: false, bateria: {} }" class="p-6">
+        <x-slot name="header">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Listado de Baterias') }}
+            </h2>
+        </x-slot>
 
-            <div class="max-w-4xl mx-auto p-6">
-                <h1 class="text-2xl font-bold text-[#49DBA3] mb-4 text-center">Baterías</h1>
+        <div class="py-12 m-10">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                        <button id="openModal" class="px-4 py-2 bg-[#49DBA3] text-white rounded-lg shadow-lg hover:bg-[#36B89A] transition-all duration-300">
+                            <i class="fas fa-plus"></i> Crear Bateria
+                        </button>
+                    </div>
+                    <table class="tabla min-w-full divide-y">
+                            <thead>
+                                    <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Bateria</th>
+                                    <th class="px-9 py-3 text-left text-xs font-medium uppercase tracking-wider">Capacidad</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Fabricante</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Coste</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Fecha de creacion</th>
+                                    </tr>
+                            </thead>
 
-                <!-- Filtros de búsqueda -->
-                <div class="mt-4 bg-white shadow-lg rounded-xl p-6">
-                    <div class="bg-white border border-gray-200 shadow-lg rounded-xl p-5 mb-8">
-                        <div class="flex items-center text font-semibold mb-4">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2"
-                                viewBox="0 0 24 24">
-                                <path d="M3 6h18M3 12h18M3 18h18" />
-                            </svg>
-                            Filtros
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <input type="text" placeholder="🔍 Identificador"
-                                class="border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 w-full">
-                            <input type="number" placeholder="⚡ Capacidad (kWh)"
-                                class="border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 w-full">
-                            <select
-                                class="border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 w-full">
-                                <option value="">🏭 Seleccionar fabricante</option>
-                                <option value="GROWATT">GROWATT</option>
-                                <option value="Pylontech">Pylontech</option>
-                                <option value="SAJ">SAJ</option>
-                                <option value="BYD">BYD</option>
-                            </select>
+                            <tbody>
+                                @if ($baterias->isEmpty())
+                                    <tr>
+                                        <td colspan="6" class="text-center py-4 text-gray-500">
+                                            No hay baterias disponibles.
+                                        </td>
+                                    </tr>
+                                @else
+                                    @foreach ($baterias as $bateria)
+                                    <tr class="border-t cursor-pointer hover:bg-gray-100" onclick="openDetail({{$bateria}})">
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $bateria->nombre_bateria }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $bateria->capacidad }} kWh</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $bateria->fabricante->nombre }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $bateria->coste }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $bateria->created_at->format('d/m/Y') }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                            <form action="{{ route('baterias.update', $bateria->id) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="button" onclick="event.stopPropagation();openEditModal({{ $bateria }})" class="text-green-600 hover:text-green-900 mr-3 no-underline">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </form>
+                                            
+                                            <button onclick="event.stopPropagation();openModalElim('{{ $bateria->nombre_bateria }}', '{{ $bateria->id }}')" class="text-red-600 hover:text-red-900">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            @if ($baterias->hasPages())
+                            <div class="px-6 py-4 bg-white dark:bg-gray-800">
+                                    {{ $baterias->links() }}
+                            </div>
+                            @endif
+                            </tbody>
+                            
+                        </table>
+
+                    
+                    <!-- Modal -->
+                    <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                        <div class="bg-white rounded-lg shadow-lg w-full max-w-3xl p-6">
+                            <div class="flex justify-between items-center border-b pb-4">
+                                <h2 class="text-xl font-semibold">Crear Nueva bateria</h2>
+                                <button id="closeModal" type="button" class="text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+
+                            <form id="bateriaForm" action="{{ route('baterias.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" id="formMethod" name="_method" value="POST">
+
+                                <div class="grid grid-cols-2 gap-10 mt-4">
+                                    <div>
+                                        <label for="nombre_bateria" class="block text-sm font-medium text-gray-700">Nombre de la bateria</label>
+                                        <input type="text" name="nombre_bateria" id="nombre_bateria" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                                    </div>
+
+                                    <div>
+                                        <label for="capacidad" class="block text-sm font-medium text-gray-700">Capacidad</label>
+                                        <input type="number" name="capacidad" id="capacidad" placeholder="Capacidad de la bateria" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                                    </div>
+
+                                    <div>
+                                        <label for="coste" class="block text-sm font-medium text-gray-700">Coste</label>
+                                        <input type="number" name="coste" id="coste" placeholder="Coste de la bateria" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                                    </div>
+
+                                    <div>
+                                        <label for="garantia_material" class="block text-sm font-medium text-gray-700">Garantía del Material (Años)</label>
+                                        <input type="number" name="garantia_material" id="garantia_material" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    </div>
+
+                                    <div>
+                                        <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
+                                        <textarea name="descripcion" id="descripcion" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></textarea>
+                                    </div>
+
+                                    <div>
+                                        <label for="fabricante" class="block text-sm font-medium text-gray-700">Fabricante</label>
+                                        <div class="flex items-center gap-4">
+                                            <select name="fabricante_id" id="fabricante" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($fabricantes as $fabricante)
+                                                    <option value="{{ $fabricante->id }}">{{ $fabricante->nombre }}</option>
+                                                @endforeach
+                                            </select>
+                                            <button type="button" id="openFabricanteModal" class="px-2 py-2 bg-[#7fd3b7] text-white rounded-lg shadow-lg hover:bg-[#36B89A] transition-all duration-300 flex items-center gap-2">
+                                                <i class="fas fa-plus"></i> Nuevo
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="garantia_fabricante" class="block text-sm font-medium text-gray-700">Garantía del Fabricante (Años)</label>
+                                        <input type="number" name="garantia_fabricante" id="garantia_fabricante" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                                    </div>
+
+                                    <div>
+                                        <label for="id_referencia" class="block text-sm font-medium text-gray-700">ID Referencia</label>
+                                        <input type="number" name="id_referencia" id="id_referencia" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    </div>
+                                </div>
+
+                                <div class="mt-6">
+                                    <label for="imagen_bateria" class="block text-sm font-medium text-gray-700 text-center">Imagen de la bateria</label>
+                                    <input type="text" name="imagen_bateria" id="imagen_bateria" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    <img id="preview" class="mt-2 mx-auto hidden w-32 h-32 object-cover">
+                                </div>
+
+                                <div class="flex justify-end mt-6">
+                                    <button type="submit" class="bg-[#49DBA3] text-white rounded-md hover:bg-[#36B89A] py-2 px-4 text-sm">
+                                        Crear bateria
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                </div>
+                        
 
-                <!-- Tabla de baterías -->
-                <div class="mt-4 overflow-x-auto bg-white shadow-lg rounded-xl">
-                    <table class="min-w-full text-sm text-left">
-                        <thead class="bg-gray-100 text-gray-700 uppercase tracking-wide text-xs">
-                            <tr>
-                                <th class="px-6 py-4">Identificador</th>
-                                <th class="px-6 py-4">Capacidad (kWh)</th>
-                                <th class="px-6 py-4">Coste (€)</th>
-                                <th class="px-6 py-4">Fabricante</th>
-                                <th class="px-6 py-4">Fecha de creación</th>
-                                <th class="px-6 py-4">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 text-gray-800">
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 font-medium">BATERIA-001</td>
-                                <td class="px-6 py-4">10</td>
-                                <td class="px-6 py-4">5000</td>
-                                <td class="px-6 py-4">GROWATT</td>
-                                <td class="px-6 py-4">2021-10-01 12:00:00</td>
-                                <td class="px-6 py-4 space-x-2">
-                                    <button
-                                        @click="showModal = true; bateria = { identificador: 'BATERIA-001', capacidad: 10, coste: 5000, fabricante: 'GROWATT' }"
-                                        class="inline-flex items-center px-4 py-2 bg-white bg-opacity-90 border-2 border-[#49DBA3] text-black rounded-md font-semibold text-xs uppercase tracking-widest cursor-pointer transition-all duration-300 ease-in-out hover:bg-[#49DBA3] hover:text-white focus:bg-[#49DBA3] focus:text-white active:bg-[#49DBA3] active:text-white focus:outline-none focus:ring-2 focus:ring-[#49DBA3] focus:ring-offset-2 dark:focus:ring-offset-green-800">Editar</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    
+
+                    <!-- Modal de Confirmación de Eliminación -->
+                    <div id="modalElim" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+                            <div class="flex justify-between items-center border-b pb-4">
+                                <h2 class="text-xl font-semibold">Confirmar Eliminación</h2>
+                                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+
+                            <p class="mt-4">¿Estás seguro de que deseas eliminar el batería <strong><span id="bateriaName"></span></strong>? Esta acción no se puede deshacer.</p>
+                            <input type="text" id="confirmationDeleteInput" class="mt-4 p-2 border rounded-md w-full" placeholder="Escribe el nombre del bateria para confirmar">
+
+                            <div class="flex justify-end mt-6">
+                                <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+                                    Cancelar
+                                </button>
+                                <form id="deletebateriaDeleteForm" action="" method="POST" class="ml-3 inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal para crear fabricante -->
+                    <div id="fabricanteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+                            <div class="flex justify-between items-center border-b pb-4">
+                                <h2 class="text-xl font-semibold">Crear Nuevo Fabricante</h2>
+                                <button id="closeFabricanteModal" class="text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+
+                            <form id="crearFabricanteForm" class="mt-4">
+                                @csrf
+                                <div>
+                                    <label for="nombre_fabricante" class="block text-sm font-medium text-gray-700">Nombre del Fabricante</label>
+                                    <input type="text" name="nombre" id="nombre_fabricante" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                                </div>
+
+                                <div class="flex justify-end mt-6">
+                                    <button type="button" id="closeFabricanteModalBtn" class="mr-2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+                                        Cancelar
+                                    </button>
+                                    <button type="submit" class="px-4 py-2 bg-[#49DBA3] text-white rounded-lg hover:bg-[#36B89A]">
+                                        Crear Fabricante
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <!-- Modal de edición -->
-            <div x-show="showModal" x-transition
-                class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div @click.away="showModal = false" class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl">
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Editar batería</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-600 mb-1">Identificador</label>
-                            <input x-model="bateria.identificador" class="w-full px-4 py-2 border rounded-xl" />
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-600 mb-1">Capacidad (kWh)</label>
-                            <input x-model="bateria.capacidad" type="number"
-                                class="w-full px-4 py-2 border rounded-xl" />
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-600 mb-1">Coste (€)</label>
-                            <input x-model="bateria.coste" type="number" class="w-full px-4 py-2 border rounded-xl" />
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-600 mb-1">Fabricante</label>
-                            <select x-model="bateria.fabricante" class="w-full px-4 py-2 border rounded-xl">
-                                <option>GROWATT</option>
-                                <option>Pylontech</option>
-                                <option>SAJ</option>
-                                <option>BYD</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mt-6 flex justify-end space-x-4">
-                        <button @click="showModal = false"
-                            class="px-4 py-2 bg-gray-200 rounded-xl hover:bg-gray-300">Cerrar</button>
-                        <button class="inline-flex items-center px-4 py-2 bg-white bg-opacity-90 border-2 border-[#49DBA3] text-black rounded-md font-semibold text-xs uppercase tracking-widest cursor-pointer transition-all duration-300 ease-in-out hover:bg-[#49DBA3] hover:text-white focus:bg-[#49DBA3] focus:text-white active:bg-[#49DBA3] active:text-white focus:outline-none focus:ring-2 focus:ring-[#49DBA3] focus:ring-offset-2 dark:focus:ring-offset-green-800">Guardar
-                            cambios</button>
-                    </div>
+            <!-- DETAIL-->
+            <div id="detail" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center hidden">
+                <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+                    <h2 class="text-lg font-bold mb-4">Detalles de la batería</h2>
+                    <p><strong>Nombre:</strong> <span id="bateriaDetail"></span></p>
+                    <p><strong>Coste:</strong> <span id="costeDetail"></span></p>
+                    <p><strong>Capacidad:</strong> <span id="capacidadDetail"></span></p>
+                    <p><strong>Descripción:</strong> <span id="descripcionDetail"></span></p>
+                    <p><strong>Imagen:</strong> <img id="imagenPanel" src="" alt="Imagen de la bateria" class="max-w-xs h-auto mt-2 rounded border border-gray-200" style="display: none;"></p>
+                    <p><strong>Garantía Material:</strong> <span id="garantiaMaterial"></span></p>
+                    <p><strong>Garantía Fabricante:</strong> <span id="garantiaFabricante"></span></p>
+                    <button onclick="toggleDetail()" class="mt-4 px-4 py-2 bg-red-600 text-white rounded">Cerrar</button>
                 </div>
             </div>
-        </div>
+        <script>
+            window.routeCrearFabricante = "{{ route('fabricantes.store') }}";
+            window.csrfToken = "{{ csrf_token() }}";
+            window.bateriasStoreRoute = "{{ route('baterias.store') }}";
+
+        </script>
+        <script src="{{ asset('build/js/baterias/modalFabricante.js') }}"></script>
+        <script src="build/js/baterias/modalbaterias.js"></script>
+        <script src="build/js/baterias/baterias.js"></script>
+        <script src="build/js/baterias/modalElimBateri.js"></script>
     </x-app-layout>
 </body>
 

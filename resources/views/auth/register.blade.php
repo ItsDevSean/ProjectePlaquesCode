@@ -5,6 +5,7 @@
          <!-- Logo img -->
          <div class="text-center mb-4">
             <img src="{{ asset('img/logo.png') }}" alt="Logo" class="w-20 h-20 mx-auto">
+            <h1 class="text-3x1">Inicia sesión</h1>
         </div>
 
         <!-- Nombre -->

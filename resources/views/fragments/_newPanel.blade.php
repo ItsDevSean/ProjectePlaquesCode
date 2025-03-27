@@ -45,7 +45,7 @@
 
     <div>
         <label>Longitud (mm) <span class="text-red-500">*</span></label>
-        <input type="number" id="longitud" name="longitud" class="border p-2 rounded w-full" required />
+        <input type="number" id="longitud_v2" name="longitud_v2" class="border p-2 rounded w-full" required />
     </div>
 
 

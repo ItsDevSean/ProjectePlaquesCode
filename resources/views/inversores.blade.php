@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="store-route" content="{{ route('inversores.store') }}">
     <title>Projecte Plaques</title>
     <link rel="stylesheet" href="{{ asset('build/css/styleDades.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -45,8 +46,8 @@
                                     </tr>
                                 @else
                                     @foreach ($inversores as $inversor)
-                                        <tr class="border-t">
-                                            <td class="px-6 py-4 whitespace-nowrap">{{ $inversor->nombre_inversor }}</td>
+                                    <tr class="border-t cursor-pointer hover:bg-gray-100" onclick="openDetail({{$inversor}})">
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $inversor->nombre_inversor }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $inversor->potencia_nominal }} kWh</td>
                                             <td class="px-6 py-4 whitespace-nowrap-3">{{ ($inversor->eficiencia) }} %</td>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $inversor->fabricante->nombre }}</td>
@@ -56,18 +57,23 @@
                                             <form action="{{ route('inversores.update', $inversor->id) }}" method="POST" class="inline">
                                                 @csrf
                                                 @method('PUT')
-                                                <button type="submit" class="text-green-600 hover:text-green-900 mr-3 no-underline">
+                                                <button type="button" onclick="event.stopPropagation();openEditModal({{ $inversor }})" class="text-green-600 hover:text-green-900 mr-3 no-underline">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
                                             </form>
                                             
-                                            <button onclick="openModalElim('{{ $inversor->nombre_inversor }}', '{{ $inversor->id }}')" class="text-red-600 hover:text-red-900">
+                                            <button onclick="event.stopPropagation();openModalElim('{{ $inversor->nombre_inversor }}', '{{ $inversor->id }}')" class="text-red-600 hover:text-red-900">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>
                                         </tr>
                                     @endforeach
                                 @endif
+                                @if ($inversores->hasPages())
+                            <div class="px-6 py-4 bg-white dark:bg-gray-800">
+                                    {{ $inversores->links() }}
+                            </div>
+                            @endif
                             </tbody>
                         </table>
 
@@ -77,8 +83,9 @@
                         <div class="bg-white rounded-lg shadow-lg w-full max-w-3xl p-6">
                             <div class="flex justify-between items-center border-b pb-4">
                                 <h2 class="text-xl font-semibold">Crear Nuevo Inversor</h2>
-                                <form action="{{ route('inversores.store') }}" method="POST" enctype="multipart/form-data">
+                                <form id="inversorForm" action="" method="POST" enctype="multipart/form-data">
                                 @csrf
+                                <input type="hidden" id="formMethod" name="_method" value="POST">
                                 <div class="flex items-center gap-8">
                                     <button type="submit" class="bg-[#49DBA3] text-white rounded-md hover:bg-[#36B89A] py-2 px-2 text-sm">
                                         Crear Inversor
@@ -97,7 +104,7 @@
 
                                     <div>
                                         <label for="eficiencia" class="block text-sm font-medium text-gray-700">Eficiencia</label>
-                                        <input type="text" name="eficiencia" id="eficiencia" placeholder="Eficiencia del inversor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                                        <input type="number" name="eficiencia" id="eficiencia" placeholder="Eficiencia del inversor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                     </div>
 
                                     <div>
@@ -153,10 +160,8 @@
 
                                     <div>
                                         <label for="id_referencia" class="block text-sm font-medium text-gray-700">ID Referencia</label>
-                                        <input type="text" name="id_referencia" id="id_referencia" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                        <input type="number" name="id_referencia" id="id_referencia" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                     </div>
-
-                                    
                                 </div>
                                 <div>
                                         <label for="imagen_inversor" class="block text-sm font-medium text-gray-700 flex justify-center mt-5">Imagen del Inversor</label>
@@ -182,7 +187,7 @@
                                 </button>
                             </div>
 
-                            <p class="mt-4">¿Estás seguro de que deseas eliminar el inversor <span id="inversorName"></span>? Esta acción no se puede deshacer.</p>
+                            <p class="mt-4">¿Estás seguro de que deseas eliminar el inversor <strong><span id="inversorName"></span></strong>? Esta acción no se puede deshacer.</p>
 
                             <input type="text" id="confirmationDeleteInput" class="mt-4 p-2 border rounded-md w-full" placeholder="Escribe el nombre del inversor para confirmar">
 
@@ -197,7 +202,7 @@
                                         Eliminar
                                     </button>
                                 </form>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                     <!-- Modal para crear fabricante -->
@@ -230,68 +235,29 @@
                     </div>
                 </div>
             </div>
+            <!-- DETAIL-->
+            <div id="detail" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center hidden">
+                <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+                    <h2 class="text-lg font-bold mb-4">Detalles del Inversor</h2>
+                    <p><strong>Inversor:</strong> <span id="inversorDetail"></span></p>
+                    <p><strong>Potencia Nominal:</strong> <span id="potenciaDetail"></span> kWh</p>
+                    <p><strong>Eficiencia:</strong> <span id="eficienciaDetail"></span> %</p>
+                    <p><strong>Descripción:</strong> <span id="descripcionDetail"></span></p>
+                    <p><strong>Imagen Panel:</strong> <img id="imagenPanel" src="" alt="Imagen del inversor" class="max-w-xs h-auto mt-2 rounded border border-gray-200"></p>
+                    <p><strong>Garantia Material:</strong> <span id="garantiaMaterial"></span></p>
+                    <p><strong>Garantia Fabricante:</strong> <span id="garantiaFabricante"></span></p>
+                    <button onclick="toggleDetail()" class="mt-4 px-4 py-2 bg-red-600 text-white rounded">Cerrar</button>
+                </div>
+            </div>
         </div>
-
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const fabricanteModal = document.getElementById("fabricanteModal");
-            const openFabricanteModalBtn = document.getElementById("openFabricanteModal");
-            const closeFabricanteModalBtn = document.getElementById("closeFabricanteModal");
-            const closeFabricanteModalByButton = document.getElementById("closeFabricanteModalBtn");
-            const crearFabricanteForm = document.getElementById("crearFabricanteForm");
-            const fabricanteSelect = document.getElementById("fabricante");
-
-          
-            const routeCrearFabricante = "{{ route('fabricantes.store') }}";
-            const csrfToken = "{{ csrf_token() }}"; 
-
-        
-            openFabricanteModalBtn.addEventListener("click", () => fabricanteModal.classList.remove("hidden"));
-
-            closeFabricanteModalBtn.addEventListener("click", () => fabricanteModal.classList.add("hidden"));
-            closeFabricanteModalByButton.addEventListener("click", () => fabricanteModal.classList.add("hidden"));
-
-           
-            crearFabricanteForm.addEventListener("submit", function(event) {
-                event.preventDefault(); 
-
-                fetch(routeCrearFabricante, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": csrfToken  
-                    },
-                    body: JSON.stringify({
-                        nombre: document.getElementById("nombre_fabricante").value
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        fabricanteModal.classList.add("hidden");
-
-                        document.getElementById("nombre_fabricante").value = "";
-
-                        const newOption = document.createElement("option");
-                        newOption.value = data.fabricante.id;
-                        newOption.text = data.fabricante.nombre;
-                        fabricanteSelect.appendChild(newOption);
-
-                        fabricanteSelect.value = data.fabricante.id;
-                    } else {
-                        alert("Error al crear el fabricante.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                });
-            });
-        });
-    </script>
-
-        <script src="build/js/modalInversores.js"></script>
-        <script src="build/js/modalElimInver.js"></script>
+        <script>
+            window.routeCrearFabricante = "{{ route('fabricantes.store') }}";
+            window.csrfToken = "{{ csrf_token() }}";
+        </script>
+        <script src="{{ asset('build/js/inversores/modalFabricante.js') }}"></script>
+        <script src="build/js/inversores/modalInversores.js"></script>
+        <script src="build/js/inversores/inversores.js"></script>
+        <script src="build/js/inversores/modalElimInver.js"></script>
     </x-app-layout>
 </body>
 </html>

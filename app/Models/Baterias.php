@@ -15,8 +15,18 @@ class Baterias extends Model
         'descripcion',
         'id_referencia',
         'capacidad',
-        'fabricante',
         'garantia_material',
         'imagen_bateria',
+        'fabricante_id',
+        'user_id', 
     ];
+    public function fabricante()
+    {
+        return $this->belongsTo(Fabricante::class, 'fabricante_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

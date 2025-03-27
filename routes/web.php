@@ -45,9 +45,13 @@ Route::get('/edificis', function () {
     return view('editarEdificis');
 })->name('edificis');
 
-Route::get('/formulari', function () {
-    return view('formulariProva');
-})->name('formulari');
+Route::get('/produccio', function () {
+    return view('produccio');
+})->name('produccio');
+
+Route::get('/consum', function () {
+    return view('consum');
+})->name('consum');
 
 
 Route::get('/vue', function(){
@@ -61,7 +65,7 @@ Route::get('/herramientas/paneles/editar', [SolarPanelsController::class, 'edit'
 
 Route::post('/herramientas/paneles/resultado', [SolarPanelsController::class, 'store'])->name('paneles.resultado');
 
-Route::get('baterias', [BateriasController::class, 'index'])->name('baterias');
+Route::resource('baterias',BateriasController::class);
 
 Route::resource('inversores', InversoresController::class);
 
@@ -95,7 +99,6 @@ Route::get('/infoEco', function(){
 });
 
 
-Route::post('/guardar-informacionElectrica', [InformacionElectricaPanelController::class, 'store'])->name('guardar.informacionElectrica');
 
 Route::post('/guardar-dades', [DadesClientController::class, 'store'])->name('guardar.dades');
 Route::put('/dades_clients/{id}', [DadesClientController::class, 'update'])->name('dades_clients.update');
@@ -120,4 +123,6 @@ Route::post('/proyectos/estado/{id}', [DadesClientController::class, 'updateEsta
 
 
 
-
+Route::get('/infoProject', function(){
+    return view('infoProject');
+});

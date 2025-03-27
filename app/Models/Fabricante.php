@@ -22,6 +22,11 @@ class Fabricante extends Model
         return $this->hasMany(Inversores::class, 'fabricante_id');
     }
 
+    public function baterias()
+    {
+        return $this->hasMany(Baterias::class, 'fabricante_id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

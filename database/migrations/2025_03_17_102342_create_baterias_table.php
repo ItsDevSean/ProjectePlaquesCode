@@ -19,13 +19,18 @@ return new class extends Migration
             $table->integer('garantia_material')->nullable();
             $table->integer('garantia_fabricante')->nullable();
             $table->text('descripcion')->nullable();
-            $table->unsignedBigInteger('fabricante');
+            $table->unsignedBigInteger('fabricante_id');
             $table->string('imagen_bateria')->nullable();
             $table->string('id_referencia')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
 
-            //$table->foreign('fabricante')->references('id')->on('fabricantes')->onDelete('cascade');
+            $table->foreign('fabricante_id') 
+                ->references('id')         
+                ->on('fabricantes')       
+                ->onDelete('cascade');     
         });
+       
     }
 
     /**
