@@ -1,7 +1,10 @@
 let inversorNameToDelete = '';
 let inversorIdToDelete = '';
 
-function openModalElim(nombreInversor, idInversor) {
+function openModalElim(nombreInversor, idInversor,event) {
+    if (event) {
+        event.stopPropagation();
+    }
     inversorNameToDelete = nombreInversor;
     inversorIdToDelete = idInversor;
     document.getElementById('inversorName').textContent = nombreInversor;

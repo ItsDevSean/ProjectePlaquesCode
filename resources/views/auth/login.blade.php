@@ -4,6 +4,7 @@
         <!-- Logo img -->
         <div class="text-center mb-4">
             <img src="{{ asset('img/logo.png') }}" alt="Logo" class="w-20 h-20 mx-auto">
+            <h1 class="text-3x1">Iniciar sesión</h1>
         </div>
     <form method="POST" action="{{ route('login') }}">
         @csrf
@@ -50,6 +51,7 @@
             </a>
             </div>
             <x-primary-button class="ms-3" href="{{ route('welcome') }}">
+
                 {{ __('Iniciar sesión') }}
             </x-primary-button>
         </div>

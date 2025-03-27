@@ -12,7 +12,7 @@ class InversoresController extends Controller
     public function index()
     {
      
-        $inversores = Inversores::where('user_id', Auth::id())->get();
+        $inversores = Inversores::where('user_id', Auth::id())->paginate(3);
      
         $fabricantes = Fabricante::where('user_id', Auth::id())->get();
 
@@ -55,7 +55,7 @@ class InversoresController extends Controller
         
         $inversor->update($request->all() + ['user_id' => Auth::id()]);
         
-        return redirect()->route('inversores', $id)->with('success', 'Proyecto actualizado correctamente');
+        return redirect()->route('inversores.index', $id)->with('success', 'Proyecto actualizado correctamente');
     }
 
     public function edit($id)
@@ -65,9 +65,8 @@ class InversoresController extends Controller
             return redirect()->route('inversores.index')->with('error', 'Inversor no encontrado');
         }
     
-        $fabricantes = Fabricante::where('user_id', Auth::id())->get(); // Add this line to retrieve manufacturers
-    
-        return view('inversores.edit', compact('inversor', 'fabricantes')); // Pass 'fabricantes' as well
+        $fabricantes = Fabricante::where('user_id', Auth::id())->get(); 
+        return view('inversores.edit', compact('inversor', 'fabricantes')); 
     }
 
     public function destroy($id)
