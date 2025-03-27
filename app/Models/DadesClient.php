@@ -13,7 +13,7 @@ class DadesClient extends Model
 
     protected $fillable = [
         'nombre', 'email', 'telefono', 'direccion', 'ciudad', 'codigo_postal',
-        'nombre_proyecto', 'descripcion_proyecto', 'tarifa', 'tipo_instalacion',
+        'nombre_proyecto', 'descripcion_proyecto', 'estacionalitat', 'tipo_instalacion',
         'user_id', 'estado_id'
     ];
 

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('codigo_postal');
             $table->string('nombre_proyecto');
             $table->string('descripcion_proyecto')->nullable();
-            $table->string('tarifa');
+            $table->string('estacionalitat');
             $table->string('tipo_instalacion');
             $table->timestamps();
         });

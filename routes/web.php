@@ -49,6 +49,10 @@ Route::get('/produccio', function () {
     return view('produccio');
 })->name('produccio');
 
+Route::get('/consum', function () {
+    return view('consum');
+})->name('consum');
+
 
 Route::get('/vue', function(){
     return view('vue');

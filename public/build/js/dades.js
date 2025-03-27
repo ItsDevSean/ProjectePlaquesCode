@@ -18,6 +18,15 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(localStorage)
     });
 
+    const tipoEstacionalitat = document.getElementById('estacionalitat');
+    tipoEstacionalitat.addEventListener('change', function() {
+        const selectedOption = tipoEstacionalitat.options[tipoEstacionalitat.selectedIndex];
+        const tipoEstacionalitatValue = selectedOption.textContent.trim();
+        localStorage.setItem('tipoEstacionalitat', tipoEstacionalitatValue);
+        console.log(localStorage.getItem('tipoEstacionalitat'));    
+    });
+
+    console.log(localStorage.getItem('tipoEstacionalitat'));
     // Guardar el ID del usuario en el localStorage
     localStorage.setItem('userId', userId);
 
