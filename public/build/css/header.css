@@ -5,3 +5,18 @@
 .itemsHeader:hover {
     color: #49DBA3;
 }
+
+#itemsHeader:hover {
+    color: #49DBA3;
+    cursor: pointer; 
+}
+
+.dropdown-fixed {
+    position: absolute;
+    top: 0;
+    padding-top: 0.75rem; /* pt-3 */
+    transition-duration: 200ms; /* duration-200 */
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1); /* ease-out */
+    transform: translateX(-50%) translateY(2.75rem); /* -translate-x-1/2 translate-y-11 */
+    z-index: 1003; 
+  }

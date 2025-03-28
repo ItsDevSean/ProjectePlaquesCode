@@ -43,7 +43,7 @@
         
                         <!-- PAS 3 -->
                         <li class="flex flex-col items-center cursor-pointer transition-transform duration-200 ease-in-out hover:scale-95">
-                            <a href="formulari" class="flex flex-col items-center">
+                            <a href="produccio" class="flex flex-col items-center">
                                 <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">
                                     3
                                 </div>
@@ -140,13 +140,18 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="mb-4">
                             <label for="tarifa_acceso" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tarifa d'Accés</label>
-                            <input type="text" class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="tarifa_acceso" name="tarifa" placeholder="Exemple: 2.0A" value="{{ old('tarifa', $proyecto->tarifa ?? '') }}" required>
-                            <span class="error-message text-red-500 text-sm hidden">La tarifa d'accés és obligatòria.</span>
+                            <select class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="estacionalitat" name="estacionalitat" required>
+                                <option value="" disabled selected>-- Tria una opció --</option>
+                                <option value="any" {{ (old('estacionalitat', $proyecto->estacionalitat ?? '') == 'any') ? 'selected' : '' }}>Tot l'any</option>
+                                <option value="estiu" {{ (old('estacionalitat', $proyecto->estacionalitat ?? '') == 'estiu') ? 'selected' : '' }}>Estiu</option>
+                                <option value="hivern" {{ (old('estacionalitat', $proyecto->estacionalitat ?? '') == 'hivern') ? 'selected' : '' }}>Hivern</option>
+                            </select>
                         </div>
 
                         <div class="mb-4">
                             <label for="tipo_instalacion" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tipus d'Instal·lació</label>
                             <select class="mt-1 block w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="tipo_instalacion" name="tipo_instalacion" required>
+                                <option value="" disabled selected>-- Tria una opció --</option>
                                 <option value="monofasica" {{ (old('tipo_instalacion', $proyecto->tipo_instalacion ?? '') == 'monofasica') ? 'selected' : '' }}>Monofàsica</option>
                                 <option value="trifasica" {{ (old('tipo_instalacion', $proyecto->tipo_instalacion ?? '') == 'trifasica') ? 'selected' : '' }}>Trifàsica</option>
                             </select>

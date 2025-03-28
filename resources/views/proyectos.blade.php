@@ -24,7 +24,7 @@
                                 <th class="px-9 py-3 text-left text-xs font-medium uppercase tracking-wider">Estado</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">N.Cliente</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nombre Proyecto</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Tarifa</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Estacio</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Creado</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Acciones</th>
                             </tr>
@@ -54,7 +54,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->nombre_proyecto }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->tarifa }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $proyecto->estacionalitat }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-500">{{ $proyecto->created_at->format('d/m/Y') }}</div> 
                                         </td>

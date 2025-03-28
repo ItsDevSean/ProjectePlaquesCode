@@ -99,12 +99,12 @@
 
                                     <div>
                                         <label for="capacidad" class="block text-sm font-medium text-gray-700">Capacidad</label>
-                                        <input type="text" name="capacidad" id="capacidad" placeholder="Capacidad de la bateria" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                                        <input type="number" name="capacidad" id="capacidad" placeholder="Capacidad de la bateria" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                     </div>
 
                                     <div>
                                         <label for="coste" class="block text-sm font-medium text-gray-700">Coste</label>
-                                        <input type="text" name="coste" id="coste" placeholder="Coste de la bateria" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                                        <input type="number" name="coste" id="coste" placeholder="Coste de la bateria" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                     </div>
 
                                     <div>
@@ -139,7 +139,7 @@
 
                                     <div>
                                         <label for="id_referencia" class="block text-sm font-medium text-gray-700">ID Referencia</label>
-                                        <input type="text" name="id_referencia" id="id_referencia" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                        <input type="number" name="id_referencia" id="id_referencia" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                     </div>
                                 </div>
 
@@ -171,8 +171,7 @@
                                 </button>
                             </div>
 
-                            <p class="mt-4">¿Estás seguro de que deseas eliminar el bateria <span id="bateriaName"></span>? Esta acción no se puede deshacer.</p>
-
+                            <p class="mt-4">¿Estás seguro de que deseas eliminar el batería <strong><span id="bateriaName"></span></strong>? Esta acción no se puede deshacer.</p>
                             <input type="text" id="confirmationDeleteInput" class="mt-4 p-2 border rounded-md w-full" placeholder="Escribe el nombre del bateria para confirmar">
 
                             <div class="flex justify-end mt-6">

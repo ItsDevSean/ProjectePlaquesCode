@@ -10,7 +10,10 @@ window.initMap = function () {
         heading: 0,
     });
 
+
+
     map.setOptions({ draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true });
+
 
     // Inicialització de variables globals
     window.obstacles = []; 
@@ -58,6 +61,7 @@ window.initMap = function () {
 // Funció per inicialitzar Autocomplete
 function geocodeAddress(map) {
     const address = document.getElementById("address").value;
+    localStorage.setItem('direccion', address);
   
     if (address === "") {
         alert("Per favor, introduïu una adreça.");
@@ -83,6 +87,8 @@ function geocodeAddress(map) {
             // Habilitar el botón "Seleccionar área"
             document.getElementById("startSelection").disabled = false;
             document.getElementById("startSelection").classList.remove("hidden");
+            getSolarData(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+            
         } else {
             alert("No sa trobat la direcció, torna-ho a intentar.");
             console.log(results);
@@ -91,6 +97,7 @@ function geocodeAddress(map) {
 }
   
 function initAutocomplete(map) {
+    
       const autocomplete = new google.maps.places.Autocomplete(
           document.getElementById("address"),
           { types: ["geocode"] }
@@ -103,7 +110,10 @@ function initAutocomplete(map) {
             alert("No s'han trobat detalls per aquesta adreça.");
             return;
         }
-  
+        
+        const address = place.formatted_address;
+        localStorage.setItem('direccion', address);
+
         console.log("Direcció seleccionada:", place.formatted_address);
         console.log("Latitud:", place.geometry.location.lat());
         console.log("Longitud:", place.geometry.location.lng());
@@ -128,34 +138,48 @@ function initAutocomplete(map) {
 
 // Función para crear un marcador
 function crearMarcador(map, latLng) {
-  
     window.marcadorExistente = new google.maps.Marker({
         position: latLng,
         map: map,
-      });
+    });
 
-      map.setCenter(latLng);
+    map.setCenter(latLng);
 
-      const areaText = document.getElementById("areaResult").innerText;
-      const areaValue = areaText.replace("Àrea: ", "").replace(" m²", ""); 
+    const areaText = document.getElementById("areaResult").innerText;
+    const areaValue = areaText.replace("Àrea: ", "").replace(" m²", ""); 
+    const estacio = localStorage.getItem('tipoEstacionalitat');
 
-      const edifici = {
-          id: window.edificis ? window.edificis.length + 1 : 1,
-          lat: latLng.lat(),
-          lng: latLng.lng(),
-          inclinacion: latLng.lat().toFixed(0),
-          area: areaValue, 
-      };
+    // Calcular la inclinació segons l'estacionalitat
+    let inclinacion;
+    const lat = latLng.lat();
+    
+    if (estacio === 'Estiu') {
+        inclinacion = lat - 10;  // Estiu: latitud -10
+    } else if (estacio === 'Hivern') {
+        inclinacion = lat + 10;  // Hivern: latitud +10
+    } else if (estacio === 'Tot l\'any') {
+        inclinacion = lat;       // Tot l'any: latitud sense canvis
+    } else {
+        console.log('No s\'ha seleccionat cap estacionalitat vàlida');
+        inclinacion = lat;       // Per defecte, si no hi ha estacionalitat vàlida
+    }
 
-      if (!window.edificis) {
-          window.edificis = [];
-      }
-      window.edificis.push(edifici);
+    const edifici = {
+        id: window.edificis ? window.edificis.length + 1 : 1,
+        lat: lat,
+        lng: latLng.lng(),
+        inclinacion: inclinacion.toFixed(0),  // Arrodonim a 0 decimals
+        area: areaValue, 
+    };
 
-      localStorage.setItem("edificiData", JSON.stringify(edifici));
-      console.log(localStorage)  
+    if (!window.edificis) {
+        window.edificis = [];
+    }
+    window.edificis.push(edifici);
+
+    localStorage.setItem("edificiData", JSON.stringify(edifici));
+    console.log(localStorage);
 }
-
 // Comienza la selección de puntos
 function iniciarSeleccio(map) {
   // Añade un nuevo evento de clic
@@ -309,7 +333,7 @@ function dibuixarPoligon(map) {
       calcularArea(window.selectedPolygon);
   }
 }
-
+ 
 // Función para calcular el número máximo de placas
 function calcularMaxPlacas(areaTotal) {
     const selectPanel = document.getElementById('panel_model');
@@ -324,9 +348,36 @@ function calcularMaxPlacas(areaTotal) {
     return Math.floor(areaTotal / areaPlaca);
 }
 
+const orientacion = document.getElementById('orientacion');
+orientacion.addEventListener('change', function () {
+    const selectedOption = orientacion.options[orientacion.selectedIndex];
+    const orientacionValue = selectedOption.textContent.trim();
+    localStorage.setItem('orientacion', orientacionValue);
+    
+});
+
+
+
+
+const inclinacion = document.getElementById('inclinacion');
+inclinacion.addEventListener('change', function () {
+    const inclinacionValue = inclinacion.value;
+    localStorage.setItem('inclinacion', inclinacionValue);
+});
+
+
 // Escuchar cambios en el select
 const selectPanel = document.getElementById('panel_model');
+
 selectPanel.addEventListener('change', function () {
+    const selectedOption = selectPanel.options[selectPanel.selectedIndex];
+    const panelModel = selectedOption.textContent.trim();
+    const panelId = selectedOption.value;
+    const potenciaMaxima = selectedOption.getAttribute('data-potencia-maxima')
+    localStorage.setItem('panel_pot', potenciaMaxima);
+    localStorage.setItem('panel_model', panelModel);
+    localStorage.setItem('panel_id', panelId);
+    
     // Obtener el área total desde localStorage o desde la función calcularArea
     const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
     const areaTotal = parseFloat(edificiData.area);
@@ -338,6 +389,7 @@ selectPanel.addEventListener('change', function () {
 
     // Calcular el número máximo de placas
     const maxPlacas = calcularMaxPlacas(areaTotal);
+    localStorage.setItem('maxPlacas', maxPlacas);
     console.log('Número máximo de placas:', maxPlacas);
 
     // Actualizar el slider (si es necesario)
@@ -382,7 +434,7 @@ function calcularArea(selectedPolygon) {
                     google.maps.event.removeListener(window.clickListener);
                     window.clickListener = null;
                 }
-
+                
                 // Rellenar el formulario con los datos guardados
                 const edificiData = JSON.parse(localStorage.getItem("edificiData"));
                 if (edificiData) {
@@ -446,6 +498,7 @@ function actualizarSlider(maxPlacas) {
             actualizarEstiloSlider(slider); // Actualizar el estilo del slider
         }
     });
+    setupPlacaCountListener(placaCount, slider);  
 }
 
 
@@ -711,3 +764,40 @@ document.getElementById("obstaclesList").addEventListener("click", function (eve
 function enableMapInteractions(map) {
     map.setOptions({ draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false });
 }
+
+
+
+function setupPlacaCountListener(placaCount, slider) {
+    // Variable que almacenará el número de placas
+    let cantidadPlacas = 0;
+    // Función que actualiza la variable y muestra en consola
+    const actualizarPlacas = () => {
+        // Usamos el valor del input manual si tiene contenido, sino del slider
+        cantidadPlacas = placaCount.value || slider.value;
+        localStorage.setItem('placaCount', cantidadPlacas);
+    };
+    
+    // Configuramos los listeners
+    placaCount.addEventListener('input', actualizarPlacas);
+    slider.addEventListener('input', actualizarPlacas);
+
+    // Mostramos el valor inicial
+    actualizarPlacas();
+}
+
+async function getSolarData(lat, lon) {
+    
+    const url = `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}&start_date=2024-01-01&end_date=2024-12-31&daily=shortwave_radiation_sum&timezone=auto`;
+  
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    // Suma total en Joules (convertir a kWh)
+    const annualRadiation_J = data.daily.shortwave_radiation_sum.reduce((a, b) => a + b, 0);
+    const annualRadiation_kWh = (annualRadiation_J / 3.6).toFixed(2); 
+    localStorage.setItem('radiacion', annualRadiation_kWh);
+  
+    console.log("☀️ Radiación anual real (Open-Meteo):", annualRadiation_kWh, "kWh/m²");
+    return annualRadiation_kWh;
+  }
+  
