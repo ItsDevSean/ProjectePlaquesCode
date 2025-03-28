@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,8 @@
     <link rel="stylesheet" href="{{ asset('build/css/styleDades.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
+
+<body class="bg-gray-100 text-gray-800">
     <x-app-layout>
         <x-slot name="header">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -244,4 +246,5 @@
         <script src="build/js/baterias/modalElimBateri.js"></script>
     </x-app-layout>
 </body>
+
 </html>

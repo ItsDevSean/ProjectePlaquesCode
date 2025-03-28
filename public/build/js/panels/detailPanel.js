@@ -22,3 +22,6 @@ function processAttributes(panel,nameAtributes) {
 function toggleDetail() {
     document.getElementById('detail').classList.toggle('hidden');
 }
+function showImport(importedData) {
+    console.log('Imported Data:', importedData);
+}

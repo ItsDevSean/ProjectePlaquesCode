@@ -18,13 +18,13 @@
                 <!-- Navigation Links -->
                 <div class="space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('proyectos')" :active="request()->routeIs('proyectos')" class="itemsHeader">
-                        {{ __('Inici') }}
+                        {{ __('Inicio') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('preus')" :active="request()->routeIs('preus')" class="itemsHeader">
-                        {{ __('Plans') }}
+                        {{ __('Planes') }}
                     </x-nav-link>
                 </div>
 

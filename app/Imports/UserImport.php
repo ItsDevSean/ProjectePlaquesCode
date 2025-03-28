@@ -4,34 +4,35 @@ namespace App\Imports;
 
 use App\Models\SolarPanelsModel;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-// Class that makes CSV imports
 class UserImport implements ToModel, WithHeadingRow, WithCustomCsvSettings
 {
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
     public function model(array $row)
     {
+        // Map CSV headers to the model's fillable attributes
         $fillable = (new SolarPanelsModel())->getFillable();
         $data = [];
-        
+
         foreach ($fillable as $field) {
-            // Convert CSV headers to match your fillable fields
-            $csvField = str_replace('_', ' ', strtolower($field)); // Adjust based on your CSV headers
-            $data[$field] = $row[$csvField] ?? null;
+            // Normalize field names: convert from snake_case to match the CSV headers
+            $csvField = str_replace('_', ' ', strtolower($field)); // Adjust as needed
+
+            // If the CSV contains the field, set the value, otherwise default to null
+            $data[$field] = isset($row[$csvField]) ? $row[$csvField] : null;
         }
+
+        Log::info('Imported data:', $data);
         
         return new SolarPanelsModel($data);
     }
 
     public function getCsvSettings(): array
     {
+        // Custom CSV settings: define delimiter, enclosure, and encoding
         return [
             'delimiter' => ',',
             'enclosure' => '"',
