@@ -109,8 +109,28 @@
                         <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana espanyola: 70€/mes</p>
                     </div>
                     
+                    <!-- Tarifa d'accés -->
+                    <div class="space-y-2">
+                        <label for="tarifa-acces" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Tarifa d'accés
+                        </label>
+                        <select id="tarifa-acces" name="tarifa-acces" 
+                                class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-400 focus:border-emerald-400">
+                            <option value="" disabled selected>Selecciona la teva tarifa</option>
+                            <option value="2.0A">2.0A - Sin discriminación horaria</option>
+                            <option value="2.0DHA">2.0DHA - Discriminación horaria</option>
+                            <option value="2.0DHS">2.0DHS - Discriminación horaria supervalle</option>
+                            <option value="2.1A">2.1A - Sin discriminación horaria (mayor potencia)</option>
+                            <option value="2.1DHA">2.1DHA - Discriminación horaria (mayor potencia)</option>
+                            <option value="2.1DHS">2.1DHS - Discriminación horaria supervalle (mayor potencia)</option>
+                            <option value="3.0A">3.0A - Tres periodos</option>
+                            <option value="6.1A">6.1A - Seis periodos</option>
+                        </select>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Pots trobar aquesta informació a la teva factura</p>
+                    </div>
+                    
                     <!-- Patró de consum -->
-                    <div class="md:col-span-2 space-y-2">
+                    <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Patró de consum
                         </label>

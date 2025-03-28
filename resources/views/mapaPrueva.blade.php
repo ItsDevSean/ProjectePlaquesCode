@@ -12,7 +12,7 @@
 <body>
     <x-app-layout>
 
-        <!-- Barra de progrés responsive -->
+        <!-- Barra de progres -->
         <div class="progress-bar-container mt-4 px-4"> 
             <div class="progress-bar bg-white border flex justify-center items-center mx-auto shadow-teal-300 shadow-md max-w-6xl p-2 rounded-lg dark:bg-gray-700 dark:text-gray-300">
                 <div class="w-full max-w-screen-2xl px-4 md:px-12 mx-auto overflow-x-auto overflow-y-hidden scrollbar-hide">
@@ -30,11 +30,23 @@
                             </a>
                         </li>
             
-                        <!-- PAS 2 -->
+                        <!-- NUEVO PAS 2 - CONSUM -->
+                        <li class="flex flex-col items-center cursor-pointer transition-transform duration-200 ease-in-out hover:scale-95">
+                            <a href="consum" class="flex flex-col items-center">
+                                <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">
+                                    2
+                                </div>
+                                <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">
+                                    Consum
+                                </span>
+                            </a>
+                        </li>
+            
+                        <!-- PAS 3 (antes 2) -->
                         <li class="flex flex-col items-center cursor-pointer transition-transform duration-200 ease-in-out hover:scale-95">
                             <a href="mapa" class="flex flex-col items-center">
                                 <div class="w-10 h-10 flex items-center justify-center bg-emerald-400 border-2 border-emerald-400 rounded-full text-white font-bold text-lg">
-                                    2
+                                    3
                                 </div>
                                 <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">
                                     Seleccionar Àrea
@@ -42,11 +54,11 @@
                             </a>
                         </li>
             
-                        <!-- PAS 3 -->
+                        <!-- PAS 4 (antes 3) -->
                         <li class="flex flex-col items-center cursor-pointer transition-transform duration-200 ease-in-out hover:scale-95">
                             <a href="produccio" class="flex flex-col items-center">
                                 <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">
-                                    3
+                                    4
                                 </div>
                                 <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">
                                     Producció
