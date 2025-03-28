@@ -108,23 +108,24 @@ class SolarPanelsController extends Controller
 
     public function import(Request $request) 
     {
-        // 1. Get the local file path
-        $filePath = app_path('Http/Controllers/tools/test.csv');
-            
-        // 2. Verify the file exists
-        if (!file_exists($filePath)) {
-            return back()->with('error', 'File not found!');
+        // 1. Validate and handle file upload from the request
+        $request->validate([
+            'csv_file' => 'required|file|mimes:csv,txt'
+        ]);
+
+        // 2. Get the uploaded file
+        $file = $request->file('app/Http/Controllers/tools/test.csv');
+
+        // 3. Check if the file is valid
+        if (!$file || !file_exists($file->getRealPath())) {
+            return back()->with('error', 'Invalid file!');
         }
 
-        // 3. Create a UploadedFile instance manually
-        $file = new \Illuminate\Http\UploadedFile(
-            $filePath,
-            'test.csv',
-            'text/csv',
-            null,
-            true
-        );        
-        Excel::import(new UserImport, request()->file('test'),'csv');
-        return back()->with('success', 'CSV imported!');
+        // 4. Import the CSV file
+        $import = Excel::import(new UserImport, $file);  // Correctly passing the file from the request
+
+        //SolarPanelsModel::create($import->all() + ['user_id' => Auth::id()]);
+
+        return view('tools.panels', compact('import'));
     }
 }
