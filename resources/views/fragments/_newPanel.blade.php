@@ -7,7 +7,7 @@
     <h2 class="text-xl font-bold text-gray-700 mb-4 text-center underline underline-offset-8 decoration-green-200">
         Informacion basica del panel
     </h2>
-
+    <div><span id="msg_error" class="text-red-500"></span></div>
     <div>
         <label>Nombre del Modelo <span class="text-red-500">*</span></label>
         <input type="text" name="panel_model" class="border p-2 rounded w-full" required />
@@ -43,12 +43,13 @@
         Datos Físicos del Panel
     </h2>
 
+    <span class="text-red-500">Introduce un alto mayor o igual que 1000 mm</span>
     <div>
         <label>Longitud (mm) <span class="text-red-500">*</span></label>
         <input type="number" id="longitud_v2" name="longitud_v2" class="border p-2 rounded w-full" required />
     </div>
 
-
+    <span class="text-red-500">Introduce un alto mayor o igual que 500 mm</span>
     <div>
         <label>Anchura (mm) <span class="text-red-500">*</span></label>
         <input type="number" id="anchura" name="anchura" class="border p-2 rounded w-full" required />
@@ -97,27 +98,27 @@
     <h2 class="text-xl font-bold text-gray-700 mb-4 text-center underline underline-offset-8 decoration-green-200">Datos del Panel Solar</h2>
 
     <div>
-        <label for="potencia_maxima">Potencia Máxima (Pmax)<span class="text-red-500">*</span></label>
+        <label for="potencia_maxima">Potencia nominal (Wp)<span class="text-red-500">*</span></label>
         <input id="potencia_maxima" name="potencia_maxima" type="number" class="border p-2 rounded w-full" required />
     </div>
 
     <div>
-        <label for="tension_maxima_potencia">Tensión en Punto de Máxima Potencia (Vmp)<span class="text-red-500">*</span></label>
+        <label for="tension_maxima_potencia">Tensión en Punto de Máxima Potencia (Vmp)</label>
         <input id="tension_maxima_potencia" name="tension_maxima_potencia" type="number" class="border p-2 rounded w-full" required />
     </div>
 
     <div>
-        <label for="corriente_punto_maxima_potencia">Corriente en Punto de Máxima Potencia (Imp)<span class="text-red-500">*</span></label>
+        <label for="corriente_punto_maxima_potencia">Corriente en Punto de Máxima Potencia (Imp)</label>
         <input id="corriente_punto_maxima_potencia" name="corriente_punto_maxima_potencia" type="number" class="border p-2 rounded w-full" required />
     </div>    
 
     <div>
-        <label for="tension_circuito_abierto">Tensión de Circuito Abierto (Voc)<span class="text-red-500">*</span></label>
+        <label for="tension_circuito_abierto">Tensión de Circuito Abierto (Voc)</label>
         <input id="tension_circuito_abierto" name="tension_circuito_abierto" type="number" class="border p-2 rounded w-full" required />
     </div>
 
     <div>
-        <label for="corriente_cortocircuito">Corriente de Cortocircuito (Isc)<span class="text-red-500">*</span></label>
+        <label for="corriente_cortocircuito">Corriente de Cortocircuito (Isc)</label>
         <input id="corriente_cortocircuito" name="corriente_cortocircuito" type="number" class="border p-2 rounded w-full" required />
     </div>
 
@@ -127,17 +128,17 @@
     </div>
 
     <div>
-        <label for="coeficiente_temp_pmax">Coeficiente de Temperatura de Pmax (%/°C)<span class="text-red-500">*</span></label>
+        <label for="coeficiente_temp_pmax">Coeficiente de Temperatura (%/°C)<span class="text-red-500">*</span></label>
         <input id="coeficiente_temp_pmax" name="coeficiente_temp_pmax" type="number" class="border p-2 rounded w-full" required />
     </div>
 
     <div>
-        <label for="coeficiente_temp_voc">Coeficiente de Temperatura de Voc (%/°C)<span class="text-red-500">*</span></label>
+        <label for="coeficiente_temp_voc">Coeficiente de Temperatura de Voc (%/°C)</label>
         <input id="coeficiente_temp_voc" name="coeficiente_temp_voc" type="number" class="border p-2 rounded w-full" required />
     </div>
 
     <div>
-        <label for="coeficiente_temp_isc">Coeficiente de Temperatura de Isc (%/°C)<span class="text-red-500">*</span></label>
+        <label for="coeficiente_temp_isc">Coeficiente de Temperatura de Isc (%/°C)</label>
         <input id="coeficiente_temp_isc" name="coeficiente_temp_isc" type="number" class="border p-2 rounded w-full" required />
     </div>
 
