@@ -8,6 +8,8 @@ use App\Models\SolarPanelsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\UserImport;
 
 class SolarPanelsController extends Controller
 {
@@ -54,14 +56,14 @@ class SolarPanelsController extends Controller
             'material_marco' => 'nullable|string',
             'color_panel' => 'nullable|string',
             'potencia_maxima' => 'required|numeric|min:0',
-            'tension_maxima_potencia' => 'required|numeric|min:0',
-            'corriente_punto_maxima_potencia' => 'required|numeric|min:0',
-            'tension_circuito_abierto' => 'required|numeric|min:0',
-            'corriente_cortocircuito' => 'required|numeric|min:0',
+            'tension_maxima_potencia' => 'nullable|numeric|min:0',
+            'corriente_punto_maxima_potencia' => 'nullable|numeric|min:0',
+            'tension_circuito_abierto' => 'nullable|numeric|min:0',
+            'corriente_cortocircuito' => 'nullable|numeric|min:0',
             'eficencia_panel' => 'required|numeric|min:0|max:100',
             'coeficiente_temp_pmax' => 'required|numeric|min:0|max:100',
-            'coeficiente_temp_voc' => 'required|numeric|min:0|max:100',
-            'coeficiente_temp_isc' => 'required|numeric|min:0|max:100',
+            'coeficiente_temp_voc' => 'nullable|numeric|min:0|max:100',
+            'coeficiente_temp_isc' => 'nullable|numeric|min:0|max:100',
         ]);
 
         SolarPanelsModel::create($request->all() + ['user_id' => Auth::id()]);
@@ -102,5 +104,27 @@ class SolarPanelsController extends Controller
     public function destroy(SolarPanelsModel $solarPanelsModel)
     {
         //
+    }
+
+    public function import(Request $request) 
+    {
+        // 1. Get the local file path
+        $filePath = app_path('Http/Controllers/tools/test.csv');
+            
+        // 2. Verify the file exists
+        if (!file_exists($filePath)) {
+            return back()->with('error', 'File not found!');
+        }
+
+        // 3. Create a UploadedFile instance manually
+        $file = new \Illuminate\Http\UploadedFile(
+            $filePath,
+            'test.csv',
+            'text/csv',
+            null,
+            true
+        );        
+        Excel::import(new UserImport, request()->file('test'),'csv');
+        return back()->with('success', 'CSV imported!');
     }
 }
