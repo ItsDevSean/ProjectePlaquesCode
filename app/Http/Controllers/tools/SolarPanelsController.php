@@ -126,6 +126,6 @@ class SolarPanelsController extends Controller
 
         //SolarPanelsModel::create($import->all() + ['user_id' => Auth::id()]);
 
-        return view('tools.panels', compact('import'));
+        return view('veureImport', compact('import'));
     }
 }
