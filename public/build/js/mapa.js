@@ -346,6 +346,7 @@ function calcularMaxPlacas(areaTotal) {
     const selectPanel = document.getElementById('panel_model');
     const selectedOption = selectPanel.options[selectPanel.selectedIndex];
     const areaPlaca = parseFloat(selectedOption.getAttribute('data-surface'));
+    localStorage.setItem('superficie', areaPlaca)
 
     if (isNaN(areaPlaca) || areaPlaca <= 0) {
         console.error('No se ha seleccionado un panel válido o la superficie no está definida.');

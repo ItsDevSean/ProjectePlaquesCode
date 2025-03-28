@@ -49,7 +49,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const horasAnuales = 8760;
     const factorCapacidad = (prodAnual / ((placaCount * potenciaMaxima / 1000) * horasAnuales) * 100).toFixed(1);
     const horasPico = (radiacionAnual).toFixed(0);
-    console.log(horasPico);
+    console.log(localStorage);
+    const superficieSistema = localStorage.getItem('superficie') * placaCount;
+    console.log(localStorage.getItem('superficie'));
+    const rendimentSistema = (prodAnual / (radiacionAnual * superficieSistema)) * 100;
+    console.log(rendimentSistema);
+    document.getElementById('systemEfficiency').textContent = (rendimentSistema).toFixed(2);
+    
     document.getElementById('location').textContent = savedLocation;
     document.getElementById('panelCount').textContent = placaCount;
     document.getElementById('panelModel').textContent = panel_model;
