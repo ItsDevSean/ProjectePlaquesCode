@@ -10,11 +10,11 @@
     <div><span id="msg_error" class="text-red-500"></span></div>
     <div>
         <label>Nombre del Modelo <span class="text-red-500">*</span></label>
-        <input type="text" name="panel_model" class="border p-2 rounded w-full" required />
+        <input type="text" id="panel_model" name="panel_model" class="border p-2 rounded w-full" required />
     </div>
     <div>
         <label>Fabricante <span class="text-red-500">*</span></label>
-        <input type="text" name="manufacturer"class="border p-2 rounded w-full" required />
+        <input type="text" id="manufacturer" name="manufacturer"class="border p-2 rounded w-full" required />
     </div>
 
    
@@ -28,7 +28,7 @@
 
     <div>
         <label for="date">Fecha de Fabricación <span class="text-red-500">*</span></label>
-        <input type="date" name="date_manufacturer" class="border p-2 rounded w-full" required />
+        <input type="date" id="date_manufacturer" name="date_manufacturer" class="border p-2 rounded w-full" required />
     </div>
     <div>
         <label>Garantía del producto (años)</label>
@@ -57,12 +57,12 @@
 
     <div>
         <label>Espesor (mm) <span class="text-red-500">*</span></label>
-        <input type="number" name="espesor" class="border p-2 rounded w-full" required />
+        <input type="number" id="espesor" name="espesor" class="border p-2 rounded w-full" required />
     </div>
 
     <div>
         <label>Peso (kg) <span class="text-red-500">*</span></label>
-        <input type="number" name="peso" class="border p-2 rounded w-full" required />
+        <input type="number" id="peso" name="peso" class="border p-2 rounded w-full" required />
     </div>
 
     <div style="display: none;">

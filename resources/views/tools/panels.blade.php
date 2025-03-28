@@ -94,6 +94,9 @@
         <div id="detail" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex justify-center items-center">
             @include('fragments._detailPanel')
         </div>
+
+        {{-- <button onclick="showImport({{ json_encode($import) }})" class="bg-[#49DBA3] hover:bg-[#193849] text-white py-2 px-4 rounded-lg">show import</button> --}}
+
         <script src="{{asset('build/js/panels/newPanel.js')}}"></script>
         <script src="{{asset('build/js/panels/detailPanel.js')}}"></script>
     </x-app-layout>

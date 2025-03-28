@@ -1,4 +1,4 @@
 user_id,panel_model,manufacturer,panel_type,date_manufacturer,panel_warranty,performance_warranty,longitud_v2,anchura,espesor,peso,superficie,descripcion,url_fabricante,imagen_panel,material_marco,color_panel,potencia_maxima,tension_maxima_potencia,corriente_punto_maxima_potencia,tension_circuito_abierto,corriente_cortocircuito,eficencia_panel,coeficiente_temp_pmax,coeficiente_temp_voc,coeficiente_temp_isc
-1,QM-PEAK-DUO-G10,Canadian Solar,Mono-PERC,2023-05-15,25,30,209.4,103.8,3.5,22.5,2.17,High efficiency panel,https://www.csisolar.com,,Aluminum,Black,405,41.7,9.72,50.1,10.2,20,-0.34,-0.27,0.05
-2,RSM120-8-430M,Rec Solar,Polycrystalline,2023-02-20,20,25,195.6,99.1,4.0,20.3,1.94,Cost-effective solution,https://www.recgroup.com,,Aluminum,Blue,430,38.9,11.05,48.3,11.4,18,-0.39,-0.31,0.04
-3,NEON2-BiFi-380,LG,Bifacial,2023-01-10,25,25,201.5,101.3,3.2,21.7,2.04,Premium bifacial panel,https://www.lg.com,,Aluminum,Silver,380,40.2,9.45,49.5,9.9,21,-0.29,-0.25,0.06
+2,QM-PEAK-DUO-G10,Canadian Solar,Mono-PERC,2023-05-15,25,30,209.4,103.8,3.5,22.5,2.17,High efficiency panel,https://www.csisolar.com,,Aluminum,Black,405,41.7,9.72,50.1,10.2,20,-0.34,-0.27,0.05
+3,RSM120-8-430M,Rec Solar,Polycrystalline,2023-02-20,20,25,195.6,99.1,4.0,20.3,1.94,Cost-effective solution,https://www.recgroup.com,,Aluminum,Blue,430,38.9,11.05,48.3,11.4,18,-0.39,-0.31,0.04
+4,NEON2-BiFi-380,LG,Bifacial,2023-01-10,25,25,201.5,101.3,3.2,21.7,2.04,Premium bifacial panel,https://www.lg.com,,Aluminum,Silver,380,40.2,9.45,49.5,9.9,21,-0.29,-0.25,0.06

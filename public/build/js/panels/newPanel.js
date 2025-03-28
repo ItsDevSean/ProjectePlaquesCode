@@ -12,8 +12,10 @@ function formSubmit(event) {
     const anchuraInput = document.getElementById('anchura');
     // See if there ara errors
     if (!errorHandler()) {
+        console.log("dasfsadf");
         return;
     }
+    console.log("Que oassas");
     // Calculate the area
     const longitud = parseFloat(longitudInput.value) || 0;
     const anchura = parseFloat(anchuraInput.value) || 0;
@@ -36,9 +38,10 @@ function errorHandler() {
     const anchuraInput = document.getElementById('anchura');
     const eficienciaInput = document.getElementById('eficencia_panel');
     const errorElement = document.getElementById('msg_error');
-    if (!nombreModelo || !fabicante || !fechaFabricacion || 
-        !espesor || !peso || !potenciaMaxima || !coeficienteTemp || 
-        !longitudInput || !anchuraInput) {
+    //console.log("nm " + nombreModelo.value)
+    if (!nombreModelo.value || !fabicante.value || !fechaFabricacion.value || 
+        !espesor.value || !peso.value || !potenciaMaxima.value || !coeficienteTemp.value || 
+        !longitudInput.value || !anchuraInput.value) {
         errorElement.textContent = "Faltan campos obligatorios.";
         isCorrect = false;
     }
