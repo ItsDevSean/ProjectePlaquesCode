@@ -97,15 +97,14 @@ function geocodeAddress(map) {
 }
   
 function initAutocomplete(map) {
-    
-      const autocomplete = new google.maps.places.Autocomplete(
-          document.getElementById("address"),
-          { types: ["geocode"] }
-      );
-  
-      autocomplete.addListener("place_changed", function () {
+    const autocomplete = new google.maps.places.Autocomplete(
+        document.getElementById("address"),
+        { types: ["geocode"] }
+    );
+
+    autocomplete.addListener("place_changed", function () {
         const place = autocomplete.getPlace();
-  
+
         if (!place.geometry) {
             alert("No s'han trobat detalls per aquesta adreça.");
             return;
@@ -117,23 +116,31 @@ function initAutocomplete(map) {
         console.log("Direcció seleccionada:", place.formatted_address);
         console.log("Latitud:", place.geometry.location.lat());
         console.log("Longitud:", place.geometry.location.lng());
-  
+
+        // Obtener coordenadas
+        const lat = place.geometry.location.lat();
+        const lng = place.geometry.location.lng();
+
         map.setCenter(place.geometry.location);
         crearMarcador(map, place.geometry.location);
-  
+
         // Cambiar el mapa a modo satélite y desactivar etiquetas
         map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
         map.setOptions({ styles: [{ featureType: "all", elementType: "labels", stylers: [{ visibility: "off" }] }] });
         map.setZoom(18);
         const mapOverlay = document.getElementById("mapOverlay");
         mapOverlay.classList.add("hidden");
-        enableMapInteractions(map)
+        enableMapInteractions(map);
+        
+        // Llamar a getSolarData con las coordenadas
+        getSolarData(lat, lng);
+
         // Habilitar el botón "Seleccionar área"
         document.getElementById("startSelection").disabled = false;
         document.getElementById("startSelection").classList.remove("hidden");
-      });
-  
-      return autocomplete;
+    });
+
+    return autocomplete;
 }
 
 // Función para crear un marcador

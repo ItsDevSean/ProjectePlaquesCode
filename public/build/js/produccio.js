@@ -44,7 +44,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const placaCount = localStorage.getItem('placaCount');
     const potenciaMaxima = localStorage.getItem('panel_pot');
     const prodAnualString = localStorage.getItem('radiacion') * ((localStorage.getItem('placaCount') * potenciaMaxima)/ 1000) * 0.8;
+    const radiacionAnual= parseFloat(localStorage.getItem('radiacion'));
     const prodAnual = prodAnualString.toFixed();
+    const horasAnuales = 8760;
+    const factorCapacidad = (prodAnual / ((placaCount * potenciaMaxima / 1000) * horasAnuales) * 100).toFixed(1);
+    const horasPico = (radiacionAnual).toFixed(0);
+    console.log(horasPico);
     document.getElementById('location').textContent = savedLocation;
     document.getElementById('panelCount').textContent = placaCount;
     document.getElementById('panelModel').textContent = panel_model;
@@ -55,8 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('annualSavings').textContent = productionData.annualSavings;
     document.getElementById('co2Saved').textContent = productionData.co2Saved.toLocaleString();
     document.getElementById('roiYears').textContent = productionData.roiYears;
-    document.getElementById('capacityFactor').textContent = productionData.capacityFactor;
-    document.getElementById('peakSunHours').textContent = productionData.peakSunHours.toLocaleString();
+    document.getElementById('capacityFactor').textContent = factorCapacidad;
+    document.getElementById('peakSunHours').textContent = horasPico;
     document.getElementById('tarifaAcces').textContent = tarifaAcces;
     document.getElementById('tipusInstalacio').textContent = tipusInstalacio;
 
