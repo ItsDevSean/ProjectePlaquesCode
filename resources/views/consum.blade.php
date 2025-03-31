@@ -30,7 +30,7 @@
             }
         }">
             <!-- Progress Track -->
-            <div class="relative h-1.5 mb-16">
+            <div class="relative h-1.5 mb-24">
                 <!-- Background Line -->
                 <div class="absolute inset-0 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
                     <!-- Progress Fill - Animated -->
@@ -92,7 +92,7 @@
         </div>
 
         <!-- Contingut principal mejorado -->
-        <div class="py-8 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div class="max-w-6xl mx-auto px-6 py-8 mt-6 bg-white rounded-xl shadow-lg dark:bg-gray-800 transition-all duration-300 hover:shadow-xl ">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 mb-8">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
                     <div>

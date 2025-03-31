@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Calcular métricas importantes
     const prodAnual = radiacionAnual * ((placaCount * potenciaMaxima) / 1000) * 0.8;
+    const equiLlar = prodAnual / 2500
     const horasAnuales = 8760;
     const factorCapacidad = (prodAnual / ((placaCount * potenciaMaxima / 1000) * horasAnuales) * 100).toFixed(1);
     const horasPico = radiacionAnual.toFixed(0);
@@ -56,10 +57,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const energiaTeorica = radiacionAnual * potenciaInstalada; 
     const energiaReal = radiacionAnual * potenciaInstalada * 0.8;
     const rendimiento = (energiaReal / energiaTeorica) * 100;
+    console.log(equiLlar)
     
 
     // Actualizar la interfaz con los datos reales
     document.getElementById('systemEfficiency').textContent = rendimiento;
+    document.getElementById('equivalentHomes').textContent = equiLlar.toFixed(1);
     document.getElementById('location').textContent = savedLocation;
     document.getElementById('panelCount').textContent = placaCount;
     document.getElementById('panelModel').textContent = panel_model;
