@@ -134,6 +134,7 @@ function initAutocomplete(map) {
         
         // Llamar a getSolarData con las coordenadas
         getSolarData(lat, lng);
+        getMonthlySolarData(lat, lng)
 
         // Habilitar el botón "Seleccionar área"
         document.getElementById("startSelection").disabled = false;
@@ -189,6 +190,9 @@ function crearMarcador(map, latLng) {
 }
 // Comienza la selección de puntos
 function iniciarSeleccio(map) {
+    guardarOrientacion();
+    guardarInclinacion();
+
   // Añade un nuevo evento de clic
   window.selectedMarkers = [];
   const clickListener = map.addListener("click", (event) => {
@@ -357,21 +361,26 @@ function calcularMaxPlacas(areaTotal) {
 }
 
 const orientacion = document.getElementById('orientacion');
-orientacion.addEventListener('change', function () {
+
+function guardarOrientacion() {
     const selectedOption = orientacion.options[orientacion.selectedIndex];
     const orientacionValue = selectedOption.textContent.trim();
     localStorage.setItem('orientacion', orientacionValue);
-    
-});
+}
+orientacion.addEventListener('change', guardarOrientacion);
 
 
 
 
 const inclinacion = document.getElementById('inclinacion');
-inclinacion.addEventListener('change', function () {
+// Función que guarda el valor actual en localStorage
+function guardarInclinacion() {
     const inclinacionValue = inclinacion.value;
     localStorage.setItem('inclinacion', inclinacionValue);
-});
+}
+
+// Escuchar cambios y actualizar
+inclinacion.addEventListener('change', guardarInclinacion);
 
 
 // Escuchar cambios en el select
@@ -807,5 +816,71 @@ async function getSolarData(lat, lon) {
   
     console.log("☀️ Radiación anual real (Open-Meteo):", annualRadiation_kWh, "kWh/m²");
     return annualRadiation_kWh;
-  }
+}
   
+async function getMonthlySolarData(lat, lon) {
+    const months = [
+        { name: "Enero", start: "2024-01-01", end: "2024-01-31" },
+        { name: "Febrero", start: "2024-02-01", end: "2024-02-29" },
+        { name: "Marzo", start: "2024-03-01", end: "2024-03-31" },
+        { name: "Abril", start: "2024-04-01", end: "2024-04-30" },
+        { name: "Mayo", start: "2024-05-01", end: "2024-05-31" },
+        { name: "Junio", start: "2024-06-01", end: "2024-06-30" },
+        { name: "Julio", start: "2024-07-01", end: "2024-07-31" },
+        { name: "Agosto", start: "2024-08-01", end: "2024-08-31" },
+        { name: "Septiembre", start: "2024-09-01", end: "2024-09-30" },
+        { name: "Octubre", start: "2024-10-01", end: "2024-10-31" },
+        { name: "Noviembre", start: "2024-11-01", end: "2024-11-30" },
+        { name: "Diciembre", start: "2024-12-01", end: "2024-12-31" }
+    ];
+
+    // Intentar cargar datos existentes del localStorage
+    let monthlyData = JSON.parse(localStorage.getItem('monthlyRadiation')) || [];
+    
+    // Verificar si ya tenemos datos para estas coordenadas
+    const storedCoords = JSON.parse(localStorage.getItem('radiationCoords')) || {};
+    if (storedCoords.lat === lat && storedCoords.lon === lon && monthlyData.length > 0) {
+        console.log("Usando datos almacenados en caché");
+        return monthlyData;
+    }
+
+    // Si no hay datos o las coordenadas cambiaron, obtener nuevos
+    monthlyData = [];
+
+    for (const month of months) {
+        const url = `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}&start_date=${month.start}&end_date=${month.end}&daily=shortwave_radiation_sum&timezone=auto`;
+        
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            
+            const data = await response.json();
+            
+            // Suma total en Joules (convertir a kWh)
+            const monthlyRadiation_J = data.daily.shortwave_radiation_sum.reduce((a, b) => a + b, 0);
+            const monthlyRadiation_kWh = (monthlyRadiation_J / 3.6).toFixed(2);
+            
+            monthlyData.push({
+                month: month.name,
+                radiation_kWh: parseFloat(monthlyRadiation_kWh) // Convertir a número
+            });
+
+            console.log(`☀️ Radiación en ${month.name}:`, monthlyRadiation_kWh, "kWh/m²");
+
+        } catch (error) {
+            console.error(`Error al obtener datos para ${month.name}:`, error);
+            monthlyData.push({
+                month: month.name,
+                radiation_kWh: null,
+                error: error.message
+            });
+        }
+    }
+
+    // Guardar en localStorage
+    localStorage.setItem('monthlyRadiation', JSON.stringify(monthlyData));
+    localStorage.setItem('radiationCoords', JSON.stringify({ lat, lon }));
+    
+    console.log("Datos mensuales guardados en localStorage:", localStorage);
+    return monthlyData;
+}
