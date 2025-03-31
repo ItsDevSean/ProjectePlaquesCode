@@ -52,11 +52,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const horasAnuales = 8760;
     const factorCapacidad = (prodAnual / ((placaCount * potenciaMaxima / 1000) * horasAnuales) * 100).toFixed(1);
     const horasPico = radiacionAnual.toFixed(0);
-    const superficieSistema = parseFloat(localStorage.getItem('superficie')) * placaCount || 0;
-    const rendimentSistema = (prodAnual / (radiacionAnual * superficieSistema)) * 100 || 0;
+    const potenciaInstalada = (placaCount * potenciaMaxima) / 1000; // Convertir a kWp
+    const energiaTeorica = radiacionAnual * potenciaInstalada; 
+    const energiaReal = radiacionAnual * potenciaInstalada * 0.8;
+    const rendimiento = (energiaReal / energiaTeorica) * 100;
+    
 
     // Actualizar la interfaz con los datos reales
-    document.getElementById('systemEfficiency').textContent = rendimentSistema.toFixed(2);
+    document.getElementById('systemEfficiency').textContent = rendimiento;
     document.getElementById('location').textContent = savedLocation;
     document.getElementById('panelCount').textContent = placaCount;
     document.getElementById('panelModel').textContent = panel_model;
