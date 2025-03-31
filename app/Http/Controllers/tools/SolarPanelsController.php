@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\tools;
 
 use App\Http\Controllers\Controller;
+use App\Imports\PanelImport;
 use App\Models\PanelType;
 use App\Models\SolarPanelsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\UserImport;
 
 class SolarPanelsController extends Controller
 {
@@ -113,25 +113,14 @@ class SolarPanelsController extends Controller
 
     public function import(Request $request) 
     {
-        // 1. Validate and handle file upload from the request
         $request->validate([
             'csv_file' => 'required|file|mimes:csv,txt'
         ]);
-
-        // 2. Get the uploaded file
         $file = $request->file('csv_file');  // Corrected file reference
-
-        // 3. Check if the file is valid
         if (!$file || !file_exists($file->getRealPath())) {
             return back()->with('error', 'Invalid file!');
         }
-
-        // 4. Import the CSV file
-        $import = Excel::import(new UserImport, $file);  // Correctly passing the file from the request
-
-        // Assuming you want to send some results to the view
-        $importedData = SolarPanelsModel::all(); // You can modify this to grab the actual imported data or log it
-
-        return view('veureImport', compact('importedData'));
+        Excel::import(new PanelImport, $file);  //toDo: aver si se puede validar los datos antes de pararlos a la BD.
+        return $this->index();
     }
 }

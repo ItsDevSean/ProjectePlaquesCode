@@ -10,30 +10,25 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class UserImport implements ToModel, WithHeadingRow, WithCustomCsvSettings
+class PanelImport implements ToModel, WithHeadingRow, WithCustomCsvSettings
 {
+    // Function that maps the CSV field to DB fields.
     public function model(array $row)
     {
-        // Map CSV headers to the model's fillable attributes
         $fillable = (new SolarPanelsModel())->getFillable();
         $data = [];
-
         foreach ($fillable as $field) {
             if ($field == 'user_id') {
                 $data[$field] = Auth::id();
             } else {
                 $data[$field] = isset($row[$field]) ? $row[$field] : null;
             }
-        }
-
-        Log::info('Imported data:', $data);
-        
+        }        
         return new SolarPanelsModel($data);
     }
-
+    // Function that specify the specified rules of the CSV
     public function getCsvSettings(): array
     {
-        // Custom CSV settings: define delimiter, enclosure, and encoding
         return [
             'delimiter' => ',',
             'enclosure' => '"',
