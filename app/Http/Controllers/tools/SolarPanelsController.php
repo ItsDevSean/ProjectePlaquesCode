@@ -106,6 +106,11 @@ class SolarPanelsController extends Controller
         //
     }
 
+    public function showForm()
+    {
+        return view('veureImport');  // Return the view with the upload form
+    }
+
     public function import(Request $request) 
     {
         // 1. Validate and handle file upload from the request
@@ -114,7 +119,7 @@ class SolarPanelsController extends Controller
         ]);
 
         // 2. Get the uploaded file
-        $file = $request->file('app/Http/Controllers/tools/test.csv');
+        $file = $request->file('csv_file');  // Corrected file reference
 
         // 3. Check if the file is valid
         if (!$file || !file_exists($file->getRealPath())) {
@@ -124,8 +129,9 @@ class SolarPanelsController extends Controller
         // 4. Import the CSV file
         $import = Excel::import(new UserImport, $file);  // Correctly passing the file from the request
 
-        //SolarPanelsModel::create($import->all() + ['user_id' => Auth::id()]);
+        // Assuming you want to send some results to the view
+        $importedData = SolarPanelsModel::all(); // You can modify this to grab the actual imported data or log it
 
-        return view('veureImport', compact('import'));
+        return view('veureImport', compact('importedData'));
     }
 }

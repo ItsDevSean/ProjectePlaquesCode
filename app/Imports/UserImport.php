@@ -18,11 +18,9 @@ class UserImport implements ToModel, WithHeadingRow, WithCustomCsvSettings
         $data = [];
 
         foreach ($fillable as $field) {
-            // Normalize field names: convert from snake_case to match the CSV headers
-            $csvField = str_replace('_', ' ', strtolower($field)); // Adjust as needed
-
+    
             // If the CSV contains the field, set the value, otherwise default to null
-            $data[$field] = isset($row[$csvField]) ? $row[$csvField] : null;
+            $data[$field] = isset($row[$field]) ? $row[$field   ] : null;
         }
 
         Log::info('Imported data:', $data);
