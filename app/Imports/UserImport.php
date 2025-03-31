@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Models\SolarPanelsModel;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
@@ -18,9 +19,11 @@ class UserImport implements ToModel, WithHeadingRow, WithCustomCsvSettings
         $data = [];
 
         foreach ($fillable as $field) {
-    
-            // If the CSV contains the field, set the value, otherwise default to null
-            $data[$field] = isset($row[$field]) ? $row[$field   ] : null;
+            if ($field == 'user_id') {
+                $data[$field] = Auth::id();
+            } else {
+                $data[$field] = isset($row[$field]) ? $row[$field] : null;
+            }
         }
 
         Log::info('Imported data:', $data);
