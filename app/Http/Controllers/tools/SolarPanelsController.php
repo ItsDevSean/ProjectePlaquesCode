@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\tools;
 
 use App\Http\Controllers\Controller;
+use App\Imports\PanelImport;
 use App\Models\PanelType;
 use App\Models\SolarPanelsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\UserImport;
 
 class SolarPanelsController extends Controller
 {
@@ -62,8 +62,8 @@ class SolarPanelsController extends Controller
             'corriente_cortocircuito' => 'nullable|numeric|min:0',
             'eficencia_panel' => 'required|numeric|min:0|max:100',
             'coeficiente_temp_pmax' => 'required|numeric|min:0|max:100',
-            'coeficiente_temp_voc' => 'nullable|numeric|min:0|max:100',
-            'coeficiente_temp_isc' => 'nullable|numeric|min:0|max:100',
+            'coeficiente_temp_voc' => 'nullable|numeric|min:-100|max:100',
+            'coeficiente_temp_isc' => 'nullable|numeric|min:-100|max:100',
         ]);
 
         SolarPanelsModel::create($request->all() + ['user_id' => Auth::id()]);
@@ -106,26 +106,45 @@ class SolarPanelsController extends Controller
         //
     }
 
+    public function showForm()
+    {
+        return view('veureImport');  // Return the view with the upload form
+    }
+
     public function import(Request $request) 
     {
-        // 1. Validate and handle file upload from the request
         $request->validate([
             'csv_file' => 'required|file|mimes:csv,txt'
         ]);
-
-        // 2. Get the uploaded file
-        $file = $request->file('app/Http/Controllers/tools/test.csv');
-
-        // 3. Check if the file is valid
-        if (!$file || !file_exists($file->getRealPath())) {
+        $file = $request->file('csv_file');  
+        if (!$file || !file_exists($file->getRealPath() )) {
             return back()->with('error', 'Invalid file!');
         }
-
-        // 4. Import the CSV file
-        $import = Excel::import(new UserImport, $file);  // Correctly passing the file from the request
-
-        //SolarPanelsModel::create($import->all() + ['user_id' => Auth::id()]);
-
-        return view('tools.panels', compact('import'));
+        $data = array_map('str_getcsv', file($file->getRealPath()));
+        if (empty($data) || count($data) <= 1) {  
+            return back()->with('error', 'CSV file is empty or invalid!');
+        }
+        $headers = array_shift($data); 
+        $expectedHeaders = (new SolarPanelsModel)->getFillable();
+        if ($headers !== $expectedHeaders) {
+            return back()->with('error', 'CSV headers are not valid!');
+        }
+        foreach ($data as $row) {
+            $rowData = [];
+            foreach ($expectedHeaders as $index => $header) {
+                if ($header == 'user_id') {
+                    $rowData[$header] = Auth::id();
+                } else {
+                    $rowData[$header] = $row[$index];
+                }
+            }
+            $newRequest = new Request($rowData);
+            try {
+                $this->store($newRequest);
+            } catch (\Exception $e) {
+                return back()->with('error', "Error processing row " . ($index + 1) . ": " . $e->getMessage());
+            }
+        }
+        return $this->index();
     }
 }
