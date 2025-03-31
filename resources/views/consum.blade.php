@@ -12,7 +12,7 @@
 <body>
     <x-app-layout>
         
-        <div class="progress-container mx-auto max-w-4xl px-4 mt-12" x-data="{
+        <div class="progress-container mx-auto max-w-5xl px-4 mt-12" x-data="{
             currentStep: 2, // Ara estem al pas 2 (Consum)
             steps: [
                 {id: 1, name: 'Dades del Client', completed: true, path: 'dades'},
@@ -92,7 +92,7 @@
         </div>
 
         <!-- Contingut principal mejorado -->
-        <div class="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="py-8 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 mb-8">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
                     <div>
@@ -135,7 +135,7 @@
                                     Consum anual (kWh/any)
                                 </label>
                                 <div class="relative">
-                                    <input type="number" id="consum-anual" name="consum-anual" 
+                                    <input type="number" id="consum-anual" name="consum-anual" id="consumAnual" 
                                            class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
                                            placeholder="Introdueix el teu consum anual">
                                     <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">

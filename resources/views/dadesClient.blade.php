@@ -12,7 +12,7 @@
     <x-app-layout>
         
         <!-- Progress Bar (sense canvis) -->
-        <div class="progress-container mx-auto max-w-4xl px-4 mt-12" x-data="{
+        <div class="progress-container mx-auto max-w-5xl px-4 mt-12" x-data="{
             currentStep: 1, // Estem al pas 1 (Dades Client)
             steps: [
                 {id: 1, name: 'Dades del Client', current: true, path: 'dades'},
