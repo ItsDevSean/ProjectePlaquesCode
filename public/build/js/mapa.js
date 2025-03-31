@@ -834,13 +834,26 @@ async function getMonthlySolarData(lat, lon) {
         { name: "Diciembre", start: "2024-12-01", end: "2024-12-31" }
     ];
 
-    const monthlyData = [];
+    // Intentar cargar datos existentes del localStorage
+    let monthlyData = JSON.parse(localStorage.getItem('monthlyRadiation')) || [];
+    
+    // Verificar si ya tenemos datos para estas coordenadas
+    const storedCoords = JSON.parse(localStorage.getItem('radiationCoords')) || {};
+    if (storedCoords.lat === lat && storedCoords.lon === lon && monthlyData.length > 0) {
+        console.log("Usando datos almacenados en caché");
+        return monthlyData;
+    }
+
+    // Si no hay datos o las coordenadas cambiaron, obtener nuevos
+    monthlyData = [];
 
     for (const month of months) {
         const url = `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}&start_date=${month.start}&end_date=${month.end}&daily=shortwave_radiation_sum&timezone=auto`;
         
         try {
             const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            
             const data = await response.json();
             
             // Suma total en Joules (convertir a kWh)
@@ -849,7 +862,7 @@ async function getMonthlySolarData(lat, lon) {
             
             monthlyData.push({
                 month: month.name,
-                radiation_kWh: monthlyRadiation_kWh
+                radiation_kWh: parseFloat(monthlyRadiation_kWh) // Convertir a número
             });
 
             console.log(`☀️ Radiación en ${month.name}:`, monthlyRadiation_kWh, "kWh/m²");
@@ -866,10 +879,8 @@ async function getMonthlySolarData(lat, lon) {
 
     // Guardar en localStorage
     localStorage.setItem('monthlyRadiation', JSON.stringify(monthlyData));
-    console.log(localStorage)
+    localStorage.setItem('radiationCoords', JSON.stringify({ lat, lon }));
     
+    console.log("Datos mensuales guardados en localStorage:", localStorage);
     return monthlyData;
 }
-
-// Uso de la función
-// getMonthlySolarData(tu_latitud, tu_longitud);

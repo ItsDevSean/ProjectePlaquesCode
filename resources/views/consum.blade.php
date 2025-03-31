@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consum del Client</title>
+    <title>Consum del Client | Anàlisi d'Estalvi</title>
     <link rel="stylesheet" href="build/css/produccio.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
     <x-app-layout>
         
-        <!-- Barra de progres -->
-        <div class="progress-bar-container mt-4 px-4"> 
+        <!-- Barra de progres mejorada -->
+        <div class="progress-bar-container mt-4 px-4">
             <div class="progress-bar bg-white border flex justify-center items-center mx-auto shadow-teal-300 shadow-md max-w-6xl p-2 rounded-lg dark:bg-gray-700 dark:text-gray-300">
                 <div class="w-full max-w-screen-2xl px-4 md:px-12 mx-auto overflow-x-auto overflow-y-hidden scrollbar-hide">
                     <ul class="w-full flex flex-nowrap justify-start md:justify-center items-center gap-6 sm:gap-10 md:gap-20 mt-2 md:mt-0 text-center whitespace-nowrap overflow-visible min-h-[4rem]">
                         
-                        <!-- PAS 1 -->
-                        <li class="flex flex-col items-center cursor-pointer transition-transform duration-200 ease-in-out hover:scale-95">
+                        <li class="flex flex-col items-center">
                             <a href="dades" class="flex flex-col items-center">
                                 <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">
                                     1
@@ -29,37 +29,34 @@
                             </a>
                         </li>
             
-                        <!-- PAS 2 -->
-                        <li class="flex flex-col items-center cursor-pointer transition-transform duration-200 ease-in-out hover:scale-95">
-                            <a href="consum" class="flex flex-col items-center">
-                                <div class="w-10 h-10 flex items-center justify-center bg-emerald-400 border-2 border-emerald-400 rounded-full text-white font-bold text-lg">
+                        <li class="flex flex-col items-center">
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 flex items-center justify-center bg-emerald-600 border-2 border-emerald-600 rounded-full text-white font-bold text-lg">
                                     2
                                 </div>
-                                <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">
+                                <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1 font-semibold">
                                     Consum
                                 </span>
-                            </a>
+                            </div>
                         </li>
             
-                        <!-- PAS 3 -->
-                        <li class="flex flex-col items-center cursor-pointer transition-transform duration-200 ease-in-out hover:scale-95">
+                        <li class="flex flex-col items-center">
                             <a href="mapa" class="flex flex-col items-center">
-                                <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">
+                                <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full text-gray-400 font-bold text-lg">
                                     3
                                 </div>
-                                <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">
+                                <span class="text-gray-500 dark:text-gray-400 text-sm md:text-base mt-1">
                                     Seleccionar Àrea
                                 </span>
                             </a>
                         </li>
             
-                        <!-- PAS 4 -->
-                        <li class="flex flex-col items-center cursor-pointer transition-transform duration-200 ease-in-out hover:scale-95">
+                        <li class="flex flex-col items-center">
                             <a href="produccio" class="flex flex-col items-center">
-                                <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-emerald-400 rounded-full text-emerald-400 font-bold text-lg">
+                                <div class="w-10 h-10 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full text-gray-400 font-bold text-lg">
                                     4
                                 </div>
-                                <span class="text-gray-700 dark:text-white text-sm md:text-base mt-1">
+                                <span class="text-gray-500 dark:text-gray-400 text-sm md:text-base mt-1">
                                     Producció
                                 </span>
                             </a>
@@ -70,97 +67,577 @@
             </div>
         </div>
 
-        <!-- Contingut principal -->
+        <!-- Contingut principal mejorado -->
         <div class="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 mb-8">
-                <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Anàlisi del teu consum</h2>
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Anàlisi del teu consum</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mt-1">Introdueix les teves dades de consum per calcular el teu estalvi potencial</p>
+                    </div>
+                    <div class="mt-4 md:mt-0">
+                        <button id="help-button" class="flex items-center text-emerald-600 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                            </svg>
+                            Com funciona?
+                        </button>
+                    </div>
+                </div>
                 
-                <!-- Formulari de consum -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Consum mensual -->
-                    <div class="space-y-2">
-                        <label for="consum-mensual" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                            Consum mensual (kWh/mes)
-                        </label>
-                        <div class="relative">
-                            <input type="number" id="consum-mensual" name="consum-mensual" 
-                                   class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-400 focus:border-emerald-400" 
-                                   placeholder="Introdueix el teu consum mensual">
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                <span class="text-gray-500">kWh</span>
+                <!-- Pestañas de opciones de entrada -->
+                <div class="mb-8 border-b border-gray-200 dark:border-gray-700">
+                    <ul class="flex flex-wrap -mb-px" id="inputTabs" role="tablist">
+                        <li class="mr-2" role="presentation">
+                            <button class="inline-block p-4 border-b-2 rounded-t-lg active" id="manual-tab" data-tabs-target="#manual" type="button" role="tab" aria-controls="manual" aria-selected="true">Introducció Manual</button>
+                        </li>
+                        <li class="mr-2" role="presentation">
+                            <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="upload-tab" data-tabs-target="#upload" type="button" role="tab" aria-controls="upload" aria-selected="false">Pujar Fitxer</button>
+                        </li>
+                        <li class="mr-2" role="presentation">
+                            <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="link-tab" data-tabs-target="#link" type="button" role="tab" aria-controls="link" aria-selected="false">Enllaç amb Comercialitzadora</button>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Contenido de las pestañas -->
+                <div id="inputTabsContent">
+                    <!-- Pestaña Manual -->
+                    <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700" id="manual" role="tabpanel" aria-labelledby="manual-tab">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Consum anual -->
+                            <div class="space-y-2">
+                                <label for="consum-anual" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Consum anual (kWh/any)
+                                </label>
+                                <div class="relative">
+                                    <input type="number" id="consum-anual" name="consum-anual" 
+                                           class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                           placeholder="Introdueix el teu consum anual">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                        <span class="text-gray-500 dark:text-gray-400">kWh</span>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana espanyola: 3.250 kWh/any</p>
+                            </div>
+                            
+                            <!-- Factura anual -->
+                            <div class="space-y-2">
+                                <label for="factura-anual" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Factura anual (€)
+                                </label>
+                                <div class="relative">
+                                    <input type="number" id="factura-anual" name="factura-anual" 
+                                           class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                           placeholder="Introdueix la teva factura anual">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                        <span class="text-gray-500 dark:text-gray-400">€</span>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana espanyola: 840€/any</p>
+                            </div>
+                            
+                            <!-- Tarifa d'accés mejorada -->
+                            <div class="space-y-2">
+                                <label for="tarifa-acces" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Tarifa d'accés
+                                </label>
+                                <select id="tarifa-acces" name="tarifa-acces" 
+                                        class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500">
+                                    <option value="" disabled selected>Selecciona la teva tarifa</option>
+                                    <option value="2.0A">2.0A - Sense discriminació horària</option>
+                                    <option value="2.0DHA">2.0DHA - Discriminació horària</option>
+                                    <option value="2.0DHS">2.0DHS - Discriminació horària supervall</option>
+                                    <option value="2.1A">2.1A - Sense discriminació horària (major potència)</option>
+                                    <option value="2.1DHA">2.1DHA - Discriminació horària (major potència)</option>
+                                    <option value="2.1DHS">2.1DHS - Discriminació horària supervall (major potència)</option>
+                                    <option value="3.0A">3.0A - Tres períodes</option>
+                                    <option value="6.1A">6.1A - Sis períodes</option>
+                                </select>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Pots trobar aquesta informació a la teva factura</p>
+                            </div>
+                            
+                            <!-- Potència contractada -->
+                            <div class="space-y-2">
+                                <label for="potencia-contractada" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Potència contractada (kW)
+                                </label>
+                                <div class="relative">
+                                    <input type="number" step="0.1" id="potencia-contractada" name="potencia-contractada" 
+                                           class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                           placeholder="Introdueix la potència contractada">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                        <span class="text-gray-500 dark:text-gray-400">kW</span>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana espanyola: 4.6 kW</p>
                             </div>
                         </div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana espanyola: 270 kWh/mes</p>
-                    </div>
-                    
-                    <!-- Factura mensual -->
-                    <div class="space-y-2">
-                        <label for="factura-mensual" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                            Factura mensual (€)
-                        </label>
-                        <div class="relative">
-                            <input type="number" id="factura-mensual" name="factura-mensual" 
-                                   class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-400 focus:border-emerald-400" 
-                                   placeholder="Introdueix la teva factura mensual">
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                <span class="text-gray-500">€</span>
+                        
+                        <!-- Patró de consum mejorado -->
+                        <div class="mt-6">
+                            <h3 class="text-lg font-medium text-gray-800 dark:text-white mb-3">Patró de consum</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Selecciona el patró que més s'ajusti al teu consum habitual</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <button type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
+                                    <div class="w-16 h-16 mb-2">
+                                        <canvas id="diurnalPatternChart"></canvas>
+                                    </div>
+                                    <span class="font-medium text-gray-700 dark:text-gray-200">Diürn</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">Major consum de dia</span>
+                                </button>
+                                
+                                <button type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
+                                    <div class="w-16 h-16 mb-2">
+                                        <canvas id="nocturnalPatternChart"></canvas>
+                                    </div>
+                                    <span class="font-medium text-gray-700 dark:text-gray-200">Nocturn</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">Major consum de nit</span>
+                                </button>
+                                
+                                <button type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
+                                    <div class="w-16 h-16 mb-2">
+                                        <canvas id="mixedPatternChart"></canvas>
+                                    </div>
+                                    <span class="font-medium text-gray-700 dark:text-gray-200">Mixt</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">Consum repartit</span>
+                                </button>
                             </div>
                         </div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana espanyola: 70€/mes</p>
                     </div>
                     
-                    <!-- Tarifa d'accés -->
-                    <div class="space-y-2">
-                        <label for="tarifa-acces" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                            Tarifa d'accés
-                        </label>
-                        <select id="tarifa-acces" name="tarifa-acces" 
-                                class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-400 focus:border-emerald-400">
-                            <option value="" disabled selected>Selecciona la teva tarifa</option>
-                            <option value="2.0A">2.0A - Sin discriminación horaria</option>
-                            <option value="2.0DHA">2.0DHA - Discriminación horaria</option>
-                            <option value="2.0DHS">2.0DHS - Discriminación horaria supervalle</option>
-                            <option value="2.1A">2.1A - Sin discriminación horaria (mayor potencia)</option>
-                            <option value="2.1DHA">2.1DHA - Discriminación horaria (mayor potencia)</option>
-                            <option value="2.1DHS">2.1DHS - Discriminación horaria supervalle (mayor potencia)</option>
-                            <option value="3.0A">3.0A - Tres periodos</option>
-                            <option value="6.1A">6.1A - Seis periodos</option>
-                        </select>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Pots trobar aquesta informació a la teva factura</p>
+                    <!-- Pestaña Upload -->
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-700" id="upload" role="tabpanel" aria-labelledby="upload-tab">
+                        <div class="max-w-2xl mx-auto">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                <svg class="w-10 h-10 mb-3 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                                </svg>
+                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                    <span class="font-semibold">Fes clic per pujar</span> o arrossega el fitxer
+                                </p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">
+                                    CSV, XLSX (Màx. 10MB)
+                                </p>
+                            </div>
+                            <input id="consumption-file" type="file" class="hidden" accept=".csv,.xlsx,.xls">
+                            
+                            <div class="flex justify-center mt-4">
+                                <button id="upload-btn" type="button" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+                                    Seleccionar Fitxer
+                                </button>
+                            </div>
+                            
+                            <div id="file-info" class="mt-4 p-4 bg-white dark:bg-gray-600 rounded-lg shadow-sm hidden">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <svg class="w-6 h-6 text-emerald-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <span id="file-name" class="font-medium text-gray-700 dark:text-gray-200"></span>
+                                    </div>
+                                    <button id="remove-file" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div id="file-progress" class="mt-2 hidden">
+                                    <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                                        <div class="bg-emerald-600 h-2.5 rounded-full" style="width: 0%"></div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Processant fitxer...</p>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 border-t border-gray-200 dark:border-gray-700 pt-4">
+                                <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Format recomanat</h4>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">
+                                    El fitxer ha d'incloure com a mínim dates i consum horari. Descarga la nostra plantilla per assegurar el format correcte.
+                                </p>
+                                <button type="button" class="text-xs text-emerald-600 dark:text-emerald-400 hover:underline">
+                                    Descargar plantilla CSV
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     
-                    <!-- Patró de consum -->
-                    <div class="space-y-2">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                            Patró de consum
-                        </label>
-                        <div class="grid grid-cols-3 gap-4">
-                            <button type="button" class="consum-pattern-btn py-2 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-400">
-                                Diürn
-                            </button>
-                            <button type="button" class="consum-pattern-btn py-2 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-400">
-                                Nocturn
-                            </button>
-                            <button type="button" class="consum-pattern-btn py-2 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-400">
-                                Mixt
-                            </button>
+                    <!-- Pestaña Link -->
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-700" id="link" role="tabpanel" aria-labelledby="link-tab">
+                        <div class="max-w-2xl mx-auto">
+                            <div class="bg-emerald-50 border border-emerald-100 rounded-lg p-4 mb-6 dark:bg-gray-600 dark:border-gray-500">
+                                <div class="flex">
+                                    <div class="flex-shrink-0">
+                                        <svg class="h-5 w-5 text-emerald-600 dark:text-emerald-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <h3 class="text-sm font-medium text-emerald-800 dark:text-emerald-200">
+                                            Accés segur
+                                        </h3>
+                                        <div class="mt-2 text-sm text-emerald-700 dark:text-emerald-300">
+                                            <p>
+                                                Connectarem de forma segura amb la teva comercialitzadora per obtenir les teves dades de consum. No emmagatzemem credencials.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="energy-provider" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Comercialitzadora
+                                    </label>
+                                    <select id="energy-provider" name="energy-provider" 
+                                            class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500">
+                                        <option value="" disabled selected>Selecciona la teva comercialitzadora</option>
+                                        <option value="Endesa">Endesa</option>
+                                        <option value="Iberdrola">Iberdrola</option>
+                                        <option value="Naturgy">Naturgy</option>
+                                        <option value="Repsol">Repsol</option>
+                                        <option value="EDP">EDP</option>
+                                        <option value="TotalEnergies">TotalEnergies</option>
+                                        <option value="Holaluz">Holaluz</option>
+                                        <option value="other">Altres</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label for="cups-number" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Número CUPS
+                                    </label>
+                                    <input type="text" id="cups-number" name="cups-number" 
+                                           class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                           placeholder="ESXXXXXXX">
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Pots trobar aquest número a qualsevol factura</p>
+                                </div>
+                                
+                                <div class="pt-2">
+                                    <button type="button" class="w-full flex justify-center items-center px-4 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                        </svg>
+                                        Connectar amb Comercialitzadora
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <!-- Gráfico de consumo -->
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 mb-8">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">Gràfic de consum</h3>
+                    <div class="mt-2 md:mt-0 flex space-x-2">
+                        <select id="chart-period" class="text-sm border border-gray-300 rounded-lg px-3 py-1 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:border-gray-600">
+                            <option value="daily">Diari</option>
+                            <option value="weekly">Setmanal</option>
+                            <option value="monthly" selected>Mensual</option>
+                            <option value="yearly">Anual</option>
+                        </select>
+                        <button id="export-chart" class="text-sm flex items-center text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Exportar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="h-80">
+                    <canvas id="consumptionChart"></canvas>
+                </div>
+                
+                <div class="mt-4 flex flex-wrap justify-center gap-2">
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 rounded-full bg-emerald-500 mr-1"></div>
+                        <span class="text-xs text-gray-600 dark:text-gray-300">Consum actual</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 rounded-full bg-blue-500 mr-1"></div>
+                        <span class="text-xs text-gray-600 dark:text-gray-300">Mitjana sectorial</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 rounded-full bg-orange-500 mr-1"></div>
+                        <span class="text-xs text-gray-600 dark:text-gray-300">Consum ideal</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Resumen y siguiente paso -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg flex-1">
+                    <h4 class="text-sm font-medium text-blue-800 dark:text-blue-200 mb-1">Resum del teu consum</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-xs text-blue-600 dark:text-blue-300">Consum anual</p>
+                            <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">3,450 kWh</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-blue-600 dark:text-blue-300">Cost anual</p>
+                            <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">€890</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-blue-600 dark:text-blue-300">Patró dominant</p>
+                            <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">Mixt</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-blue-600 dark:text-blue-300">Potència</p>
+                            <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">4.6 kW</p>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
         </div>
             
         <script>
-            // Interactivitat dels botons de patró de consum
+            // Tabs functionality
+            const tabs = document.querySelectorAll('[data-tabs-target]');
+            const tabContents = document.querySelectorAll('[role="tabpanel"]');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = document.querySelector(tab.dataset.tabsTarget);
+                    
+                    // Hide all tab contents
+                    tabContents.forEach(content => {
+                        content.classList.add('hidden');
+                    });
+                    
+                    // Show selected tab content
+                    target.classList.remove('hidden');
+                    
+                    // Update active tab styling
+                    tabs.forEach(t => {
+                        t.classList.remove('active', 'border-emerald-500', 'text-emerald-600', 'dark:text-emerald-400');
+                        t.classList.add('border-transparent', 'hover:text-gray-600', 'hover:border-gray-300', 'dark:hover:text-gray-300');
+                    });
+                    
+                    tab.classList.add('active', 'border-emerald-500', 'text-emerald-600', 'dark:text-emerald-400');
+                    tab.classList.remove('border-transparent', 'hover:text-gray-600', 'hover:border-gray-300', 'dark:hover:text-gray-300');
+                });
+            });
+            
+            // File upload functionality
+            const uploadBtn = document.getElementById('upload-btn');
+            const fileInput = document.getElementById('consumption-file');
+            const fileInfo = document.getElementById('file-info');
+            const fileName = document.getElementById('file-name');
+            const removeFile = document.getElementById('remove-file');
+            const fileProgress = document.getElementById('file-progress');
+            
+            uploadBtn.addEventListener('click', () => fileInput.click());
+            
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    const file = e.target.files[0];
+                    fileName.textContent = file.name;
+                    fileInfo.classList.remove('hidden');
+                    
+                    // Simulate file processing
+                    fileProgress.classList.remove('hidden');
+                    let progress = 0;
+                    const interval = setInterval(() => {
+                        progress += 10;
+                        fileProgress.querySelector('div').style.width = `${progress}%`;
+                        
+                        if (progress >= 100) {
+                            clearInterval(interval);
+                            fileProgress.querySelector('p').textContent = "Fitxer processat correctament";
+                            // Here you would process the file (CSV/Excel) and update the chart
+                        }
+                    }, 200);
+                }
+            });
+            
+            removeFile.addEventListener('click', () => {
+                fileInput.value = '';
+                fileInfo.classList.add('hidden');
+                fileProgress.classList.add('hidden');
+            });
+            
+            // Initialize pattern charts
+            const initPatternChart = (ctx, data) => {
+                return new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: Array.from({length: 24}, (_, i) => i + ':00'),
+                        datasets: [{
+                            data: data,
+                            borderColor: '#10B981',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: false,
+                            pointRadius: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                enabled: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                display: false
+                            },
+                            y: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            };
+            
+            // Sample data for pattern charts
+            const diurnalData = [5,5,5,5,10,25,40,60,70,75,70,65,60,55,50,45,40,35,30,25,20,15,10,7];
+            const nocturnalData = [30,25,20,15,10,8,15,20,15,10,8,7,5,5,5,5,10,25,40,60,70,75,70,65];
+            const mixedData = [20,15,12,10,8,15,30,50,60,55,50,45,40,45,50,45,40,45,50,55,50,40,30,25];
+            
+            // Initialize all pattern charts
+            const diurnalChart = initPatternChart(document.getElementById('diurnalPatternChart'), diurnalData);
+            const nocturnalChart = initPatternChart(document.getElementById('nocturnalPatternChart'), nocturnalData);
+            const mixedChart = initPatternChart(document.getElementById('mixedPatternChart'), mixedData);
+            
+            // Pattern buttons functionality
             const patternBtns = document.querySelectorAll('.consum-pattern-btn');
             patternBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
-                    patternBtns.forEach(b => b.classList.remove('bg-emerald-100', 'border-emerald-400', 'text-emerald-700'));
-                    this.classList.add('bg-emerald-100', 'border-emerald-400', 'text-emerald-700');
-                    
-                    // Actualitzar el gràfic segons el patró seleccionat
-                    // (Aquesta part es podria implementar amb dades reals)
+                    patternBtns.forEach(b => b.classList.remove('border-emerald-400', 'bg-emerald-50', 'dark:bg-emerald-900/30'));
+                    this.classList.add('border-emerald-400', 'bg-emerald-50', 'dark:bg-emerald-900/30');
+                    // Update main chart based on selected pattern
+                    updateMainChart();
                 });
+            });
+            
+            // Main consumption chart
+            const consumptionCtx = document.getElementById('consumptionChart').getContext('2d');
+            const consumptionChart = new Chart(consumptionCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Gen', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Des'],
+                    datasets: [
+                        {
+                            label: 'Consum actual',
+                            data: [320, 290, 280, 250, 230, 270, 310, 320, 290, 300, 320, 350],
+                            backgroundColor: '#10B981',
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Mitjana sectorial',
+                            data: [300, 280, 270, 260, 250, 260, 290, 300, 280, 290, 300, 320],
+                            backgroundColor: '#3B82F6',
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Consum ideal',
+                            data: [250, 240, 230, 220, 210, 220, 230, 240, 230, 240, 250, 270],
+                            backgroundColor: '#F59E0B',
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.raw + ' kWh';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'kWh'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Update chart based on period selection
+            document.getElementById('chart-period').addEventListener('change', function() {
+                updateMainChart();
+            });
+            
+            function updateMainChart() {
+                const period = document.getElementById('chart-period').value;
+                let labels, actualData, averageData, idealData;
+                
+                switch(period) {
+                    case 'daily':
+                        labels = Array.from({length: 24}, (_, i) => i + ':00');
+                        actualData = Array.from({length: 24}, () => Math.floor(Math.random() * 10) + 5);
+                        averageData = Array.from({length: 24}, () => Math.floor(Math.random() * 8) + 4);
+                        idealData = Array.from({length: 24}, () => Math.floor(Math.random() * 6) + 3);
+                        break;
+                    case 'weekly':
+                        labels = ['Dl', 'Dt', 'Dc', 'Dj', 'Dv', 'Ds', 'Dg'];
+                        actualData = Array.from({length: 7}, () => Math.floor(Math.random() * 30) + 20);
+                        averageData = Array.from({length: 7}, () => Math.floor(Math.random() * 25) + 15);
+                        idealData = Array.from({length: 7}, () => Math.floor(Math.random() * 20) + 10);
+                        break;
+                    case 'monthly':
+                        labels = ['Gen', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Des'];
+                        actualData = [320, 290, 280, 250, 230, 270, 310, 320, 290, 300, 320, 350];
+                        averageData = [300, 280, 270, 260, 250, 260, 290, 300, 280, 290, 300, 320];
+                        idealData = [250, 240, 230, 220, 210, 220, 230, 240, 230, 240, 250, 270];
+                        break;
+                    case 'yearly':
+                        labels = ['2020', '2021', '2022', '2023'];
+                        actualData = [3600, 3700, 3550, 3450];
+                        averageData = [3500, 3600, 3500, 3400];
+                        idealData = [3000, 3100, 3000, 2900];
+                        break;
+                }
+                
+                consumptionChart.data.labels = labels;
+                consumptionChart.data.datasets[0].data = actualData;
+                consumptionChart.data.datasets[1].data = averageData;
+                consumptionChart.data.datasets[2].data = idealData;
+                consumptionChart.update();
+            }
+            
+            // Export chart functionality
+            document.getElementById('export-chart').addEventListener('click', function() {
+                const link = document.createElement('a');
+                link.download = 'consum-electric-' + document.getElementById('chart-period').value + '.png';
+                link.href = document.getElementById('consumptionChart').toDataURL('image/png');
+                link.click();
+            });
+            
+            // Help modal
+            document.getElementById('help-button').addEventListener('click', function() {
+                // Implement a modal with help information
+                alert("Aquí s'obriria un modal amb informació d'ajuda sobre com introduir les dades de consum.");
             });
         </script>
     </x-app-layout>

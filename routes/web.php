@@ -53,6 +53,10 @@ Route::get('/consum', function () {
     return view('consum');
 })->name('consum');
 
+Route::get('/resultat', function () {
+    return view('resultat');
+})->name('resultat');
+
 
 Route::get('/vue', function(){
     return view('vue');
