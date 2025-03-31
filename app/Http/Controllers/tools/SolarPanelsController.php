@@ -62,8 +62,8 @@ class SolarPanelsController extends Controller
             'corriente_cortocircuito' => 'nullable|numeric|min:0',
             'eficencia_panel' => 'required|numeric|min:0|max:100',
             'coeficiente_temp_pmax' => 'required|numeric|min:0|max:100',
-            'coeficiente_temp_voc' => 'nullable|numeric|min:0|max:100',
-            'coeficiente_temp_isc' => 'nullable|numeric|min:0|max:100',
+            'coeficiente_temp_voc' => 'nullable|numeric|min:-100|max:100',
+            'coeficiente_temp_isc' => 'nullable|numeric|min:-100|max:100',
         ]);
 
         SolarPanelsModel::create($request->all() + ['user_id' => Auth::id()]);
@@ -116,11 +116,35 @@ class SolarPanelsController extends Controller
         $request->validate([
             'csv_file' => 'required|file|mimes:csv,txt'
         ]);
-        $file = $request->file('csv_file');  // Corrected file reference
-        if (!$file || !file_exists($file->getRealPath())) {
+        $file = $request->file('csv_file');  
+        if (!$file || !file_exists($file->getRealPath() )) {
             return back()->with('error', 'Invalid file!');
         }
-        Excel::import(new PanelImport, $file);  //toDo: aver si se puede validar los datos antes de pararlos a la BD.
+        $data = array_map('str_getcsv', file($file->getRealPath()));
+        if (empty($data) || count($data) <= 1) {  
+            return back()->with('error', 'CSV file is empty or invalid!');
+        }
+        $headers = array_shift($data); 
+        $expectedHeaders = (new SolarPanelsModel)->getFillable();
+        if ($headers !== $expectedHeaders) {
+            return back()->with('error', 'CSV headers are not valid!');
+        }
+        foreach ($data as $row) {
+            $rowData = [];
+            foreach ($expectedHeaders as $index => $header) {
+                if ($header == 'user_id') {
+                    $rowData[$header] = Auth::id();
+                } else {
+                    $rowData[$header] = $row[$index];
+                }
+            }
+            $newRequest = new Request($rowData);
+            try {
+                $this->store($newRequest);
+            } catch (\Exception $e) {
+                return back()->with('error', "Error processing row " . ($index + 1) . ": " . $e->getMessage());
+            }
+        }
         return $this->index();
     }
 }
