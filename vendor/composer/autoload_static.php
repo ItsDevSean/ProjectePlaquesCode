@@ -592,6 +592,7 @@ class ComposerStaticInit626b9e7ddd47fb7eff9aaa53cce0c9ad
         'App\\Http\\Controllers\\tools\\SolarPanelsController' => __DIR__ . '/../..' . '/app/Http/Controllers/tools/SolarPanelsController.php',
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
+        'App\\Imports\\PanelImport' => __DIR__ . '/../..' . '/app/Imports/PanelImport.php',
         'App\\Models\\Baterias' => __DIR__ . '/../..' . '/app/Models/Baterias.php',
         'App\\Models\\DadesClient' => __DIR__ . '/../..' . '/app/Models/DadesClient.php',
         'App\\Models\\Estado' => __DIR__ . '/../..' . '/app/Models/Estado.php',
