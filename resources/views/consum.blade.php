@@ -229,7 +229,7 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </div>                  
                     
                     <!-- Pestaña Upload -->
                     <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-700" id="upload" role="tabpanel" aria-labelledby="upload-tab">
