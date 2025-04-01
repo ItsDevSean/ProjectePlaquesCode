@@ -16,6 +16,18 @@
                 {{ __('Buscador de Direcció') }}
             </h2>
         </x-slot>
+        <form action="{{ route('veureImport') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="file" name="csv_file">
+            <button type="submit" class="bg-[#49DBA3] hover:bg-[#193849] text-white py-2 px-4 rounded-lg">Importar</button>
+    
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+    
+        </form>
         <div class="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 w-full">
             <h1 class="text-2xl font-bold text-[#49DBA3] mb-4 text-center">Paneles</h1>
             
