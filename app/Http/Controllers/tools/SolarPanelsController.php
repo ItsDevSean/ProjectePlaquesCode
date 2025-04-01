@@ -108,7 +108,7 @@ class SolarPanelsController extends Controller
 
     public function showForm()
     {
-        return view('veureImport');  // Return the view with the upload form
+        return view('tools.panels');  
     }
 
     public function import(Request $request) 

@@ -109,7 +109,6 @@ Route::get('/infoEco', function(){
 
 
 Route::post('/guardar-dades', [DadesClientController::class, 'store'])->name('guardar.dades');
-Route::put('/dades_clients/{id}', [DadesClientController::class, 'update'])->name('dades_clients.update');
 
 Route::resource('dades_clients', DadesClientController::class);
 
@@ -124,8 +123,6 @@ Route::post('/guardar-eco', [infoEcoController::class, 'store'])->name('guardar.
 Route::post('/guardar-eco-resultado', [infoEcoResultadoController::class, 'store'])->name('guardar.eco.resultado');
 
 Route::get('/dades_clients/{id}/details', [DadesClientController::class, 'details'])->name('dades_clients.details');
-
-Route::delete('/dades_clients/{id}', [DadesClientController::class, 'destroy'])->name('dades_clients.destroy');
 
 Route::post('/proyectos/estado/{id}', [DadesClientController::class, 'updateEstado'])->name('proyectos.updateEstado');
 

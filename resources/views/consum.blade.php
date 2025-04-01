@@ -180,22 +180,6 @@
                                 </select>
                                 <p class="text-xs text-gray-500 dark:text-gray-400">Pots trobar aquesta informació a la teva factura</p>
                             </div>
-                            
-                            <!-- Potència contractada -->
-                            <div class="space-y-2">
-                                <label for="potencia-contractada" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    Potència contractada (kW)
-                                </label>
-                                <div class="relative">
-                                    <input type="number" step="0.1" id="potencia-contractada" name="potencia-contractada" 
-                                           class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
-                                           placeholder="Introdueix la potència contractada">
-                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                        <span class="text-gray-500 dark:text-gray-400">kW</span>
-                                    </div>
-                                </div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana espanyola: 4.6 kW</p>
-                            </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
@@ -231,22 +215,6 @@
                                     </div>
                                 </div>
                                 <p class="text-xs text-gray-500 dark:text-gray-400">Introdueix els preus de cada període segons la teva factura</p>
-                            </div>
-                        
-                            <!-- Término de potencia -->
-                            <div class="space-y-2">
-                                <label for="terme-potencia" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    Terme de potència (€/kW/mes)
-                                </label>
-                                <div class="relative">
-                                    <input type="number" step="0.01" id="terme-potencia" name="terme-potencia" 
-                                           class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
-                                           placeholder="Ex: 0.118">
-                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                        <span class="text-gray-500 dark:text-gray-400">€/kW/mes</span>
-                                    </div>
-                                </div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Cost mensual per cada kW contractat</p>
                             </div>
                         </div>
                         
@@ -311,32 +279,32 @@
                             <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Selecciona el patró que més s'ajusti al teu consum habitual</p>
                             
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <button type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
+                                <button id="button_diurn" type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
                                     <div class="w-16 h-16 mb-2">
                                         <canvas id="diurnalPatternChart"></canvas>
                                     </div>
-                                    <span class="font-medium text-gray-700 dark:text-gray-200">Diürn</span>
+                                    <span  id="diurn" class="font-medium text-gray-700 dark:text-gray-200">Diürn</span>
                                     <span class="text-xs text-gray-500 dark:text-gray-400">Major consum de dia</span>
                                 </button>
                                 
-                                <button type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
+                                <button id="button_nocturn" type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
                                     <div class="w-16 h-16 mb-2">
                                         <canvas id="nocturnalPatternChart"></canvas>
                                     </div>
-                                    <span class="font-medium text-gray-700 dark:text-gray-200">Nocturn</span>
+                                    <span id="nocturn" class="font-medium text-gray-700 dark:text-gray-200">Nocturn</span>
                                     <span class="text-xs text-gray-500 dark:text-gray-400">Major consum de nit</span>
                                 </button>
                                 
-                                <button type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
+                                <button id="button_mixt" type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
                                     <div class="w-16 h-16 mb-2">
                                         <canvas id="mixedPatternChart"></canvas>
                                     </div>
-                                    <span class="font-medium text-gray-700 dark:text-gray-200">Mixt</span>
+                                    <span id="mixt" class="font-medium text-gray-700 dark:text-gray-200">Mixt</span>
                                     <span class="text-xs text-gray-500 dark:text-gray-400">Consum repartit</span>
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </div>                  
                     
                     <!-- Pestaña Upload -->
                     <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-700" id="upload" role="tabpanel" aria-labelledby="upload-tab">
@@ -801,6 +769,7 @@
                 document.getElementById('tarifa-acces').dispatchEvent(event);
             });
         </script>
+        <script src="{{asset('build/js/consum.js')}}"></script>
     </x-app-layout>
 </body>
 </html>
