@@ -30,7 +30,7 @@
             }
         }">
             <!-- Progress Track -->
-            <div class="relative h-1.5 mb-16">
+            <div class="relative h-1.5 mb-24">
                 <!-- Background Line -->
                 <div class="absolute inset-0 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
                     <!-- Progress Fill - Animated -->
@@ -92,7 +92,7 @@
         </div>
 
         <!-- Contingut principal mejorado -->
-        <div class="py-8 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div class="max-w-6xl mx-auto px-6 py-8 mt-6 bg-white rounded-xl shadow-lg dark:bg-gray-800 transition-all duration-300 hover:shadow-xl ">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 mb-8">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
                     <div>
@@ -195,6 +195,113 @@
                                     </div>
                                 </div>
                                 <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana espanyola: 4.6 kW</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <!-- Precios por periodo (solo para tarifas con discriminación horaria) -->
+                            <div id="precios-periodo-container" class="hidden space-y-2">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Preus per període (€/kWh)
+                                </label>
+                                <div class="grid grid-cols-3 gap-3">
+                                    <div class="relative">
+                                        <input type="number" step="0.001" id="precio-p1" name="precio-p1" 
+                                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                               placeholder="P1">
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                            <span class="text-xs text-gray-500 dark:text-gray-400">€</span>
+                                        </div>
+                                    </div>
+                                    <div class="relative">
+                                        <input type="number" step="0.001" id="precio-p2" name="precio-p2" 
+                                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                               placeholder="P2">
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                            <span class="text-xs text-gray-500 dark:text-gray-400">€</span>
+                                        </div>
+                                    </div>
+                                    <div class="relative">
+                                        <input type="number" step="0.001" id="precio-p3" name="precio-p3" 
+                                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                               placeholder="P3">
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                            <span class="text-xs text-gray-500 dark:text-gray-400">€</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Introdueix els preus de cada període segons la teva factura</p>
+                            </div>
+                        
+                            <!-- Término de potencia -->
+                            <div class="space-y-2">
+                                <label for="terme-potencia" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Terme de potència (€/kW/mes)
+                                </label>
+                                <div class="relative">
+                                    <input type="number" step="0.01" id="terme-potencia" name="terme-potencia" 
+                                           class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                           placeholder="Ex: 0.118">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                        <span class="text-gray-500 dark:text-gray-400">€/kW/mes</span>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Cost mensual per cada kW contractat</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Sección de Costos e Incentivos -->
+                        <div class="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
+                            <h3 class="text-lg font-medium text-gray-800 dark:text-white mb-4">Costos i incentius</h3>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Coste total instalación -->
+                                <div class="space-y-2">
+                                    <label for="coste-instalacion" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Cost total instal·lació
+                                    </label>
+                                    <div class="relative">
+                                        <input type="number" id="coste-instalacion" name="coste-instalacion" 
+                                               class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                               placeholder="Ex: 6000">
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <span class="text-gray-500 dark:text-gray-400">€</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana: 1.200-1.500 €/kWp</p>
+                                </div>
+                                
+                                <!-- Subvenciones -->
+                                <div class="space-y-2">
+                                    <label for="subvenciones" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Subvencions o bonificacions
+                                    </label>
+                                    <div class="relative">
+                                        <input type="number" id="subvenciones" name="subvenciones" 
+                                               class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                               placeholder="Ex: 1200" value="0">
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <span class="text-gray-500 dark:text-gray-400">€</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Ajuts o deduccions aplicables</p>
+                                </div>
+                                
+                                <!-- Precio de venta de excedentes -->
+                                <div class="space-y-2">
+                                    <label for="precio-excedentes" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Preu de venda d'excedents
+                                    </label>
+                                    <div class="relative">
+                                        <input type="number" step="0.001" id="precio-excedentes" name="precio-excedentes" 
+                                               class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                               placeholder="Ex: 0.08" value="0.05">
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <span class="text-gray-500 dark:text-gray-400">€/kWh</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Preu per l'energia injectada a la xarxa</p>
+                                </div>
                             </div>
                         </div>
                         
@@ -662,6 +769,36 @@
             document.getElementById('help-button').addEventListener('click', function() {
                 // Implement a modal with help information
                 alert("Aquí s'obriria un modal amb informació d'ajuda sobre com introduir les dades de consum.");
+            });
+
+            // Añadir al final del script existente
+            document.getElementById('tarifa-acces').addEventListener('change', function() {
+                const tarifa = this.value;
+                const preciosContainer = document.getElementById('precios-periodo-container');
+                
+                // Mostrar precios por periodo solo para tarifas con discriminación horaria
+                if (tarifa.includes('DHA') || tarifa.includes('DHS') || tarifa === '3.0A') {
+                    preciosContainer.classList.remove('hidden');
+                } else {
+                    preciosContainer.classList.add('hidden');
+                }
+                
+                // Actualizar etiquetas según tipo de tarifa
+                if (tarifa === '3.0A') {
+                    document.querySelector('#precio-p1').placeholder = 'P1 (10-14h)';
+                    document.querySelector('#precio-p2').placeholder = 'P2 (14-18h)';
+                    document.querySelector('#precio-p3').placeholder = 'P3 (18-22h)';
+                } else if (tarifa.includes('DHA') || tarifa.includes('DHS')) {
+                    document.querySelector('#precio-p1').placeholder = 'P1 (8-14h, 18-22h)';
+                    document.querySelector('#precio-p2').placeholder = 'P2 (14-18h, 22-24h)';
+                    document.querySelector('#precio-p3').placeholder = 'P3 (0-8h)';
+                }
+            });
+
+            // Inicializar estado al cargar
+            document.addEventListener('DOMContentLoaded', function() {
+                const event = new Event('change');
+                document.getElementById('tarifa-acces').dispatchEvent(event);
             });
         </script>
     </x-app-layout>

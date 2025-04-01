@@ -111,7 +111,7 @@
 
                                     <div>
                                         <label for="garantia_material" class="block text-sm font-medium text-gray-700">Garantía del Material (Años)</label>
-                                        <input type="number" name="garantia_material" id="garantia_material" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                        <input type="number" name="garantia_material" id="garantia_material" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                     </div>
 
                                     <div>
@@ -122,7 +122,7 @@
                                     <div>
                                         <label for="fabricante" class="block text-sm font-medium text-gray-700">Fabricante</label>
                                         <div class="flex items-center gap-4">
-                                            <select name="fabricante_id" id="fabricante" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                            <select name="fabricante_id" id="fabricante" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                                 <option value="">Seleccionar</option>
                                                 @foreach ($fabricantes as $fabricante)
                                                     <option value="{{ $fabricante->id }}">{{ $fabricante->nombre }}</option>
@@ -141,7 +141,7 @@
 
                                     <div>
                                         <label for="id_referencia" class="block text-sm font-medium text-gray-700">ID Referencia</label>
-                                        <input type="number" name="id_referencia" id="id_referencia" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                        <input type="number" name="id_referencia" id="id_referencia" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                     </div>
                                 </div>
 
@@ -183,7 +183,7 @@
                                 <form id="deletebateriaDeleteForm" action="" method="POST" class="ml-3 inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                                    <button type="button" onclick="confirmDeletion()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
                                         Eliminar
                                     </button>
                                 </form>

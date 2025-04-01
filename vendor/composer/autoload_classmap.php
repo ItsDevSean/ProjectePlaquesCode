@@ -28,6 +28,7 @@ return array(
     'App\\Http\\Controllers\\tools\\SolarPanelsController' => $baseDir . '/app/Http/Controllers/tools/SolarPanelsController.php',
     'App\\Http\\Requests\\Auth\\LoginRequest' => $baseDir . '/app/Http/Requests/Auth/LoginRequest.php',
     'App\\Http\\Requests\\ProfileUpdateRequest' => $baseDir . '/app/Http/Requests/ProfileUpdateRequest.php',
+    'App\\Imports\\PanelImport' => $baseDir . '/app/Imports/PanelImport.php',
     'App\\Models\\Baterias' => $baseDir . '/app/Models/Baterias.php',
     'App\\Models\\DadesClient' => $baseDir . '/app/Models/DadesClient.php',
     'App\\Models\\Estado' => $baseDir . '/app/Models/Estado.php',

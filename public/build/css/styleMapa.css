@@ -30,7 +30,7 @@
 /* Encabezado del mapa (buscador y botones) */
 .map-header {
     display: inline-flex;
-    opacity: 90%;
+    opacity: 92%;
     flex-direction: column;
     align-items: center;
     gap: 10px;
