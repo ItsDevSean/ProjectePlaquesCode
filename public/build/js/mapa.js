@@ -369,9 +369,6 @@ function guardarOrientacion() {
 }
 orientacion.addEventListener('change', guardarOrientacion);
 
-
-
-
 const inclinacion = document.getElementById('inclinacion');
 // Función que guarda el valor actual en localStorage
 function guardarInclinacion() {
