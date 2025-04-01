@@ -198,7 +198,7 @@
                                 <form id="deleteInversorDeleteForm" action="" method="POST" class="ml-3 inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                                    <button type="button" onclick="confirmDeletion()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
                                         Eliminar
                                     </button>
                                 </form>
