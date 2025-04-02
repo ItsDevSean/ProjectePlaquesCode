@@ -263,7 +263,7 @@
                                     <div class="relative">
                                         <input type="number" step="0.001" id="precio-excedentes" name="precio-excedentes" 
                                                class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
-                                               placeholder="Ex: 0.08" value="0.05">
+                                               placeholder="Ex: 0.08">
                                         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                             <span class="text-gray-500 dark:text-gray-400">€/kWh</span>
                                         </div>
@@ -496,7 +496,9 @@
             </div>
         </div>
             
-        
+        <script>
+            window.userId = "{{ Auth::id() }}"
+        </script>
         <script src="{{asset('build/js/consum.js')}}"></script>
     </x-app-layout>
 </body>

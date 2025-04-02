@@ -48,7 +48,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const placaCount = parseFloat(localStorage.getItem(`user_${userId}_placaCount`)) || 0;
     const potenciaMaxima = parseFloat(localStorage.getItem(`user_${userId}_panel_pot`)) || 0;
     const radiacionAnual = parseFloat(localStorage.getItem(`user_${userId}_radiacion`)) || 0;
-    
+    const patroAutoconsum = localStorage.getItem(`user_${userId}_consumPattern`) || "No especificada";
+    const consumAnual = localStorage.getItem(`user_${userId}_consumAnual`) || "No especificada";
+    const facturaAnual =  localStorage.getItem(`user_${userId}_facturaAnual`) || "No especificada";
+    const preuExcedents =  localStorage.getItem(`user_${userId}_precioExcedentes`) || "No especificada";
+    const costInstalació = localStorage.getItem(`user_${userId}_costeInstalacion`) || "No especificada";
+    const subvenciones = localStorage.getItem(`user_${userId}_subvenciones`) || "No especificada";
+
     // Calcular métricas importantes
     const prodAnual = radiacionAnual * ((placaCount * potenciaMaxima) / 1000) * 0.8;
     const equiLlar = prodAnual / 2500
@@ -61,6 +67,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const rendimiento = (energiaReal / energiaTeorica) * 100;
     console.log(equiLlar)
     
+
+    // Calculs d'estalivi i impacte
+    const genearcioSolar = potenciaInstalada * horasPico * rendimiento; 
+    const autconsum = patroAutoconsum * genearcioSolar;
+    const excedents = genearcioSolar - autconsum;
+    const preuElectricitat = facturaAnual / consumAnual;
+    const estalviAnual = (consumAnual * patroAutoconsum * preuElectricitat) + (excedents * preuExcedents) 
+    const coEvitat = consumAnual * patroAutoconsum * 0.253
+    const retornInversio = (costInstalació - subvenciones) / estalviAnual;
 
     // Actualizar la interfaz con los datos reales
     document.getElementById('systemEfficiency').textContent = rendimiento;
@@ -75,6 +90,9 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('peakSunHours').textContent = horasPico;
     document.getElementById('tarifaAcces').textContent = tarifaAcces;
     document.getElementById('tipusInstalacio').textContent = tipusInstalacio;
+    document.getElementById('annualSavings').textContent = estalviAnual.toFixed(0);
+    document.getElementById('co2Saved').textContent = coEvitat;
+    document.getElementById('roiYears').textContent = retornInversio.toFixed(2);
 
     // Actualizar la tabla de datos mensuales con los datos reales
     const tableBody = document.getElementById('monthlyDataTable');
@@ -206,3 +224,5 @@ if (accordionCard) {
         icon.classList.toggle('active');
     });
 }
+
+
