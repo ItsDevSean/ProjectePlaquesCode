@@ -1,7 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-        <link rel="stylesheet" href="build/css/styles.css">
         <link rel="stylesheet" href="build/css/proyectosStyle.css">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -112,31 +111,36 @@
                                             @php
                                                 $estadoActual = App\Models\Estado::find($proyecto->estado_id);
                                                 $colorClasses = [
-                                                    'pendiente' => 'bg-yellow-100 text-yellow-800',
-                                                    'en progreso' => 'bg-emerald-100 text-blue-800',
-                                                    'completado' => 'bg-purple-100 text-green-800',
-                                                    'cancelado' => 'bg-red-100 text-red-800',
+                                                    'pendiente' => 'text-yellow-800',
+                                                    'en progreso' => 'text-blue-800',
+                                                    'completado' => 'text-green-800',
+                                                    'cancelado' => 'text-red-800',
                                                 ];
                                                 $currentColor = $colorClasses[strtolower($estadoActual->nombre)] ?? 'bg-white-100 text-gray-800';
                                             @endphp
                                             
-                                            <select name="estado_id" 
-                                                    class="estado-select px-3 py-1 rounded-full text-xs font-semibold {{ $currentColor }} focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer transition-colors" 
+                                            <div class="relative inline-block">
+                                                <!-- Flecha a la izquierda -->
+                                                
+                                                
+                                                <select name="estado_id" 
+                                                    class="estado-select py-1 text-[13px] font-semibold {{ $currentColor }} bg-transparent cursor-pointer transition-colors border-0 outline-none focus:outline-none focus:ring-0 focus:border-transparent appearance-none"
                                                     data-id="{{ $proyecto->id }}" 
                                                     onclick="event.stopPropagation();"
                                                     data-current-color="{{ strtolower($estadoActual->nombre) }}">
-                                                @foreach(App\Models\Estado::all() as $estado)
-                                                    @php
-                                                        $optionColor = $colorClasses[strtolower($estado->nombre)] ?? 'bg-gray-100 text-gray-800';
-                                                    @endphp
-                                                    <option value="{{ $estado->id }}" 
-                                                            data-color="{{ strtolower($estado->nombre) }}"
-                                                            class="{{ $optionColor }}"
-                                                            {{ $proyecto->estado_id == $estado->id ? 'selected' : '' }}>
-                                                        {{ ucfirst($estado->nombre) }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                                    @foreach(App\Models\Estado::all() as $estado)
+                                                        @php
+                                                            $optionColor = $colorClasses[strtolower($estado->nombre)] ?? 'bg-gray-100 text-gray-800';
+                                                        @endphp
+                                                        <option value="{{ $estado->id }}" 
+                                                                data-color="{{ strtolower($estado->nombre) }}"
+                                                                class="{{ $optionColor }}"
+                                                                {{ $proyecto->estado_id == $estado->id ? 'selected' : '' }}>
+                                                            {{ ucfirst($estado->nombre) }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $proyecto->nombre }}</div>
