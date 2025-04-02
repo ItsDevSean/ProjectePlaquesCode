@@ -299,5 +299,8 @@
         </div>
     </x-app-layout>
     <script src="build/js/produccio.js"></script>
+    <script>
+        window.userId = "{{ Auth::id() }}";
+    </script>
 </body>
 </html>

@@ -299,6 +299,8 @@
 </x-app-layout>
     
     <script>
+    window.userId = "{{ Auth::id() }}";
+        
     const slider = document.getElementById("placaSlider");
     const placaCount = document.getElementById("placaCount");
     let value = 0
@@ -323,7 +325,6 @@
         actualitzarFonsSlider();  
         placaCount.innerText = this.value;
     });
-
     </script>
     
     <script src="build/js/mapa.js"></script>

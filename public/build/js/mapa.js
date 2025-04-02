@@ -1,3 +1,6 @@
+const userId = window.userId;
+
+
 // Funció d'inicialització del mapa
 window.initMap = function () {
     const centre = { lat: 41.3879, lng: 2.16992 };
@@ -61,7 +64,7 @@ window.initMap = function () {
 // Funció per inicialitzar Autocomplete
 function geocodeAddress(map) {
     const address = document.getElementById("address").value;
-    localStorage.setItem('direccion', address);
+    localStorage.setItem(`user_${userId}_direccion`, address);
   
     if (address === "") {
         alert("Per favor, introduïu una adreça.");
@@ -111,7 +114,7 @@ function initAutocomplete(map) {
         }
         
         const address = place.formatted_address;
-        localStorage.setItem('direccion', address);
+        localStorage.setItem(`user_${userId}_direccion`, address);
 
         console.log("Direcció seleccionada:", place.formatted_address);
         console.log("Latitud:", place.geometry.location.lat());
@@ -155,7 +158,7 @@ function crearMarcador(map, latLng) {
 
     const areaText = document.getElementById("areaResult").innerText;
     const areaValue = areaText.replace("Àrea: ", "").replace(" m²", ""); 
-    const estacio = localStorage.getItem('tipoEstacionalitat');
+    const estacio = localStorage.getItem(`user_${userId}_tipoEstacionalitat`);
 
     // Calcular la inclinació segons l'estacionalitat
     let inclinacion;
@@ -185,7 +188,7 @@ function crearMarcador(map, latLng) {
     }
     window.edificis.push(edifici);
 
-    localStorage.setItem("edificiData", JSON.stringify(edifici));
+    localStorage.setItem(`user_${userId}_edificiData`, JSON.stringify(edifici));
     console.log(localStorage);
 }
 // Comienza la selección de puntos
@@ -350,7 +353,7 @@ function calcularMaxPlacas(areaTotal) {
     const selectPanel = document.getElementById('panel_model');
     const selectedOption = selectPanel.options[selectPanel.selectedIndex];
     const areaPlaca = parseFloat(selectedOption.getAttribute('data-surface'));
-    localStorage.setItem('superficie', areaPlaca)
+    localStorage.setItem(`user_${userId}_superficie`, areaPlaca)
 
     if (isNaN(areaPlaca) || areaPlaca <= 0) {
         console.error('No se ha seleccionado un panel válido o la superficie no está definida.');
@@ -365,18 +368,15 @@ const orientacion = document.getElementById('orientacion');
 function guardarOrientacion() {
     const selectedOption = orientacion.options[orientacion.selectedIndex];
     const orientacionValue = selectedOption.textContent.trim();
-    localStorage.setItem('orientacion', orientacionValue);
+    localStorage.setItem(`user_${userId}_orientacion`, orientacionValue);
 }
 orientacion.addEventListener('change', guardarOrientacion);
-
-
-
 
 const inclinacion = document.getElementById('inclinacion');
 // Función que guarda el valor actual en localStorage
 function guardarInclinacion() {
     const inclinacionValue = inclinacion.value;
-    localStorage.setItem('inclinacion', inclinacionValue);
+    localStorage.setItem(`user_${userId}_inclinacion`, inclinacionValue);
 }
 
 // Escuchar cambios y actualizar
@@ -391,12 +391,12 @@ selectPanel.addEventListener('change', function () {
     const panelModel = selectedOption.textContent.trim();
     const panelId = selectedOption.value;
     const potenciaMaxima = selectedOption.getAttribute('data-potencia-maxima')
-    localStorage.setItem('panel_pot', potenciaMaxima);
-    localStorage.setItem('panel_model', panelModel);
-    localStorage.setItem('panel_id', panelId);
+    localStorage.setItem(`user_${userId}_panel_pot`, potenciaMaxima);
+    localStorage.setItem(`user_${userId}_panel_model`, panelModel);
+    localStorage.setItem(`user_${userId}_panel_id`, panelId);
     
     // Obtener el área total desde localStorage o desde la función calcularArea
-    const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
+    const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`)) || {};
     const areaTotal = parseFloat(edificiData.area);
 
     if (isNaN(areaTotal) || areaTotal <= 0) {
@@ -406,7 +406,7 @@ selectPanel.addEventListener('change', function () {
 
     // Calcular el número máximo de placas
     const maxPlacas = calcularMaxPlacas(areaTotal);
-    localStorage.setItem('maxPlacas', maxPlacas);
+    localStorage.setItem(`user_${userId}_maxPlacas`, maxPlacas);
     console.log('Número máximo de placas:', maxPlacas);
 
     // Actualizar el slider (si es necesario)
@@ -424,13 +424,13 @@ function calcularArea(selectedPolygon) {
 
         // Obtener los datos existentes de edificiData
         console.log(localStorage)
-        const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
+        const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`)) || {};
         
         // Actualizar solo la propiedad 'area' sin sobrescribir las demás
         edificiData.area = area.toFixed(2);
 
         // Guardar el objeto actualizado en localStorage
-        localStorage.setItem("edificiData", JSON.stringify(edificiData));
+        localStorage.setItem(`user_${userId}_edificiData`, JSON.stringify(edificiData));
         console.log(localStorage);
         // Calcular el número máximo de placas con el área actual
         const maxPlacas = calcularMaxPlacas(area);
@@ -453,7 +453,7 @@ function calcularArea(selectedPolygon) {
                 }
                 
                 // Rellenar el formulario con los datos guardados
-                const edificiData = JSON.parse(localStorage.getItem("edificiData"));
+                const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`));
                 if (edificiData) {
                     // Asignar el valor de inclinacion al campo del formulario
                     document.getElementById("inclinacion").value = edificiData.inclinacion;
@@ -649,9 +649,9 @@ function iniciarSeleccioObstacle(map, obstacleIdCounter) {
     
                 areaLabel.innerText = `Àrea: ${novaAreaTotal.toFixed(2)} m²`;
     
-                const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
+                const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`)) || {};
                 edificiData.area = novaAreaTotal.toFixed(2);
-                localStorage.setItem("edificiData", JSON.stringify(edificiData));
+                localStorage.setItem(`user_${userId}_edificiData`, JSON.stringify(edificiData));
     
                 const maxPlacas = calcularMaxPlacas(novaAreaTotal);
                 actualizarSlider(maxPlacas);
@@ -744,9 +744,9 @@ document.getElementById("obstaclesList").addEventListener("click", function (eve
 
         areaLabel.innerText = `Àrea: ${novaAreaTotal.toFixed(2)} m²`;
 
-        const edificiData = JSON.parse(localStorage.getItem("edificiData")) || {};
+        const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`)) || {};
         edificiData.area = novaAreaTotal.toFixed(2);
-        localStorage.setItem("edificiData", JSON.stringify(edificiData));
+        localStorage.setItem(`user_${userId}_edificiData`, JSON.stringify(edificiData));
 
         const maxPlacas = calcularMaxPlacas(novaAreaTotal);
         actualizarSlider(maxPlacas);
@@ -791,7 +791,7 @@ function setupPlacaCountListener(placaCount, slider) {
     const actualizarPlacas = () => {
         // Usamos el valor del input manual si tiene contenido, sino del slider
         cantidadPlacas = placaCount.value || slider.value;
-        localStorage.setItem('placaCount', cantidadPlacas);
+        localStorage.setItem(`user_${userId}_placaCount`, cantidadPlacas);
     };
     
     // Configuramos los listeners
@@ -812,7 +812,7 @@ async function getSolarData(lat, lon) {
     // Suma total en Joules (convertir a kWh)
     const annualRadiation_J = data.daily.shortwave_radiation_sum.reduce((a, b) => a + b, 0);
     const annualRadiation_kWh = (annualRadiation_J / 3.6).toFixed(2); 
-    localStorage.setItem('radiacion', annualRadiation_kWh);
+    localStorage.setItem(`user_${userId}_radiacion`, annualRadiation_kWh);
   
     console.log("☀️ Radiación anual real (Open-Meteo):", annualRadiation_kWh, "kWh/m²");
     return annualRadiation_kWh;
@@ -835,10 +835,10 @@ async function getMonthlySolarData(lat, lon) {
     ];
 
     // Intentar cargar datos existentes del localStorage
-    let monthlyData = JSON.parse(localStorage.getItem('monthlyRadiation')) || [];
+    let monthlyData = JSON.parse(localStorage.getItem(`user_${userId}_monthlyRadiation`)) || [];
     
     // Verificar si ya tenemos datos para estas coordenadas
-    const storedCoords = JSON.parse(localStorage.getItem('radiationCoords')) || {};
+    const storedCoords = JSON.parse(localStorage.getItem(`user_${userId}_radiationCoords`)) || {};
     if (storedCoords.lat === lat && storedCoords.lon === lon && monthlyData.length > 0) {
         console.log("Usando datos almacenados en caché");
         return monthlyData;
@@ -878,9 +878,10 @@ async function getMonthlySolarData(lat, lon) {
     }
 
     // Guardar en localStorage
-    localStorage.setItem('monthlyRadiation', JSON.stringify(monthlyData));
-    localStorage.setItem('radiationCoords', JSON.stringify({ lat, lon }));
+    localStorage.setItem(`user_${userId}_monthlyRadiation`, JSON.stringify(monthlyData));
+    localStorage.setItem(`user_${userId}_radiationCoords`, JSON.stringify({ lat, lon }));
     
     console.log("Datos mensuales guardados en localStorage:", localStorage);
     return monthlyData;
 }
+console.log(localStorage)

@@ -18,6 +18,12 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
                 if (data.message) {
                     setColor(this); 
+
+                    // Actualizar los contadores en la página sin recargar
+                    document.getElementById("total-counter").textContent = data.total;
+                    document.getElementById("active-counter").textContent = data.activos;
+                    document.getElementById("progress-counter").textContent = data.enProgreso;
+                    document.getElementById("completed-counter").textContent = data.completados;
                 } else {
                     alert("Error al actualizar el estado.");
                 }
@@ -44,7 +50,7 @@ function setColor(select) {
 function getColor(nombre) {
     switch (nombre.toLowerCase()) {
         case "completado":
-            return "red";
+            return "purple";
         case "iniciado":
             return "green";
         default:

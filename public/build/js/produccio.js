@@ -1,9 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const userId = window.userId;
+
     function calcularProduccionMensual() {
         // Obtener datos necesarios del localStorage
-        const radiacionData = JSON.parse(localStorage.getItem('monthlyRadiation')) || [];
-        const placaCount = parseFloat(localStorage.getItem('placaCount')) || 0;
-        const potenciaMaxima = parseFloat(localStorage.getItem('panel_pot')) || 0;
+        const radiacionData = JSON.parse(localStorage.getItem(`user_${userId}_monthlyRadiation`)) || [];
+        const placaCount = parseFloat(localStorage.getItem(`user_${userId}_placaCount`)) || 0;
+        const potenciaMaxima = parseFloat(localStorage.getItem(`user_${userId}_panel_pot`)) || 0;
         
         // Verificar que tenemos todos los datos necesarios
         if (!radiacionData.length || placaCount <= 0 || potenciaMaxima <= 0) {
@@ -29,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     
         // Guardar los resultados en localStorage
-        localStorage.setItem('produccionMensual', JSON.stringify(produccionMensual));
+        localStorage.setItem(`user_${userId}_produccionMensual`, JSON.stringify(produccionMensual));
         return produccionMensual;
     }
 
@@ -37,15 +39,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const produccionMensual = calcularProduccionMensual();
     
     // Obtener datos para mostrar
-    const savedLocation = localStorage.getItem('direccion') || "Ubicación no especificada";
-    const tarifaAcces = localStorage.getItem('user_1_tarifa') || "No especificada";
-    const panel_model = localStorage.getItem('panel_model') || "Modelo no especificado";
-    const orientacion = localStorage.getItem('orientacion') || "No especificada";
-    const inclinacio = localStorage.getItem('inclinacion') || "No especificada";
-    const tipusInstalacio = localStorage.getItem('tipusInstalacion') || "No especificada";
-    const placaCount = parseFloat(localStorage.getItem('placaCount')) || 0;
-    const potenciaMaxima = parseFloat(localStorage.getItem('panel_pot')) || 0;
-    const radiacionAnual = parseFloat(localStorage.getItem('radiacion')) || 0;
+    const savedLocation = localStorage.getItem(`user_${userId}_direccion`) || "Ubicación no especificada";
+    const tarifaAcces = localStorage.getItem(`user_${userId}_user_1_tarifa`) || "No especificada";
+    const panel_model = localStorage.getItem(`user_${userId}_panel_model`) || "Modelo no especificado";
+    const orientacion = localStorage.getItem(`user_${userId}_orientacion`) || "No especificada";
+    const inclinacio = localStorage.getItem(`user_${userId}_inclinacion`) || "No especificada";
+    const tipusInstalacio = localStorage.getItem(`user_${userId}_tipusInstalacion`) || "No especificada";
+    const placaCount = parseFloat(localStorage.getItem(`user_${userId}_placaCount`)) || 0;
+    const potenciaMaxima = parseFloat(localStorage.getItem(`user_${userId}_panel_pot`)) || 0;
+    const radiacionAnual = parseFloat(localStorage.getItem(`user_${userId}_radiacion`)) || 0;
     
     // Calcular métricas importantes
     const prodAnual = radiacionAnual * ((placaCount * potenciaMaxima) / 1000) * 0.8;
@@ -185,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (circle) {
         const radius = circle.r.baseVal.value;
         const circumference = radius * 2 * Math.PI;
-        prodAnualTotal = localStorage.getItem('radiacion') * ((localStorage.getItem('maxPlacas') * potenciaMaxima)/ 1000) * 0.8;
+        prodAnualTotal = localStorage.getItem(`user_${userId}_radiacion`) * ((localStorage.getItem(`user_${userId}_maxPlacas`) * potenciaMaxima)/ 1000) * 0.8;
         const offset = circumference - (prodAnual / prodAnualTotal * circumference);
         circle.style.strokeDasharray = `${circumference} ${circumference}`;
         circle.style.strokeDashoffset = offset;
