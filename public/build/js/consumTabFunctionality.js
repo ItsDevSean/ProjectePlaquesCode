@@ -188,6 +188,28 @@ document.getElementById('chart-period').addEventListener('change', function() {
     updateMainChart();
 });
 
+// Function that generates a dinamic form
+function addForm() {
+    let form = document.createElement('form');
+    form.setAttribute('action', '{{ route("veureImport") }}');
+    form.setAttribute('method', 'POST');
+    form.setAttribute('enctype', 'multipart/form-data');
+    let csrfInput = document.createElement('input');
+    csrfInput.setAttribute('type', 'hidden');
+    csrfInput.setAttribute('name', '_token');
+    csrfInput.setAttribute('value', '{{ csrf_token() }}');  
+    let button = document.createElement('button');
+    button.setAttribute('type', 'submit');
+    button.classList.add('bg-[#49DBA3]', 'hover:bg-[#193849]', 'text-white', 'py-2', 'px-4', 'rounded-lg');
+    button.innerHTML = 'Importar';
+    let errorDiv = document.createElement('div');
+    errorDiv.classList.add('alert', 'alert-danger');
+    form.appendChild(csrfInput);
+    form.appendChild(button);
+    form.appendChild(errorDiv);
+    document.getElementById('container').appendChild(form);
+}
+
 function updateMainChart() {
     const period = document.getElementById('chart-period').value;
     let labels, actualData, averageData, idealData;
