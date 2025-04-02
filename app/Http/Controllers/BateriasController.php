@@ -32,18 +32,19 @@ class BateriasController extends Controller
             'capacidad' => 'required|integer|min:0',
             'fabricante_id' => 'required|integer|exists:fabricantes,id',
             'garantia_material' => 'nullable|integer|min:0',
-            'imagen_bateria' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'imagen_bateria' => 'nullable|url|max:2048',
+            #'imagen_bateria' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $data = $request->all();
         $data['user_id'] = Auth::id();
 
-        if ($request->hasFile('imagen_bateria')) {
-            $image = $request->file('imagen_bateria');
-            $imageName = time().'_'.$image->getClientOriginalName();
-            $path = $image->storeAs('public/baterias', $imageName);
-            $data['imagen_bateria'] = 'storage/baterias/'.$imageName;
-        }
+        #if ($request->hasFile('imagen_bateria')) {
+            #$image = $request->file('imagen_bateria');
+            #$imageName = time().'_'.$image->getClientOriginalName();
+            #$path = $image->storeAs('public/baterias', $imageName);
+            #$data['imagen_bateria'] = 'storage/baterias/'.$imageName;
+        #}
 
         Baterias::create($data);
 
