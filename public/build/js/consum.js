@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Clase principal para gestionar la aplicación de consumo
     class ConsumptionApp {
+        
         constructor() {
             this.userId = window.userId || null;
             this.initElements();
@@ -60,31 +61,32 @@ document.addEventListener('DOMContentLoaded', function() {
         // Inicializar event listeners
         initEventListeners() {
             // Inputs
-            this.elements.consumAnual.addEventListener('change', () => this.saveToLocalStorage('consumAnual', this.elements.consumAnual.value));
-            this.elements.facturaAnual.addEventListener('change', () => this.saveToLocalStorage('facturaAnual', this.elements.facturaAnual.value));
-            this.elements.costeInstalacion.addEventListener('change', () => this.saveToLocalStorage('costeInstalacion', this.elements.costeInstalacion.value));
-            this.elements.subvenciones.addEventListener('change', () => this.saveToLocalStorage('subvenciones', this.elements.subvenciones.value));
-            this.elements.precioExcedentes.addEventListener('change', () => this.saveToLocalStorage('precioExcedentes', this.elements.precioExcedentes.value));
+            this.elements.consumAnual.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_consumAnual`, this.elements.consumAnual.value));
+            this.elements.facturaAnual.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_facturaAnual`, this.elements.facturaAnual.value));
+            this.elements.costeInstalacion.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_costeInstalacion`, this.elements.costeInstalacion.value));
+            this.elements.subvenciones.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_subvenciones`, this.elements.subvenciones.value));
+            this.elements.precioExcedentes.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_precioExcedentes`, this.elements.precioExcedentes.value));
             
             // Tarifa de acceso
             this.elements.tarifaAcces.addEventListener('change', () => {
                 const selectedOption = this.elements.tarifaAcces.options[this.elements.tarifaAcces.selectedIndex];
-                this.saveToLocalStorage('tarifaAcces', selectedOption.textContent.trim());
+                this.saveToLocalStorage(`user_${userId}_tarifaAcces`, selectedOption.textContent.trim());
                 this.togglePreciosPeriodo();
             });
             
             // Patrones de consumo
             this.elements.buttonDiurn.addEventListener('click', () => {
                 this.setActivePattern('diurn');
-                this.saveToLocalStorage('consumPattern', 'diurn');
+                this.saveToLocalStorage(`user_${userId}_consumPattern`, 'diurn');
+                console.log(localStorage);
             });
             this.elements.buttonNocturn.addEventListener('click', () => {
                 this.setActivePattern('nocturn');
-                this.saveToLocalStorage('consumPattern', 'nocturn');
+                this.saveToLocalStorage(`user_${userId}_consumPattern`, 'nocturn');
             });
             this.elements.buttonMixt.addEventListener('click', () => {
                 this.setActivePattern('mixt');
-                this.saveToLocalStorage('consumPattern', 'mixt');
+                this.saveToLocalStorage(`user_${userId}_consumPattern`, 'mixt');
             });
             
             // Pestañas

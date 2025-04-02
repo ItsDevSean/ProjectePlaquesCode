@@ -496,7 +496,9 @@
             </div>
         </div>
             
-        
+        <script>
+            window.userId = "{{ Auth::id() }}"
+        </script>
         <script src="{{asset('build/js/consum.js')}}"></script>
     </x-app-layout>
 </body>
