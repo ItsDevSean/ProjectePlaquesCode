@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log(equiLlar)
     
 
-    // Calcul 
+    // Calculs d'estalivi i impacte
     const genearcioSolar = potenciaInstalada * horasPico * rendimiento; 
     const autconsum = patroAutoconsum * genearcioSolar;
     const excedents = genearcioSolar - autconsum;
