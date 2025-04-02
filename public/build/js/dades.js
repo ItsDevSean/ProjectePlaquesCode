@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const selectedOption = tipusInstalacion.options[tipusInstalacion.selectedIndex];
         const displayText = selectedOption.textContent.trim();
         localStorage.setItem(`user_${userId}_tipo_instalacion`, displayText); 
-        console.log(localStorage)
+        console
     });
 
 
@@ -24,12 +24,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const selectedText = tipoEstacionalitat.options[tipoEstacionalitat.selectedIndex];
         const estacioValor = selectedText.textContent.trim();
         localStorage.setItem(`user_${userId}_estacionalidad`, estacioValor); 
-        console.log("Guardado:", localStorage)
     });
     
-    
 
-    // Recuperar datos del localStorage al cargar la página
     // Para los campos normales
     inputs.forEach(input => {
         const savedValue = localStorage.getItem(`user_${userId}_${input.name}`);

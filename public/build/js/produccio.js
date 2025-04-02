@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    console.log(localStorage)
     const userId = window.userId;
 
     function calcularProduccionMensual() {
@@ -40,11 +41,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Obtener datos para mostrar
     const savedLocation = localStorage.getItem(`user_${userId}_direccion`) || "Ubicación no especificada";
-    const tarifaAcces = localStorage.getItem(`user_${userId}_user_1_tarifa`) || "No especificada";
+    const tarifaAcces = localStorage.getItem(`user_${userId}_tarifa`) || "2.0A";
     const panel_model = localStorage.getItem(`user_${userId}_panel_model`) || "Modelo no especificado";
     const orientacion = localStorage.getItem(`user_${userId}_orientacion`) || "No especificada";
     const inclinacio = localStorage.getItem(`user_${userId}_inclinacion`) || "No especificada";
-    const tipusInstalacio = localStorage.getItem(`user_${userId}_tipusInstalacion`) || "No especificada";
+    const tipusInstalacio = localStorage.getItem(`user_${userId}_tipo_instalacion`) || "No especificada";
+    console.log (tipusInstalacio)
     const placaCount = parseFloat(localStorage.getItem(`user_${userId}_placaCount`)) || 0;
     const potenciaMaxima = parseFloat(localStorage.getItem(`user_${userId}_panel_pot`)) || 0;
     const radiacionAnual = parseFloat(localStorage.getItem(`user_${userId}_radiacion`)) || 0;

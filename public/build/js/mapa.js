@@ -94,7 +94,6 @@ function geocodeAddress(map) {
             
         } else {
             alert("No sa trobat la direcció, torna-ho a intentar.");
-            console.log(results);
         }
     });
 }
@@ -116,9 +115,7 @@ function initAutocomplete(map) {
         const address = place.formatted_address;
         localStorage.setItem(`user_${userId}_direccion`, address);
 
-        console.log("Direcció seleccionada:", place.formatted_address);
-        console.log("Latitud:", place.geometry.location.lat());
-        console.log("Longitud:", place.geometry.location.lng());
+        
 
         // Obtener coordenadas
         const lat = place.geometry.location.lat();
@@ -158,17 +155,18 @@ function crearMarcador(map, latLng) {
 
     const areaText = document.getElementById("areaResult").innerText;
     const areaValue = areaText.replace("Àrea: ", "").replace(" m²", ""); 
-    const estacio = localStorage.getItem(`user_${userId}_tipoEstacionalitat`);
+    const estacio = localStorage.getItem(`user_${userId}_estacionalidad`);
 
     // Calcular la inclinació segons l'estacionalitat
-    let inclinacion;
+    
     const lat = latLng.lat();
+    let inclinacion;
     
     if (estacio === 'Estiu') {
         inclinacion = lat - 10;  // Estiu: latitud -10
     } else if (estacio === 'Hivern') {
         inclinacion = lat + 10;  // Hivern: latitud +10
-    } else if (estacio === 'Tot l\'any') {
+    } else if (estacio === 'any') {
         inclinacion = lat;       // Tot l'any: latitud sense canvis
     } else {
         console.log('No s\'ha seleccionat cap estacionalitat vàlida');
@@ -189,12 +187,12 @@ function crearMarcador(map, latLng) {
     window.edificis.push(edifici);
 
     localStorage.setItem(`user_${userId}_edificiData`, JSON.stringify(edifici));
-    console.log(localStorage);
+    
+    console.log(localStorage.getItem(`user_${userId}_inclinacion`));
 }
 // Comienza la selección de puntos
 function iniciarSeleccio(map) {
     guardarOrientacion();
-    guardarInclinacion();
 
   // Añade un nuevo evento de clic
   window.selectedMarkers = [];
@@ -307,7 +305,6 @@ function seleccionarPunt(event, map) {
     });
 
     window.selectedMarkers.push(marker);
-    console.log(selectedMarkers.length)
     marker.addListener("dragend", function () {
         dibuixarPoligon(map);
     });
@@ -372,15 +369,18 @@ function guardarOrientacion() {
 }
 orientacion.addEventListener('change', guardarOrientacion);
 
-const inclinacion = document.getElementById('inclinacion');
+let inclinacion = document.getElementById('inclinacion');
+
 // Función que guarda el valor actual en localStorage
 function guardarInclinacion() {
     const inclinacionValue = inclinacion.value;
+    console.log(inclinacionValue)
     localStorage.setItem(`user_${userId}_inclinacion`, inclinacionValue);
 }
 
 // Escuchar cambios y actualizar
 inclinacion.addEventListener('change', guardarInclinacion);
+
 
 
 // Escuchar cambios en el select
@@ -407,7 +407,6 @@ selectPanel.addEventListener('change', function () {
     // Calcular el número máximo de placas
     const maxPlacas = calcularMaxPlacas(areaTotal);
     localStorage.setItem(`user_${userId}_maxPlacas`, maxPlacas);
-    console.log('Número máximo de placas:', maxPlacas);
 
     // Actualizar el slider (si es necesario)
     actualizarSlider(maxPlacas);
@@ -423,7 +422,6 @@ function calcularArea(selectedPolygon) {
         
 
         // Obtener los datos existentes de edificiData
-        console.log(localStorage)
         const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`)) || {};
         
         // Actualizar solo la propiedad 'area' sin sobrescribir las demás
@@ -431,7 +429,6 @@ function calcularArea(selectedPolygon) {
 
         // Guardar el objeto actualizado en localStorage
         localStorage.setItem(`user_${userId}_edificiData`, JSON.stringify(edificiData));
-        console.log(localStorage);
         // Calcular el número máximo de placas con el área actual
         const maxPlacas = calcularMaxPlacas(area);
         actualizarSlider(maxPlacas);
@@ -445,13 +442,16 @@ function calcularArea(selectedPolygon) {
                 // Abrir el side panel
                 const sidePanel = document.getElementById("sidePanel");
                 sidePanel.classList.add("open");
-
+                guardarInclinacion();
                 // Desactivar la selección de puntos
                 if (window.clickListener) {
                     google.maps.event.removeListener(window.clickListener);
                     window.clickListener = null;
                 }
                 
+                
+
+
                 // Rellenar el formulario con los datos guardados
                 const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`));
                 if (edificiData) {
@@ -459,6 +459,8 @@ function calcularArea(selectedPolygon) {
                     document.getElementById("inclinacion").value = edificiData.inclinacion;
                     document.getElementById("area").value = edificiData.area;
                 }
+
+                guardarInclinacion();
             });
 
             // Añadir el botón al lado de "areaResult"
@@ -814,7 +816,6 @@ async function getSolarData(lat, lon) {
     const annualRadiation_kWh = (annualRadiation_J / 3.6).toFixed(2); 
     localStorage.setItem(`user_${userId}_radiacion`, annualRadiation_kWh);
   
-    console.log("☀️ Radiación anual real (Open-Meteo):", annualRadiation_kWh, "kWh/m²");
     return annualRadiation_kWh;
 }
   
@@ -840,7 +841,6 @@ async function getMonthlySolarData(lat, lon) {
     // Verificar si ya tenemos datos para estas coordenadas
     const storedCoords = JSON.parse(localStorage.getItem(`user_${userId}_radiationCoords`)) || {};
     if (storedCoords.lat === lat && storedCoords.lon === lon && monthlyData.length > 0) {
-        console.log("Usando datos almacenados en caché");
         return monthlyData;
     }
 
@@ -865,10 +865,8 @@ async function getMonthlySolarData(lat, lon) {
                 radiation_kWh: parseFloat(monthlyRadiation_kWh) // Convertir a número
             });
 
-            console.log(`☀️ Radiación en ${month.name}:`, monthlyRadiation_kWh, "kWh/m²");
 
         } catch (error) {
-            console.error(`Error al obtener datos para ${month.name}:`, error);
             monthlyData.push({
                 month: month.name,
                 radiation_kWh: null,
@@ -881,7 +879,5 @@ async function getMonthlySolarData(lat, lon) {
     localStorage.setItem(`user_${userId}_monthlyRadiation`, JSON.stringify(monthlyData));
     localStorage.setItem(`user_${userId}_radiationCoords`, JSON.stringify({ lat, lon }));
     
-    console.log("Datos mensuales guardados en localStorage:", localStorage);
     return monthlyData;
 }
-console.log(localStorage)
