@@ -52,6 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const consumAnual = localStorage.getItem(`user_${userId}_consumAnual`) || "No especificada";
     const facturaAnual =  localStorage.getItem(`user_${userId}_facturaAnual`) || "No especificada";
     const preuExcedents =  localStorage.getItem(`user_${userId}_precioExcedentes`) || "No especificada";
+    const costInstalació = localStorage.getItem(`user_${userId}_costeInstalacion`) || "No especificada";
+    const subvenciones = localStorage.getItem(`user_${userId}_subvenciones`) || "No especificada";
 
     // Calcular métricas importantes
     const prodAnual = radiacionAnual * ((placaCount * potenciaMaxima) / 1000) * 0.8;
@@ -72,6 +74,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const excedents = genearcioSolar - autconsum;
     const preuElectricitat = facturaAnual / consumAnual;
     const estalviAnual = (consumAnual * patroAutoconsum * preuElectricitat) + (excedents * preuExcedents) 
+    const coEvitat = consumAnual * patroAutoconsum * 0.253
+    const retornInversio = (costInstalació - subvenciones) / estalviAnual;
 
     // Actualizar la interfaz con los datos reales
     document.getElementById('systemEfficiency').textContent = rendimiento;
@@ -87,7 +91,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('tarifaAcces').textContent = tarifaAcces;
     document.getElementById('tipusInstalacio').textContent = tipusInstalacio;
     document.getElementById('annualSavings').textContent = estalviAnual.toFixed(0);
-
+    document.getElementById('co2Saved').textContent = coEvitat;
+    document.getElementById('roiYears').textContent = retornInversio.toFixed(2);
 
     // Actualizar la tabla de datos mensuales con los datos reales
     const tableBody = document.getElementById('monthlyDataTable');
