@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.elements.costeInstalacion.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_costeInstalacion`, this.elements.costeInstalacion.value));
             this.elements.subvenciones.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_subvenciones`, this.elements.subvenciones.value));
             this.elements.precioExcedentes.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_precioExcedentes`, this.elements.precioExcedentes.value));
+            console.log("dsf " + localStorage.getItem(`user_${userId}_precioExcedentes`));
             
             // Tarifa de acceso
             this.elements.tarifaAcces.addEventListener('change', () => {
@@ -77,16 +78,15 @@ document.addEventListener('DOMContentLoaded', function() {
             // Patrones de consumo
             this.elements.buttonDiurn.addEventListener('click', () => {
                 this.setActivePattern('diurn');
-                this.saveToLocalStorage(`user_${userId}_consumPattern`, 'diurn');
-                console.log(localStorage);
+                this.saveToLocalStorage(`user_${userId}_consumPattern`, 0.7);
             });
             this.elements.buttonNocturn.addEventListener('click', () => {
                 this.setActivePattern('nocturn');
-                this.saveToLocalStorage(`user_${userId}_consumPattern`, 'nocturn');
+                this.saveToLocalStorage(`user_${userId}_consumPattern`, 0.3);
             });
             this.elements.buttonMixt.addEventListener('click', () => {
                 this.setActivePattern('mixt');
-                this.saveToLocalStorage(`user_${userId}_consumPattern`, 'mixt');
+                this.saveToLocalStorage(`user_${userId}_consumPattern`, 0.5);
             });
             
             // Pestañas
