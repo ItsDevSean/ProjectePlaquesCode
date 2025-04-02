@@ -17,19 +17,19 @@
             <div class="mb-8 grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-md p-6 text-white">
                     <h3 class="text-sm font-medium mb-1">Total Proyectos</h3>
-                    <p class="text-3xl font-bold">{{ $clientes->total() }}</p>
+                    <p id="total-counter" class="text-3xl font-bold">{{ $clientes->total() }}</p>
                 </div>
                 <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-xl shadow-md p-6 text-white">
                     <h3 class="text-sm font-medium mb-1">Activos</h3>
-                    <p class="text-3xl font-bold">{{ $clientes->where('estado_id', 1)->count() }}</p>
+                    <p id="active-counter" class="text-3xl font-bold">{{ $clientes->where('estado_id', 1)->count() }}</p>
                 </div>
                 <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-xl shadow-md p-6 text-white">
                     <h3 class="text-sm font-medium mb-1">En Progreso</h3>
-                    <p class="text-3xl font-bold">{{ $clientes->where('estado_id', 2)->count() }}</p>
+                    <p id="progress-counter" class="text-3xl font-bold">{{ $clientes->where('estado_id', 2)->count() }}</p>
                 </div>
                 <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl shadow-md p-6 text-white">
                     <h3 class="text-sm font-medium mb-1">Completados</h3>
-                    <p class="text-3xl font-bold">{{ $clientes->where('estado_id', 3)->count() }}</p>
+                    <p id="completed-counter" class="text-3xl font-bold">{{ $clientes->where('estado_id', 3)->count() }}</p>
                 </div>
             </div>
 
@@ -88,19 +88,19 @@
                                                 </svg>
                                                 <p class="text-lg font-medium">No hay proyectos disponibles</p>
                                                 <p class="text-sm mt-1">Crea tu primer proyecto para comenzar</p>
-                                                <button class="mt-4 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg hover:from-emerald-600 hover:to-teal-700 transition-colors">
+                                                <a href="{{ asset('dades') }}" class="mt-4 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg hover:from-emerald-600 hover:to-teal-700 transition-colors inline-block">
                                                     Crear Proyecto
-                                                </button>
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>
                                 @else
                                     @foreach ($clientes as $proyecto)
-                                        <tr class="project-row hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150" data-id="{{ $proyecto->id }}">
+                                        <tr class="project-row hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150" data-id="{{ $proyecto->id }}" onclick="showProjectDetails({{ $proyecto->id }})">
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex items-center">
-                                                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-                                                        <span class="text-blue-600 font-medium">{{ substr($proyecto->user?->name ?? 'U', 0, 1) }}</span>
+                                                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center">
+                                                        <span class="text-teal-600 font-medium">{{ substr($proyecto->user?->name ?? 'U', 0, 1) }}</span>
                                                     </div>
                                                     <div class="ml-4">
                                                         <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $proyecto->user?->name ?? 'Usuario no disponible' }}</div>
@@ -109,43 +109,44 @@
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                @php
-                                                    $estado = App\Models\Estado::find($proyecto->estado_id);
-                                                    $colorClasses = [
-                                                        'pendiente' => 'bg-yellow-100 text-yellow-800',
-                                                        'en progreso' => 'bg-blue-100 text-blue-800',
-                                                        'completado' => 'bg-green-100 text-green-800',
-                                                        'cancelado' => 'bg-red-100 text-red-800',
-                                                    ][strtolower($estado->nombre)] ?? 'bg-gray-100 text-gray-800';
-                                                @endphp
-                                                <select name="estado_id" class="estado-select px-3 py-1 rounded-full text-xs font-semibold {{ $colorClasses }} focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer transition-colors" data-id="{{ $proyecto->id }}">
-                                                    @foreach(App\Models\Estado::all() as $estado)
-                                                        @php
-                                                            $optionColor = [
-                                                                'pendiente' => 'bg-yellow-100 text-yellow-800',
-                                                                'en progreso' => 'bg-blue-100 text-blue-800',
-                                                                'completado' => 'bg-green-100 text-green-800',
-                                                                'cancelado' => 'bg-red-100 text-red-800',
-                                                            ][strtolower($estado->nombre)] ?? 'bg-gray-100 text-gray-800';
-                                                        @endphp
-                                                        <option 
-                                                            value="{{ $estado->id }}" 
+                                            @php
+                                                $estadoActual = App\Models\Estado::find($proyecto->estado_id);
+                                                $colorClasses = [
+                                                    'pendiente' => 'bg-yellow-100 text-yellow-800',
+                                                    'en progreso' => 'bg-emerald-100 text-blue-800',
+                                                    'completado' => 'bg-purple-100 text-green-800',
+                                                    'cancelado' => 'bg-red-100 text-red-800',
+                                                ];
+                                                $currentColor = $colorClasses[strtolower($estadoActual->nombre)] ?? 'bg-white-100 text-gray-800';
+                                            @endphp
+                                            
+                                            <select name="estado_id" 
+                                                    class="estado-select px-3 py-1 rounded-full text-xs font-semibold {{ $currentColor }} focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer transition-colors" 
+                                                    data-id="{{ $proyecto->id }}" 
+                                                    onclick="event.stopPropagation();"
+                                                    data-current-color="{{ strtolower($estadoActual->nombre) }}">
+                                                @foreach(App\Models\Estado::all() as $estado)
+                                                    @php
+                                                        $optionColor = $colorClasses[strtolower($estado->nombre)] ?? 'bg-gray-100 text-gray-800';
+                                                    @endphp
+                                                    <option value="{{ $estado->id }}" 
+                                                            data-color="{{ strtolower($estado->nombre) }}"
                                                             class="{{ $optionColor }}"
                                                             {{ $proyecto->estado_id == $estado->id ? 'selected' : '' }}>
-                                                            {{ ucfirst($estado->nombre) }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                        {{ ucfirst($estado->nombre) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $proyecto->nombre }}</div>
                                             </td>
                                             <td class="px-6 py-4">
                                                 <div class="text-sm font-semibold text-gray-900 dark:text-white">{{ $proyecto->nombre_proyecto }}</div>
-                                                <div class="text-sm text-gray-500 truncate max-w-xs">{{ Str::limit($proyecto->descripcion ?? 'Sin descripción', 50) }}</div>
+                                                <div class="text-sm text-gray-500 truncate max-w-xs">{{ Str::limit($proyecto->descripcion_proyecto ?? 'Sin descripción', 50) }}</div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <span class="px-2 py-1 text-xs rounded-full {{ $proyecto->estacionalitat === 'Alta' ? 'bg-green-100 text-green-800' : ($proyecto->estacionalitat === 'Media' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800') }}">
+                                                <span class="px-4 py-1 text-s rounded-full {{ $proyecto->estacionalitat === 'Alta' ? 'bg-green-100 text-green-800' : ($proyecto->estacionalitat === 'Media' ? 'bg-yellow-100 text-yellow-800' : 'bg-emerald-100 text-teal-600') }}">
                                                     {{ $proyecto->estacionalitat }}
                                                 </span>
                                             </td>
@@ -155,18 +156,12 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <div class="flex items-center justify-end space-x-3">
-                                                    <button onclick="showProjectDetails({{ $proyecto->id }})" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" title="Ver detalles">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                                        </svg>
-                                                    </button>
-                                                    <a href="{{ route('dades_clients.update', $proyecto->id) }}" class="text-blue-600 hover:text-blue-900 transition-colors" title="Editar">
+                                                    <a href="{{ route('dades_clients.edit', $proyecto->id) }}"  onclick="event.stopPropagation();" class="text-emerald-600 hover:text-teal-700 transition-colors" title="Editar">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                         </svg>
                                                     </a>
-                                                    <button onclick="openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}')" class="text-red-600 hover:text-red-900 transition-colors" title="Eliminar">
+                                                    <button onclick="event.stopPropagation(); openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}')" class="text-red-600 hover:text-red-900 transition-colors" title="Eliminar">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                         </svg>
@@ -355,8 +350,8 @@
                     <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Responsable</h4>
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                         <div class="flex items-center space-x-3">
-                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-                                <span id="userInitial" class="text-blue-600 font-medium">-</span>
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center">
+                                <span id="userInitial" class="text-green-600 font-medium">-</span>
                             </div>
                             <div>
                                 <p id="userName" class="text-sm font-medium text-gray-900 dark:text-white">-</p>
@@ -375,7 +370,7 @@
                             Editar
                         </a>
                         <button id="deleteProjectButton" class="flex-1 flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>
                             Eliminar
@@ -453,86 +448,64 @@
         @method('DELETE')
     </form> 
     
-    <script src="build/js/sidePanel.js"></script>
-    <script src="build/js/modal.js"></script>
+    <script src="build/js/proyectos.js"></script>
     <script src="build/js/estado.js"></script>
-    
     <script>
-        // Habilitar/deshabilitar botón de confirmación según coincidencia
-        document.getElementById('confirmationInput').addEventListener('input', function() {
-            const projectName = document.getElementById('projectoName').textContent;
-            const confirmButton = document.getElementById('confirmDeleteButton');
-            confirmButton.disabled = this.value !== projectName;
-        });
-        
-        // Mostrar detalles del proyecto
-        function showProjectDetails(projectId) {
-            // Aquí iría la llamada AJAX para obtener los detalles del proyecto
-            // Por ahora simulamos datos
-            const projectData = {
-                id: projectId,
-                name: "Proyecto " + projectId,
-                description: "Descripción detallada del proyecto " + projectId + ". Este proyecto tiene como objetivo principal mejorar los procesos internos de la empresa.",
-                status: "En progreso",
-                created_at: "15/03/2023",
-                updated_at: "20/03/2023",
-                client: {
-                    name: "Cliente " + projectId,
-                    address: "Calle Falsa 123",
-                    city: "Barcelona",
-                    contact: "cliente" + projectId + "@example.com"
-                },
-                user: {
-                    name: "Usuario Responsable",
-                    email: "usuario@example.com"
-                }
-            };
-            
-            // Llenar los datos en el panel
-            document.getElementById('projectId').textContent = projectData.id;
-            document.getElementById('projectName').textContent = projectData.name;
-            document.getElementById('descriptionProject').textContent = projectData.description;
-            document.getElementById('projectStatus').textContent = projectData.status;
-            document.getElementById('projectCreated').textContent = projectData.created_at;
-            document.getElementById('projectUpdated').textContent = projectData.updated_at;
-            document.getElementById('clientName').textContent = projectData.client.name;
-            document.getElementById('clientAddress').textContent = projectData.client.address;
-            document.getElementById('clientCity').textContent = projectData.client.city;
-            document.getElementById('clientContact').textContent = projectData.client.contact;
-            document.getElementById('userName').textContent = projectData.user.name;
-            document.getElementById('userEmail').textContent = projectData.user.email;
-            document.getElementById('userInitial').textContent = projectData.user.name.charAt(0);
-            
-            // Actualizar enlaces
-            document.getElementById('editProjectLink').href = `/dades_clients/${projectId}/edit`;
-            document.getElementById('deleteProjectButton').onclick = () => openModal(projectData.name, projectId);
-            
-            // Mostrar panel
-            document.getElementById('overlay').classList.remove('hidden');
-            document.getElementById('sidePanel').classList.remove('translate-x-full');
-            document.getElementById('sidePanel').classList.add('translate-x-0');
-        }
-        
-        function closeSidePanel() {
-            document.getElementById('overlay').classList.add('hidden');
-            document.getElementById('sidePanel').classList.remove('translate-x-0');
-            document.getElementById('sidePanel').classList.add('translate-x-full');
-        }
-        
-        function openModal(projectName, projectId) {
-            document.getElementById('projectoName').textContent = projectName;
-            document.getElementById('deleteProjectForm').action = `/dades_clients/${projectId}`;
-            document.getElementById('modal').classList.remove('hidden');
-            document.getElementById('confirmationInput').value = '';
-            document.getElementById('confirmDeleteButton').disabled = true;
-        }
-        
-        function closeModal() {
-            document.getElementById('modal').classList.add('hidden');
-        }
-        
-        function confirmDeletion() {
-            document.getElementById('deleteProjectForm').submit();
-        }
+    function showProjectDetails(projectId) {
+    // Datos REALES desde Laravel
+    const projectData = @json($proyecto ?? null);
+    
+    if (!projectData) {
+        console.error("No hay datos del proyecto");
+        return;
+    }
+
+    // Llenar el panel con datos REALES
+    document.getElementById('projectId').textContent = projectData.id;
+    document.getElementById('projectName').textContent = projectData.nombre_proyecto || 'Sin nombre';
+    document.getElementById('descriptionProject').textContent = projectData.descripcion_proyecto || 'Sin descripción';
+    document.getElementById('projectStatus').textContent = projectData.estado?.nombre || 'Sin estado';
+    document.getElementById('projectCreated').textContent = new Date(projectData.created_at).toLocaleDateString();
+    document.getElementById('projectUpdated').textContent = new Date(projectData.updated_at).toLocaleDateString();
+    
+    // Datos del cliente (ajusta según tus campos en BD)
+    document.getElementById('clientName').textContent = projectData.nombre || 'Sin nombre';
+    document.getElementById('clientAddress').textContent = projectData.direccion || 'Sin dirección';
+    document.getElementById('clientCity').textContent = projectData.ciudad || 'Sin ciudad';
+    document.getElementById('clientContact').textContent = projectData.email || 'Sin email';
+    
+    // Datos del usuario
+    document.getElementById('userName').textContent = projectData.user?.name || 'Usuario no disponible';
+    document.getElementById('userEmail').textContent = projectData.user?.email || '';
+    document.getElementById('userInitial').textContent = projectData.user?.name?.charAt(0) || 'U';
+
+    
+    const editLink = document.getElementById('editProjectLink');
+    editLink.href = `/dades_clients/${projectId}/edit`; 
+
+    const overlay = document.getElementById('overlay');
+    const sidePanel = document.getElementById('sidePanel');
+    
+    // Clonar primero
+    overlay.replaceWith(overlay.cloneNode(true));
+    sidePanel.replaceWith(sidePanel.cloneNode(true));
+    
+    // Luego agregar eventos
+    document.getElementById('overlay').addEventListener('click', closeSidePanel);
+    document.getElementById('sidePanel').addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+
+    // Ahora sí agregar el event listener al botón (que es el nuevo clon)
+    const deleteButton = document.getElementById('deleteProjectButton');
+    deleteButton.addEventListener('click', function() {
+        openModal(projectData.nombre_proyecto, projectData.id);
+    });
+
+    // Mostrar panel
+    document.getElementById('overlay').classList.remove('hidden');
+    document.getElementById('sidePanel').classList.remove('translate-x-full');
+    document.getElementById('sidePanel').classList.add('translate-x-0')
+}
     </script>
 </x-app-layout>

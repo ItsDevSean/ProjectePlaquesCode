@@ -110,7 +110,29 @@ public function updateEstado(Request $request, $id)
     $proyecto->estado_id = $request->estado_id;
     $proyecto->save();
 
-    return response()->json(['message' => 'Estado actualizado correctamente']);
+    // Recalcular los contadores
+    $total = DadesClient::where('user_id', Auth::id())->count();
+    $activos = DadesClient::where('user_id', Auth::id())->where('estado_id', 1)->count();
+    $enProgreso = DadesClient::where('user_id', Auth::id())->where('estado_id', 2)->count();
+    $completados = DadesClient::where('user_id', Auth::id())->where('estado_id', 3)->count();
+
+    return response()->json([
+        'message' => 'Estado actualizado correctamente',
+        'total' => $total,
+        'activos' => $activos,
+        'enProgreso' => $enProgreso,
+        'completados' => $completados,
+    ]);
+}
+
+
+public function show($id)
+{
+    $proyecto = DadesClient::find($id);
+    if (!$proyecto) {
+        return redirect()->route('proyectos')->with('error', 'Proyecto no encontrado');
+    }
+    return view('proyectos', compact('proyecto'));
 }
 
 }
