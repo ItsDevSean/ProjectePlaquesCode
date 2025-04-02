@@ -236,7 +236,7 @@
                             <select class="mt-1 block w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 appearance-none" 
                                     id="estacionalitat" name="estacionalitat" required>
                                 <option value="" disabled selected>-- Tria una opció --</option>
-                                <option value="any" {{ (old('estacionalitat', $proyecto->estacionalitat ?? '') == 'any') ? 'selected' : '' }}>Tot l'any</option>
+                                <option value="any" {{ (old('estacionalitat', $proyecto->estacionalitat ?? '') == 'any') ? 'selected' : '' }}>Anual</option>
                                 <option value="estiu" {{ (old('estacionalitat', $proyecto->estacionalitat ?? '') == 'estiu') ? 'selected' : '' }}>Estiu</option>
                                 <option value="hivern" {{ (old('estacionalitat', $proyecto->estacionalitat ?? '') == 'hivern') ? 'selected' : '' }}>Hivern</option>
                             </select>

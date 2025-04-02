@@ -19,12 +19,12 @@
                 <!-- Navigation Links -->
                 <div class="hidden md:flex items-center space-x-1 ml-10">
                     <x-nav-link :href="route('proyectos')" :active="request()->routeIs('proyectos')" 
-                               class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-emerald-300 hover:bg-[#2C3E50] transition-colors duration-200">
+                               class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-emerald-300 hover:bg-[#2c3e50] transition-colors duration-200">
                         {{ __('Inicio') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('preus')" :active="request()->routeIs('preus')" 
-                               class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-emerald-300 hover:bg-[#2C3E50] transition-colors duration-200">
+                               class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-emerald-300 hover:bg-[#2c3e50] transition-colors duration-200">
                         {{ __('Planes') }}
                     </x-nav-link>
 
