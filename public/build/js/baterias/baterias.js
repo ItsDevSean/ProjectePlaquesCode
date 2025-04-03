@@ -9,22 +9,29 @@ function openDetail(bateria,event) {
         return; // Salir de la función sin mostrar detalles
     }
     
-    // Llenar los datos
-    document.getElementById('bateriaDetail').textContent = bateria.nombre_bateria || 'N/A';
-    document.getElementById('costeDetail').textContent = bateria.coste || 'N/A';
-    document.getElementById('capacidadDetail').textContent = bateria.capacidad || 'N/A';
-    document.getElementById('descripcionDetail').textContent = bateria.descripcion || 'Sin descripción';
-    
-    const imgElement = document.getElementById('imagenPanel');
-    if (bateria.imagen_bateria) {
-        imgElement.src = bateria.imagen_bateria; 
-        imgElement.style.display = 'block'; 
-    } else {
-        imgElement.style.display = 'none'; 
+    function setDetailValue(elementId, value, defaultValue = 'N/A') {
+        const element = document.getElementById(elementId);
+        if (element) element.textContent = value || defaultValue;
     }
-    
-    document.getElementById('garantiaMaterial').textContent = bateria.garantia_material || 'N/A';
-    document.getElementById('garantiaFabricante').textContent = bateria.garantia_fabricante || 'N/A';
+
+    // Asignar todos los valores
+    setDetailValue('bateriaDetail', bateria.nombre_bateria);
+    setDetailValue('costeDetail', bateria.coste);
+    setDetailValue('capacidadDetail', bateria.capacidad);
+    setDetailValue('descripcionDetail', bateria.descripcion, 'Sin descripción');
+    setDetailValue('garantiaMaterial', bateria.garantia_material);
+    setDetailValue('garantiaFabricante', bateria.garantia_fabricante);
+    setDetailValue('idReferencia', bateria.id_referencia);
+
+    const imgElement = document.getElementById('imagenPanel');
+    if (imgElement) {
+        if (bateria.imagen_bateria) {
+            imgElement.src = bateria.imagen_bateria;
+            imgElement.style.display = 'block';
+        } else {
+            imgElement.style.display = 'none';
+        }
+    }
 }
 
 function toggleDetail() {
