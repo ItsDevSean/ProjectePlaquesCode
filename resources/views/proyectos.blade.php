@@ -121,13 +121,7 @@
                                             
                                             <div class="relative inline-block">
                                                 <!-- Flecha a la izquierda -->
-                                                
-                                                
-                                                <select name="estado_id" 
-                                                    class="estado-select py-1 text-[13px] font-semibold {{ $currentColor }} bg-transparent cursor-pointer transition-colors border-0 outline-none focus:outline-none focus:ring-0 focus:border-transparent appearance-none"
-                                                    data-id="{{ $proyecto->id }}" 
-                                                    onclick="event.stopPropagation();"
-                                                    data-current-color="{{ strtolower($estadoActual->nombre) }}">
+                                                <select name="estado_id"  class="estado-select py-1 text-[13px] font-semibold {{ $currentColor }} bg-transparent cursor-pointer transition-colors border-0 outline-none focus:outline-none focus:ring-0 focus:border-transparent appearance-none" data-id="{{ $proyecto->id }}" onclick="event.stopPropagation();"data-current-color="{{ strtolower($estadoActual->nombre) }}">
                                                     @foreach(App\Models\Estado::all() as $estado)
                                                         @php
                                                             $optionColor = $colorClasses[strtolower($estado->nombre)] ?? 'bg-gray-100 text-gray-800';
@@ -414,31 +408,16 @@
                                 <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
                                     Para confirmar, escribe el nombre del proyecto en el campo de abajo:
                                 </p>
-                                <input
-                                    type="text"
-                                    id="confirmationInput"
-                                    class="mt-3 w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-                                    placeholder="Escribe el nombre del proyecto"
-                                />
+                                <input type="text" id="confirmationInput" class="mt-3 w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="Escribe el nombre del proyecto"/>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button
-                        onclick="confirmDeletion()"
-                        id="confirmDeleteButton"
-                        type="button"
-                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-                        disabled
-                    >
+                    <button onclick="confirmDeletion()" id="confirmDeleteButton" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"disabled>
                         Eliminar
                     </button>
-                    <button
-                        onclick="closeModal()"
-                        type="button"
-                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-600 text-base font-medium text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    >
+                    <button onclick="closeModal()" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-600 text-base font-medium text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                         Cancelar
                     </button>
                 </div>
