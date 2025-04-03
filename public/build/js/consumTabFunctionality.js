@@ -51,7 +51,14 @@ fileInput.addEventListener('change', (e) => {
             if (progress >= 100) {
                 clearInterval(interval);
                 fileProgress.querySelector('p').textContent = "Fitxer processat correctament";
-                
+                const sumbitButton = document.createElement('button');
+                sumbitButton.id = "importButton";
+                sumbitButton.type = 'submit';
+                sumbitButton.innerHTML = 'Importar Fitxer';
+                sumbitButton.classList.add('bg-[#49DBA3]', 'hover:bg-[#193849]', 'text-white', 'py-2', 'px-4', 'rounded-lg');
+                const form = document.getElementById("electricBillForm");
+                form.appendChild(sumbitButton);
+                console.log("ifoahfoiaoif");
             }
         }, 200);
     }
