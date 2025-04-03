@@ -72,13 +72,13 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <div class="flex items-center justify-end space-x-3">
-                                        <button onclick="event.stopPropagation(); openEditModal({{ json_encode($bateria) }})" 
-                                                class="text-emerald-600 hover:text-teal-700 transition-colors" 
-                                                title="Editar">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                            </svg>
-                                        </button>
+                                            <button onclick="event.stopPropagation(); openEditModal({{ json_encode($bateria) }})" 
+                                                    class="text-emerald-600 hover:text-teal-700 transition-colors" 
+                                                    title="Editar">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                </svg>
+                                            </button>
                                             <button onclick="event.stopPropagation();openModalElim('{{ $bateria->nombre_bateria }}', '{{ $bateria->id }}')" 
                                                     class="text-red-600 hover:text-red-900 transition-colors" 
                                                     title="Eliminar">
@@ -104,7 +104,7 @@
                 </table>
 
                     
-                    <!-- Modal Premium -->
+                    <!-- Modal Baterias -->
                     <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 hidden backdrop-blur-sm transition-opacity duration-300">
                         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-4xl overflow-hidden transform transition-all duration-300 scale-95 opacity-0 modal-content">
                             <!-- Encabezado con efecto gradiente -->
@@ -394,7 +394,6 @@
                 </div>
             </div>
             <!-- DETAIL-->
-            <!-- Secció Detalls de la Bateria -->
             <div id="detail" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center hidden z-50">
                 <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg w-full max-w-2xl transition-all duration-300">
                     <!-- Capçalera de la Secció -->

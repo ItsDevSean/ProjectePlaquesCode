@@ -73,6 +73,7 @@ Route::get('/herramientas/paneles/importar', [SolarPanelsController::class, 'imp
 Route::post('/herramientas/paneles/resultado', [SolarPanelsController::class, 'store'])->name('paneles.resultado');
 
 Route::get('/herramientas/cositas', [SolarPanelsController::class, 'showForm'])->name('showImportForm');
+
 Route::post('/herramientas/cositas', [SolarPanelsController::class, 'import'])->name('veureImport');
 
 Route::resource('baterias',BateriasController::class);

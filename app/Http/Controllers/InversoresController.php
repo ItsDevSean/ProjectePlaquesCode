@@ -11,9 +11,10 @@ class InversoresController extends Controller
 {
     public function index()
     {
-     
-        $inversores = Inversores::where('user_id', Auth::id())->paginate(3);
-     
+        $inversores = Inversores::where('user_id', Auth::id())
+                    ->with('fabricante') 
+                    ->paginate(3);
+        
         $fabricantes = Fabricante::where('user_id', Auth::id())->get();
 
         return view('inversores', compact('inversores', 'fabricantes'));

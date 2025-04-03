@@ -1,32 +1,85 @@
-function openDetail(inversor,event) {
-    toggleDetail();
+// Configuración del modal de detalle
+function setupDetailModal() {
+    const detailModal = document.getElementById('detail');
 
-    if (event && (
-        event.target.closest('button.text-green-600') || // Botón editar
-        event.target.closest('button.text-red-600') ||   // Botón eliminar
-        event.target.closest('form')                     // Formularios
-    )) {
-        return; // Salir de la función sin mostrar detalles
-    }
+    const closeDetailButtons = [
+        ...document.querySelectorAll('[onclick="toggleDetail()"]'),
+    ].filter(Boolean);
+
+    closeDetailButtons.forEach(button => {
+        button.addEventListener('click', closeDetail);
+    });
+
+    detailModal.addEventListener('click', (e) => {
+        if (e.target === detailModal) {
+            closeDetail();
+        }
+    });
+}
+
+function closeDetail() {
+    const modal = document.getElementById('detail');
+    const modalContent = modal.querySelector('.modal-content');
     
-    // Llenar los datos
-    document.getElementById('inversorDetail').textContent = inversor.nombre_inversor || 'N/A';
-    document.getElementById('potenciaDetail').textContent = inversor.potencia_nominal || 'N/A';
-    document.getElementById('eficienciaDetail').textContent = inversor.eficiencia || 'N/A';
-    document.getElementById('descripcionDetail').textContent = inversor.descripcion || 'Sin descripción';
+    modalContent.classList.remove('scale-100', 'opacity-100');
+    modalContent.classList.add('scale-95', 'opacity-0');
     
-    const imgElement = document.getElementById('imagenPanel');
-    if (inversor.imagen_inversor) {
-        imgElement.src = inversor.imagen_inversor; 
-        imgElement.style.display = 'block'; 
-    } else {
-        imgElement.style.display = 'none'; 
-    }
-    
-    document.getElementById('garantiaMaterial').textContent = inversor.garantia_material || 'N/A';
-    document.getElementById('garantiaFabricante').textContent = inversor.garantia_fabricante || 'N/A';
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 300);
 }
 
 function toggleDetail() {
-    document.getElementById('detail').classList.toggle('hidden');
+    const modal = document.getElementById('detail');
+    
+    if (modal.classList.contains('hidden')) {
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.querySelector('.modal-content').classList.remove('scale-95', 'opacity-0');
+            modal.querySelector('.modal-content').classList.add('scale-100', 'opacity-100');
+        }, 10);
+    } else {
+        closeDetail();
+    }
 }
+
+function openDetail(inversor) {
+    const fields = {
+        'inversorDetail': inversor.nombre_inversor,
+        'potenciaDetail': `${inversor.potencia_nominal} W`,
+        'eficienciaDetail': `${inversor.eficiencia}%`,
+        'fabricanteDetail': inversor.fabricante ? inversor.fabricante.nombre : 
+                          (inversor.fabricante_id ? 'Fabricante no disponible' : 'N/A'),
+        'tipoInstalacionDetail': inversor.tipo_instalacion || 'N/A',
+        'garantiaMaterial': `${inversor.garantia_material} años`,
+        'garantiaFabricante': `${inversor.garantia_fabricante} años`,
+        'fechaCreacionDetail': new Date(inversor.created_at).toLocaleDateString(),
+        'descripcionDetail': inversor.descripcion || 'No hay descripción disponible'
+    };
+
+    Object.entries(fields).forEach(([id, value]) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
+    });
+
+    const imagenPanel = document.getElementById('imagenPanel');
+    if (inversor.imagen_inversor) {
+        imagenPanel.src = inversor.imagen_inversor;
+        imagenPanel.classList.remove('hidden');
+    } else {
+        imagenPanel.src = '';
+        imagenPanel.classList.add('hidden');
+    }
+
+    toggleDetail();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    setupDetailModal();
+    
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !document.getElementById('detail').classList.contains('hidden')) {
+            closeDetail();
+        }
+    });
+});
