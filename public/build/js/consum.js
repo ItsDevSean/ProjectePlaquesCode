@@ -66,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
             this.elements.costeInstalacion.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_costeInstalacion`, this.elements.costeInstalacion.value));
             this.elements.subvenciones.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_subvenciones`, this.elements.subvenciones.value));
             this.elements.precioExcedentes.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_precioExcedentes`, this.elements.precioExcedentes.value));
-            console.log("dsf " + localStorage.getItem(`user_${userId}_precioExcedentes`));
             
             // Tarifa de acceso
             this.elements.tarifaAcces.addEventListener('change', () => {
@@ -203,22 +202,54 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Cargar datos guardados
+        // Cargar datos guardados
         loadSavedData() {
-            if (localStorage.getItem('consumAnual')) this.elements.consumAnual.value = localStorage.getItem('consumAnual');
-            if (localStorage.getItem('facturaAnual')) this.elements.facturaAnual.value = localStorage.getItem('facturaAnual');
-            if (localStorage.getItem('costeInstalacion')) this.elements.costeInstalacion.value = localStorage.getItem('costeInstalacion');
-            if (localStorage.getItem('subvenciones')) this.elements.subvenciones.value = localStorage.getItem('subvenciones');
-            if (localStorage.getItem('precioExcedentes')) this.elements.precioExcedentes.value = localStorage.getItem('precioExcedentes');
+            if (!this.userId) return; // Asegurarse de que tenemos userId
             
-            // Cargar patrón de consumo
-            if (localStorage.getItem('consumPattern')) {
-                this.setActivePattern(localStorage.getItem('consumPattern'));
+            // Recuperar campos normales
+            const inputs = [
+                {element: this.elements.consumAnual, key: 'consumAnual'},
+                {element: this.elements.facturaAnual, key: 'facturaAnual'},
+                {element: this.elements.costeInstalacion, key: 'costeInstalacion'},
+                {element: this.elements.subvenciones, key: 'subvenciones'},
+                {element: this.elements.precioExcedentes, key: 'precioExcedentes'},
+                {element: this.elements.precioP1, key: 'precioP1'},
+                {element: this.elements.precioP2, key: 'precioP2'},
+                {element: this.elements.precioP3, key: 'precioP3'}
+            ];
+
+            // Recuperar campos normales
+            inputs.forEach(input => {
+                const savedValue = localStorage.getItem(`user_${this.userId}_${input.key}`);
+                if (savedValue) {
+                    input.element.value = savedValue;
+                }
+            });
+
+            // Recuperar select (tarifaAcces)
+            const savedTarifaAcces = localStorage.getItem(`user_${this.userId}_tarifaAcces`);
+            if (savedTarifaAcces) {
+                Array.from(this.elements.tarifaAcces.options).forEach(option => {
+                    if (option.textContent.trim() === savedTarifaAcces) {
+                        option.selected = true;
+                        // Disparar evento change para actualizar la UI
+                        this.elements.tarifaAcces.dispatchEvent(new Event('change'));
+                    }
+                });
+            }
+
+            // Recuperar patrón de consumo
+            const savedPattern = localStorage.getItem(`user_${this.userId}_consumPattern`);
+            if (savedPattern) {
+                let patternName;
+                if (savedPattern === "0.7") patternName = 'diurn';
+                else if (savedPattern === "0.3") patternName = 'nocturn';
+                else if (savedPattern === "0.5") patternName = 'mixt';
+                
+                if (patternName) this.setActivePattern(patternName);
             } else {
                 this.setActivePattern('mixt'); // Valor por defecto
             }
-            
-            // Disparar evento change para tarifa de acceso para inicializar precios por periodo
-            this.elements.tarifaAcces.dispatchEvent(new Event('change'));
         }
 
         // Guardar en localStorage
@@ -226,6 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem(key, value);
         }
 
+        /*
         // Mostrar/ocultar precios por periodo según tarifa
         togglePreciosPeriodo() {
             const tarifa = this.elements.tarifaAcces.value;
@@ -247,6 +279,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.elements.preciosPeriodoContainer.classList.add('hidden');
             }
         }
+        */
 
         // Establecer patrón de consumo activo
         setActivePattern(pattern) {
