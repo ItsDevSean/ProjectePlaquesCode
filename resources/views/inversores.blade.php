@@ -54,7 +54,7 @@
                                 @foreach ($inversores as $inversor)
                                     <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150" onclick="openDetail({{$inversor}})">
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $inversor->nombre_inversor }}</div>
+                                            <div class="text-sm font-bold text-gray-900 dark:text-white">{{ $inversor->nombre_inversor }}</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 dark:text-white">{{ $inversor->potencia_nominal }} W</div>
@@ -66,7 +66,7 @@
                                             <div class="text-sm text-gray-900 dark:text-white">{{ $inversor->fabricante->nombre }}</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900 dark:text-white capitalize">{{ $inversor->tipo_instalacion }}</div>
+                                            <div class="text-sm font-bold text-gray-900 dark:text-white capitalize">{{ $inversor->tipo_instalacion }}</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 dark:text-white">{{ $inversor->created_at->format('d/m/Y') }}</div>
