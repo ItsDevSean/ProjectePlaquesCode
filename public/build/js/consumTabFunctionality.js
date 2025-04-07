@@ -300,24 +300,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function showCSV(data) {
-    // Split the string by commas to get the individual values
-    var rows = data.split(',');
-
-    var formattedData = [];
-    
-    // Since we know each row has 4 columns (Year, Month, Electric Consumption, Bill Amount),
-    // we will process the string in groups of 4
-    for (var i = 0; i < rows.length; i += 4) {
-        formattedData.push({
-            year: rows[i],
-            month: rows[i + 1],
-            electricConsumption: parseInt(rows[i + 2]),
-            billAmount: parseInt(rows[i + 3])
-        });
-    }
-
-    console.log(formattedData); // Log the parsed data for debugging
-
-    // You can now use the formattedData array in your app
-    // For example, you can render it in a table or use it for other purposes
+    data.forEach(item => {
+        console.log(`Year: ${item.year}, Month: ${item.month}, Consumption: ${item.consumption}, Cost: ${item.cost}`);
+    }); //ToDo: see where it shows the error
 }

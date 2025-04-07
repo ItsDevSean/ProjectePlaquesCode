@@ -361,27 +361,9 @@
                                         Descargar plantilla CSV
                                     </button>
                                 </div>
-                                {{-- <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Year</th>
-                                            <th>Month</th>
-                                            <th>Electric Consumption (kWh)</th>
-                                            <th>Bill Amount ($)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($electicConsumption as $data)
-                                            <tr>
-                                                <td>{{ $data->Year }}</td>
-                                                <td>{{ $data['Month'] }}</td>
-                                                <td>{{ $data['Electric Consumption (kWh)'] }}</td>
-                                                <td>{{ $data['Bill Amount ($)'] }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                 --}}
+                                <button onclick="showCSV(@json($electicConsumption))" type="button" class="text-xs text-emerald-600 dark:text-emerald-400 hover:underline">
+                                    Process csv
+                                </button>
                                 @if(session('error'))
                                     <div class="alert alert-danger">
                                         {{ session('error') }}
