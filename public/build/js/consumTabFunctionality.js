@@ -300,7 +300,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function showCSV(data) {
+    console.log("hello");
     data.forEach(item => {
         console.log(`Year: ${item.year}, Month: ${item.month}, Consumption: ${item.consumption}, Cost: ${item.cost}`);
-    }); //ToDo: see where it shows the error
+    });
 }
