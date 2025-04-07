@@ -322,7 +322,7 @@
                                         CSV, XLSX (Màx. 10MB)
                                     </p>
                                 </div>
-                                <input id="consumption-file" type="file" class="hidden" accept=".csv,.xlsx,.xls">
+                                <input id="consumption-file" type="file" class="hidden" accept=".csv,.xlsx,.xls" name="csv_file">
                                 
                                 <div class="flex justify-center mt-4">
                                     <button id="upload-btn" type="button" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
@@ -361,7 +361,27 @@
                                         Descargar plantilla CSV
                                     </button>
                                 </div>
-                                <div id="vvv">{{ implode(", ", $electicConsumption); }}</div>
+                                {{-- <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Year</th>
+                                            <th>Month</th>
+                                            <th>Electric Consumption (kWh)</th>
+                                            <th>Bill Amount ($)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($electicConsumption as $data)
+                                            <tr>
+                                                <td>{{ $data->Year }}</td>
+                                                <td>{{ $data['Month'] }}</td>
+                                                <td>{{ $data['Electric Consumption (kWh)'] }}</td>
+                                                <td>{{ $data['Bill Amount ($)'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                 --}}
                                 @if(session('error'))
                                     <div class="alert alert-danger">
                                         {{ session('error') }}

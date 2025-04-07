@@ -16,10 +16,10 @@ class ConsumptionController extends Controller
     public function validation(Request $request) 
     {
         $request->validate([
-            'year' => 'required|numeric|min:1900',
-            'month' => 'required|string',
-            'electric_consumption' => 'required|numeric|min:1',
-            'bill' => 'required|numeric|min:1',
+            'Year' => 'required|numeric|min:1900',
+            'Month' => 'required|string',
+            'Electric Consumption (kWh)' => 'required|numeric|min:1',
+            'Bill Amount ($)' => 'required|numeric|min:1',
         ]);
     }
 
@@ -29,7 +29,8 @@ class ConsumptionController extends Controller
         $request->validate([
             'csv_file' => 'required|file|mimes:csv,txt'
         ]);
-        $file = $request->file('csv_file');  
+        $file = $request->file('csv_file');
+         
         if (!$file || !file_exists($file->getRealPath() )) {
             return back()->with('error', 'Invalid file!');
         }
@@ -39,6 +40,7 @@ class ConsumptionController extends Controller
         }
         $headers = array_shift($data); 
         $expectedHeaders = (new ConsumptionModel())->getFillable();
+        //dd($expectedHeaders);
         if ($headers !== $expectedHeaders) {
             return back()->with('error', 'CSV headers are not valid!');
         }
@@ -56,8 +58,6 @@ class ConsumptionController extends Controller
                 return back()->with('error', "Error processing row " . ($index + 1) . ": " . $e->getMessage());
             }
         }
-        dd(session('error'));
-        dd($electicConsumption); 
         return view('consum', compact('electicConsumption'));
     }
 }

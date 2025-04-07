@@ -10,6 +10,6 @@ class ConsumptionModel extends Model
     use HasFactory;
     
     protected $fillable = [
-        'user_id', 'year', 'month', 'electric_consumption', 'bill', 
+        'Year', 'Month', 'Electric Consumption (kWh)', 'Bill Amount ($)', 
     ];
 }
