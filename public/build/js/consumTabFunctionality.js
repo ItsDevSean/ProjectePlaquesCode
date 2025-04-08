@@ -58,7 +58,21 @@ fileInput.addEventListener('change', (e) => {
                 sumbitButton.classList.add('bg-[#49DBA3]', 'hover:bg-[#193849]', 'text-white', 'py-2', 'px-4', 'rounded-lg');
                 const form = document.getElementById("electricBillForm");
                 form.appendChild(sumbitButton);
-                console.log("ifoahfoiaoif");
+
+                // Add event listener after button is added to the DOM
+                sumbitButton.addEventListener('click', () => {
+                    console.log("Button clicked");
+                    let userId = window.userId
+                    let billAmount = 0;
+                    data.forEach(item => {
+                        let cost = parseFloat(item["Bill Amount ($)"]);
+                        billAmount += cost;
+                    });
+
+                    console.log("De todo: " + billAmount);
+                    this.saveToLocalStorage(`user_${userId}_factura-anual`, billAmount);
+                    console.log("dani se levanta " + localStorage.getItem(`user_${userId}_factura-anual`));
+                });
             }
         }, 200);
     }
@@ -299,9 +313,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('tarifa-acces').dispatchEvent(event);
 });
 
-function showCSV(data) {
-    console.log("hello");
-    data.forEach(item => {
-        console.log(`Year: ${item.year}, Month: ${item.month}, Consumption: ${item.consumption}, Cost: ${item.cost}`);
-    });
-}
+const importedData = document.getElementById('importedData');
+console.log("David " + importedData.innerText);
+
+
+
+
+ 

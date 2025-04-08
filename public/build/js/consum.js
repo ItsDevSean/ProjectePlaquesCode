@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 uploadBtn: document.getElementById('upload-btn'),
                 removeFile: document.getElementById('remove-file'),
                 exportChart: document.getElementById('export-chart'),
+                importButton: document.getElementById('importButton'),
                 
                 // Pestañas
                 tabs: document.querySelectorAll('[data-tabs-target]'),
@@ -66,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
             this.elements.costeInstalacion.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_costeInstalacion`, this.elements.costeInstalacion.value));
             this.elements.subvenciones.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_subvenciones`, this.elements.subvenciones.value));
             this.elements.precioExcedentes.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_precioExcedentes`, this.elements.precioExcedentes.value));
-            console.log("dsf " + localStorage.getItem(`user_${userId}_precioExcedentes`));
             
             // Tarifa de acceso
             this.elements.tarifaAcces.addEventListener('change', () => {
@@ -88,6 +88,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.setActivePattern('mixt');
                 this.saveToLocalStorage(`user_${userId}_consumPattern`, 0.5);
             });
+
+            this.elements.importButton.addEventListener('click', () => {    
+                console.log("maaaarc");
+                let billAmount = 0;
+                data.forEach(item => {
+                    let cost = parseFloat(item["Bill Amount ($)"]);
+                    billAmount += cost;
+                });
+                console.log("De todo: " + billAmount);
+                this.saveToLocalStorage(`user_${this.userId}_factura-anual`, billAmount);
+                console.log("dani se levanta " + localStorage.getItem("user_${userId}_factura-anual"));
+            });
             
             // Pestañas
             this.elements.tabs.forEach(tab => {
@@ -104,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.elements.exportChart.addEventListener('click', () => this.exportChart());
             
             // Ayuda
-            this.elements.helpButton.addEventListener('click', () => this.showHelp());
+            this.elements.helpButton.addEventListener('click', () => this.showHelp());            
         }
 
         // Inicializar gráficos de patrones
