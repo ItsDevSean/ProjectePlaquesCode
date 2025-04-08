@@ -32,7 +32,7 @@
                     <div class="relative" 
                          @mouseenter="navigationMenuOpen = true; navigationMenu = 'learn-more'" 
                          @mouseleave="navigationMenuOpen = false; navigationMenu = ''">
-                        <button class="flex items-center px-3 pt-0 pb-1 rounded-md text-sm font-medium text-white hover:text-emerald-300 hover:bg-[#2C3E50] transition-colors duration-200">
+                        <button class="flex items-center px-3 pt-0 pb-1 rounded-md text-sm font-medium text-white hover:text-emerald-300 hover:bg-[#2C3E50] transition-colors duration-200 ">
                             <span>Herramientas</span>
                             <svg class="ml-1 h-4 w-4 transition-transform duration-200" 
                                  :class="{ 'rotate-180': navigationMenuOpen }" 
