@@ -26,57 +26,36 @@ tabs.forEach(tab => {
 });
 
 // File upload functionality
-const uploadBtn = document.getElementById('upload-btn');
+//const uploadBtn = document.getElementById('upload-btn');
 const fileInput = document.getElementById('consumption-file');
 const fileInfo = document.getElementById('file-info');
 const fileName = document.getElementById('file-name');
 const removeFile = document.getElementById('remove-file');
 const fileProgress = document.getElementById('file-progress');
 
-uploadBtn.addEventListener('click', () => fileInput.click());
+//uploadBtn.addEventListener('click', () => fileInput.click());
 
-fileInput.addEventListener('change', (e) => {
-    if (e.target.files.length > 0) {
-        const file = e.target.files[0];
-        fileName.textContent = file.name;
-        fileInfo.classList.remove('hidden');
+// fileInput.addEventListener('change', (e) => {
+//     if (e.target.files.length > 0) {
+//         const file = e.target.files[0];
+//         fileName.textContent = file.name;
+//         fileInfo.classList.remove('hidden');
         
-        // Simulate file processing
-        fileProgress.classList.remove('hidden');
-        let progress = 0;
-        const interval = setInterval(() => {
-            progress += 10;
-            fileProgress.querySelector('div').style.width = `${progress}%`;
+//         // Simulate file processing
+//         fileProgress.classList.remove('hidden');
+//         let progress = 0;
+//         const interval = setInterval(() => {
+//             progress += 10;
+//             fileProgress.querySelector('div').style.width = `${progress}%`;
             
-            if (progress >= 100) {
-                clearInterval(interval);
-                fileProgress.querySelector('p').textContent = "Fitxer processat correctament";
-                const sumbitButton = document.createElement('button');
-                sumbitButton.id = "importButton";
-                sumbitButton.type = 'submit';
-                sumbitButton.innerHTML = 'Importar Fitxer';
-                sumbitButton.classList.add('bg-[#49DBA3]', 'hover:bg-[#193849]', 'text-white', 'py-2', 'px-4', 'rounded-lg');
-                const form = document.getElementById("electricBillForm");
-                form.appendChild(sumbitButton);
-
-                // Add event listener after button is added to the DOM
-                sumbitButton.addEventListener('click', () => {
-                    console.log("Button clicked");
-                    let userId = window.userId
-                    let billAmount = 0;
-                    data.forEach(item => {
-                        let cost = parseFloat(item["Bill Amount ($)"]);
-                        billAmount += cost;
-                    });
-
-                    console.log("De todo: " + billAmount);
-                    this.saveToLocalStorage(`user_${userId}_factura-anual`, billAmount);
-                    console.log("dani se levanta " + localStorage.getItem(`user_${userId}_factura-anual`));
-                });
-            }
-        }, 200);
-    }
-});
+//             if (progress >= 100) {
+//                 clearInterval(interval);
+//                 fileProgress.querySelector('p').textContent = "Fitxer processat correctament";
+                
+//             }
+//         }, 200);
+//     }
+// });
 
 removeFile.addEventListener('click', () => {
     fileInput.value = '';

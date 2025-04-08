@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         constructor() {
             this.userId = window.userId || null;
+            this.importedValues = false;
             this.initElements();
             this.initEventListeners();
             this.initPatternCharts();
@@ -67,6 +68,18 @@ document.addEventListener('DOMContentLoaded', function() {
             this.elements.costeInstalacion.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_costeInstalacion`, this.elements.costeInstalacion.value));
             this.elements.subvenciones.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_subvenciones`, this.elements.subvenciones.value));
             this.elements.precioExcedentes.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_precioExcedentes`, this.elements.precioExcedentes.value));
+            console.log("Tu app tine bottone? No no thengo app... " + this.importedValues);
+            if (this.importedValues) {
+                console.log("Nunca me sale");
+                let billAmount = 0;
+                data.forEach(item => {
+                    let cost = parseFloat(item["Bill Amount ($)"]);
+                    billAmount += cost;
+                });
+                console.log("De todo: " + billAmount);
+                saveToLocalStorage(`user_${this.userId}_consumAnual`, billAmount);
+                console.log("me vuelvo loco " + localStorage.getItem("user_${userId}_consumAnual"));
+            }
             
             // Tarifa de acceso
             this.elements.tarifaAcces.addEventListener('change', () => {
@@ -88,18 +101,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.setActivePattern('mixt');
                 this.saveToLocalStorage(`user_${userId}_consumPattern`, 0.5);
             });
-
-            this.elements.importButton.addEventListener('click', () => {    
-                console.log("maaaarc");
-                let billAmount = 0;
-                data.forEach(item => {
-                    let cost = parseFloat(item["Bill Amount ($)"]);
-                    billAmount += cost;
-                });
-                console.log("De todo: " + billAmount);
-                this.saveToLocalStorage(`user_${this.userId}_factura-anual`, billAmount);
-                console.log("dani se levanta " + localStorage.getItem("user_${userId}_factura-anual"));
-            });
             
             // Pestañas
             this.elements.tabs.forEach(tab => {
@@ -116,7 +117,9 @@ document.addEventListener('DOMContentLoaded', function() {
             this.elements.exportChart.addEventListener('click', () => this.exportChart());
             
             // Ayuda
-            this.elements.helpButton.addEventListener('click', () => this.showHelp());            
+            this.elements.helpButton.addEventListener('click', () => this.showHelp());
+
+            
         }
 
         // Inicializar gráficos de patrones
@@ -332,9 +335,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (progress >= 100) {
                     clearInterval(interval);
                     progressText.textContent = "Fitxer processat correctament";
-                    
-                    // Aquí iría el código real para procesar el archivo CSV/Excel
-                    // y actualizar los datos del gráfico
+                    const sumbitButton = document.createElement('button');
+                    sumbitButton.id = "importButton";
+                    sumbitButton.type = 'submit';
+                    sumbitButton.innerHTML = 'Importar Fitxer';
+                    sumbitButton.classList.add('bg-[#49DBA3]', 'hover:bg-[#193849]', 'text-white', 'py-2', 'px-4', 'rounded-lg');
+                    const form = document.getElementById("electricBillForm");
+                    form.appendChild(sumbitButton);
+                    this.importedValues = true;
+                    console.log("Discart  de todos loc changes" + this.importedValues);
                 }
             }, 200);
         }
