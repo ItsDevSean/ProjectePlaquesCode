@@ -26,36 +26,11 @@ tabs.forEach(tab => {
 });
 
 // File upload functionality
-//const uploadBtn = document.getElementById('upload-btn');
 const fileInput = document.getElementById('consumption-file');
 const fileInfo = document.getElementById('file-info');
 const fileName = document.getElementById('file-name');
 const removeFile = document.getElementById('remove-file');
 const fileProgress = document.getElementById('file-progress');
-
-//uploadBtn.addEventListener('click', () => fileInput.click());
-
-// fileInput.addEventListener('change', (e) => {
-//     if (e.target.files.length > 0) {
-//         const file = e.target.files[0];
-//         fileName.textContent = file.name;
-//         fileInfo.classList.remove('hidden');
-        
-//         // Simulate file processing
-//         fileProgress.classList.remove('hidden');
-//         let progress = 0;
-//         const interval = setInterval(() => {
-//             progress += 10;
-//             fileProgress.querySelector('div').style.width = `${progress}%`;
-            
-//             if (progress >= 100) {
-//                 clearInterval(interval);
-//                 fileProgress.querySelector('p').textContent = "Fitxer processat correctament";
-                
-//             }
-//         }, 200);
-//     }
-// });
 
 removeFile.addEventListener('click', () => {
     fileInput.value = '';
@@ -122,7 +97,7 @@ patternBtns.forEach(btn => {
     });
 });
 
-// Main consumption chart
+// Main consumption chart                           
 const consumptionCtx = document.getElementById('consumptionChart').getContext('2d');
 const consumptionChart = new Chart(consumptionCtx, {
     type: 'bar',
@@ -210,7 +185,7 @@ function addForm() {
     document.getElementById('container').appendChild(form);
 }
 
-function updateMainChart() {
+function updateMainChart() { //toDO: passar tota aquesta part al altre classe
     const period = document.getElementById('chart-period').value;
     let labels, actualData, averageData, idealData;
     

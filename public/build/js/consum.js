@@ -56,7 +56,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Selectores
                 chartPeriod: document.getElementById('chart-period'),
                 energyProvider: document.getElementById('energy-provider'),
-                cupsNumber: document.getElementById('cups-number')
+                cupsNumber: document.getElementById('cups-number'),
+
+                //Imported data
+                importedDataJson: document.getElementById('importedData').innerText
+
             };
         }
 
@@ -70,12 +74,11 @@ document.addEventListener('DOMContentLoaded', function() {
             this.elements.precioExcedentes.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_precioExcedentes`, this.elements.precioExcedentes.value));
             
             // Procesar los datos del import
-            const importedData = document.getElementById('importedData').innerText;
-            const data = JSON.parse(importedData);
-            if (data.length > 1) {
+            const importedData = JSON.parse(this.elements.importedDataJson);
+            if (importedData.length > 1) {
                 let billAmount = 0;
                 let elcConAmount = 0;
-                data.forEach(item => {
+                importedData.forEach(item => {
                     billAmount += parseFloat(item["Bill Amount ($)"]);
                     elcConAmount += parseFloat(item["Electric Consumption (kWh)"]);
                 });
@@ -141,36 +144,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Crear gráfico de patrón
         createPatternChart(ctx, data) {
-            return new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: Array.from({length: 24}, (_, i) => i + ':00'),
-                    datasets: [{
-                        data: data,
-                        borderColor: '#10B981',
-                        borderWidth: 2,
-                        tension: 0.4,
-                        fill: false,
-                        pointRadius: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: false }
-                    },
-                    scales: {
-                        x: { display: false },
-                        y: { display: false }
-                    }
-                }
-            });
+            // return new Chart(ctx, {
+            //     type: 'line',
+            //     data: {
+            //         labels: Array.from({length: 24}, (_, i) => i + ':00'),
+            //         datasets: [{
+            //             data: data,
+            //             borderColor: '#10B981',
+            //             borderWidth: 2,
+            //             tension: 0.4,
+            //             fill: false,
+            //             pointRadius: 0
+            //         }]
+            //     },
+            //     options: {
+            //         responsive: true,
+            //         maintainAspectRatio: false,
+            //         plugins: {
+            //             legend: { display: false },
+            //             tooltip: { enabled: false }
+            //         },
+            //         scales: {
+            //             x: { display: false },
+            //             y: { display: false }
+            //         }
+            //     }
+            // });
         }
 
         // Inicializar gráfico principal
         initMainChart() {
+            console.log("tu tutututu")
+            consumActual = [];
+            const importedData = JSON.parse(this.elements.importedDataJson);
+            if (importedData.length > 1) {
+                let billAmount = 0;
+                let elcConAmount = 0;
+                importedData.forEach(item => {
+                    consumActual = parseFloat(item["Electric Consumption (kWh)"]);
+                });
+                this.saveToLocalStorage(`user_${this.userId}_consumAnual`, elcConAmount);
+                console.log("me vuelvo loco " + localStorage.getItem("user_"+this.userId+"_consumAnual"));
+            }
             this.consumptionChart = new Chart(this.elements.consumptionChart.getContext('2d'), {
                 type: 'bar',
                 data: {
@@ -222,6 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Cargar datos guardados
         loadSavedData() {
+            console.log("nun nu nun unnu un")
             if (localStorage.getItem('consumAnual')) this.elements.consumAnual.value = localStorage.getItem('consumAnual');
             if (localStorage.getItem('facturaAnual')) this.elements.facturaAnual.value = localStorage.getItem('facturaAnual');
             if (localStorage.getItem('costeInstalacion')) this.elements.costeInstalacion.value = localStorage.getItem('costeInstalacion');
