@@ -58,6 +58,6 @@ class ConsumptionController extends Controller
                 return back()->with('error', "Error processing row " . ($index + 1) . ": " . $e->getMessage());
             }
         }
-        return view('pujarFitxer', compact('electicConsumption')); //toDo: evitar que refesque
+        return view('consum', compact('electicConsumption')); //toDo: evitar que refesque
     }
 }

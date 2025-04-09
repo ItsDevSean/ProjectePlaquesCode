@@ -68,17 +68,20 @@ document.addEventListener('DOMContentLoaded', function() {
             this.elements.costeInstalacion.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_costeInstalacion`, this.elements.costeInstalacion.value));
             this.elements.subvenciones.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_subvenciones`, this.elements.subvenciones.value));
             this.elements.precioExcedentes.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_precioExcedentes`, this.elements.precioExcedentes.value));
-            console.log("Tu app tine bottone? No no thengo app... " + this.importedValues);
-            if (this.importedValues) {
-                console.log("Nunca me sale");
+            
+            // Procesar los datos del import
+            const importedData = document.getElementById('importedData').innerText;
+            const data = JSON.parse(importedData);
+            if (data.length > 1) {
                 let billAmount = 0;
+                let elcConAmount = 0;
                 data.forEach(item => {
-                    let cost = parseFloat(item["Bill Amount ($)"]);
-                    billAmount += cost;
+                    billAmount += parseFloat(item["Bill Amount ($)"]);
+                    elcConAmount += parseFloat(item["Electric Consumption (kWh)"]);
                 });
-                console.log("De todo: " + billAmount);
-                saveToLocalStorage(`user_${this.userId}_consumAnual`, billAmount);
-                console.log("me vuelvo loco " + localStorage.getItem("user_${userId}_consumAnual"));
+                this.saveToLocalStorage(`user_${this.userId}_facturaAnual`, billAmount);
+                this.saveToLocalStorage(`user_${this.userId}_consumAnual`, elcConAmount);
+                console.log("me vuelvo loco " + localStorage.getItem("user_"+this.userId+"_consumAnual"));
             }
             
             // Tarifa de acceso

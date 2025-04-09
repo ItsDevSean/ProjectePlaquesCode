@@ -55,9 +55,7 @@ Route::get('/produccio', function () {
 Route::get('/consum', [ConsumptionController::class, 'index'])->name('consum');
 
 Route::post('/consum', [ConsumptionController::class, 'import'])->name('consumption');
-Route::get('/pujarFitxer', function () {
-    return view('fragments._pujarFitxer');
-})->name('pujarFitxer');
+
 
 Route::get('/resultat', function () {
     return view('resultat');
