@@ -1,10 +1,9 @@
 const userId = window.userId;
 
-
 // Funció d'inicialització del mapa
 window.initMap = function () {
-    const centre = { lat: 41.3879, lng: 2.16992 };
 
+    const centre = { lat: 41.3879, lng: 2.16992 };
     const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 15,
         center: centre,
@@ -31,7 +30,6 @@ window.initMap = function () {
     } else {
         const savedAddress = localStorage.getItem(`user_${userId}_direccion`);
         document.getElementById("address").value = savedAddress;
-        
         geocodeAddress(map);
     }
     
@@ -899,6 +897,7 @@ document.getElementById("obstaclesList").addEventListener("click", function (eve
         const areaLabel = document.getElementById("areaResult");
         const areaPrincipal = parseFloat(areaLabel.innerText.replace("Àrea: ", "").replace(" m²", ""));
         const novaAreaTotal = areaPrincipal + areaObstacle;
+        localStorage.setItem(`user_${userId}_novaArea`, novaAreaTotal);
         areaLabel.innerText = `Àrea: ${novaAreaTotal.toFixed(2)} m²`;
 
         // Actualizar datos del edificio
