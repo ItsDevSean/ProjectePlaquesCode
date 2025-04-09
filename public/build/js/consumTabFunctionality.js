@@ -97,66 +97,6 @@ patternBtns.forEach(btn => {
     });
 });
 
-// Main consumption chart                           
-const consumptionCtx = document.getElementById('consumptionChart').getContext('2d');
-const consumptionChart = new Chart(consumptionCtx, {
-    type: 'bar',
-    data: {
-        labels: ['Gen', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Des'],
-        datasets: [
-            {
-                label: 'Consum actual',
-                data: [320, 290, 280, 250, 230, 270, 310, 320, 290, 300, 320, 350],
-                backgroundColor: '#10B981',
-                borderRadius: 4
-            },
-            {
-                label: 'Mitjana sectorial',
-                data: [300, 280, 270, 260, 250, 260, 290, 300, 280, 290, 300, 320],
-                backgroundColor: '#3B82F6',
-                borderRadius: 4
-            },
-            {
-                label: 'Consum ideal',
-                data: [250, 240, 230, 220, 210, 220, 230, 240, 230, 240, 250, 270],
-                backgroundColor: '#F59E0B',
-                borderRadius: 4
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false
-            },
-            tooltip: {
-                mode: 'index',
-                intersect: false,
-                callbacks: {
-                    label: function(context) {
-                        return context.dataset.label + ': ' + context.raw + ' kWh';
-                    }
-                }
-            }
-        },
-        scales: {
-            x: {
-                grid: {
-                    display: false
-                }
-            },
-            y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'kWh'
-                }
-            }
-        }
-    }
-});
 
 // Update chart based on period selection
 document.getElementById('chart-period').addEventListener('change', function() {
@@ -186,41 +126,41 @@ function addForm() {
 }
 
 function updateMainChart() { //toDO: passar tota aquesta part al altre classe
-    const period = document.getElementById('chart-period').value;
-    let labels, actualData, averageData, idealData;
+    // const period = document.getElementById('chart-period').value;
+    // let labels, actualData, averageData, idealData;
     
-    switch(period) {
-        case 'daily':
-            labels = Array.from({length: 24}, (_, i) => i + ':00');
-            actualData = Array.from({length: 24}, () => Math.floor(Math.random() * 10) + 5);
-            averageData = Array.from({length: 24}, () => Math.floor(Math.random() * 8) + 4);
-            idealData = Array.from({length: 24}, () => Math.floor(Math.random() * 6) + 3);
-            break;
-        case 'weekly':
-            labels = ['Dl', 'Dt', 'Dc', 'Dj', 'Dv', 'Ds', 'Dg'];
-            actualData = Array.from({length: 7}, () => Math.floor(Math.random() * 30) + 20);
-            averageData = Array.from({length: 7}, () => Math.floor(Math.random() * 25) + 15);
-            idealData = Array.from({length: 7}, () => Math.floor(Math.random() * 20) + 10);
-            break;
-        case 'monthly':
-            labels = ['Gen', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Des'];
-            actualData = [320, 290, 280, 250, 230, 270, 310, 320, 290, 300, 320, 350];
-            averageData = [300, 280, 270, 260, 250, 260, 290, 300, 280, 290, 300, 320];
-            idealData = [250, 240, 230, 220, 210, 220, 230, 240, 230, 240, 250, 270];
-            break;
-        case 'yearly':
-            labels = ['2020', '2021', '2022', '2023'];
-            actualData = [3600, 3700, 3550, 3450];
-            averageData = [3500, 3600, 3500, 3400];
-            idealData = [3000, 3100, 3000, 2900];
-            break;
-    }
+    // switch(period) {
+    //     case 'daily':
+    //         labels = Array.from({length: 24}, (_, i) => i + ':00');
+    //         actualData = Array.from({length: 24}, () => Math.floor(Math.random() * 10) + 5);
+    //         averageData = Array.from({length: 24}, () => Math.floor(Math.random() * 8) + 4);
+    //         idealData = Array.from({length: 24}, () => Math.floor(Math.random() * 6) + 3);
+    //         break;
+    //     case 'weekly':
+    //         labels = ['Dl', 'Dt', 'Dc', 'Dj', 'Dv', 'Ds', 'Dg'];
+    //         actualData = Array.from({length: 7}, () => Math.floor(Math.random() * 30) + 20);
+    //         averageData = Array.from({length: 7}, () => Math.floor(Math.random() * 25) + 15);
+    //         idealData = Array.from({length: 7}, () => Math.floor(Math.random() * 20) + 10);
+    //         break;
+    //     case 'monthly':
+    //         labels = ['Gen', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Des'];
+    //         actualData = [320, 290, 280, 250, 230, 270, 310, 320, 290, 300, 320, 350];
+    //         averageData = [300, 280, 270, 260, 250, 260, 290, 300, 280, 290, 300, 320];
+    //         idealData = [250, 240, 230, 220, 210, 220, 230, 240, 230, 240, 250, 270];
+    //         break;
+    //     case 'yearly':
+    //         labels = ['2020', '2021', '2022', '2023'];
+    //         actualData = [3600, 3700, 3550, 3450];
+    //         averageData = [3500, 3600, 3500, 3400];
+    //         idealData = [3000, 3100, 3000, 2900];
+    //         break;
+    // }
     
-    consumptionChart.data.labels = labels;
-    consumptionChart.data.datasets[0].data = actualData;
-    consumptionChart.data.datasets[1].data = averageData;
-    consumptionChart.data.datasets[2].data = idealData;
-    consumptionChart.update();
+    // consumptionChart.data.labels = labels;
+    // consumptionChart.data.datasets[0].data = actualData;
+    // consumptionChart.data.datasets[1].data = averageData;
+    // consumptionChart.data.datasets[2].data = idealData;
+    // consumptionChart.update();
 }
 
 // Export chart functionality

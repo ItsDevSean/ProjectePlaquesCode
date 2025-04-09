@@ -175,25 +175,27 @@ document.addEventListener('DOMContentLoaded', function() {
         // Inicializar gráfico principal
         initMainChart() {
             console.log("tu tutututu")
-            consumActual = [];
+            let consumActual = [];
             const importedData = JSON.parse(this.elements.importedDataJson);
             if (importedData.length > 1) {
-                let billAmount = 0;
-                let elcConAmount = 0;
                 importedData.forEach(item => {
-                    consumActual = parseFloat(item["Electric Consumption (kWh)"]);
+                    consumActual.push(parseFloat(item["Electric Consumption (kWh)"]));
                 });
-                this.saveToLocalStorage(`user_${this.userId}_consumAnual`, elcConAmount);
-                console.log("me vuelvo loco " + localStorage.getItem("user_"+this.userId+"_consumAnual"));
+            } else {
+                for (let i = 0; i < 12; i++) {
+                    consumActual.push(0);    
+                }
             }
-            this.consumptionChart = new Chart(this.elements.consumptionChart.getContext('2d'), {
+            console.log("nana nanan nanan")
+            const consumptionCtx = document.getElementById('consumptionChart').getContext('2d');
+            const conCtx = new Chart(consumptionCtx, {
                 type: 'bar',
                 data: {
                     labels: ['Gen', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Des'],
                     datasets: [
                         {
                             label: 'Consum actual',
-                            data: [320, 290, 280, 250, 230, 270, 310, 320, 290, 300, 320, 350],
+                            data: consumActual,
                             backgroundColor: '#10B981',
                             borderRadius: 4
                         },
@@ -215,24 +217,40 @@ document.addEventListener('DOMContentLoaded', function() {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: false },
+                        legend: {
+                            display: false
+                        },
                         tooltip: {
                             mode: 'index',
                             intersect: false,
                             callbacks: {
-                                label: (context) => `${context.dataset.label}: ${context.raw} kWh`
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.raw + ' kWh';
+                                }
                             }
                         }
                     },
                     scales: {
-                        x: { grid: { display: false } },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
                         y: {
                             beginAtZero: true,
-                            title: { display: true, text: 'kWh' }
+                            title: {
+                                display: true,
+                                text: 'kWh'
+                            }
                         }
                     }
                 }
             });
+            conCtx.data.labels = labels;
+            conCtx.data.datasets[0].data = actualData;
+            conCtx.data.datasets[1].data = averageData;
+            conCtx.data.datasets[2].data = idealData;
+            conCtx.update();
         }
 
         // Cargar datos guardados
