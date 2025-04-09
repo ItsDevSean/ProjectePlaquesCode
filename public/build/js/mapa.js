@@ -37,26 +37,16 @@ window.initMap = function () {
     
     const startSelectionButton = document.getElementById("startSelection");
     startSelectionButton.disabled = true;
-
+    
     if (localStorage.getItem(`user_${userId}_polygon`)) {
         startSelectionButton.textContent = "Reiniciar selecció";
         iniciarSeleccio(map);
+        
         cargarObstaculosDesdeLocalStorage(map).then(() => {
-            // AQUEST ÉS EL CANVI IMPORTANT:
-            // Ara esperem que es carreguin els obstacles abans de recuperar les dades
+            // Asegurarnos de que el botón se crea incluso sin obstáculos
+            crearBotonConfigurarPlaSiNoExiste();
             
-            // Recuperar el número de plaques del localStorage i actualitzar el slider
-            const savedPlacaCount = localStorage.getItem(`user_${userId}_placaCount`);
-            if (savedPlacaCount) {
-                const placaCountInput = document.getElementById("placaCount");
-                const placaSlider = document.getElementById("placaSlider");
-                
-                placaCountInput.value = savedPlacaCount;
-                placaSlider.value = savedPlacaCount;
-                actualizarEstiloSlider(placaSlider);
-            }
-
-            // Recuperar el tipus de panell del localStorage i seleccionar-lo al desplegable
+            // Recuperar el tipus de panell del localStorage
             const savedPanelId = localStorage.getItem(`user_${userId}_panel_id`);
             if (savedPanelId) {
                 const selectPanel = document.getElementById("panel_model");
@@ -70,7 +60,9 @@ window.initMap = function () {
         });
     } else {
         startSelectionButton.textContent = "Seleccionar area";
-    }
+    };
+
+    
     
     document.getElementById("startSelection").addEventListener("click", () => {
         const button = document.getElementById("startSelection");
@@ -103,6 +95,37 @@ window.initMap = function () {
         iniciarSeleccioObstacle(map, obstacleIdCounter);
     });
 };
+
+function crearBotonConfigurarPlaSiNoExiste() {
+    if (!document.querySelector(".configurar-pla-button")) {
+        const areaLabel = document.getElementById("areaResult");
+        if (areaLabel) {
+            const configurarPlaButton = document.createElement("button");
+            configurarPlaButton.innerText = "Configurar pla";
+            configurarPlaButton.className = "configurar-pla-button";
+            configurarPlaButton.addEventListener("click", () => {
+                const sidePanel = document.getElementById("sidePanel");
+                sidePanel.classList.add("open");
+                guardarInclinacion();
+                
+                if (window.clickListener) {
+                    google.maps.event.removeListener(window.clickListener);
+                    window.clickListener = null;
+                }
+
+                // Rellenar el formulario con los datos guardados
+                const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`));
+                if (edificiData) {
+                    document.getElementById("inclinacion").value = edificiData.inclinacion;
+                    document.getElementById("area").value = edificiData.area;
+                }
+                guardarInclinacion();
+            });
+
+            areaLabel.insertAdjacentElement("afterend", configurarPlaButton);
+        }
+    }
+}
 
 function geocodeAddress(map) {
     const address = document.getElementById("address").value;
@@ -239,11 +262,13 @@ function iniciarSeleccio(map) {
     const savedPolygon = localStorage.getItem(`user_${userId}_polygon`);
     
     if (savedPolygon) {
+        
         const parsedPolygon = JSON.parse(savedPolygon);
         window.selectedMarkers = [];
         
         // Recrear los marcadores desde el localStorage
         parsedPolygon.forEach(coord => {
+            
             const latLng = new google.maps.LatLng(coord.lat, coord.lng);
             const marker = new google.maps.Marker({
                 position: latLng,
@@ -264,8 +289,11 @@ function iniciarSeleccio(map) {
             });
         });
         
+        crearBotonConfigurarPlaSiNoExiste();
+        
         // Dibujar el polígono si hay suficientes puntos
         if (window.selectedMarkers.length >= 2) {
+            
             const coordinates = window.selectedMarkers.map(marker => marker.getPosition());
             
             window.selectedPolygon = new google.maps.Polygon({
@@ -284,12 +312,15 @@ function iniciarSeleccio(map) {
             const areaLabel = document.getElementById("areaResult");
             
             if (areaGuardada) {
+                console.log("loc")
                 areaLabel.innerText = `Àrea: ${parseFloat(areaGuardada).toFixed(2)} m²`;
+                
             } else {
+                
                 // Si no hay área guardada, calcularla (por si acaso)
                 calcularArea(window.selectedPolygon);
             }
-
+            
             // Configurar el botón "Configurar pla" sin recalcular
             if (!document.querySelector(".configurar-pla-button")) {
                 const configurarPlaButton = document.createElement("button");
@@ -318,6 +349,7 @@ function iniciarSeleccio(map) {
             }
             
         }
+        
     } else {
         // Si no hay polígono guardado, iniciar selección normal
         window.selectedMarkers = [];
@@ -543,6 +575,7 @@ function calcularArea(selectedPolygon) {
     
     if (selectedPolygon) {
         const area = google.maps.geometry.spherical.computeArea(selectedPolygon.getPath());
+        localStorage.setItem(`user_${userId}_novaArea`, area)
         areaLabel.innerText = `Àrea: ${area.toFixed(2)} m²`;
         
         // Obtener los datos existentes de edificiData
