@@ -86,6 +86,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.saveToLocalStorage(`user_${this.userId}_consumAnual`, elcConAmount);
                 console.log("me vuelvo loco " + localStorage.getItem("user_"+this.userId+"_consumAnual"));
             }
+
+            // Mostrar datos del import
+            if (importedData.length > 1) {
+                console.log("Como que no esta defined");
+                this.elements.consumAnual.value = localStorage.getItem("user_"+this.userId+"_consumAnual");
+                this.elements.facturaAnual.value = localStorage.getItem("user_"+this.userId+"_facturaAnual");
+            }
             
             // Tarifa de acceso
             this.elements.tarifaAcces.addEventListener('change', () => {
@@ -174,7 +181,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Inicializar gráfico principal
         initMainChart() {
-            console.log("tu tutututu")
             let consumActual = [];
             const importedData = JSON.parse(this.elements.importedDataJson);
             if (importedData.length > 1) {
@@ -186,7 +192,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     consumActual.push(0);    
                 }
             }
-            console.log("nana nanan nanan")
             const consumptionCtx = document.getElementById('consumptionChart').getContext('2d');
             const conCtx = new Chart(consumptionCtx, {
                 type: 'bar',
