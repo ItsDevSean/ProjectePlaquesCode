@@ -379,12 +379,7 @@
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
                     <h3 class="text-lg font-bold text-gray-800 dark:text-white">Gràfic de consum</h3>
                     <div class="mt-2 md:mt-0 flex space-x-2">
-                        <select id="chart-period" class="text-sm border border-gray-300 rounded-lg px-3 py-1 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:border-gray-600">
-                            <option value="daily">Diari</option>
-                            <option value="weekly">Setmanal</option>
-                            <option value="monthly" selected>Mensual</option>
-                            <option value="yearly">Anual</option>
-                        </select>
+                        <div id="chart-period" class=" px-3 py-1 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:border-gray-600"></div>
                         <button id="export-chart" class="text-sm flex items-center text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200">
                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>

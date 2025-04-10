@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         constructor() {
             this.userId = window.userId || null;
-            this.importedValues = false;
             this.initElements();
             this.initEventListeners();
             this.initPatternCharts();
@@ -376,16 +375,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 if (progress >= 100) {
                     clearInterval(interval);
-                    progressText.textContent = "Fitxer processat correctament";
-                    const sumbitButton = document.createElement('button');
-                    sumbitButton.id = "importButton";
-                    sumbitButton.type = 'submit';
-                    sumbitButton.innerHTML = 'Importar Fitxer';
-                    sumbitButton.classList.add('bg-[#49DBA3]', 'hover:bg-[#193849]', 'text-white', 'py-2', 'px-4', 'rounded-lg');
                     const form = document.getElementById("electricBillForm");
-                    form.appendChild(sumbitButton);
-                    this.importedValues = true;
-                    console.log("Discart  de todos loc changes" + this.importedValues);
+                    form.submit();
                 }
             }, 200);
         }
