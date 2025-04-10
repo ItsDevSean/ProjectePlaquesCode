@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BateriasController;
+use App\Http\Controllers\ConsumptionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InformacionElectricaPanelController;
 use App\Http\Controllers\infoEcoController;
@@ -10,7 +11,7 @@ use App\Http\Controllers\InversoresController;
 use App\Http\Controllers\FabricanteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\tools\SolarPanelsController;
-
+use App\Models\ConsumptionModel;
 
 Route::get('/', function () {
     return view('welcome');
@@ -51,9 +52,10 @@ Route::get('/produccio', function () {
     return view('produccio');
 })->name('produccio');
 
-Route::get('/consum', function () {
-    return view('consum');
-})->name('consum');
+Route::get('/consum', [ConsumptionController::class, 'index'])->name('consum');
+
+Route::post('/consum', [ConsumptionController::class, 'import'])->name('consumption');
+
 
 Route::get('/resultat', function () {
     return view('resultat');

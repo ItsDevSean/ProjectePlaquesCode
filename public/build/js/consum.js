@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 uploadBtn: document.getElementById('upload-btn'),
                 removeFile: document.getElementById('remove-file'),
                 exportChart: document.getElementById('export-chart'),
+                importButton: document.getElementById('importButton'),
                 
                 // Pestañas
                 tabs: document.querySelectorAll('[data-tabs-target]'),
@@ -54,7 +55,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Selectores
                 chartPeriod: document.getElementById('chart-period'),
                 energyProvider: document.getElementById('energy-provider'),
-                cupsNumber: document.getElementById('cups-number')
+                cupsNumber: document.getElementById('cups-number'),
+
+                //Imported data
+                importedDataJson: document.getElementById('importedData').innerText
+
             };
         }
 
@@ -66,6 +71,27 @@ document.addEventListener('DOMContentLoaded', function() {
             this.elements.costeInstalacion.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_costeInstalacion`, this.elements.costeInstalacion.value));
             this.elements.subvenciones.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_subvenciones`, this.elements.subvenciones.value));
             this.elements.precioExcedentes.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_precioExcedentes`, this.elements.precioExcedentes.value));
+            
+            // Procesar los datos del import
+            const importedData = JSON.parse(this.elements.importedDataJson);
+            if (importedData.length > 1) {
+                let billAmount = 0;
+                let elcConAmount = 0;
+                importedData.forEach(item => {
+                    billAmount += parseFloat(item["Bill Amount ($)"]);
+                    elcConAmount += parseFloat(item["Electric Consumption (kWh)"]);
+                });
+                this.saveToLocalStorage(`user_${this.userId}_facturaAnual`, billAmount);
+                this.saveToLocalStorage(`user_${this.userId}_consumAnual`, elcConAmount);
+                console.log("me vuelvo loco " + localStorage.getItem("user_"+this.userId+"_consumAnual"));
+            }
+
+            // Mostrar datos del import
+            if (importedData.length > 1) {
+                console.log("Como que no esta defined");
+                this.elements.consumAnual.value = localStorage.getItem("user_"+this.userId+"_consumAnual");
+                this.elements.facturaAnual.value = localStorage.getItem("user_"+this.userId+"_facturaAnual");
+            }
             
             // Tarifa de acceso
             this.elements.tarifaAcces.addEventListener('change', () => {
@@ -104,6 +130,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Ayuda
             this.elements.helpButton.addEventListener('click', () => this.showHelp());
+
+            
         }
 
         // Inicializar gráficos de patrones
@@ -122,44 +150,56 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Crear gráfico de patrón
         createPatternChart(ctx, data) {
-            return new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: Array.from({length: 24}, (_, i) => i + ':00'),
-                    datasets: [{
-                        data: data,
-                        borderColor: '#10B981',
-                        borderWidth: 2,
-                        tension: 0.4,
-                        fill: false,
-                        pointRadius: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: false }
-                    },
-                    scales: {
-                        x: { display: false },
-                        y: { display: false }
-                    }
-                }
-            });
+            // return new Chart(ctx, {
+            //     type: 'line',
+            //     data: {
+            //         labels: Array.from({length: 24}, (_, i) => i + ':00'),
+            //         datasets: [{
+            //             data: data,
+            //             borderColor: '#10B981',
+            //             borderWidth: 2,
+            //             tension: 0.4,
+            //             fill: false,
+            //             pointRadius: 0
+            //         }]
+            //     },
+            //     options: {
+            //         responsive: true,
+            //         maintainAspectRatio: false,
+            //         plugins: {
+            //             legend: { display: false },
+            //             tooltip: { enabled: false }
+            //         },
+            //         scales: {
+            //             x: { display: false },
+            //             y: { display: false }
+            //         }
+            //     }
+            // });
         }
 
         // Inicializar gráfico principal
         initMainChart() {
-            this.consumptionChart = new Chart(this.elements.consumptionChart.getContext('2d'), {
+            let consumActual = [];
+            const importedData = JSON.parse(this.elements.importedDataJson);
+            if (importedData.length > 1) {
+                importedData.forEach(item => {
+                    consumActual.push(parseFloat(item["Electric Consumption (kWh)"]));
+                });
+            } else {
+                for (let i = 0; i < 12; i++) {
+                    consumActual.push(0);    
+                }
+            }
+            const consumptionCtx = document.getElementById('consumptionChart').getContext('2d');
+            const conCtx = new Chart(consumptionCtx, {
                 type: 'bar',
                 data: {
                     labels: ['Gen', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Des'],
                     datasets: [
                         {
                             label: 'Consum actual',
-                            data: [320, 290, 280, 250, 230, 270, 310, 320, 290, 300, 320, 350],
+                            data: consumActual,
                             backgroundColor: '#10B981',
                             borderRadius: 4
                         },
@@ -181,30 +221,52 @@ document.addEventListener('DOMContentLoaded', function() {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: false },
+                        legend: {
+                            display: false
+                        },
                         tooltip: {
                             mode: 'index',
                             intersect: false,
                             callbacks: {
-                                label: (context) => `${context.dataset.label}: ${context.raw} kWh`
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.raw + ' kWh';
+                                }
                             }
                         }
                     },
                     scales: {
-                        x: { grid: { display: false } },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
                         y: {
                             beginAtZero: true,
-                            title: { display: true, text: 'kWh' }
+                            title: {
+                                display: true,
+                                text: 'kWh'
+                            }
                         }
                     }
                 }
             });
+            conCtx.data.labels = labels;
+            conCtx.data.datasets[0].data = actualData;
+            conCtx.data.datasets[1].data = averageData;
+            conCtx.data.datasets[2].data = idealData;
+            conCtx.update();
         }
 
         // Cargar datos guardados
         // Cargar datos guardados
         loadSavedData() {
             if (!this.userId) return; // Asegurarse de que tenemos userId
+            console.log("nun nu nun unnu un")
+            if (localStorage.getItem('consumAnual')) this.elements.consumAnual.value = localStorage.getItem('consumAnual');
+            if (localStorage.getItem('facturaAnual')) this.elements.facturaAnual.value = localStorage.getItem('facturaAnual');
+            if (localStorage.getItem('costeInstalacion')) this.elements.costeInstalacion.value = localStorage.getItem('costeInstalacion');
+            if (localStorage.getItem('subvenciones')) this.elements.subvenciones.value = localStorage.getItem('subvenciones');
+            if (localStorage.getItem('precioExcedentes')) this.elements.precioExcedentes.value = localStorage.getItem('precioExcedentes');
             
             // Recuperar campos normales
             const inputs = [
@@ -352,10 +414,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 if (progress >= 100) {
                     clearInterval(interval);
-                    progressText.textContent = "Fitxer processat correctament";
-                    
-                    // Aquí iría el código real para procesar el archivo CSV/Excel
-                    // y actualizar los datos del gráfico
+                    const form = document.getElementById("electricBillForm");
+                    form.submit();
                 }
             }, 200);
         }
