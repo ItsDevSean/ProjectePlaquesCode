@@ -3,7 +3,7 @@
 <script src="//unpkg.com/alpinejs"></script>
 
 <nav x-data="{navigationMenuOpen: false, navigationMenu: '', navigationMenuCloseDelay: 200, navigationMenuCloseTimeout: null}" 
-     class="sticky top-0 z-50 w-full bg-[#34495E] shadow-md border-b border-gray-700">
+     class="sticky top-0 z-50 w-full bg-[#34495E] shadow-md border-b border-gray-700 z-[9999]">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -32,7 +32,7 @@
                     <div class="relative" 
                          @mouseenter="navigationMenuOpen = true; navigationMenu = 'learn-more'" 
                          @mouseleave="navigationMenuOpen = false; navigationMenu = ''">
-                        <button class="flex items-center px-3 pt-0 pb-1 rounded-md text-sm font-medium text-white hover:text-emerald-300 hover:bg-[#2C3E50] transition-colors duration-200">
+                        <button class="flex items-center px-3 pt-0 pb-1 rounded-md text-sm font-medium text-white hover:text-emerald-300 hover:bg-[#2C3E50] transition-colors duration-200 ">
                             <span>Herramientas</span>
                             <svg class="ml-1 h-4 w-4 transition-transform duration-200" 
                                  :class="{ 'rotate-180': navigationMenuOpen }" 
@@ -75,9 +75,9 @@
             <div class="flex items-center">
                 <!-- New Project Button -->
                 <div class="hidden md:block mr-4">
-                    <a href="{{ asset('dades') }}" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 border border-transparent rounded-md font-medium text-white shadow-sm hover:from-emerald-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all duration-200">
+                    <button id="loadProjectBtn" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 border border-transparent rounded-md font-medium text-white shadow-sm hover:from-emerald-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all duration-200">
                         <i class="fas fa-plus mr-2"></i> {{ __('Nuevo Proyecto') }}
-                    </a>
+                    </button>
                 </div>
 
                 <!-- User Dropdown -->
@@ -210,3 +210,12 @@
         </div>
     </div>
 </nav>
+
+<script src="build/js/dades.js"></script>
+<script>
+    const loadProjectBtn = document.getElementById('loadProjectBtn');
+    loadProjectBtn.addEventListener('click', function() {
+        localStorage.setItem('shouldCheckForProject', 'true');
+        window.location.href = "{{ asset('dades') }}";
+    });
+</script>

@@ -300,31 +300,6 @@
     
     <script>
     window.userId = "{{ Auth::id() }}";
-        
-    const slider = document.getElementById("placaSlider");
-    const placaCount = document.getElementById("placaCount");
-    let value = 0
-    // Funció per actualitzar el fons del slider
-    function actualitzarFonsSlider() {
-        if (value === 0) {  
-            slider.style.background = '#e0e0e0';   
-        } else {
-            slider.style.background = `linear-gradient(to right, #49DBA3 ${value}%, #e0e0e0 ${value}%)`;
-        }
-        value = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
-    }
-
-    // Inicialitza el fons del slider al carregar la pàgina
-    window.addEventListener("load", function () {
-        placaCount.innerText = slider.value;  
-        actualitzarFonsSlider();  
-    });
-
-    // Actualitza el fons i el comptador quan es mou el slider
-    slider.addEventListener("input", function () {
-        actualitzarFonsSlider();  
-        placaCount.innerText = this.value;
-    });
     </script>
     
     <script src="build/js/mapa.js"></script>

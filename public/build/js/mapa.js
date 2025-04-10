@@ -1,10 +1,8 @@
 const userId = window.userId;
 
-
 // Funció d'inicialització del mapa
 window.initMap = function () {
     const centre = { lat: 41.3879, lng: 2.16992 };
-
     const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 15,
         center: centre,
@@ -13,38 +11,73 @@ window.initMap = function () {
         heading: 0,
     });
 
-
-
     map.setOptions({ draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true });
-
 
     // Inicialització de variables globals
     window.obstacles = []; 
     window.currentObstacle = null; 
     window.obstacleMarkers = [];
     window.obstaclePolygons = [];
+    window.obstacleIdCounter = { value: 0 };
 
     // Crear el contador de IDs
     const obstacleIdCounter = { value: 0 };
 
-    const autocomplete = initAutocomplete(map);
+    if(!localStorage.getItem(`user_${userId}_direccion`)) {
+        const autocomplete = initAutocomplete(map);
+        document.getElementById("buttonBuscar").addEventListener("click", () => geocodeAddress(map));
+    } else {
+        const savedAddress = localStorage.getItem(`user_${userId}_direccion`);
+        document.getElementById("address").value = savedAddress;
+        geocodeAddress(map);
+    }
+    
     const startSelectionButton = document.getElementById("startSelection");
     startSelectionButton.disabled = true;
+    
+    if (localStorage.getItem(`user_${userId}_polygon`)) {
+        startSelectionButton.textContent = "Reiniciar selecció";
+        iniciarSeleccio(map);
+        
+        cargarObstaculosDesdeLocalStorage(map).then(() => {
+            // Asegurarnos de que el botón se crea incluso sin obstáculos
+            crearBotonConfigurarPlaSiNoExiste();
+            
+            // Recuperar el tipus de panell del localStorage
+            const savedPanelId = localStorage.getItem(`user_${userId}_panel_id`);
+            if (savedPanelId) {
+                const selectPanel = document.getElementById("panel_model");
+                for (let i = 0; i < selectPanel.options.length; i++) {
+                    if (selectPanel.options[i].value === savedPanelId) {
+                        selectPanel.selectedIndex = i;
+                        break;
+                    }
+                }
+                selectPanel.dispatchEvent(new Event('change'));
+            }
+        });
+    } else {
+        startSelectionButton.textContent = "Seleccionar area";
+    };
+
+    
+    
     document.getElementById("startSelection").addEventListener("click", () => {
         const button = document.getElementById("startSelection");
     
         if (button.textContent === "Reiniciar selecció") {
-            button.textContent = "Seleccionar area"; // Torna a canviar el text del botó
+            button.textContent = "Seleccionar area"; 
             reiniciarEstado(map);
             const sidePanel = document.getElementById("sidePanel");
             sidePanel.classList.remove("open");
         } else {
-            button.textContent = "Reiniciar selecció"; // Canvia el text del botó
-            iniciarSeleccio(map); // Inicia la selecció d'una nova àrea
+            button.textContent = "Reiniciar selecció";
+            iniciarSeleccio(map); 
         }
     });
 
-    document.getElementById("buttonBuscar").addEventListener("click", () => geocodeAddress(map));
+    
+
     document.getElementById("nouObstacleButton").addEventListener("click", () => {
         const sidePanel = document.getElementById("sidePanel");
         sidePanel.classList.remove("open");
@@ -61,24 +94,53 @@ window.initMap = function () {
     });
 };
 
-// Funció per inicialitzar Autocomplete
+function crearBotonConfigurarPlaSiNoExiste() {
+    if (!document.querySelector(".configurar-pla-button")) {
+        const areaLabel = document.getElementById("areaResult");
+        if (areaLabel) {
+            const configurarPlaButton = document.createElement("button");
+            configurarPlaButton.innerText = "Configurar pla";
+            configurarPlaButton.className = "configurar-pla-button";
+            configurarPlaButton.addEventListener("click", () => {
+                const sidePanel = document.getElementById("sidePanel");
+                sidePanel.classList.add("open");
+                guardarInclinacion();
+                
+                if (window.clickListener) {
+                    google.maps.event.removeListener(window.clickListener);
+                    window.clickListener = null;
+                }
+
+                // Rellenar el formulario con los datos guardados
+                const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`));
+                if (edificiData) {
+                    document.getElementById("inclinacion").value = edificiData.inclinacion;
+                    document.getElementById("area").value = edificiData.area;
+                }
+                guardarInclinacion();
+            });
+
+            areaLabel.insertAdjacentElement("afterend", configurarPlaButton);
+        }
+    }
+}
+
 function geocodeAddress(map) {
     const address = document.getElementById("address").value;
     localStorage.setItem(`user_${userId}_direccion`, address);
-  
+    
     if (address === "") {
         alert("Per favor, introduïu una adreça.");
         return;
     }
-  
+    
     const geocoder = new google.maps.Geocoder();
-  
+    
     geocoder.geocode({ address: address }, function (results, status) {
         if (status === "OK") {
             map.setCenter(results[0].geometry.location);
             crearMarcador(map, results[0].geometry.location);
-            alert("Ubicació trobada");
-  
+            
             // Cambiar el mapa a modo satélite, desactivar etiquetas y hacer zoom
             map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
             map.setOptions({ styles: [{ featureType: "all", elementType: "labels", stylers: [{ visibility: "off" }] }] });
@@ -86,11 +148,12 @@ function geocodeAddress(map) {
             const mapOverlay = document.getElementById("mapOverlay");
             mapOverlay.classList.add("hidden");
             
-            enableMapInteractions(map)
+            enableMapInteractions(map);
             // Habilitar el botón "Seleccionar área"
             document.getElementById("startSelection").disabled = false;
             document.getElementById("startSelection").classList.remove("hidden");
             getSolarData(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+            getMonthlySolarData(results[0].geometry.location.lat(), results[0].geometry.location.lng());
             
         } else {
             alert("No sa trobat la direcció, torna-ho a intentar.");
@@ -163,14 +226,14 @@ function crearMarcador(map, latLng) {
     let inclinacion;
     
     if (estacio === 'Estiu') {
-        inclinacion = lat - 10;  // Estiu: latitud -10
+        inclinacion = lat - 10;  
     } else if (estacio === 'Hivern') {
-        inclinacion = lat + 10;  // Hivern: latitud +10
+        inclinacion = lat + 10;  
     } else if (estacio === 'any') {
-        inclinacion = lat;       // Tot l'any: latitud sense canvis
+        inclinacion = lat;
     } else {
-        console.log('No s\'ha seleccionat cap estacionalitat vàlida');
-        inclinacion = lat;       // Per defecte, si no hi ha estacionalitat vàlida
+        console.log('Estacionalitat no vàlida');
+        inclinacion = lat;       
     }
 
     const edifici = {
@@ -187,21 +250,112 @@ function crearMarcador(map, latLng) {
     window.edificis.push(edifici);
 
     localStorage.setItem(`user_${userId}_edificiData`, JSON.stringify(edifici));
-    
-    console.log(localStorage.getItem(`user_${userId}_inclinacion`));
 }
+
 // Comienza la selección de puntos
 function iniciarSeleccio(map) {
     guardarOrientacion();
+    
+    // Intenta cargar marcadores guardados
+    const savedPolygon = localStorage.getItem(`user_${userId}_polygon`);
+    
+    if (savedPolygon) {
+        
+        const parsedPolygon = JSON.parse(savedPolygon);
+        window.selectedMarkers = [];
+        
+        // Recrear los marcadores desde el localStorage
+        parsedPolygon.forEach(coord => {
+            
+            const latLng = new google.maps.LatLng(coord.lat, coord.lng);
+            const marker = new google.maps.Marker({
+                position: latLng,
+                map: map,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 6,
+                    fillColor: "red",
+                    fillOpacity: 1,
+                    strokeWeight: 1,
+                },
+                draggable: true,
+            });
+            
+            window.selectedMarkers.push(marker);
+            marker.addListener("dragend", function() {
+                dibuixarPoligon(map); // Solo se ejecuta si se mueve un marcador
+            });
+        });
+        
+        crearBotonConfigurarPlaSiNoExiste();
+        
+        // Dibujar el polígono si hay suficientes puntos
+        if (window.selectedMarkers.length >= 2) {
+            
+            const coordinates = window.selectedMarkers.map(marker => marker.getPosition());
+            
+            window.selectedPolygon = new google.maps.Polygon({
+                paths: coordinates,
+                strokeColor: "#00FF00",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#00FF00",
+                fillOpacity: 0.35,
+                map: map,
+                clickable: false,
+            });
+            
+            // Obtener el área desde localStorage en lugar de recalcularla
+            const areaGuardada = localStorage.getItem(`user_${userId}_novaArea`);
+            const areaLabel = document.getElementById("areaResult");
+            
+            if (areaGuardada) {
+                console.log("loc")
+                areaLabel.innerText = `Àrea: ${parseFloat(areaGuardada).toFixed(2)} m²`;
+                
+            } else {
+                
+                // Si no hay área guardada, calcularla (por si acaso)
+                calcularArea(window.selectedPolygon);
+            }
+            
+            // Configurar el botón "Configurar pla" sin recalcular
+            if (!document.querySelector(".configurar-pla-button")) {
+                const configurarPlaButton = document.createElement("button");
+                configurarPlaButton.innerText = "Configurar pla";
+                configurarPlaButton.className = "configurar-pla-button";
+                configurarPlaButton.addEventListener("click", () => {
+                    const sidePanel = document.getElementById("sidePanel");
+                    sidePanel.classList.add("open");
+                    guardarInclinacion();
+                    
+                    if (window.clickListener) {
+                        google.maps.event.removeListener(window.clickListener);
+                        window.clickListener = null;
+                    }
 
-  // Añade un nuevo evento de clic
-  window.selectedMarkers = [];
-  const clickListener = map.addListener("click", (event) => {
-      seleccionarPunt(event, map);
-  });
+                    // Rellenar el formulario con los datos guardados
+                    const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`));
+                    if (edificiData) {
+                        document.getElementById("inclinacion").value = edificiData.inclinacion;
+                        document.getElementById("area").value = edificiData.area;
+                    }
+                    guardarInclinacion();
+                });
 
-  // Guarda el listener para poder eliminarlo después
-  window.clickListener = clickListener;
+                areaLabel.insertAdjacentElement("afterend", configurarPlaButton);
+            }
+            
+        }
+        
+    } else {
+        // Si no hay polígono guardado, iniciar selección normal
+        window.selectedMarkers = [];
+        const clickListener = map.addListener("click", (event) => {
+            seleccionarPunt(event, map);
+        });
+        window.clickListener = clickListener;
+    }
 }
 
 function reiniciarEstado(map) {
@@ -278,9 +432,25 @@ function reiniciarEstado(map) {
         window.edificis = [];
     }
 
-    localStorage.removeItem("edificiData");
-}
+    // Limpiar localStorage de los datos específicos de esta vista
+    localStorage.removeItem(`user_${userId}_polygon`);
+    localStorage.removeItem(`user_${userId}_obstacles`);
+    localStorage.removeItem(`user_${userId}_novaArea`);
+    localStorage.removeItem(`user_${userId}_edificiData`);
+    localStorage.removeItem(`user_${userId}_placaCount`);
+    localStorage.removeItem(`user_${userId}_panel_model`);
+    localStorage.removeItem(`user_${userId}_panel_id`);
+    localStorage.removeItem(`user_${userId}_panel_pot`);
+    localStorage.removeItem(`user_${userId}_superficie`);
+    localStorage.removeItem(`user_${userId}_maxPlacas`);
+    localStorage.removeItem(`user_${userId}_orientacion`);
 
+    // Reiniciar valores en el formulario
+    document.getElementById("area").value = "";
+    document.getElementById("placaCount").value = "0";
+    document.getElementById("placaSlider").value = "0";
+    actualizarEstiloSlider(document.getElementById("placaSlider"));
+}
 
 // Función para seleccionar puntos
 function seleccionarPunt(event, map) {
@@ -312,6 +482,8 @@ function seleccionarPunt(event, map) {
     if (window.selectedMarkers.length >= 2) {
         dibuixarPoligon(map);
     }
+
+    guardarPoligonoEnLocalStorage();
 }
 
 // Función para dibujar el polígono
@@ -320,14 +492,14 @@ function dibuixarPoligon(map) {
   if (window.selectedPolygon) {
       window.selectedPolygon.setMap(null);
   }
-
+  
   const coordinates = window.selectedMarkers.map((marker) => marker.getPosition());
 
   // Només tanca el polígon si hi ha 3 punts o més
   if (coordinates.length >= 3) {
       coordinates.push(coordinates[0]); // Tanca només si hi ha 3 o més punts
   }
-
+  
   // Crea un nuevo polígono
   window.selectedPolygon = new google.maps.Polygon({
       paths: coordinates,
@@ -339,10 +511,12 @@ function dibuixarPoligon(map) {
       map: map,
       clickable: false,
   });   
-
+  
   if (coordinates.length >= 3) {
-      calcularArea(window.selectedPolygon);
+    calcularArea(window.selectedPolygon);
   }
+  
+  guardarPoligonoEnLocalStorage();
 }
  
 // Función para calcular el número máximo de placas
@@ -381,8 +555,6 @@ function guardarInclinacion() {
 // Escuchar cambios y actualizar
 inclinacion.addEventListener('change', guardarInclinacion);
 
-
-
 // Escuchar cambios en el select
 const selectPanel = document.getElementById('panel_model');
 
@@ -415,12 +587,12 @@ selectPanel.addEventListener('change', function () {
 // Función para calcular el área del polígono
 function calcularArea(selectedPolygon) {
     const areaLabel = document.getElementById("areaResult");
-
+    
     if (selectedPolygon) {
         const area = google.maps.geometry.spherical.computeArea(selectedPolygon.getPath());
+        localStorage.setItem(`user_${userId}_novaArea`, area)
         areaLabel.innerText = `Àrea: ${area.toFixed(2)} m²`;
         
-
         // Obtener los datos existentes de edificiData
         const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`)) || {};
         
@@ -478,49 +650,55 @@ function actualizarSlider(maxPlacas) {
     slider.max = maxPlacas;
     placaCount.max = maxPlacas;
 
-    // Inicializar el valor del slider y el input
-    slider.value = 0;
-    placaCount.value = 0;
+    // Cargar valor guardado o inicializar a 0
+    const savedPlacaCount = localStorage.getItem(`user_${userId}_placaCount`) || 0;
+    const initialValue = Math.min(parseInt(savedPlacaCount, 10), maxPlacas);
 
-    // Actualizar el estilo del slider al cargar la página
+    // Establecer valores iniciales
+    slider.value = initialValue;
+    placaCount.value = initialValue;
     actualizarEstiloSlider(slider);
+    actualitzarFonsSlider();
 
     // Actualizar el input cuando se mueve el slider
-    slider.addEventListener("input", function () {
+    slider.addEventListener("input", function() {
         placaCount.value = this.value;
-        actualizarEstiloSlider(this); // Actualizar el estilo del slider
+        actualizarEstiloSlider(this);
+        localStorage.setItem(`user_${userId}_placaCount`, this.value);
     });
 
     // Actualizar el slider cuando el input manual cambia
-    placaCount.addEventListener("input", function () {
+    placaCount.addEventListener("input", function() {
         const newValue = Math.min(Math.max(parseInt(this.value, 10), 0), parseInt(this.max, 10));
-        this.value = newValue; // Asegurarse de que el valor esté dentro del rango
+        this.value = newValue;
         slider.value = newValue;
-        actualizarEstiloSlider(slider); // Actualizar el estilo del slider
+        actualizarEstiloSlider(slider);
+        localStorage.setItem(`user_${userId}_placaCount`, newValue);
     });
 
-    // Actualizar el slider cuando el input manual pierde el foco (evento "change")
-    placaCount.addEventListener("change", function () {
+    // Manejar el evento 'change' para cuando se pierde el foco
+    placaCount.addEventListener("change", function() {
         const newValue = Math.min(Math.max(parseInt(this.value, 10), 0), parseInt(this.max, 10));
-        this.value = newValue; // Asegurarse de que el valor esté dentro del rango
+        this.value = newValue;
         slider.value = newValue;
-        actualizarEstiloSlider(slider); // Actualizar el estilo del slider
+        actualizarEstiloSlider(slider);
+        localStorage.setItem(`user_${userId}_placaCount`, newValue);
     });
 
-    // Actualizar el slider solo cuando el usuario presione Enter
-    placaCount.addEventListener("keypress", function (e) {
+    // Manejar la tecla Enter
+    placaCount.addEventListener("keypress", function(e) {
         if (e.key === "Enter") {
-            e.preventDefault(); // Prevenir el envío del formulario
+            e.preventDefault();
             const newValue = Math.min(Math.max(parseInt(this.value, 10), 0), parseInt(this.max, 10));
-            this.value = newValue; // Asegurarse de que el valor esté dentro del rango
+            this.value = newValue;
             slider.value = newValue;
-            actualizarEstiloSlider(slider); // Actualizar el estilo del slider
+            actualizarEstiloSlider(slider);
+            localStorage.setItem(`user_${userId}_placaCount`, newValue);
         }
     });
-    setupPlacaCountListener(placaCount, slider);  
+
+    setupPlacaCountListener(placaCount, slider);
 }
-
-
 
 // Función para actualizar el valor del slider
 function actualizarValorSlider(placaCount, slider) {
@@ -532,21 +710,42 @@ function actualizarValorSlider(placaCount, slider) {
 
 // Función para actualizar el estilo del slider
 function actualizarEstiloSlider(slider) {
-    const value = slider.value;
-    const max = slider.max;
+    const value = parseInt(slider.value) || 0;
+    const max = parseInt(slider.max) || 1;
     const progress = (value / max) * 100 + "%"; // Calcular el porcentaje de progreso
     slider.style.background = `linear-gradient(to right, #49DBA3 ${progress}, #e0e0e0 ${progress})`; // Actualizar el fondo del slider
 }
+
+const slider = document.getElementById("placaSlider");
+const placaCount = document.getElementById("placaCount");
+let value = 0
+// Funció per actualitzar el fons del slider
+function actualitzarFonsSlider() {
+    if (value === 0) {  
+        slider.style.background = '#e0e0e0';   
+    } else {
+        slider.style.background = `linear-gradient(to right, #49DBA3 ${value}%, #e0e0e0 ${value}%)`;
+    }
+value = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+}
+
+// Inicialitza el fons del slider al carregar la pàgina
+window.addEventListener("load", function () {
+    placaCount.innerText = slider.value;  
+    actualitzarFonsSlider();  
+});
+
+// Actualitza el fons i el comptador quan es mou el slider
+slider.addEventListener("input", function () {
+    actualitzarFonsSlider();  
+    placaCount.innerText = this.value;
+});
 
 // Cerrar el side panel
 document.getElementById("closePanelButton").addEventListener("click", () => {
     const sidePanel = document.getElementById("sidePanel");
     sidePanel.classList.remove("open");
 });
-
-
-
-
 
 // Cerrar el side panel al hacer clic fuera de él
 document.addEventListener("click", (event) => {
@@ -563,7 +762,6 @@ document.addEventListener("click", (event) => {
         sidePanel.classList.remove("open"); // Cerrar el side panel
     }
 });
-
 
 // Funció per verificar si un polígon està completament dins d'un altre polígon
 function estaPoligonDins(polygonPrincipal, polygonObstacle) {
@@ -605,12 +803,10 @@ function iniciarSeleccioObstacle(map, obstacleIdCounter) {
     function tancarPoligonHandler() {
         tancarPoligonButton.removeEventListener("click", tancarPoligonHandler);
         if (window.currentObstacle.markers.length >= 3) {
-            // Desactivar el botó per evitar múltiples clics
             tancarPoligonButton.style.display = "none";
     
-            // Crear el polígon de l'obstacle
-            const coordinates = window.currentObstacle.markers.map((marker) => marker.getPosition());
-            if (coordinates.length >= 3) coordinates.push(coordinates[0]);
+            const coordinates = window.currentObstacle.markers.map(marker => marker.getPosition());
+            coordinates.push(coordinates[0]); // Cerrar el polígono
     
             const obstaclePolygon = new google.maps.Polygon({
                 paths: coordinates,
@@ -621,50 +817,56 @@ function iniciarSeleccioObstacle(map, obstacleIdCounter) {
                 fillOpacity: 0.35,
                 map: map,
             });
+
+            window.obstaclePolygons.push(obstaclePolygon);
+            window.currentObstacle.polygons.push(obstaclePolygon);
     
-            // Verificar si el polígon està dins del polígon principal
             if (estaPoligonDins(window.selectedPolygon, obstaclePolygon)) {
-                // Afegir el polígon a l'obstacle actual
-                window.currentObstacle.polygons.push(obstaclePolygon);
-    
-                // Calcular l'àrea de l'obstacle
-                const areaObstacle = google.maps.geometry.spherical.computeArea(obstaclePolygon.getPath());
-    
-                // Afegir l'obstacle a la llista visual (només un element)
-                const obstaclesList = document.getElementById("obstaclesList");
-                const obstacleItem = document.createElement("div");
-                obstacleItem.className = "obstacle-item";
-                obstacleItem.innerHTML = `
-                    <div>Obstacle ${window.obstacles.length + 1}</div>
-                    <div>Àrea: ${areaObstacle.toFixed(2)} m²</div>
-                    <span class="delete-obstacle" data-area="${areaObstacle}" data-id="${obstacleId}">Eliminar</span>
-                `;
-                obstaclesList.appendChild(obstacleItem);
-    
-                // Afegir l'obstacle a la llista global
-                window.obstacles.push(window.currentObstacle);
-    
-                // Actualitzar l'àrea total del polígon principal
+                window.currentObstacle.polygons = [obstaclePolygon];
+                
+                // Calcular área
+                const areaObstacle = google.maps.geometry.spherical.computeArea(
+                    obstaclePolygon.getPath()
+                );
+                
+                // Actualizar área principal
                 const areaLabel = document.getElementById("areaResult");
                 const areaPrincipal = parseFloat(areaLabel.innerText.replace("Àrea: ", "").replace(" m²", ""));
                 const novaAreaTotal = areaPrincipal - areaObstacle;
-    
+                
+                localStorage.setItem(`user_${userId}_novaArea`, novaAreaTotal);
                 areaLabel.innerText = `Àrea: ${novaAreaTotal.toFixed(2)} m²`;
     
+                // Actualizar datos del edificio
                 const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`)) || {};
                 edificiData.area = novaAreaTotal.toFixed(2);
                 localStorage.setItem(`user_${userId}_edificiData`, JSON.stringify(edificiData));
     
+                // Actualizar slider
                 const maxPlacas = calcularMaxPlacas(novaAreaTotal);
                 actualizarSlider(maxPlacas);
     
-                alert("Polígon tancat. No es poden afegir més punts a aquest obstacle.");
+                // Añadir a la lista
+                const obstaclesList = document.getElementById("obstaclesList");
+                const obstacleItem = document.createElement("div");
+                obstacleItem.className = "obstacle-item";
+                obstacleItem.innerHTML = `
+                    <div>Obstacle ${window.obstacles.length}</div>
+                    <div>Àrea: ${areaObstacle.toFixed(2)} m²</div>
+                    <span class="delete-obstacle" data-area="${areaObstacle}" 
+                          data-id="${window.currentObstacle.id}">Eliminar</span>
+                `;
+                obstaclesList.appendChild(obstacleItem);
+    
+                // Guardar todos los obstáculos
+                guardarObstaculosEnLocalStorage();
             } else {
                 alert("L'obstacle ha d'estar completament dins del polígon principal.");
                 obstaclePolygon.setMap(null);
             }
         } else {
             alert("Necessiteu almenys 3 punts per tancar el polígon.");
+            
         }
     }
 
@@ -702,89 +904,124 @@ function iniciarSeleccioObstacle(map, obstacleIdCounter) {
         }
     }
 
-    // Funció per dibuixar el polígon de l'obstacle
-    function dibuixarPoligonObstacle() {
-        // Eliminar el polígon temporal anterior si existeix
-        if (window.currentObstacle.polygons.length > 0) {
-            window.currentObstacle.polygons[window.currentObstacle.polygons.length - 1].setMap(null);
-        }
-
-        const coordinates = window.currentObstacle.markers.map((marker) => marker.getPosition());
-        if (coordinates.length >= 3) coordinates.push(coordinates[0]);
-
-        // Crear un nou polígon temporal
-        const tempPolygon = new google.maps.Polygon({
-            paths: coordinates,
-            strokeColor: "#FF0000",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#FF0000",
-            fillOpacity: 0.35,
-            map: map,
-        });
-
-        // Afegir el polígon temporal a l'obstacle actual
-        window.currentObstacle.polygons.push(tempPolygon);
-        
-    }
+    
 
     // Afegir el listener per seleccionar punts
     window.clickListener = map.addListener("click", seleccionarPuntObstacle);
 
 }
 
+// Funció per dibuixar el polígon de l'obstacle
+function dibuixarPoligonObstacle() {
+    // Eliminar el polígon temporal anterior si existeix
+    if (window.currentObstacle.polygons.length > 0) {
+        window.currentObstacle.polygons[window.currentObstacle.polygons.length - 1].setMap(null);
+    }
+
+    const coordinates = window.currentObstacle.markers.map((marker) => marker.getPosition());
+    if (coordinates.length >= 3) coordinates.push(coordinates[0]);
+
+    // Crear un nou polígon temporal
+    const tempPolygon = new google.maps.Polygon({
+        paths: coordinates,
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#FF0000",
+        fillOpacity: 0.35,
+        map: map,
+    });
+
+    // Afegir el polígon temporal a l'obstacle actual
+    window.currentObstacle.polygons.push(tempPolygon);
+    
+}
+
 document.getElementById("obstaclesList").addEventListener("click", function (event) {
     if (event.target.classList.contains("delete-obstacle")) {
         const obstacleItem = event.target.closest(".obstacle-item");
-        const obstacleId = parseInt(event.target.getAttribute("data-id")); // Obtener el ID del obstáculo
+        const obstacleId = parseInt(event.target.getAttribute("data-id"));
         const areaObstacle = parseFloat(event.target.getAttribute("data-area"));
 
-        // Sumar el área del obstáculo al área total
+        // 1. Actualizar área total
         const areaLabel = document.getElementById("areaResult");
         const areaPrincipal = parseFloat(areaLabel.innerText.replace("Àrea: ", "").replace(" m²", ""));
         const novaAreaTotal = areaPrincipal + areaObstacle;
-
+        localStorage.setItem(`user_${userId}_novaArea`, novaAreaTotal);
         areaLabel.innerText = `Àrea: ${novaAreaTotal.toFixed(2)} m²`;
 
+        // Actualizar datos del edificio
         const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`)) || {};
         edificiData.area = novaAreaTotal.toFixed(2);
         localStorage.setItem(`user_${userId}_edificiData`, JSON.stringify(edificiData));
 
+        // Actualizar slider
         const maxPlacas = calcularMaxPlacas(novaAreaTotal);
         actualizarSlider(maxPlacas);
 
-        // Buscar el obstáculo por su ID
+        // 2. Buscar y eliminar el obstáculo
         const obstacleIndex = window.obstacles.findIndex(obstacle => obstacle.id === obstacleId);
         if (obstacleIndex !== -1) {
             const obstacle = window.obstacles[obstacleIndex];
-
-            // Eliminar solo los marcadores y polígonos del obstáculo eliminado
-            if (obstacle) {
-                // Eliminar los marcadores del obstáculo
-                if (obstacle.markers && obstacle.markers.length > 0) {
-                    obstacle.markers.forEach(marker => marker.setMap(null));
-                }
-
-                // Eliminar los polígonos del obstáculo
-                if (obstacle.polygons && obstacle.polygons.length > 0) {
-                    obstacle.polygons.forEach(polygon => polygon.setMap(null));
-                }
-
-                // Eliminar el obstáculo de la lista global
-                window.obstacles.splice(obstacleIndex, 1);
+            
+            // Eliminar todos los elementos gráficos asociados
+            eliminarElementosObstaculo(obstacle);
+            
+            // Eliminar de las listas globales
+            window.obstacles.splice(obstacleIndex, 1);
+            
+            // Si es el obstáculo actual, limpiarlo
+            if (window.currentObstacle && window.currentObstacle.id === obstacleId) {
+                window.currentObstacle = null;
             }
         }
 
-        // Eliminar el ítem del obstáculo de la lista visual
+        // 3. Actualizar localStorage
+        guardarObstaculosEnLocalStorage();
+
+        // 4. Eliminar de la interfaz
         obstacleItem.remove();
     }
 });
 
+// Función auxiliar para eliminar todos los elementos de un obstáculo
+function eliminarElementosObstaculo(obstacle) {
+    // Eliminar marcadores
+    if (obstacle.markers && obstacle.markers.length > 0) {
+        obstacle.markers.forEach(marker => {
+            if (marker && marker.setMap) {
+                marker.setMap(null);
+            }
+            // Eliminar de obstacleMarkers si existe
+            if (window.obstacleMarkers) {
+                const markerIndex = window.obstacleMarkers.findIndex(m => m === marker);
+                if (markerIndex !== -1) {
+                    window.obstacleMarkers.splice(markerIndex, 1);
+                }
+            }
+        });
+    }
+
+    // Eliminar polígonos
+    if (obstacle.polygons && obstacle.polygons.length > 0) {
+        obstacle.polygons.forEach(polygon => {
+            if (polygon && polygon.setMap) {
+                polygon.setMap(null);
+            }
+            // Eliminar de obstaclePolygons si existe
+            if (window.obstaclePolygons) {
+                const polygonIndex = window.obstaclePolygons.findIndex(p => p === polygon);
+                if (polygonIndex !== -1) {
+                    window.obstaclePolygons.splice(polygonIndex, 1);
+                }
+            }
+        });
+    }
+}
+
 function enableMapInteractions(map) {
     map.setOptions({ draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false });
 }
-
-
 
 function setupPlacaCountListener(placaCount, slider) {
     // Variable que almacenará el número de placas
@@ -880,4 +1117,119 @@ async function getMonthlySolarData(lat, lon) {
     localStorage.setItem(`user_${userId}_radiationCoords`, JSON.stringify({ lat, lon }));
     
     return monthlyData;
+}
+
+function guardarPoligonoEnLocalStorage() {
+    if (window.selectedMarkers && window.selectedMarkers.length > 0) {
+        const coordsToSave = window.selectedMarkers.map(marker => {
+            return {
+                lat: marker.getPosition().lat(),
+                lng: marker.getPosition().lng()
+            };
+        });
+        localStorage.setItem(`user_${userId}_polygon`, JSON.stringify(coordsToSave));
+    }
+}
+
+
+function guardarObstaculosEnLocalStorage() {
+    const obstaclesToSave = window.obstacles.map(obstacle => {
+        let areaObstacle = 0;
+        if (obstacle.polygons.length > 0) {
+            try {
+                areaObstacle = google.maps.geometry.spherical.computeArea(
+                    obstacle.polygons[0].getPath()
+                );
+            } catch (e) {
+                console.error("Error calculando área:", e);
+            }
+        }
+        
+        return {
+            id: obstacle.id,
+            markers: obstacle.markers.map(marker => ({
+                lat: marker.getPosition().lat(),
+                lng: marker.getPosition().lng()
+            })),
+            area: areaObstacle
+        };
+    });
+    
+    localStorage.setItem(`user_${userId}_obstacles`, JSON.stringify(obstaclesToSave));
+}
+
+function cargarObstaculosDesdeLocalStorage(map) {
+    return new Promise((resolve) => {
+        const savedObstacles = localStorage.getItem(`user_${userId}_obstacles`);
+        if (savedObstacles) {
+            const parsedObstacles = JSON.parse(savedObstacles);
+            
+            // Reiniciar el contador de IDs
+            const maxId = parsedObstacles.reduce((max, obstacle) => Math.max(max, obstacle.id), 0);
+            window.obstacleIdCounter = { value: maxId + 1 };
+            
+            // Limpiar obstáculos existentes
+            window.obstacles = [];
+            document.getElementById("obstaclesList").innerHTML = "";
+            
+            // Recrear cada obstáculo
+            parsedObstacles.forEach(obstacleData => {
+                const obstacle = {
+                    id: obstacleData.id,
+                    markers: [],
+                    polygons: []
+                };
+                
+                // Crear marcadores
+                obstacleData.markers.forEach(coord => {
+                    const latLng = new google.maps.LatLng(coord.lat, coord.lng);
+                    const marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map,
+                        icon: {
+                            path: google.maps.SymbolPath.CIRCLE,
+                            scale: 6,
+                            fillColor: "red",
+                            fillOpacity: 1,
+                            strokeWeight: 1,
+                        },
+                        draggable: false,
+                    });
+                    obstacle.markers.push(marker);
+                });
+                
+                // Crear polígono si hay suficientes marcadores
+                if (obstacle.markers.length >= 3) {
+                    const coordinates = obstacle.markers.map(marker => marker.getPosition());
+                    coordinates.push(coordinates[0]);
+                    
+                    const obstaclePolygon = new google.maps.Polygon({
+                        paths: coordinates,
+                        strokeColor: "#FF0000",
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: "#FF0000",
+                        fillOpacity: 0.35,
+                        map: map,
+                    });
+                    obstacle.polygons.push(obstaclePolygon);
+                }
+                
+                window.obstacles.push(obstacle);
+                
+                // Mostrar en la interfaz
+                const obstaclesList = document.getElementById("obstaclesList");
+                const obstacleItem = document.createElement("div");
+                obstacleItem.className = "obstacle-item";
+                obstacleItem.innerHTML = `
+                    <div>Obstacle ${obstacle.id}</div>
+                    <div>Àrea: ${obstacleData.area?.toFixed(2) || "0.00"} m²</div>
+                    <span class="delete-obstacle" data-area="${obstacleData.area || 0}" 
+                          data-id="${obstacle.id}">Eliminar</span>
+                `;
+                obstaclesList.appendChild(obstacleItem);
+            });
+        }
+        resolve();
+    });
 }
