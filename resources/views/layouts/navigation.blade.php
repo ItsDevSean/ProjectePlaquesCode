@@ -75,9 +75,9 @@
             <div class="flex items-center">
                 <!-- New Project Button -->
                 <div class="hidden md:block mr-4">
-                    <a href="{{ asset('dades') }}" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 border border-transparent rounded-md font-medium text-white shadow-sm hover:from-emerald-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all duration-200">
+                    <button id="loadProjectBtn" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 border border-transparent rounded-md font-medium text-white shadow-sm hover:from-emerald-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all duration-200">
                         <i class="fas fa-plus mr-2"></i> {{ __('Nuevo Proyecto') }}
-                    </a>
+                    </button>
                 </div>
 
                 <!-- User Dropdown -->
@@ -210,3 +210,12 @@
         </div>
     </div>
 </nav>
+
+<script src="build/js/dades.js"></script>
+<script>
+    const loadProjectBtn = document.getElementById('loadProjectBtn');
+    loadProjectBtn.addEventListener('click', function() {
+        localStorage.setItem('shouldCheckForProject', 'true');
+        window.location.href = "{{ asset('dades') }}";
+    });
+</script>
