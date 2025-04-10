@@ -3,7 +3,7 @@
 <script src="//unpkg.com/alpinejs"></script>
 
 <nav x-data="{navigationMenuOpen: false, navigationMenu: '', navigationMenuCloseDelay: 200, navigationMenuCloseTimeout: null}" 
-     class="sticky top-0 z-50 w-full bg-[#34495E] shadow-md border-b border-gray-700">
+     class="sticky top-0 z-50 w-full bg-[#34495E] shadow-md border-b border-gray-700 z-[9999]">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">

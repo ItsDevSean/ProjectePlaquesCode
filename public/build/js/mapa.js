@@ -432,7 +432,24 @@ function reiniciarEstado(map) {
         window.edificis = [];
     }
 
-    localStorage.removeItem("edificiData");
+    // Limpiar localStorage de los datos específicos de esta vista
+    localStorage.removeItem(`user_${userId}_polygon`);
+    localStorage.removeItem(`user_${userId}_obstacles`);
+    localStorage.removeItem(`user_${userId}_novaArea`);
+    localStorage.removeItem(`user_${userId}_edificiData`);
+    localStorage.removeItem(`user_${userId}_placaCount`);
+    localStorage.removeItem(`user_${userId}_panel_model`);
+    localStorage.removeItem(`user_${userId}_panel_id`);
+    localStorage.removeItem(`user_${userId}_panel_pot`);
+    localStorage.removeItem(`user_${userId}_superficie`);
+    localStorage.removeItem(`user_${userId}_maxPlacas`);
+    localStorage.removeItem(`user_${userId}_orientacion`);
+
+    // Reiniciar valores en el formulario
+    document.getElementById("area").value = "";
+    document.getElementById("placaCount").value = "0";
+    document.getElementById("placaSlider").value = "0";
+    actualizarEstiloSlider(document.getElementById("placaSlider"));
 }
 
 // Función para seleccionar puntos
