@@ -19,14 +19,14 @@
                 <!-- Navigation Links -->
                 <div class="hidden md:flex items-center space-x-1 ml-10">
                     <x-nav-link :href="route('proyectos')" :active="request()->routeIs('proyectos')" 
-                               class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-emerald-300 hover:bg-[#2c3e50] transition-colors duration-200">
-                        {{ __('Inicio') }}
-                    </x-nav-link>
-
-                    <x-nav-link :href="route('preus')" :active="request()->routeIs('preus')" 
-                               class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-emerald-300 hover:bg-[#2c3e50] transition-colors duration-200">
-                        {{ __('Planes') }}
-                    </x-nav-link>
+                        class="px-3 py-2 rounded-md text-sm font-medium text-white hover:!text-emerald-300 transition-colors duration-200">
+                 {{ __('Inicio') }}
+             </x-nav-link>
+             
+             <x-nav-link :href="route('preus')" :active="request()->routeIs('preus')" 
+                        class="px-3 py-2 rounded-md text-sm font-medium text-white hover:!text-emerald-300 transition-colors duration-200">
+                 {{ __('Planes') }}
+             </x-nav-link>
 
                     <!-- Tools Dropdown -->
                     <div class="relative" 
@@ -52,18 +52,27 @@
                              class="absolute left-0 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
                              @mouseenter="navigationMenuOpen = true"
                              @mouseleave="navigationMenuOpen = false">
-                            <div class="py-1">
-                                <a href="{{ route('panels') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors duration-200">
-                                    <div class="font-medium">Paneles</div>
-                                    <div class="text-xs text-gray-500">Crear/Editar paneles</div>
+                             <div class="py-1">
+                                <a href="{{ route('panels') }}" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-teal-50 hover:to-emerald-50 hover:text-teal-600 transition-all duration-200 flex items-center">
+                                    <i class="fas fa-solar-panel mr-3 text-teal-500"></i>
+                                    <div>
+                                        <div class="font-medium">Paneles</div>
+                                        <div class="text-xs text-gray-500">Crear/Editar paneles</div>
+                                    </div>
                                 </a>
-                                <a href="{{ route('baterias.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors duration-200">
-                                    <div class="font-medium">Baterías</div>
-                                    <div class="text-xs text-gray-500">Crear/Editar baterías</div>
+                                <a href="{{ route('baterias.index') }}" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-teal-50 hover:to-emerald-50 hover:text-teal-600 transition-all duration-200 flex items-center">
+                                    <i class="fas fa-battery-three-quarters mr-3 text-teal-500"></i>
+                                    <div>
+                                        <div class="font-medium">Baterías</div>
+                                        <div class="text-xs text-gray-500">Crear/Editar baterías</div>
+                                    </div>
                                 </a>
-                                <a href="{{ route('inversores.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors duration-200">
-                                    <div class="font-medium">Inversores</div>
-                                    <div class="text-xs text-gray-500">Crear/Editar inversores</div>
+                                <a href="{{ route('inversores.index') }}" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-teal-50 hover:to-emerald-50 hover:text-teal-600 transition-all duration-200 flex items-center">
+                                    <i class="fas fa-bolt mr-3 text-teal-500"></i>
+                                    <div>
+                                        <div class="font-medium">Inversores</div>
+                                        <div class="text-xs text-gray-500">Crear/Editar inversores</div>
+                                    </div>
                                 </a>
                             </div>
                         </div>

@@ -83,12 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
             closeModal();
         });
 
-        // Cerrar al hacer clic fuera del modal
-        document.getElementById('projectModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
+        
     }
 
     // Función para limpiar datos
