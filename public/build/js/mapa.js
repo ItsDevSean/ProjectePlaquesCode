@@ -2,7 +2,6 @@ const userId = window.userId;
 
 // Funció d'inicialització del mapa
 window.initMap = function () {
-
     const centre = { lat: 41.3879, lng: 2.16992 };
     const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 15,
@@ -54,6 +53,7 @@ window.initMap = function () {
                         break;
                     }
                 }
+                selectPanel.dispatchEvent(new Event('change'));
             }
         });
     } else {
@@ -633,46 +633,54 @@ function actualizarSlider(maxPlacas) {
     slider.max = maxPlacas;
     placaCount.max = maxPlacas;
 
-    // Inicializar el valor del slider y el input
-    slider.value = 0;
-    placaCount.value = 0;
+    // Cargar valor guardado o inicializar a 0
+    const savedPlacaCount = localStorage.getItem(`user_${userId}_placaCount`) || 0;
+    const initialValue = Math.min(parseInt(savedPlacaCount, 10), maxPlacas);
 
-    // Actualizar el estilo del slider al cargar la página
+    // Establecer valores iniciales
+    slider.value = initialValue;
+    placaCount.value = initialValue;
     actualizarEstiloSlider(slider);
+    actualitzarFonsSlider();
 
     // Actualizar el input cuando se mueve el slider
-    slider.addEventListener("input", function () {
+    slider.addEventListener("input", function() {
         placaCount.value = this.value;
-        actualizarEstiloSlider(this); // Actualizar el estilo del slider
+        actualizarEstiloSlider(this);
+        localStorage.setItem(`user_${userId}_placaCount`, this.value);
     });
 
     // Actualizar el slider cuando el input manual cambia
-    placaCount.addEventListener("input", function () {
+    placaCount.addEventListener("input", function() {
         const newValue = Math.min(Math.max(parseInt(this.value, 10), 0), parseInt(this.max, 10));
-        this.value = newValue; // Asegurarse de que el valor esté dentro del rango
+        this.value = newValue;
         slider.value = newValue;
-        actualizarEstiloSlider(slider); // Actualizar el estilo del slider
+        actualizarEstiloSlider(slider);
+        localStorage.setItem(`user_${userId}_placaCount`, newValue);
     });
 
-    // Actualizar el slider cuando el input manual pierde el foco (evento "change")
-    placaCount.addEventListener("change", function () {
+    // Manejar el evento 'change' para cuando se pierde el foco
+    placaCount.addEventListener("change", function() {
         const newValue = Math.min(Math.max(parseInt(this.value, 10), 0), parseInt(this.max, 10));
-        this.value = newValue; // Asegurarse de que el valor esté dentro del rango
+        this.value = newValue;
         slider.value = newValue;
-        actualizarEstiloSlider(slider); // Actualizar el estilo del slider
+        actualizarEstiloSlider(slider);
+        localStorage.setItem(`user_${userId}_placaCount`, newValue);
     });
 
-    // Actualizar el slider solo cuando el usuario presione Enter
-    placaCount.addEventListener("keypress", function (e) {
+    // Manejar la tecla Enter
+    placaCount.addEventListener("keypress", function(e) {
         if (e.key === "Enter") {
-            e.preventDefault(); // Prevenir el envío del formulario
+            e.preventDefault();
             const newValue = Math.min(Math.max(parseInt(this.value, 10), 0), parseInt(this.max, 10));
-            this.value = newValue; // Asegurarse de que el valor esté dentro del rango
+            this.value = newValue;
             slider.value = newValue;
-            actualizarEstiloSlider(slider); // Actualizar el estilo del slider
+            actualizarEstiloSlider(slider);
+            localStorage.setItem(`user_${userId}_placaCount`, newValue);
         }
     });
-    setupPlacaCountListener(placaCount, slider);  
+
+    setupPlacaCountListener(placaCount, slider);
 }
 
 // Función para actualizar el valor del slider
@@ -685,11 +693,36 @@ function actualizarValorSlider(placaCount, slider) {
 
 // Función para actualizar el estilo del slider
 function actualizarEstiloSlider(slider) {
-    const value = slider.value;
-    const max = slider.max;
+    const value = parseInt(slider.value) || 0;
+    const max = parseInt(slider.max) || 1;
     const progress = (value / max) * 100 + "%"; // Calcular el porcentaje de progreso
     slider.style.background = `linear-gradient(to right, #49DBA3 ${progress}, #e0e0e0 ${progress})`; // Actualizar el fondo del slider
 }
+
+const slider = document.getElementById("placaSlider");
+const placaCount = document.getElementById("placaCount");
+let value = 0
+// Funció per actualitzar el fons del slider
+function actualitzarFonsSlider() {
+    if (value === 0) {  
+        slider.style.background = '#e0e0e0';   
+    } else {
+        slider.style.background = `linear-gradient(to right, #49DBA3 ${value}%, #e0e0e0 ${value}%)`;
+    }
+value = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+}
+
+// Inicialitza el fons del slider al carregar la pàgina
+window.addEventListener("load", function () {
+    placaCount.innerText = slider.value;  
+    actualitzarFonsSlider();  
+});
+
+// Actualitza el fons i el comptador quan es mou el slider
+slider.addEventListener("input", function () {
+    actualitzarFonsSlider();  
+    placaCount.innerText = this.value;
+});
 
 // Cerrar el side panel
 document.getElementById("closePanelButton").addEventListener("click", () => {
