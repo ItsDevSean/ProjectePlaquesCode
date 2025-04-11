@@ -273,10 +273,13 @@ function iniciarSeleccio(map) {
                 map: map,
                 icon: {
                     path: google.maps.SymbolPath.CIRCLE,
-                    scale: 6,
-                    fillColor: "red",
-                    fillOpacity: 1,
-                    strokeWeight: 1,
+                    scale: 8,  // Un poco más grande
+                    fillColor: "#4285F4",  // Azul de Google más profesional
+                    fillOpacity: 0.9,
+                    strokeColor: "#FFFFFF",  // Borde blanco para contraste
+                    strokeWeight: 2,  // Borde más grueso
+                    strokeOpacity: 1,
+                    anchor: new google.maps.Point(0, 0)  // Mejor posicionamiento
                 },
                 draggable: true,
             });
@@ -296,14 +299,17 @@ function iniciarSeleccio(map) {
             
             window.selectedPolygon = new google.maps.Polygon({
                 paths: coordinates,
-                strokeColor: "#00FF00",
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: "#00FF00",
-                fillOpacity: 0.35,
+                strokeColor: "#1E88E5",  // Azul más profesional
+                strokeOpacity: 0.9,
+                strokeWeight: 3,  // Línea un poco más gruesa
+                fillColor: "#42A5F5",  // Azul más claro para el relleno
+                fillOpacity: 0.3,  // Más transparente
                 map: map,
                 clickable: false,
-            });
+                zIndex: 1,  // Para asegurar que esté encima de otros elementos
+                strokeDashArray: [0, 0],  // Podrías usar [5, 5] para línea punteada si prefieres
+                editable: false  // Asegurar que no sea editable si no lo necesitas
+              });
             
             // Obtener el área desde localStorage en lugar de recalcularla
             const areaGuardada = localStorage.getItem(`user_${userId}_novaArea`);
@@ -466,10 +472,13 @@ function seleccionarPunt(event, map) {
         map: map,
         icon: {
             path: google.maps.SymbolPath.CIRCLE,
-            scale: 6,
-            fillColor: "red",
-            fillOpacity: 1,
-            strokeWeight: 1,
+            scale: 8,  // Un poco más grande
+            fillColor: "#4285F4",  // Azul de Google más profesional
+            fillOpacity: 0.9,
+            strokeColor: "#FFFFFF",  // Borde blanco para contraste
+            strokeWeight: 2,  // Borde más grueso
+            strokeOpacity: 1,
+            anchor: new google.maps.Point(0, 0)  // Mejor posicionamiento
         },
         draggable: true,
     });
@@ -502,15 +511,18 @@ function dibuixarPoligon(map) {
   
   // Crea un nuevo polígono
   window.selectedPolygon = new google.maps.Polygon({
-      paths: coordinates,
-      strokeColor: "#00FF00",
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: "#00FF00",
-      fillOpacity: 0.35,
-      map: map,
-      clickable: false,
-  });   
+    paths: coordinates,
+    strokeColor: "#1E88E5",  // Azul más profesional
+    strokeOpacity: 0.9,
+    strokeWeight: 3,  // Línea un poco más gruesa
+    fillColor: "#42A5F5",  // Azul más claro para el relleno
+    fillOpacity: 0.3,  // Más transparente
+    map: map,
+    clickable: false,
+    zIndex: 1,  // Para asegurar que esté encima de otros elementos
+    strokeDashArray: [0, 0],  // Podrías usar [5, 5] para línea punteada si prefieres
+    editable: false  // Asegurar que no sea editable si no lo necesitas
+  });
   
   if (coordinates.length >= 3) {
     calcularArea(window.selectedPolygon);
