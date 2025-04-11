@@ -29,3 +29,4 @@ function closeModal() {
 function confirmDeletion() {
     document.getElementById('deleteProjectForm').submit();
 }
+

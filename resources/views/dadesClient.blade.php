@@ -82,6 +82,15 @@
             </div>
         </div>
         
+        <!-- Botones de navegación fijos -->        
+        <div class="fixed inset-y-0 right-0 flex items-center justify-center w-16 z-20 pr-10">
+            <button onclick="window.location.href='/consum'" class="p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 group">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600 dark:text-gray-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+
         <!-- Formulari del client millorat -->
         <div class="max-w-6xl mx-auto px-6 py-8 mt-6 bg-white rounded-xl shadow-lg dark:bg-gray-800 transition-all duration-300 hover:shadow-xl">
             <!-- Capçalera del formulari -->
@@ -256,7 +265,8 @@
                     </div>
                 </div>
 
-                <!-- Botó d'enviament -->
+                <!-- Botó d'enviament 
+
                 <div class="flex justify-end">
                     <button type="submit" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all duration-300 transform hover:scale-105">
                         {{ isset($cliente) ? 'Actualizar' : 'Seguent' }}
@@ -265,6 +275,7 @@
                         </svg>
                     </button>
                 </div>
+            -->
             </form>
         </div>
 
