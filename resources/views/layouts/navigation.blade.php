@@ -93,7 +93,7 @@
                 <div class="relative ml-3">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <button class="flex items-center max-w-xs rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all duration-200">
+                            <button class="flex items-center max-w-xs rounded-full text-sm  transition-all duration-200">
                                 <span class="sr-only">Open user menu</span>
                                 <div class="text-white font-medium mr-2">{{ Auth::user()->name }}</div>
                                 <div class="h-8 w-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
