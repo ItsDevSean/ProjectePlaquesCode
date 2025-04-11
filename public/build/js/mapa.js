@@ -275,7 +275,7 @@ function iniciarSeleccio(map) {
                     path: google.maps.SymbolPath.CIRCLE,
                     scale: 8,  // Un poco más grande
                     fillColor: "#4285F4",  // Azul de Google más profesional
-                    fillOpacity: 0.9,
+                    fillOpacity: 0.8,
                     strokeColor: "#FFFFFF",  // Borde blanco para contraste
                     strokeWeight: 2,  // Borde más grueso
                     strokeOpacity: 1,

@@ -190,7 +190,7 @@
                 <div class="order-last md:order-first">
                     <div class="relative">
                         <div class="rounded-xl overflow-hidden shadow-2xl border-4 border-white border-opacity-20">
-                            <img src="{{ asset('build/img/dashboard-solarpv.jpg') }}" alt="Dashboard SolarPV Pro" class="w-full h-auto">
+                            <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80" alt="Dashboard SolarPV Pro" class="w-full h-auto">
                         </div>
                         <div class="absolute -inset-4 border-2 border-white border-opacity-10 rounded-xl pointer-events-none"></div>
                     </div>
@@ -267,14 +267,14 @@
                     </ul>
                 </div>
                 <div class="rounded-xl overflow-hidden shadow-xl border border-gray-200">
-                    <img src="{{ asset('build/img/workflow-solar.jpg') }}" alt="Flujo de trabajo SolarPV Pro" class="w-full h-auto">
+                    <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80" alt="Flujo de trabajo SolarPV Pro" class="w-full h-auto">
                 </div>
             </div>
             
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="order-last md:order-first">
                     <div class="rounded-xl overflow-hidden shadow-xl border border-gray-200">
-                        <img src="{{ asset('build/img/data-analysis.jpg') }}" alt="Análisis de datos" class="w-full h-auto">
+                        <img src="/img/produccio2.PNG" alt="Análisis de datos" class="w-full h-auto">
                     </div>
                 </div>
                 <div>
@@ -600,40 +600,40 @@
                 <p class="max-w-2xl mx-auto text-lg text-gray-600">Una base tecnológica robusta para garantizar rendimiento, seguridad y escalabilidad.</p>
             </div>
             
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
                 <div class="flex flex-col items-center">
                     <div class="w-20 h-20 bg-white rounded-xl shadow-sm p-4 flex items-center justify-center mb-3">
-                        <img src="{{ asset('build/img/tech/tailwind.svg') }}" alt="Tailwind CSS" class="tech-icon max-h-12">
-                    </div>
-                    <span class="text-sm font-medium text-gray-600">Tailwind CSS</span>
-                </div>
-                
-                <div class="flex flex-col items-center">
-                    <div class="w-20 h-20 bg-white rounded-xl shadow-sm p-4 flex items-center justify-center mb-3">
-                        <img src="{{ asset('build/img/tech/alpinejs.svg') }}" alt="Alpine.js" class="tech-icon max-h-12">
-                    </div>
-                    <span class="text-sm font-medium text-gray-600">Alpine.js</span>
-                </div>
-                
-                <div class="flex flex-col items-center">
-                    <div class="w-20 h-20 bg-white rounded-xl shadow-sm p-4 flex items-center justify-center mb-3">
-                        <img src="{{ asset('build/img/tech/chartjs.svg') }}" alt="Chart.js" class="tech-icon max-h-12">
-                    </div>
-                    <span class="text-sm font-medium text-gray-600">Chart.js</span>
-                </div>
-                
-                <div class="flex flex-col items-center">
-                    <div class="w-20 h-20 bg-white rounded-xl shadow-sm p-4 flex items-center justify-center mb-3">
-                        <img src="{{ asset('build/img/tech/laravel.svg') }}" alt="Laravel" class="tech-icon max-h-12">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Laravel.svg/1200px-Laravel.svg.png" alt="Laravel" class="tech-icon max-h-12">
                     </div>
                     <span class="text-sm font-medium text-gray-600">Laravel</span>
                 </div>
                 
                 <div class="flex flex-col items-center">
                     <div class="w-20 h-20 bg-white rounded-xl shadow-sm p-4 flex items-center justify-center mb-3">
-                        <img src="{{ asset('build/img/tech/google-maps.svg') }}" alt="Google Maps" class="tech-icon max-h-12">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/2048px-Tailwind_CSS_Logo.svg.png" alt="Tailwind CSS" class="tech-icon max-h-12">
                     </div>
-                    <span class="text-sm font-medium text-gray-600">Google Maps</span>
+                    <span class="text-sm font-medium text-gray-600">Tailwind CSS</span>
+                </div>
+                
+                <div class="flex flex-col items-center">
+                    <div class="w-20 h-20 bg-white rounded-xl shadow-sm p-4 flex items-center justify-center mb-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/2048px-Unofficial_JavaScript_logo_2.svg.png" alt="JavaScript" class="tech-icon max-h-12">
+                    </div>
+                    <span class="text-sm font-medium text-gray-600">JavaScript</span>
+                </div>
+                
+                <div class="flex flex-col items-center">
+                    <div class="w-20 h-20 bg-white rounded-xl shadow-sm p-4 flex items-center justify-center mb-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Google_Maps_icon_%282020%29.svg/800px-Google_Maps_icon_%282020%29.svg.png" alt="Google Maps API" class="tech-icon max-h-12">
+                    </div>
+                    <span class="text-sm font-medium text-gray-600">Google Maps API</span>
+                </div>
+                
+                <div class="flex flex-col items-center">
+                    <div class="w-20 h-20 bg-white rounded-xl shadow-sm p-4 flex items-center justify-center mb-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png" alt="Stripe" class="tech-icon max-h-12">
+                    </div>
+                    <span class="text-sm font-medium text-gray-600">Stripe</span>
                 </div>
             </div>
         </div>
@@ -652,8 +652,7 @@
                 <div class="testimonial-card p-8 rounded-xl shadow-sm border border-gray-200">
                     <div class="flex items-center mb-6">
                         <div class="flex-shrink-0">
-                            <img class="h-12 w-12 rounded-full" src="{{ asset('build/img/testimonial1.jpg') }}" alt="Testimonio 1">
-                        </div>
+                            <img class="h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" alt="Ing. Carlos Méndez">                        </div>
                         <div class="ml-4">
                             <h3 class="text-lg font-bold text-gray-900">Ing. Carlos Méndez</h3>
                             <p class="text-gray-600">EcoEnergía Solutions</p>
@@ -682,7 +681,7 @@
                 <div class="testimonial-card p-8 rounded-xl shadow-sm border border-gray-200">
                     <div class="flex items-center mb-6">
                         <div class="flex-shrink-0">
-                            <img class="h-12 w-12 rounded-full" src="{{ asset('build/img/testimonial2.jpg') }}" alt="Testimonio 2">
+                            <img class="h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=988&q=80" alt="Dra. Ana Torres">
                         </div>
                         <div class="ml-4">
                             <h3 class="text-lg font-bold text-gray-900">Dra. Ana Torres</h3>
@@ -712,7 +711,7 @@
                 <div class="testimonial-card p-8 rounded-xl shadow-sm border border-gray-200">
                     <div class="flex items-center mb-6">
                         <div class="flex-shrink-0">
-                            <img class="h-12 w-12 rounded-full" src="{{ asset('build/img/testimonial3.jpg') }}" alt="Testimonio 3">
+                            <img class="h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" alt="Javier Ruiz">
                         </div>
                         <div class="ml-4">
                             <h3 class="text-lg font-bold text-gray-900">Javier Ruiz</h3>
