@@ -18,8 +18,13 @@ class SolarPanelsModel extends Model
         'url_fabricante', 'imagen_panel', 'material_marco', 'color_panel',
         'potencia_maxima', 'tension_maxima_potencia', 'corriente_punto_maxima_potencia',
         'tension_circuito_abierto', 'corriente_cortocircuito', 'eficencia_panel',
-        'coeficiente_temp_pmax', 'coeficiente_temp_voc', 'coeficiente_temp_isc',
+        'coeficiente_temp_pmax', 'coeficiente_temp_voc', 'coeficiente_temp_isc','fabricante_id',
     ];
+
+    public function fabricante()
+    {
+        return $this->belongsTo(Fabricante::class, 'fabricante_id');
+    }
 
 
     public function user(){

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\tools;
 
 use App\Http\Controllers\Controller;
 use App\Imports\PanelImport;
+use App\Models\Fabricante;
 use App\Models\PanelType;
 use App\Models\SolarPanelsModel;
 use Illuminate\Http\Request;
@@ -22,7 +23,8 @@ class SolarPanelsController extends Controller
         $panels = SolarPanelsModel::all()
         ->where('user_id', Auth::id());
         $nameAtributes = (new SolarPanelsModel)->getFillable();
-        return view('tools.panels', compact('panels', 'panelType', 'nameAtributes'));  
+        $manufacturers = Fabricante::where('user_id', Auth::id())->get();
+        return view('tools.panels', compact('panels', 'panelType', 'nameAtributes', 'manufacturers'));  
     }
 
     /**
