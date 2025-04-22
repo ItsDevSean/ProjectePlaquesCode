@@ -265,7 +265,7 @@
                     </div>
                 </div>
 
-                <!-- Botó d'enviament 
+               Botó d'enviament 
 
                 <div class="flex justify-end">
                     <button type="submit" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all duration-300 transform hover:scale-105">
@@ -275,7 +275,7 @@
                         </svg>
                     </button>
                 </div>
-            -->
+           
             </form>
         </div>
 
