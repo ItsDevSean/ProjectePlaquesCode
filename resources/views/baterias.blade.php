@@ -100,157 +100,157 @@
                 </table>
 
                     
-                    <!-- Modal Baterias -->
-                    <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 hidden backdrop-blur-sm transition-opacity duration-300">
-                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-4xl overflow-hidden transform transition-all duration-300 scale-95 opacity-0 modal-content">
-                            <!-- Encabezado con efecto gradiente -->
-                            <div class="bg-gradient-to-r from-emerald-500 to-teal-600 px-6 py-4">
-                                <div class="flex justify-between items-center">
-                                    <h2 class="text-2xl font-bold text-white">Gestión de Baterías</h2>
-                                    <button id="closeModal" type="button" class="text-white hover:text-gray-200 transition-colors duration-200 focus:outline-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                    </button>
+                <!-- Modal Baterias -->
+                <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center pt-10 bg-black bg-opacity-70 hidden backdrop-blur-sm transition-opacity duration-300 p-4">
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-4xl transform transition-all duration-300 scale-95 opacity-0 modal-content max-h-[80vh] overflow-y-auto">
+                        <!-- Encabezado con efecto gradiente -->
+                        <div class="bg-gradient-to-r from-emerald-500 to-teal-600 px-6 py-4">
+                            <div class="flex justify-between items-center">
+                                <h2 class="text-2xl font-bold text-white">Gestión de Baterías</h2>
+                                <button id="closeModal" type="button" class="text-white hover:text-gray-200 transition-colors duration-200 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <form id="bateriaForm" action="{{ route('baterias.store') }}" method="POST" enctype="multipart/form-data" class="p-6">
+                            @csrf
+                            <input type="hidden" id="formMethod" name="_method" value="POST">
+
+                            <!-- Grid de 2 columnas con espaciado mejorado -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <!-- Columna Izquierda -->
+                                <div class="space-y-6">
+                                    <!-- Nombre -->
+                                    <div class="relative">
+                                        <label for="nombre_bateria" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre de la Batería</label>
+                                        <div class="relative">
+                                            <input type="text" name="nombre_bateria" id="nombre_bateria" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400 dark:placeholder-gray-400 pl-10" required>
+                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Capacidad -->
+                                    <div class="relative">
+                                        <label for="capacidad" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Capacidad (kWh)</label>
+                                        <div class="relative">
+                                            <input type="number" name="capacidad" id="capacidad" placeholder="Ej: 5.2" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400 dark:placeholder-gray-400 pl-10" required step="0.1">
+                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Coste -->
+                                    <div class="relative">
+                                        <label for="coste" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Coste (€)</label>
+                                        <div class="relative">
+                                            <input type="number" name="coste" id="coste" placeholder="Ej: 1200" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400 dark:placeholder-gray-400 pl-10" required min="0" step="0.01">
+                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- ID Referencia -->
+                                    <div class="relative">
+                                        <label for="id_referencia" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">ID Referencia</label>
+                                        <div class="relative">
+                                            <input type="text" name="id_referencia" id="id_referencia" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400 dark:placeholder-gray-400 pl-10" required>
+                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Columna Derecha -->
+                                <div class="space-y-6">
+                                    <!-- Fabricante -->
+                                    <div>
+                                        <label for="fabricante" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Fabricante</label>
+                                        <div class="flex gap-4">
+                                            <select name="fabricante_id" id="fabricante" class="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 appearance-none" required>
+                                                <option value="">Seleccionar fabricante</option>
+                                                @foreach ($fabricantes as $fabricante)
+                                                    <option value="{{ $fabricante->id }}">{{ $fabricante->nombre }}</option>
+                                                @endforeach
+                                            </select>
+                                            <button type="button" id="openFabricanteModal" class="px-4 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg shadow-md hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 flex items-center gap-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                                </svg>
+                                                <span class="hidden sm:inline">Nuevo</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Garantías -->
+                                    <div class="grid grid-cols-2 gap-5">
+                                        <div>
+                                            <label for="garantia_material" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Garantía Material (años)</label>
+                                            <input type="number" name="garantia_material" id="garantia_material" min="1" max="30" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300" required>
+                                        </div>
+                                        <div>
+                                            <label for="garantia_fabricante" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Garantía Fabricante (años)</label>
+                                            <input type="number" name="garantia_fabricante" id="garantia_fabricante" min="1" max="30" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300" required>
+                                        </div>
+                                    </div>
+
+                                    <!-- Descripción -->
+                                    <div>
+                                        <label for="descripcion" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Descripción</label>
+                                        <textarea name="descripcion" id="descripcion" rows="4" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300"></textarea>
+                                    </div>
+
+                                    <!-- Imagen -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Imagen de la Batería</label>
+                                        <div class="flex items-center justify-center w-full">
+                                            <label for="imagen_bateria" class="flex flex-col items-center justify-center w-full h-36 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-300">
+                                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                    </svg>
+                                                    <p class="text-sm text-gray-500 dark:text-gray-400">PNG, JPG o JPEG (MAX. 5MB)</p>
+                                                </div>
+                                                <input id="imagen_bateria" name="imagen_bateria" type="file" class="hidden" accept="image/*">
+                                            </label>
+                                        </div>
+                                        <div class="mt-3 flex justify-center">
+                                            <img id="preview" class="hidden w-40 h-40 object-contain rounded-lg border border-gray-200 dark:border-gray-600">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <form id="bateriaForm" action="{{ route('baterias.store') }}" method="POST" enctype="multipart/form-data" class="p-6">
-                                @csrf
-                                <input type="hidden" id="formMethod" name="_method" value="POST">
-
-                                <!-- Grid de 2 columnas con espaciado mejorado -->
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <!-- Columna Izquierda -->
-                                    <div class="space-y-5">
-                                        <!-- Nombre -->
-                                        <div class="relative">
-                                            <label for="nombre_bateria" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre de la Batería</label>
-                                            <div class="relative">
-                                                <input type="text" name="nombre_bateria" id="nombre_bateria" class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400 dark:placeholder-gray-400 pl-10" required>
-                                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Capacidad -->
-                                        <div class="relative">
-                                            <label for="capacidad" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Capacidad (kWh)</label>
-                                            <div class="relative">
-                                                <input type="number" name="capacidad" id="capacidad" placeholder="Ej: 5.2"class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400 dark:placeholder-gray-400 pl-10" required step="0.1">
-                                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Coste -->
-                                        <div class="relative">
-                                            <label for="coste" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Coste (€)</label>
-                                            <div class="relative">
-                                                <input type="number" name="coste" id="coste" placeholder="Ej: 1200"class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400 dark:placeholder-gray-400 pl-10" required min="0" step="0.01">
-                                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- ID Referencia -->
-                                        <div class="relative">
-                                            <label for="id_referencia" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">ID Referencia</label>
-                                            <div class="relative">
-                                                <input type="text" name="id_referencia" id="id_referencia" class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400 dark:placeholder-gray-400 pl-10"required>
-                                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Columna Derecha -->
-                                    <div class="space-y-5">
-                                        <!-- Fabricante -->
-                                        <div>
-                                            <label for="fabricante" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Fabricante</label>
-                                            <div class="flex gap-3">
-                                                <select name="fabricante_id" id="fabricante" class="flex-1 px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 appearance-none"required>
-                                                    <option value="">Seleccionar fabricante</option>
-                                                    @foreach ($fabricantes as $fabricante)
-                                                        <option value="{{ $fabricante->id }}">{{ $fabricante->nombre }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <button type="button" id="openFabricanteModal" class="px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg shadow-md hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 flex items-center gap-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                                    </svg>
-                                                    <span class="hidden sm:inline">Nuevo</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <!-- Garantías -->
-                                        <div class="grid grid-cols-2 gap-4">
-                                            <div>
-                                                <label for="garantia_material" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Garantía Material (años)</label>
-                                                <input type="number" name="garantia_material" id="garantia_material" min="1" max="30" class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300"required>
-                                            </div>
-                                            <div>
-                                                <label for="garantia_fabricante" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Garantía Fabricante (años)</label>
-                                                <input type="number" name="garantia_fabricante" id="garantia_fabricante" min="1" max="30" class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300"required>
-                                            </div>
-                                        </div>
-
-                                        <!-- Descripción -->
-                                        <div>
-                                            <label for="descripcion" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Descripción</label>
-                                            <textarea name="descripcion" id="descripcion" rows="3"class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300"></textarea>
-                                        </div>
-
-                                        <!-- Imagen -->
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Imagen de la Batería</label>
-                                            <div class="flex items-center justify-center w-full">
-                                                <label for="imagen_bateria" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-300">
-                                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                        </svg>
-                                                        <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG o JPEG (MAX. 5MB)</p>
-                                                    </div>
-                                                    <input id="imagen_bateria" name="imagen_bateria" type="file" class="hidden" accept="image/*">
-                                                </label>
-                                            </div>
-                                            <div class="mt-2 flex justify-center">
-                                                <img id="preview" class="hidden w-32 h-32 object-contain rounded-lg border border-gray-200 dark:border-gray-600">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Botones de acción -->
-                                <div class="mt-8 flex justify-end space-x-3">
-                                    <button type="button" id="cancelButton" class="px-6 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-300">
-                                        Cancelar
-                                    </button>
-                                    <button type="submit" class="px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg shadow-md hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 flex items-center gap-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                        </svg>
-                                        <span id="submitButtonText">Crear Batería</span>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                            <!-- Botones de acción -->
+                            <div class="mt-10 flex justify-end space-x-4">
+                                <button type="button" id="cancelButton" class="px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-300">
+                                    Cancelar
+                                </button>
+                                <button type="submit" class="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg shadow-md hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    <span id="submitButtonText">Crear Batería</span>
+                                </button>
+                            </div>
+                        </form>
                     </div>
+                </div>
                         
 
                     
@@ -355,9 +355,8 @@
                     </div>
                 </div>
             </div>
-            <!-- Modal de Detalle de Batería -->
-            <div id="detail" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 hidden backdrop-blur-sm transition-opacity duration-300">
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden transform transition-all duration-300 scale-95 opacity-0 modal-content">
+            <div id="detail" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 pt-16 hidden backdrop-blur-sm transition-opacity duration-300 px-4">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-3xl overflow-hidden transform transition-all duration-300 scale-95 opacity-0 modal-content max-h-[85vh] overflow-y-auto">
                     <!-- Encabezado con efecto gradiente -->
                     <div class="bg-gradient-to-r from-emerald-500 to-teal-600 px-6 py-4">
                         <div class="flex justify-between items-center">
@@ -369,11 +368,11 @@
                             </button>
                         </div>
                     </div>
-
+            
                     <div class="p-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">  <!-- Aumenté el gap a 8 -->
                             <!-- Columna Izquierda -->
-                            <div class="space-y-4">
+                            <div class="space-y-5">  <!-- Aumenté el espacio vertical -->
                                 <!-- Nombre -->
                                 <div class="flex items-start">
                                     <div class="flex-shrink-0 h-10 w-10 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center">
@@ -386,7 +385,7 @@
                                         <p id="bateriaDetail" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
                                     </div>
                                 </div>
-
+            
                                 <!-- Capacidad -->
                                 <div class="flex items-start">
                                     <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
@@ -399,7 +398,7 @@
                                         <p id="capacidadDetail" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
                                     </div>
                                 </div>
-
+            
                                 <!-- Coste -->
                                 <div class="flex items-start">
                                     <div class="flex-shrink-0 h-10 w-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center">
@@ -413,9 +412,9 @@
                                     </div>
                                 </div>
                             </div>
-
+            
                             <!-- Columna Derecha -->
-                            <div class="space-y-4">
+                            <div class="space-y-5">  <!-- Aumenté el espacio vertical -->
                                 <!-- Garantía Material -->
                                 <div class="flex items-start">
                                     <div class="flex-shrink-0 h-10 w-10 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
@@ -428,7 +427,7 @@
                                         <p id="garantiaMaterial" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
                                     </div>
                                 </div>
-
+            
                                 <!-- Garantía Fabricante -->
                                 <div class="flex items-start">
                                     <div class="flex-shrink-0 h-10 w-10 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
@@ -441,7 +440,7 @@
                                         <p id="garantiaFabricante" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
                                     </div>
                                 </div>
-
+            
                                 <!-- ID Referencia -->
                                 <div class="flex items-start">
                                     <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center">
@@ -456,24 +455,24 @@
                                 </div>
                             </div>
                         </div>
-
+            
                         <!-- Descripción -->
-                        <div class="mt-6">
-                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Descripción</h3>
+                        <div class="mt-8">  <!-- Aumenté el margen superior -->
+                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Descripción</h3>  <!-- Aumenté el margen inferior -->
                             <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
                                 <p id="descripcionDetail" class="text-gray-900 dark:text-gray-200"></p>
                             </div>
                         </div>
-
+            
                         <!-- Imagen -->
-                        <div class="mt-6">
-                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Imagen de la Batería</h3>
+                        <div class="mt-8">  <!-- Aumenté el margen superior -->
+                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Imagen de la Batería</h3>  <!-- Aumenté el margen inferior -->
                             <div class="flex justify-center">
-                                <img id="imagenPanel" src="" alt="Imagen de la batería" class="max-w-full h-64 object-contain rounded-lg border border-gray-200 dark:border-gray-600">
+                                <img id="imagenPanel" src="" alt="Imagen de la batería" class="max-w-full h-72 object-contain rounded-lg border border-gray-200 dark:border-gray-600">  <!-- Aumenté la altura de la imagen -->
                             </div>
                         </div>
                     </div>
-
+            
                     <!-- Pie del modal -->
                     <div class="bg-gray-50 dark:bg-gray-700 px-6 py-4 flex justify-end">
                         <button onclick="toggleDetail()" class="px-6 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg shadow-md hover:from-emerald-600 hover:to-teal-700 transition-all duration-300">

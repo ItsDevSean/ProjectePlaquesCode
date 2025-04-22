@@ -103,8 +103,8 @@
 
                     
                     <!-- Modal para inversores -->
-                    <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 hidden backdrop-blur-sm transition-opacity duration-300">
-                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-4xl overflow-hidden transform transition-all duration-300 scale-95 opacity-0 modal-content">
+                    <div id="modal" class="fixed inset-0 z-50 flex pt-10 p-4 items-center justify-center bg-black bg-opacity-70 hidden backdrop-blur-sm transition-opacity duration-300">
+                        <div class="bg-white max-h-[80vh] mx-4 dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-4xl overflow-y-auto transform transition-all duration-300 scale-95 opacity-0 modal-content">
                             <!-- Encabezado con efecto gradiente -->
                             <div class="bg-gradient-to-r from-emerald-500 to-teal-600 px-6 py-4">
                                 <div class="flex justify-between items-center">
@@ -377,7 +377,7 @@
                 </div>
             </div>
             <!-- Modal de Detalle -->
-            <div id="detail" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 hidden backdrop-blur-sm transition-opacity duration-300">
+            <div id="detail" class="fixed pt-10 inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 hidden backdrop-blur-sm transition-opacity duration-300">
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden transform transition-all duration-300 scale-95 opacity-0 modal-content">
                     <!-- Encabezado con efecto gradiente -->
                     <div class="bg-gradient-to-r from-emerald-500 to-teal-600 px-6 py-4">
