@@ -4,6 +4,44 @@
     width: auto;
 }
 
+.missing-data-container {
+    background-color: #f9fafb; /* gris gairebé blanc, molt net */
+    border: 1px solid #e5e7eb; /* línia suau però clara */
+    border-radius: 0.75rem;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 800px;
+    margin-bottom: 200px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* lleugeríssim relleu */
+}
+
+.missing-data-title {
+    color: #111827; /* gairebé negre, però no pur */
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.missing-data-list {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    color: #374151; /* gris elegant, molt llegible */
+    margin-top: 0.75rem;
+}
+
+.missing-data-item {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.missing-data-instruction {
+    margin-top: 1.5rem;
+    color: #6b7280; /* gris clar, to d’ajuda */
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+
 .card {
     transition: all 0.3s ease;
     border: 1px solid #e5e7eb;

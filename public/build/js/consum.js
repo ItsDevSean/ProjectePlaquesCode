@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const userId = window.userId;
+
     // Clase principal para gestionar la aplicación de consumo
     class ConsumptionApp {
         
@@ -15,6 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
         initElements() {
             this.elements = {
                 // Inputs
+                patroDiurn: document.getElementById('button_diurn'),
+                patroNocturn: document.getElementById('button_nocturn'),
+                patroMixt: document.getElementById('button_mixt'),
                 consumAnual: document.getElementById('consum-anual'),
                 facturaAnual: document.getElementById('factura-anual'),
                 tarifaAcces: document.getElementById('tarifa-acces'),
@@ -65,6 +70,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Inicializar event listeners
         initEventListeners() {
+            this.elements.patroDiurn.addEventListener('click', () => this.saveToLocalStorage(`user_${userId}_consumPattern`, 0.7));
+            this.elements.patroNocturn.addEventListener('click', () => this.saveToLocalStorage(`user_${userId}_consumPattern`, 0.3));
+            this.elements.patroMixt.addEventListener('click', () => this.saveToLocalStorage(`user_${userId}_consumPattern`, 0.5));
             // Inputs
             this.elements.consumAnual.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_consumAnual`, this.elements.consumAnual.value));
             this.elements.facturaAnual.addEventListener('change', () => this.saveToLocalStorage(`user_${userId}_facturaAnual`, this.elements.facturaAnual.value));
@@ -299,7 +307,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
             }
-
             // Recuperar patrón de consumo
             const savedPattern = localStorage.getItem(`user_${this.userId}_consumPattern`);
             if (savedPattern) {

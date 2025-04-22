@@ -1,4 +1,51 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    // Campos requeridos para mostrar la vista de producción
+    const requiredFields = [
+        `user_${window.userId}_monthlyRadiation`,
+        `user_${window.userId}_placaCount`,
+        `user_${window.userId}_panel_pot`,
+        `user_${window.userId}_direccion`,
+        `user_${window.userId}_panel_model`,
+        `user_${window.userId}_orientacion`,
+        `user_${window.userId}_inclinacion`,
+        `user_${window.userId}_tipo_instalacion`,
+        `user_${window.userId}_consumPattern`,
+        `user_${window.userId}_consumAnual`,
+        `user_${window.userId}_facturaAnual`,
+        `user_${window.userId}_precioExcedentes`,
+        `user_${window.userId}_costeInstalacion`,
+        `user_${window.userId}_subvenciones`
+    ];
+    
+    // Verificar si todos los campos requeridos están presentes
+    const missingFields = requiredFields.filter(field => !localStorage.getItem(field));
+    
+    const productionContent = document.getElementById('production-content');
+    const missingDataMessage = document.getElementById('missing-data-message');
+    const missingFieldsList = document.getElementById('missing-fields-list');
+    
+    if (missingFields.length === 0) {
+        // Todos los campos están presentes, mostrar el contenido de producción
+        productionContent.classList.remove('hidden');
+        
+        // Cargar el script de producción
+        const script = document.createElement('script');
+        script.src = 'build/js/produccio.js';
+        document.body.appendChild(script);
+    } else {
+        // Mostrar mensaje de campos faltantes
+        missingDataMessage.classList.remove('hidden');
+        
+        // Mostrar lista de campos faltantes
+        missingFields.forEach(field => {
+            const fieldName = field.replace(`user_${window.userId}_`, '').replace(/_/g, ' ');
+            const listItem = document.createElement('li');
+            listItem.className = 'missing-data-item';
+            listItem.textContent = fieldName;
+            missingFieldsList.appendChild(listItem);
+        });
+    }
     console.log(localStorage)
     const userId = window.userId;
 
@@ -46,7 +93,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const orientacion = localStorage.getItem(`user_${userId}_orientacion`) || "No especificada";
     const inclinacio = localStorage.getItem(`user_${userId}_inclinacion`) || "No especificada";
     const tipusInstalacio = localStorage.getItem(`user_${userId}_tipo_instalacion`) || "No especificada";
-    console.log (tipusInstalacio)
     const placaCount = parseFloat(localStorage.getItem(`user_${userId}_placaCount`)) || 0;
     const potenciaMaxima = parseFloat(localStorage.getItem(`user_${userId}_panel_pot`)) || 0;
     const radiacionAnual = parseFloat(localStorage.getItem(`user_${userId}_radiacion`)) || 0;
@@ -67,7 +113,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const energiaTeorica = radiacionAnual * potenciaInstalada; 
     const energiaReal = radiacionAnual * potenciaInstalada * 0.8;
     const rendimiento = (energiaReal / energiaTeorica) * 100;
-    console.log(equiLlar)
     
 
     // Calculs d'estalivi i impacte
@@ -76,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const excedents = genearcioSolar - autconsum;
     const preuElectricitat = facturaAnual / consumAnual;
     const estalviAnual = (consumAnual * patroAutoconsum * preuElectricitat) + (excedents * preuExcedents) 
+    console.log(consumAnual, preuElectricitat, patroAutoconsum)
     const coEvitat = consumAnual * patroAutoconsum * 0.253
     const retornInversio = (costInstalació - subvenciones) / estalviAnual;
 
