@@ -142,7 +142,7 @@
                                     </tr>
                                 @else
                                     @foreach ($panels as $p)
-                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150">
+                                        <tr onclick="openDetail({{ $p }}, {{ json_encode($nameAtributes) }})" class="text-center hover:bg-[#b6b7b8]">
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex items-center">
                                                     <div class="flex-shrink-0 h-10 w-10 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center">
@@ -385,11 +385,11 @@
 
             <!-- Modal de Detalle -->
             <div id="detail" class="fixed pt-10 inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 hidden backdrop-blur-sm transition-opacity duration-300">
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden transform transition-all duration-300 scale-95 opacity-0 modal-content">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden transform transition-all duration-300 scale-95 modal-content">
                     <!-- Encabezado con efecto gradiente -->
                     <div class="bg-gradient-to-r from-emerald-500 to-teal-600 px-6 py-4">
                         <div class="flex justify-between items-center">
-                            <h2 class="text-xl font-bold text-white">Detalles del Panel Solar</h2>
+                            <h2 id="detailTitle" class="text-xl font-bold text-white"></h2>
                             <button onclick="toggleDetail()" type="button" class="text-white hover:text-gray-200 transition-colors duration-200 focus:outline-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -410,7 +410,7 @@
                                     </div>
                                     <div class="ml-4">
                                         <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Modelo</h3>
-                                        <p id="panelModelDetail" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
+                                        <p id="detail_panel_model" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
                                     </div>
                                 </div>
 
@@ -422,7 +422,7 @@
                                     </div>
                                     <div class="ml-4">
                                         <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Fabricante</h3>
-                                        <p id="manufacturerDetail" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
+                                        <p id="detail_manufacturer" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
                                     </div>
                                 </div>
 
@@ -434,7 +434,7 @@
                                     </div>
                                     <div class="ml-4">
                                         <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Tipo</h3>
-                                        <p id="panelTypeDetail" class="text-lg font-semibold text-gray-900 dark:text-white capitalize"></p>
+                                        <p id="detail_panel_type" class="text-lg font-semibold text-gray-900 dark:text-white capitalize"></p>
                                     </div>
                                 </div>
 
@@ -446,7 +446,7 @@
                                     </div>
                                     <div class="ml-4">
                                         <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Fecha Fabricación</h3>
-                                        <p id="dateManufacturerDetail" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
+                                        <p id="detail_date_manufacturer" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
                                     </div>
                                 </div>
                             </div>
@@ -460,8 +460,8 @@
                                         </svg>
                                     </div>
                                     <div class="ml-4">
-                                        <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Garantía Producto</h3>
-                                        <p id="panelWarrantyDetail" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
+                                        <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Eficiencia (%)</h3>
+                                        <p id="detail_eficencia_panel" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
                                     </div>
                                 </div>
 
@@ -472,8 +472,8 @@
                                         </svg>
                                     </div>
                                     <div class="ml-4">
-                                        <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Garantía Rendimiento</h3>
-                                        <p id="performanceWarrantyDetail" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
+                                        <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Coeficiente de Temperatura  (%/°C) </h3>
+                                        <p id="detail_coeficiente_temp_pmax" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
                                     </div>
                                 </div>
 
@@ -484,8 +484,8 @@
                                         </svg>
                                     </div>
                                     <div class="ml-4">
-                                        <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Fecha de Creación</h3>
-                                        <p id="createdAtDetail" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
+                                        <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Superficie (m)</h3>
+                                        <p id="detail_superficie" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
                                     </div>
                                 </div>
 
@@ -496,8 +496,8 @@
                                         </svg>
                                     </div>
                                     <div class="ml-4">
-                                        <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Potencia Nominal</h3>
-                                        <p id="potenciaDetail" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
+                                        <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Potencia Nominal (Wp)</h3>
+                                        <p id="detail_potencia_maxima" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
                                     </div>
                                 </div>
                             </div>
