@@ -22,6 +22,8 @@ class SolarPanelsController extends Controller
         $panelType = PanelType::all();            
         $panels = SolarPanelsModel::all()
         ->where('user_id', Auth::id());
+        
+        //dd($panels);
         $nameAtributes = (new SolarPanelsModel)->getFillable();
         $manufacturers = Fabricante::where('user_id', Auth::id())->get();
         return view('tools.panels', compact('panels', 'panelType', 'nameAtributes', 'manufacturers'));  
@@ -67,6 +69,7 @@ class SolarPanelsController extends Controller
             'coeficiente_temp_voc' => 'nullable|numeric|min:-100|max:100',
             'coeficiente_temp_isc' => 'nullable|numeric|min:-100|max:100',
         ]);
+        
 
         SolarPanelsModel::create($request->all() + ['user_id' => Auth::id()]);
 

@@ -210,7 +210,7 @@
 
             <!-- Modal para crear/editar panel -->
             <div id="modal" class="fixed inset-0 z-50 flex pt-10 p-4 items-center justify-center bg-black bg-opacity-70 hidden backdrop-blur-sm transition-opacity duration-300">
-                <div class="bg-white max-h-[80vh] mx-4 dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-4xl overflow-y-auto transform transition-all duration-300 scale-95 opacity-0 modal-content">
+                <div class="bg-white max-h-[80vh] mx-4 dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-4xl overflow-y-auto transform transition-all duration-300 scale-95 modal-content">
                     <!-- Encabezado con efecto gradiente -->
                     <div class="bg-gradient-to-r from-emerald-500 to-teal-600 px-6 py-4">
                         <div class="flex justify-between items-center">
@@ -374,7 +374,7 @@
                                 <button type="button" onclick="toggleModal()" class="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-300">
                                     Cancelar
                                 </button>
-                                <button type="submit" class="px-6 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg shadow-lg hover:from-emerald-600 hover:to-teal-700 transition-all duration-300">
+                                <button id="submitButton" type="submit" class="px-6 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg shadow-lg hover:from-emerald-600 hover:to-teal-700 transition-all duration-300">
                                     Guardar Panel
                                 </button>
                             </div>
