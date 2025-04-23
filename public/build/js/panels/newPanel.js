@@ -1,6 +1,7 @@
 function formSubmit(event) {
     // Prevent default form submission
     event.preventDefault();
+    console.log("hold on timeeee ");
     //Prepare the form
     const form = document.getElementById('panelForm');
     if (!form) {

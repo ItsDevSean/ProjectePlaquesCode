@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         constructor() {
             this.userId = window.userId || null;
             this.initElements();
+            this.initForm();
             this.initEventListeners();
             this.initPatternCharts();
             this.initMainChart();
@@ -20,12 +21,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 patroDiurn: document.getElementById('button_diurn'),
                 patroNocturn: document.getElementById('button_nocturn'),
                 patroMixt: document.getElementById('button_mixt'),
-                consumAnual: document.getElementById('consum-anual'),
-                facturaAnual: document.getElementById('factura-anual'),
+                consumAnual: document.getElementById('consumAnual'),
+                facturaAnual: document.getElementById('facturaAnual'),
                 tarifaAcces: document.getElementById('tarifa-acces'),
-                costeInstalacion: document.getElementById('coste-instalacion'),
+                costeInstalacion: document.getElementById('costeInstalacion'),
                 subvenciones: document.getElementById('subvenciones'),
-                precioExcedentes: document.getElementById('precio-excedentes'),
+                precioExcedentes: document.getElementById('precioExcedentes'),
                 preciosPeriodoContainer: document.getElementById('precios-periodo-container'),
                 precioP1: document.getElementById('precio-p1'),
                 precioP2: document.getElementById('precio-p2'),
@@ -63,9 +64,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 cupsNumber: document.getElementById('cups-number'),
 
                 //Imported data
-                importedDataJson: document.getElementById('importedData').innerText
+                importedDataJson: document.getElementById('importedData').innerText,
+
+                // Form
+                formulari: document.getElementById('fomulariConsum'),
 
             };
+        }
+
+        // Inicializar els elements del formulari
+        initForm() {
+            if (this.elements.formulari) {
+                const inputs = this.elements.formulari.querySelectorAll('input, select');
+                inputs.forEach(input => {
+                    const savedValue = localStorage.getItem(`user_${userId}_${input.name}`);
+                    if (savedValue) {
+                        input.value = savedValue;
+                    }
+                })
+            } 
         }
 
         // Inicializar event listeners

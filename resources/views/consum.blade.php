@@ -108,7 +108,7 @@
         </div>
 
         <!-- Contingut principal mejorado -->
-        <div class="max-w-6xl mx-auto px-6 py-8 mt-6 bg-white rounded-xl shadow-lg dark:bg-gray-800 transition-all duration-300 hover:shadow-xl ">
+        <div id="fomulariConsum" class="max-w-6xl mx-auto px-6 py-8 mt-6 bg-white rounded-xl shadow-lg dark:bg-gray-800 transition-all duration-300 hover:shadow-xl ">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 mb-8">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
                     <div>
@@ -147,11 +147,11 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- Consum anual -->
                             <div class="space-y-2">
-                                <label for="consum-anual" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                <label for="consumAnual" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     Consum anual (kWh/any)
                                 </label>
                                 <div class="relative">
-                                    <input type="number" id="consum-anual" name="consum-anual" id="consumAnual" 
+                                    <input type="number" id="consumAnual" name="consumAnual" 
                                            class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
                                            placeholder="Introdueix el teu consum anual">
                                     <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -163,18 +163,18 @@
                             
                             <!-- Factura anual -->
                             <div class="space-y-2">
-                                <label for="factura-anual" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                <label for="facturaAnual" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     Factura anual (€)
                                 </label>
                                 <div class="relative">
-                                    <input type="number" id="factura-anual" name="factura-anual" 
+                                    <input type="number" id="facturaAnual" name="facturaAnual" 
                                            class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
-                                           placeholder="Introdueix la teva factura anual">
+                                           placeholder="Introdueix el teu consum anual">
                                     <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                         <span class="text-gray-500 dark:text-gray-400">€</span>
                                     </div>
                                 </div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana espanyola: 840€/any</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana espanyola: 3.250 kWh/any</p>
                             </div>
                             
                             <!-- Tarifa d'accés mejorada -->
@@ -241,11 +241,11 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <!-- Coste total instalación -->
                                 <div class="space-y-2">
-                                    <label for="coste-instalacion" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    <label for="costeInstalacion" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                         Cost total instal·lació
                                     </label>
                                     <div class="relative">
-                                        <input type="number" id="coste-instalacion" name="coste-instalacion" 
+                                        <input type="number" id="costeInstalacion" name="costeInstalacion" 
                                                class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
                                                placeholder="Ex: 6000">
                                         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -273,11 +273,11 @@
                                 
                                 <!-- Precio de venta de excedentes -->
                                 <div class="space-y-2">
-                                    <label for="precio-excedentes" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    <label for="precioExcedentes" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                         Preu de venda d'excedents
                                     </label>
                                     <div class="relative">
-                                        <input type="number" step="0.001" id="precio-excedentes" name="precio-excedentes" 
+                                        <input type="number" step="0.001" id="precioExcedentes" name="precioExcedentes" 
                                                class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
                                                placeholder="Ex: 0.08">
                                         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">

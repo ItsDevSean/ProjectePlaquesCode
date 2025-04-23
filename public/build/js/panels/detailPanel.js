@@ -1,12 +1,13 @@
 // Open detail with the values of the panel
 function openDetail(panel, nameAtributes) {
+    console.log("the streeets have no nameeeee")
     processAttributes(panel,nameAtributes);
     toggleDetail();
 }   
 function processAttributes(panel,nameAtributes) {
-    document.getElementById('modalModel').textContent = panel.panel_model;
+    document.getElementById('detailTitle').textContent = "Detalle de " + panel.panel_model;
     nameAtributes.forEach(na => {
-        if (na != 'panel_model' && na != 'user_id') {
+        if (na != 'user_id') {
             // Ensure the element exists before setting textContent
             const element = document.getElementById("detail_"+na);
             if (element) {
