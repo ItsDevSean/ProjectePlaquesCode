@@ -239,9 +239,24 @@
                                     </div>
                                     
                                     
+                                  
+                                    <!-- Fabricante -->
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Fabricante <span class="text-red-500">*</span></label>
-                                        <input type="text" id="manufacturer" name="manufacturer" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300" required />
+                                        <label id="nomManudfacturer" for="manufacturer" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Fabricante</label>
+                                        <div class="flex gap-3">
+                                            <select name="manufacturer" id="manufacturer" class="flex-1 px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 appearance-none "required>
+                                                <option value="">Seleccionar fabricante</option>
+                                                @foreach ($fabricantes as $fabricante)
+                                                    <option value="{{ $fabricante->id }}">{{ $fabricante->nombre }}</option>
+                                                @endforeach
+                                            </select>
+                                            <button type="button" id="openFabricanteModal" class="px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg shadow-md hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 flex items-center gap-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                                </svg>
+                                                <span class="hidden sm:inline">Nuevo</span>
+                                            </button>
+                                        </div>
                                     </div>
                                     
                                     <div>
@@ -379,6 +394,54 @@
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+
+            <!-- Modal para crear fabricante -->
+            <div id="fabricanteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 hidden backdrop-blur-sm transition-opacity duration-300">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all duration-300 scale-95 modal-content">
+                    <!-- Encabezado con efecto gradiente -->
+                    <div class="bg-gradient-to-r from-emerald-500 to-teal-600 px-6 py-4">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-xl font-bold text-white">Crear Nuevo Fabricante</h2>
+                            <button id="closeFabricanteModal" type="button" class="text-white hover:text-gray-200 transition-colors duration-200 focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <form  id="crearFabricanteForm" class="p-6">
+                        @csrf
+                        <div class="space-y-5">
+                            <!-- Nombre del Fabricante -->
+                            <div class="relative">
+                                <label for="nombre_fabricante" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre del Fabricante</label>
+                                <div class="relative">
+                                    <input type="text" name="nombre" id="nombre_fabricante" class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400 dark:placeholder-gray-400 pl-10"required>
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botones de acción -->
+                        <div class="mt-8 flex justify-end space-x-3">
+                            <button type="button" id="closeFabricanteModalBtn" class="px-6 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-300">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg shadow-md hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Crear Fabricante</span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -579,7 +642,11 @@
                 @method('DELETE')
             </form>
         </div>
-
+        <script>  
+                  window.routeCrearFabricante = "{{ route('fabricantes.store') }}";
+                  window.csrfToken = "{{ csrf_token() }}";
+        </script>
+        <script src="{{asset('build/js/panels/modalFabricante.js')}}"></script>
         <script src="{{asset('build/js/panels/newPanel.js')}}"></script>
         <script src="{{asset('build/js/panels/detailPanel.js')}}"></script>
         <script src="{{asset('build/js/panels/modalElimPanel.js')}}"></script>
