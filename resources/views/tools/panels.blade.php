@@ -223,9 +223,7 @@
                         </div>
                     </div>
 
-                    <div class="p-6">
-                        @include('fragments._errors-form')
-                        
+                    <div class="p-6">                   
                         <form action="{{ route('paneles.resultado') }}" method="POST" id="panelForm" class="space-y-6">
                             @csrf
                             @method('POST')
@@ -237,8 +235,9 @@
                                     
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre del Modelo <span class="text-red-500">*</span></label>
-                                        <input type="text" id="panel_model" name="panel_model" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300" required />
+                                        <input type="text" id="panel_model" name="panel_model" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300" required/>
                                     </div>
+                                    
                                     
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Fabricante <span class="text-red-500">*</span></label>
@@ -303,7 +302,7 @@
                                     </div>
                                     
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Eficiencia (%) <span class="text-red-500">*</span></label>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Eficiencia (%) <span id="errorEficiencia" class="text-red-500">*</span></label>
                                         <input id="eficencia_panel" name="eficencia_panel" type="number" step="0.01" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300" required />
                                     </div>
                                     
@@ -321,12 +320,12 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Longitud (mm) <span class="text-red-500">*</span></label>
                                         <input type="number" id="longitud_v2" name="longitud_v2" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300" required />
-                                        <p class="text-xs text-red-500 mt-1">Mínimo 1000 mm</p>
+                                        <p id="errorAltura" class="text-xs text-red-500 mt-1">Mínimo 1000 mm</p>
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Anchura (mm) <span class="text-red-500">*</span></label>
                                         <input type="number" id="anchura" name="anchura" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300" required />
-                                        <p class="text-xs text-red-500 mt-1">Mínimo 500 mm</p>
+                                        <p id="errorAnchura" class="text-xs text-red-500 mt-1">Mínimo 500 mm</p>
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Espesor (mm) <span class="text-red-500">*</span></label>
@@ -397,7 +396,6 @@
                             </button>
                         </div>
                     </div>
-
                     <div class="p-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- Columna Izquierda -->
