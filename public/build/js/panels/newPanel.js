@@ -1,8 +1,6 @@
+// Function that prces the form before the submit
 function formSubmit(event) {
-    // Prevent default form submission
     event.preventDefault();
-    console.log("hold on timeeee ");
-    //Prepare the form
     const form = document.getElementById('panelForm');
     if (!form) {
         console.error("Form not found!");
@@ -11,9 +9,8 @@ function formSubmit(event) {
     const superficieInput = document.getElementById('superficie'); 
     const longitudInput = document.getElementById('longitud_v2');
     const anchuraInput = document.getElementById('anchura');
-    // See if there ara errors
     if (!errorHandler()) {
-        console.log("dasfsadf");
+        console.log("Ostia todos los canvios");
         return;
     }
     console.log("Que oassas");
@@ -25,6 +22,7 @@ function formSubmit(event) {
     //Now submit the form after updating the input
     form.submit();
 }
+// Function that shows the errors of the form submition
 function errorHandler() {
     let isCorrect = true;
     // Get the elements that habe to validate
@@ -38,21 +36,46 @@ function errorHandler() {
     const longitudInput = document.getElementById('longitud_v2');
     const anchuraInput = document.getElementById('anchura');
     const eficienciaInput = document.getElementById('eficencia_panel');
-    const errorElement = document.getElementById('msg_error');
-    //console.log("nm " + nombreModelo.value)
-    if (!nombreModelo.value || !fabicante.value || !fechaFabricacion.value || 
-        !espesor.value || !peso.value || !potenciaMaxima.value || !coeficienteTemp.value || 
-        !longitudInput.value || !anchuraInput.value) {
-        errorElement.textContent = "Faltan campos obligatorios.";
+
+      // List all fields in order you want them checked
+      const fieldsToCheck = [
+        { id: 'panel_model', required: true, name: 'Nombre del Modelo' },
+        { id: 'manufacturer', required: true, name: 'Fabricante' },
+        { id: 'date_manufacturer', required: true, name: 'Fecha de Fabricación' },
+        { id: 'potencia_maxima', required: true, name: 'Potencia Nominal' },
+        { id: 'coeficiente_temp_pmax', required: true, name: 'Coef. Temp. Potencia' },
+        { id: 'longitud_v2', required: true, name: 'Longitud' },
+        { id: 'anchura', required: true, name: 'Anchura' },
+        { id: 'espesor', required: true, name: 'Espesor' },
+        { id: 'peso', required: true, name: 'Peso' },
+        { id: 'eficencia_panel', required: true, name: 'Eficiencia' },
+        { id: 'panel_warranty', required: false, name: 'Garantía Producto' },
+        { id: 'performance_warranty', required: false, name: 'Garantía Rendimiento' },
+    ];
+
+    // Check for empty required fields first
+    for (const field of fieldsToCheck) {
+        const element = document.getElementById(field.id);
+        if (field.required && !element.value) {
+            element.focus();
+            return false;
+        }
+    }
+    if (isCorrect && longitudInput.value < 1000 || isCorrect && anchuraInput.value < 500) {
+        console.log("with out with out you")
+        const errorMsgLonAnc = document.getElementById("errorAltura");
+        errorMsgLonAnc.textContent = "";
+        const errorMsgAnc = document.getElementById("errorAnchura");
+        errorMsgAnc.textContent = ""; 
+        errorMsgLonAnc.textContent = "La altura o la anchura son demasiado pequeñas.";
+        longitudInput.focus();
         isCorrect = false;
     }
-    if (!isCorrect && longitudInput.value < 1000 || anchuraInput.value < 500) {
-        errorElement.textContent = "La altura o la anchura son demasiado pequeñas.";
-        isCorrect = false;
-    }
-    if (!isCorrect && eficienciaInput.value > 99) {
-        errorElement.textContent = "Eficiència ha de ser menor de 100"
-        console.log("fefef");
+    if (isCorrect && eficienciaInput.value > 99) {
+        const errorMsgEficiencia = document.getElementById("errorEficiencia");
+        errorMsgEficiencia.textContent = "";
+        errorMsgEficiencia.textContent = "Eficiència ha de ser menor de 100";
+        eficienciaInput.focus();
         isCorrect = false;
     }
     return isCorrect;

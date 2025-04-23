@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const fabricanteModal = document.getElementById("fabricanteModal");
     const modalContent = fabricanteModal.querySelector('.modal-content');
     const crearFabricanteForm = document.getElementById("crearFabricanteForm");
-    const fabricanteSelect = document.getElementById("fabricante");
+    const fabricanteSelect = document.getElementById("manufacturer");
     
     // Elementos para abrir/cerrar el modal
     const openFabricanteModalBtn = document.getElementById("openFabricanteModal");
@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         // Cerrar al hacer clic fuera del contenido
+        console.log("va marc q tienes faenas con la bd " + fabricanteModal);
         fabricanteModal.addEventListener('click', (e) => {
             if (e.target === fabricanteModal) closeModal();
         });
@@ -113,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function openModal() {
-        document.getElementById("nombre_fabricante").value = "";
+        document.getElementById("nomManudfacturer").value = "";
         fabricanteModal.classList.remove("hidden");
         setTimeout(() => {
             modalContent.classList.remove('scale-95', 'opacity-0');
@@ -122,9 +123,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function closeModal() {
+        console.log("me la pela chaval no me vas a contestar ")
         modalContent.classList.remove('scale-100', 'opacity-100');
         modalContent.classList.add('scale-95', 'opacity-0');
-        
         setTimeout(() => {
             fabricanteModal.classList.add("hidden");
         }, 300);
