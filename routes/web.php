@@ -39,27 +39,14 @@ Route::get('/mapa', function () {
     return view('mapaPrueva');
 })->name('map');
 
-Route::get('/open', function () {
-    return view('opencv');
-})->name('open');
 
+// Ruta para mostrar el formulario de producción (GET)
+Route::get('/produccio', [DadesClientController::class, 'produccio'])->name('produccio');
 
-Route::get('/edificis', function () {
-    return view('editarEdificis');
-})->name('edificis');
-
-Route::get('/produccio', function () {
-    return view('produccio');
-})->name('produccio');
 
 Route::get('/consum', [ConsumptionController::class, 'index'])->name('consum');
 
 Route::post('/consum', [ConsumptionController::class, 'import'])->name('consumption');
-
-
-Route::get('/resultat', function () {
-    return view('resultat');
-})->name('resultat');
 
 
 Route::get('/vue', function(){
@@ -113,7 +100,7 @@ Route::get('/infoEco', function(){
 
 
 
-Route::post('/guardar-dades', [DadesClientController::class, 'store'])->name('guardar.dades');
+Route::post('/guardar-dades', action: [DadesClientController::class, 'store'])->name('guardar.dades');
 
 Route::resource('dades_clients', DadesClientController::class);
 
