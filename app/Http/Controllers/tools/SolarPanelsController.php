@@ -22,11 +22,10 @@ class SolarPanelsController extends Controller
         $panelType = PanelType::all();            
         $panels = SolarPanelsModel::all()
         ->where('user_id', Auth::id());
-        
-        //dd($panels);
+        $fabricantes = Fabricante::where('user_id', Auth::id())->get();
         $nameAtributes = (new SolarPanelsModel)->getFillable();
         $manufacturers = Fabricante::where('user_id', Auth::id())->get();
-        return view('tools.panels', compact('panels', 'panelType', 'nameAtributes', 'manufacturers'));  
+        return view('tools.panels', compact('panels', 'panelType', 'fabricantes', 'nameAtributes', 'manufacturers'));  
     }
 
     /**
@@ -44,7 +43,7 @@ class SolarPanelsController extends Controller
     {
         $request->validate([
             'panel_model' => 'required|string|min:2|max:100',
-            'manufacturer' => 'required|string|min:2|max:100',
+            'fabricante_id' => 'required|integer|exists:fabricantes,id',
             'panel_type' => 'required|string|min:2|max:50',
             'date_manufacturer' => 'required|date',
             'panel_warranty' => 'nullable|integer',

@@ -99,9 +99,9 @@
                 <p class="text-gray-600 dark:text-gray-300">Omple les dades bàsiques per començar el teu projecte solar</p>
             </div>
             
-            <form action="{{ isset($proyecto) ? route('dades_clients.update', $proyecto->id) : route('guardar.dades') }}" method="POST" id="clientForm">
+            <form action="{{ isset($proyecto) ? route('proyecto.update.dadesclient', $proyecto->id) : route('guardar.dades') }}" method="POST" id="clientForm">
                 @csrf
-                @if(isset($proyecto)) 
+                @if(isset($proyecto))
                     @method('PUT')
                 @endif
 
@@ -167,7 +167,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
                                 </div>
-                                <input type="text" class="mt-1 block w-full pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400 dark:placeholder-gray-400" 
+                                <input disabled type="text" class="mt-1 block w-full pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400 dark:placeholder-gray-400" 
                                        id="direccion" name="direccion" placeholder="Exemple: Carrer Major, 12" value="{{ old('direccion', $proyecto->direccion ?? '') }}" required>
                                 <span class="error-message absolute left-0 -bottom-5 text-red-500 text-xs hidden">La direcció és obligatòria.</span>
                             </div>
@@ -263,19 +263,7 @@
                             <span class="error-message absolute left-0 -bottom-5 text-red-500 text-xs hidden">Selecciona un tipus d'instal·lació.</span>
                         </div>
                     </div>
-                </div>
-
-                <!-- Botó d'enviament -->
-
-                <div class="flex justify-end">
-                    <button type="submit" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all duration-300 transform hover:scale-105">
-                        {{ isset($cliente) ? 'Actualizar' : 'Seguent' }}
-                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 -mr-1 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </button>
-                </div>
-            
+                </div>            
             </form>
         </div>
 
