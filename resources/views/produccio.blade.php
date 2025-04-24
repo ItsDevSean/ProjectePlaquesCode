@@ -453,14 +453,12 @@
          }
          return response.json();
     })
-    .then(responseData => { // Cambié nombre de 'data' a 'responseData' para evitar confusión
+    .then(responseData => {
         if (responseData.success) {
             alert("✅ Dades guardades correctament");
-            // Limpiar localStorage después de guardar con éxito (opcional)
-            // Object.keys(keyMap).forEach(localKey => localStorage.removeItem(localKey));
+         
             window.location.href = "{{ route('proyectos') }}";
         } else {
-            // Si el backend devuelve success: false, mostrar mensaje o errores
              let errorMessage = responseData.message || 'Error desconegut al servidor.';
              if (responseData.errors) {
                  errorMessage += "\nDetalls:\n";
