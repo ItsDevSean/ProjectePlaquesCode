@@ -103,7 +103,7 @@
         </div>
 
         <div class="fixed inset-y-0 right-0 flex items-center justify-center w-16 z-20 pr-10">
-            <button class="p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 group">
+            <button id="enviarLocal" class="p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 group">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600 dark:text-gray-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M17 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a1 1 0 001-1V7l-3-4zM12 19a2 2 0 110-4 2 2 0 010 4zm4-10H8V5h8v4z" />
                 </svg>
@@ -340,7 +340,7 @@
     document.getElementById('enviarLocal').addEventListener('click', function() {
     const btn = this;
     btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardant...';
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="font-size: 1.3em; color: #059669;"></i>';
 
     // *** CORREGIDO: keyMap usa las claves REALES de localStorage ***
     const keyMap = {
@@ -456,7 +456,8 @@
     .then(responseData => {
         if (responseData.success) {
             alert("✅ Dades guardades correctament");
-         
+            localStorage.clear()
+            // Object.keys(keyMap).forEach(localKey => localStorage.removeItem(localKey));
             window.location.href = "{{ route('proyectos') }}";
         } else {
              let errorMessage = responseData.message || 'Error desconegut al servidor.';
@@ -475,7 +476,6 @@
     })
     .finally(() => {
         btn.disabled = false;
-        btn.innerHTML = 'Guardar datos locales';
     });
 });
 </script>

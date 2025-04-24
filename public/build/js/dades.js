@@ -128,11 +128,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Cargar valores guardados
         inputs.forEach(input => {
-            console.log("Ezequiel eren creiente? " + input.name)
             const savedValue = localStorage.getItem(`user_${userId}_${input.name}`);
-            console.log("Lo guardeas en una variable? " + savedValue)
             if (savedValue) {
-                console.log("en el VM pones esto ")
                 input.value = savedValue;
             }
         });

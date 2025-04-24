@@ -263,19 +263,7 @@
                             <span class="error-message absolute left-0 -bottom-5 text-red-500 text-xs hidden">Selecciona un tipus d'instal·lació.</span>
                         </div>
                     </div>
-                </div>
-
-                <!-- Botó d'enviament -->
-
-                <div class="flex justify-end">
-                    <button type="submit" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all duration-300 transform hover:scale-105">
-                        {{ isset($cliente) ? 'Actualizar' : 'Seguent' }}
-                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 -mr-1 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </button>
-                </div>
-            
+                </div>            
             </form>
         </div>
 
