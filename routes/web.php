@@ -98,7 +98,17 @@ Route::get('/infoEco', function(){
     return view('infoEco');
 });
 
-
+Route::prefix('proyecto/{id}/editar')->group(function () {
+    Route::get('dadesclient', [DadesClientController::class, 'editDadesClient'])->name('proyecto.edit.dadesclient');
+    Route::get('consum', [DadesClientController::class, 'editConsum'])->name('proyecto.edit.consum'); // ✅ CAMBIADO
+    Route::get('mapa', [DadesClientController::class, 'editMapa'])->name('proyecto.edit.mapa'); // ✅ CAMBIADO
+    Route::get('produccio', [DadesClientController::class, 'editProduccio'])->name('proyecto.edit.produccio');
+    
+    Route::put('dadesclient', [DadesClientController::class, 'updateDadesClient'])->name('proyecto.update.dadesclient');
+    Route::put('consum', [DadesClientController::class, 'updateConsum'])->name('proyecto.update.consum');
+    Route::put('mapa', [DadesClientController::class, 'updateMapa'])->name('proyecto.update.mapa');
+    Route::put('produccio', [DadesClientController::class, 'updateProduccio'])->name('proyecto.update.produccio');
+});
 
 Route::post('/guardar-dades', action: [DadesClientController::class, 'store'])->name('guardar.dades');
 
