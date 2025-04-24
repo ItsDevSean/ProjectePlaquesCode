@@ -100,8 +100,8 @@ Route::get('/infoEco', function(){
 
 Route::prefix('proyecto/{id}/editar')->group(function () {
     Route::get('dadesclient', [DadesClientController::class, 'editDadesClient'])->name('proyecto.edit.dadesclient');
-    Route::get('consum', [DadesClientController::class, 'editConsum'])->name('proyecto.edit.consum'); // ✅ CAMBIADO
-    Route::get('mapa', [DadesClientController::class, 'editMapa'])->name('proyecto.edit.mapa'); // ✅ CAMBIADO
+    Route::get('consum', [DadesClientController::class, 'editConsum'])->name('proyecto.edit.consum'); 
+    Route::get('mapa', [DadesClientController::class, 'editMapa'])->name('proyecto.edit.mapa'); 
     Route::get('produccio', [DadesClientController::class, 'editProduccio'])->name('proyecto.edit.produccio');
     
     Route::put('dadesclient', [DadesClientController::class, 'updateDadesClient'])->name('proyecto.update.dadesclient');

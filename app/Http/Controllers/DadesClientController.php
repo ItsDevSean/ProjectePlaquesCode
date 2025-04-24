@@ -30,7 +30,7 @@ class DadesClientController extends Controller
             'codigo_postal' => 'nullable|numeric|min:0',
             'nombre_proyecto' => 'required|string',
             'descripcion_proyecto' => 'nullable|string',
-            'estacionalidad' => 'nullable|string',
+            'estacionalitat' => 'nullable|string',
             'tipo_instalacion' => 'nullable|string',
             'consum_anual' => 'nullable|numeric',
             'factura_anual' => 'nullable|numeric',
