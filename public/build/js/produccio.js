@@ -134,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('orientation').textContent = orientacion;
     document.getElementById('tilt').textContent = inclinacio;
     document.getElementById('annualProduction').textContent = Math.round(prodAnual).toLocaleString();
+    localStorage.setItem(`user_${userId}_prodAnual`, Math.round(prodAnual).toLocaleString())
     document.getElementById('capacityFactor').textContent = factorCapacidad;
     document.getElementById('peakSunHours').textContent = horasPico;
     document.getElementById('tarifaAcces').textContent = tarifaAcces;

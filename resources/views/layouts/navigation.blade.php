@@ -85,7 +85,7 @@
                 <!-- New Project Button -->
                 <div class="hidden md:block mr-4">
                     <button id="loadProjectBtn" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 border border-transparent rounded-md font-medium text-white shadow-sm hover:from-emerald-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all duration-200">
-                        <i class="fas fa-plus mr-2"></i> {{ __('Nuevo Proyecto') }}
+                        <i class="fas fa-sun mr-3 text-lg"></i> {{ __('Nuevo Proyecto') }}
                     </button>
                 </div>
 

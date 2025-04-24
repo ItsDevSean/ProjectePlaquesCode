@@ -189,11 +189,15 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <div class="flex items-center justify-end space-x-3">
-                                                    <a href="{{ route('dades_clients.edit', $proyecto->id) }}"  onclick="event.stopPropagation();" class="text-emerald-600 hover:text-teal-700 transition-colors" title="Editar">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                        </svg>
-                                                    </a>
+                                                <a href="{{ route('proyecto.edit.dadesclient', $proyecto->id) }}"  
+                                                onclick="event.stopPropagation();" 
+                                                class="text-emerald-600 hover:text-teal-700 transition-colors" 
+                                                title="Editar">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                    </svg>
+                                                </a>
                                                     <button onclick="event.stopPropagation(); openModal('{{ $proyecto->nombre_proyecto }}', '{{ $proyecto->id }}')" class="text-red-600 hover:text-red-900 transition-colors" title="Eliminar">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -466,173 +470,7 @@
         @method('DELETE')
     </form> 
     
-    
     <script src="build/js/estado.js"></script>
-    <script>
-// Función para mostrar los detalles del proyecto
-function showProjectDetails(projectId) {
-    // Encontrar la fila de la tabla que corresponde al proyecto clickeado
-    const projectRow = document.querySelector(`.project-row[data-id="${projectId}"]`);
+    <script src="build/js/proyectos.js"></script>
     
-    if (!projectRow) {
-        console.error("No se encontró el proyecto con ID:", projectId);
-        return;
-    }
-
-    // Extraer los datos de las celdas de la fila
-    const cells = projectRow.querySelectorAll('td');
-    
-    // Llenar el panel con los datos extraídos
-    document.getElementById('projectId').textContent = projectId;
-    document.getElementById('projectName').textContent = cells[3].querySelector('div:first-child').textContent;
-    document.getElementById('descriptionProject').textContent = cells[3].querySelector('div:last-child').textContent;
-    document.getElementById('projectStatus').textContent = cells[1].querySelector('select').value;
-    document.getElementById('projectCreated').textContent = cells[5].querySelector('div:first-child').textContent;
-    document.getElementById('projectUpdated').textContent = cells[5].querySelector('div:first-child').textContent; // Puedes ajustar esto si tienes updated_at
-    
-    // Datos del cliente
-    document.getElementById('clientName').textContent = cells[2].textContent;
-    document.getElementById('clientAddress').textContent = 'Sin dirección'; // Ajusta según tus datos
-    document.getElementById('clientCity').textContent = 'Sin ciudad'; // Ajusta según tus datos
-    document.getElementById('clientContact').textContent = 'Sin contacto'; // Ajusta según tus datos
-    
-    // Datos del usuario
-    document.getElementById('userName').textContent = cells[0].querySelector('div:first-child').textContent;
-    document.getElementById('userEmail').textContent = cells[0].querySelector('div:last-child').textContent;
-    document.getElementById('userInitial').textContent = cells[0].querySelector('div:first-child').textContent.charAt(0);
-
-    // Configurar enlaces de acción
-    const editLink = document.getElementById('editProjectLink');
-    editLink.href = `/dades_clients/${projectId}/edit`;
-
-    // Configurar botón de eliminar
-    const deleteButton = document.getElementById('deleteProjectButton');
-    deleteButton.onclick = function(e) {
-        e.stopPropagation();
-        openModal(cells[3].querySelector('div:first-child').textContent, projectId);
-    };
-
-    // Mostrar panel
-    document.getElementById('overlay').classList.remove('hidden');
-    document.getElementById('sidePanel').classList.remove('translate-x-full');
-    document.getElementById('sidePanel').classList.add('translate-x-0');
-}
-
-// Función para cerrar el panel lateral
-function closeSidePanel() {
-    document.getElementById('overlay').classList.add('hidden');
-    document.getElementById('sidePanel').classList.remove('translate-x-0');
-    document.getElementById('sidePanel').classList.add('translate-x-full');
-}
-
-// Habilitar/deshabilitar botón de confirmación según coincidencia
-document.getElementById('confirmationInput').addEventListener('input', function() {
-    const projectName = document.getElementById('projectoName').textContent;
-    const confirmButton = document.getElementById('confirmDeleteButton');
-    confirmButton.disabled = this.value !== projectName;
-});
-
-// Función para abrir el modal de confirmación
-function openModal(projectName, projectId) {
-    document.getElementById('projectoName').textContent = projectName;
-    document.getElementById('deleteProjectForm').action = `/dades_clients/${projectId}`;
-    document.getElementById('modal').classList.remove('hidden');
-    document.getElementById('confirmationInput').value = '';
-    document.getElementById('confirmDeleteButton').disabled = true;
-}
-
-// Función para cerrar el modal
-function closeModal() {
-    document.getElementById('modal').classList.add('hidden');
-}
-
-// Función para confirmar la eliminación
-function confirmDeletion() {
-    document.getElementById('deleteProjectForm').submit();
-}
-
-// Cerrar modal al hacer clic fuera
-document.getElementById('modal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeModal();
-    }
-});
-
-// Cerrar panel lateral al hacer clic en el overlay
-document.getElementById('overlay').addEventListener('click', closeSidePanel);
-
-// Evitar que el clic en el panel lateral cierre el overlay
-document.getElementById('sidePanel').addEventListener('click', function(e) {
-    e.stopPropagation();
-});
-</script>
-    <script>
-        // Toggle del menú de filtros
-        document.getElementById('filterButton').addEventListener('click', function(e) {
-            e.stopPropagation();
-            document.getElementById('filterDropdown').classList.toggle('hidden');
-        });
-        
-        // Cerrar el menú al hacer clic fuera
-        document.addEventListener('click', function() {
-            document.getElementById('filterDropdown').classList.add('hidden');
-        });
-        
-        // Aplicar filtros
-        document.getElementById('applyFilters').addEventListener('click', function() {
-            const selectedEstados = Array.from(document.querySelectorAll('input[name="estado[]"]:checked'))
-                                        .map(checkbox => checkbox.value);
-            
-            const url = new URL(window.location.href);
-            url.searchParams.delete('estado');
-            
-            selectedEstados.forEach(estadoId => {
-                url.searchParams.append('estado[]', estadoId);
-            });
-            
-            window.location.href = url.toString();
-        });
-        
-        // Actualizar contadores cuando se filtran
-        function updateCounters() {
-            const total = {{ $clientes->total() }};
-            const active = {{ $clientes->where('estado_id', 1)->count() }};
-            const progress = {{ $clientes->where('estado_id', 2)->count() }};
-            const completed = {{ $clientes->where('estado_id', 3)->count() }};
-            
-            // Animación para los contadores
-            animateCounter('total-counter', total);
-            animateCounter('active-counter', active);
-            animateCounter('progress-counter', progress);
-            animateCounter('completed-counter', completed);
-        }
-        
-        function animateCounter(elementId, target) {
-            const element = document.getElementById(elementId);
-            const current = parseInt(element.textContent);
-            const increment = target > current ? 1 : -1;
-            let currentValue = current;
-            
-            const timer = setInterval(() => {
-                currentValue += increment;
-                element.textContent = currentValue;
-                
-                if ((increment === 1 && currentValue >= target) || 
-                    (increment === -1 && currentValue <= target)) {
-                    clearInterval(timer);
-                    element.textContent = target;
-                }
-            }, 20);
-        }
-        
-        // Inicializar
-        document.addEventListener('DOMContentLoaded', function() {
-            updateCounters();
-            
-            // Si hay filtros aplicados, mostrar badge
-            if (new URLSearchParams(window.location.search).has('estado')) {
-                document.getElementById('filterButton').classList.add('bg-blue-100', 'dark:bg-blue-900');
-            }
-        });
-        </script>
 </x-app-layout>
