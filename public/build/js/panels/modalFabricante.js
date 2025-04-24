@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const fabricanteModal = document.getElementById("fabricanteModal");
     const modalContent = fabricanteModal.querySelector('.modal-content');
     const crearFabricanteForm = document.getElementById("crearFabricanteForm");
-    const fabricanteSelect = document.getElementById("manufacturer");
+    const fabricanteSelect = document.getElementById("fabricante_id");
     
     // Elementos para abrir/cerrar el modal
     const openFabricanteModalBtn = document.getElementById("openFabricanteModal");

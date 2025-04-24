@@ -247,9 +247,9 @@
                                   
                                     <!-- Fabricante -->
                                     <div>
-                                        <label id="nomManudfacturer" for="manufacturer" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Fabricante</label>
+                                        <label id="nomManudfacturer" for="fabricante_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Fabricante</label>
                                         <div class="flex gap-3">
-                                            <select name="manufacturer" id="manufacturer" class="flex-1 px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 appearance-none "required>
+                                            <select name="fabricante_id" id="fabricante_id" class="flex-1 px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 appearance-none "required>
                                                 <option value="">Seleccionar fabricante</option>
                                                 @foreach ($fabricantes as $fabricante)
                                                     <option value="{{ $fabricante->id }}">{{ $fabricante->nombre }}</option>
