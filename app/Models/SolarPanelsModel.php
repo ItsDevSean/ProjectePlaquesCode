@@ -12,7 +12,7 @@ class SolarPanelsModel extends Model
     protected $table = "solar_panels_tabel";
     
     protected $fillable = [
-        'user_id', 'panel_model', 'manufacturer', 'panel_type', 
+        'user_id', 'panel_model', 'fabricante_id', 'panel_type', 
         'date_manufacturer', 'panel_warranty', 'performance_warranty', 
         'longitud_v2', 'anchura', 'espesor', 'peso', 'superficie', 'descripcion',
         'url_fabricante', 'imagen_panel', 'material_marco', 'color_panel',

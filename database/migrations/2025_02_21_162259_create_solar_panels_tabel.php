@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');            
             $table->string('panel_model',500);
-            $table->string('manufacturer',500);
+            $table->unsignedBigInteger('fabricante_id');
             $table->string('panel_type',500);
             $table->date('date_manufacturer');
             $table->integer('panel_warranty')->nullable();
@@ -42,6 +42,11 @@ return new class extends Migration
             $table->integer('coeficiente_temp_voc')->nullable();
             $table->integer('coeficiente_temp_isc')->nullable(); 
             $table->timestamps();
+
+            $table->foreign('fabricante_id') 
+                ->references('id')         
+                ->on('fabricantes')       
+                ->onDelete('cascade');  
         });
     }
 
