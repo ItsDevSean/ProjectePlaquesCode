@@ -470,7 +470,7 @@
         @method('DELETE')
     </form> 
     
-    
     <script src="build/js/estado.js"></script>
     <script src="build/js/proyectos.js"></script>
+    
 </x-app-layout>
