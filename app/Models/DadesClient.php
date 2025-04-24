@@ -19,7 +19,7 @@ class DadesClient extends Model
         'consum_anual', 'factura_anual', 'tarifa_acces', 'coste_instalacion',
         'subvenciones', 'precio_excedentes', 'patro_consum', 'inclinacion',
         'orientacion', 'radiacion_anual', 'max_placas', 'placa_count',
-        'panel_potencia', 'panel_modelo', 'superficie', 'nova_area',
+        'panel_potencia', 'panel_modelo', 'superficie', 'nova_area', 'prodAnual',
         // Los campos JSON
         'monthly_radiation', 'produccion_mensual', 'edifici_data',
         'obstacles', 'polygon', 'radiation_coords'

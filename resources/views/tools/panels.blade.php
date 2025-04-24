@@ -127,9 +127,13 @@
                                     <tr>
                                         <td colspan="6" class="px-6 py-12 text-center">
                                             <div class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                                </svg>
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                                    <rect x="3" y="3" width="18" height="18" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 9h18" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 15h18" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 3v18" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 3v18" />
+                                                  </svg>
                                                 <p class="text-lg font-medium">No hay paneles registrados</p>
                                                 <p class="text-sm mt-2">Comienza importando un archivo o añadiendo un panel manualmente</p>
                                                 <div class="mt-4 flex gap-3">

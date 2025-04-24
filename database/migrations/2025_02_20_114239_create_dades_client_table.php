@@ -49,6 +49,7 @@ return new class extends Migration
             $table->string('panel_modelo'); // user_1_panel_model
             $table->decimal('superficie', 12, 2); // user_1_superficie
             $table->decimal('nova_area', 12, 2); // user_1_novaArea
+            $table->string('prodAnual');
             
             // Datos en formato JSON
             $table->json('monthly_radiation')->nullable(); // user_1_monthlyRadiation

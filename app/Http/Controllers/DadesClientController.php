@@ -53,6 +53,7 @@ class DadesClientController extends Controller
             'obstacles' => 'nullable|array',
             'polygon' => 'nullable|array',
             'radiation_coords' => 'nullable|array',
+            'prodAnual' => 'nullable|String',
         ]);
         
         $data = $request->all();

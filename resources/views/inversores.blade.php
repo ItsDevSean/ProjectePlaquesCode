@@ -42,9 +42,14 @@
                                 <tr>
                                     <td colspan="7" class="px-6 py-8 text-center">
                                         <div class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                                <rect x="3" y="5" width="18" height="14" rx="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M7 11h2.5"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M7 13h2.5"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.5 12 q 1-3 2 0 t 2 0"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 12h3"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5 l 1.5 1.5 l -1.5 1.5"/>
+                                              </svg>
                                             <p class="text-lg font-medium">No hay inversores disponibles</p>
                                             <p class="text-sm mt-1">Añade tu primer inversor para comenzar</p>
                                         </div>
