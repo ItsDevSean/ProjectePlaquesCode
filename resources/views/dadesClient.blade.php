@@ -167,7 +167,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
                                 </div>
-                                <input type="text" class="mt-1 block w-full pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400 dark:placeholder-gray-400" 
+                                <input disabled type="text" class="mt-1 block w-full pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400 dark:placeholder-gray-400" 
                                        id="direccion" name="direccion" placeholder="Exemple: Carrer Major, 12" value="{{ old('direccion', $proyecto->direccion ?? '') }}" required>
                                 <span class="error-message absolute left-0 -bottom-5 text-red-500 text-xs hidden">La direcció és obligatòria.</span>
                             </div>

@@ -472,8 +472,14 @@
         }
     })
     .catch(error => {
-        console.error("Error en fetch:", error);
-        alert("Error al guardar: " + error.message);
+    console.error("Error en fetch:", error);
+    alert("Error al guardar: " + error.message);
+    btn.disabled = true; // Deshabilitas el botón para indicar el error
+    btn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600 dark:text-gray-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a1 1 0 001-1V7l-3-4zM12 19a2 2 0 110-4 2 2 0 010 4zm4-10H8V5h8v4z" />
+        </svg>
+        `;
     })
     .finally(() => {
         btn.disabled = false;
