@@ -99,9 +99,9 @@
                 <p class="text-gray-600 dark:text-gray-300">Omple les dades bàsiques per començar el teu projecte solar</p>
             </div>
             
-            <form action="{{ isset($proyecto) ? route('dades_clients.update', $proyecto->id) : route('guardar.dades') }}" method="POST" id="clientForm">
+            <form action="{{ isset($proyecto) ? route('proyecto.update.dadesclient', $proyecto->id) : route('guardar.dades') }}" method="POST" id="clientForm">
                 @csrf
-                @if(isset($proyecto)) 
+                @if(isset($proyecto))
                     @method('PUT')
                 @endif
 

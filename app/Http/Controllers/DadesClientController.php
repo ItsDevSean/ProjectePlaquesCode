@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DadesClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\ConsumptionModel;
 
 class DadesClientController extends Controller
 {
@@ -108,21 +109,7 @@ class DadesClientController extends Controller
         return redirect()->route('proyectos')->with('success', 'Proyecto eliminado correctamente');
     }
 
-    public function update(Request $request, $id)
-    {
-        $proyecto = DadesClient::find($id);
-
-        if (!$proyecto) {
-            return redirect()->route('proyectos')->with('error', 'Proyecto no encontrado');
-        }
-
-        $data = $request->all();
-        $data['user_id'] = Auth::id();
-
-        $proyecto->update($data);
-
-        return redirect()->route('dades_clients.edit', $id)->with('success', 'Proyecto actualizado correctamente');
-    }
+    
 
     public function edit($id)
     {
@@ -170,6 +157,63 @@ class DadesClientController extends Controller
 {
     return view('produccio'); // Asegúrate de que esta vista existe
 }
+public function import(Request $request)
+{
+    $electicConsumption = [];
+
+    $request->validate([
+        'csv_file' => 'required|file|mimes:csv,txt',
+        'proyecto_id' => 'required|exists:dades_clients,id'
+    ]);
+
+    $file = $request->file('csv_file');
+
+    if (!$file || !file_exists($file->getRealPath())) {
+        return back()->with('error', 'Archivo no válido.');
+    }
+
+    $data = array_map('str_getcsv', file($file->getRealPath()));
+    if (empty($data) || count($data) <= 1) {
+        return back()->with('error', 'El archivo CSV está vacío o mal formado.');
+    }
+
+    $headers = array_shift($data);
+    $expectedHeaders = (new ConsumptionModel())->getFillable();
+
+    if ($headers !== $expectedHeaders) {
+        return back()->with('error', 'Los encabezados del CSV no son válidos.');
+    }
+
+    foreach ($data as $rowIndex => $row) {
+        $rowData = [];
+        foreach ($expectedHeaders as $index => $header) {
+            $rowData[$header] = $row[$index];
+        }
+
+        $newRequest = new Request($rowData);
+        try {
+            $this->validateConsumptionRow($newRequest);
+            $rowData['user_id'] = Auth::id();
+            $rowData['dades_client_id'] = $request->input('proyecto_id');
+
+            $electicConsumption[] = ConsumptionModel::create($rowData);
+        } catch (\Exception $e) {
+            return back()->with('error', "Error en la fila " . ($rowIndex + 1) . ": " . $e->getMessage());
+        }
+    }
+
+    return redirect()->route('proyecto.edit.consum', $request->input('proyecto_id'))
+        ->with('success', 'Consumos importados correctamente.');
+}
+
+public function validateConsumptionRow(Request $request)
+{
+    $request->validate([
+        'anio' => 'required|integer',
+        'mes' => 'required|string|max:10',
+        'consumo_kwh' => 'required|numeric',
+    ]);
+}
 
 
     public function show($id)
@@ -182,4 +226,45 @@ class DadesClientController extends Controller
 
         return view('proyectos', compact('proyecto'));
     }
+
+    public function editDadesClient($id) {
+        $proyecto = DadesClient::findOrFail($id);
+        return view('dadesClient', compact('proyecto'));
+    }
+    
+    public function editProduccio($id) {
+        $proyecto = DadesClient::findOrFail($id);
+        return view('produccio', compact('proyecto'));
+    }
+    
+    public function editConsum($id)
+{
+    $proyecto = DadesClient::find($id);
+    if (!$proyecto) {
+        return redirect()->route('proyectos')->with('error', 'Proyecto no encontrado');
+    }
+
+    // Obtenemos los consumos asociados al proyecto
+    $electicConsumption = ConsumptionModel::where('dades_client_id', $id)->get();
+
+    return view('consum', compact('proyecto', 'electicConsumption'));
+}
+    
+    public function updateConsum(Request $request, $id) {
+        $proyecto = DadesClient::findOrFail($id);
+        $proyecto->update($request->all());
+        return redirect()->route('proyecto.edit.produccio', $id);
+    }
+
+    public function editMapa($id) {
+        $proyecto = DadesClient::findOrFail($id);
+        return view('mapaPrueva', compact('proyecto'));
+    }
+
+    public function updateMapa(Request $request, $id) {
+        $proyecto = DadesClient::findOrFail($id);
+        $proyecto->update($request->all());
+        return redirect()->route('proyectos'); 
+    }
+
 }
