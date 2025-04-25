@@ -40,7 +40,7 @@ function errorHandler() {
       // List all fields in order you want them checked
       const fieldsToCheck = [
         { id: 'panel_model', required: true, name: 'Nombre del Modelo' },
-        { id: 'manufacturer', required: true, name: 'Fabricante' },
+        { id: 'fabricante_id', required: true, name: 'Fabricante' },
         { id: 'date_manufacturer', required: true, name: 'Fecha de Fabricación' },
         { id: 'potencia_maxima', required: true, name: 'Potencia Nominal' },
         { id: 'coeficiente_temp_pmax', required: true, name: 'Coef. Temp. Potencia' },

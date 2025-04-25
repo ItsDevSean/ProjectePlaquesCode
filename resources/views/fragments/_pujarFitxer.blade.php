@@ -52,9 +52,6 @@
                     Descargar plantilla CSV
                 </button>
             </div>
-            <button onclick="showCSV({{ json_encode($electicConsumption) }})" type="button" class="text-xs text-emerald-600 dark:text-emerald-400 hover:underline">
-                Process csv
-            </button>
             <div id="importedData" style="display: none;">
                 {{ json_encode($electicConsumption) }}
             </div>
