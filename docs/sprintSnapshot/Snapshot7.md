@@ -1,8 +1,11 @@
-# Sprint 5 (28/02/2025 - 21/03/2025)
+# Sprint 7 (28/02/2025 - 21/03/2025)
 
 ### Demo del domini del nostres projectes: 
-
+Aquest apartat, a sigut el que ens ha donat mes maldecaps durant aquest Sprint. 
 ![demoDominio](https://github.com/user-attachments/assets/542972b3-b848-4ee3-a579-b6a3bf33a735)
+
+Aqui deixem l'enllaç:
+https://fotovoltaiques.itb.barcelona/PROJECTE9/public/index.php
 
 
 ### Calculs en l'apartat de produció:
@@ -36,6 +39,11 @@ En el llistat de projectes, hem millorat l'estil i podem canviar l'estat del pro
 ### Nou canvi en la Pagina d'inici:
 
 ![mejoraMenuInicio](https://github.com/user-attachments/assets/fe6b7038-bb95-4052-9a25-eaf177611a6f)
+
+### Nova vista per canviar la inclinació i orientació de les plaques
+
+![image](https://github.com/user-attachments/assets/b16150a0-5cf9-4c24-bb76-103a82dfd11f)
+Font : Inclinació i orientació de les plques.
 
 ### Nous llistats per a tots els elements:
 
