@@ -13,7 +13,7 @@ class DadesClientController extends Controller
     {
         $clientes = DadesClient::with(['user', 'estado'])
             ->where('user_id', Auth::id())
-            ->paginate(10);
+            ->paginate(5);
 
         return view('proyectos', compact('clientes'));
     }
