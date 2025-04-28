@@ -25,7 +25,7 @@ return new class extends Migration
             // Datos del proyecto
             $table->string('nombre_proyecto'); // user_1_nombre_proyecto
             $table->text('descripcion_proyecto')->nullable(); // user_1_descripcion_proyecto
-            $table->string('estacionalitat'); // user_1_estacionalidad
+            $table->string('estacionalidad'); // user_1_estacionalidad
             $table->string('tipo_instalacion'); // user_1_tipo_instalacion
             
             // Datos de consumo y facturación

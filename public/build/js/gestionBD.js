@@ -46,7 +46,8 @@ document.addEventListener('DOMContentLoaded', function () {
             [`${localStoragePrefix}edificiData`]: 'edifici_data',
             [`${localStoragePrefix}obstacles`]: 'obstacles',
             [`${localStoragePrefix}polygon`]: 'polygon',
-            [`${localStoragePrefix}radiationCoords`]: 'radiation_coords'
+            [`${localStoragePrefix}radiationCoords`]: 'radiation_coords',
+            [`${localStoragePrefix}prodAnual`]: 'prodAnual'
         };
 
         const jsonKeys = Object.keys(keyMap).filter(key => key.endsWith('monthlyRadiation') || key.endsWith('produccionMensual') || key.endsWith('edificiData') || key.endsWith('obstacles') || key.endsWith('polygon') || key.endsWith('radiationCoords'));
