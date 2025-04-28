@@ -89,7 +89,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Botones de navegación fijos -->
         <div class="fixed inset-y-0 left-0 flex items-center justify-center w-16 z-20 pl-10">
             <button onclick="window.location.href='/dades'" class="p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 group">
