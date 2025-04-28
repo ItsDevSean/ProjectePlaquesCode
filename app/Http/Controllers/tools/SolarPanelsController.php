@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Size;
 
 class SolarPanelsController extends Controller
 {
@@ -43,7 +44,7 @@ class SolarPanelsController extends Controller
     {
         $request->validate([
             'panel_model' => 'required|string|min:2|max:100',
-            'fabricante_id' => 'required|integer|exists:fabricantes,id',
+            'fabricante_id' => 'required|integer|',
             'panel_type' => 'required|string|min:2|max:50',
             'date_manufacturer' => 'required|date',
             'panel_warranty' => 'nullable|integer',
@@ -130,23 +131,31 @@ class SolarPanelsController extends Controller
         }
         $headers = array_shift($data); 
         $expectedHeaders = (new SolarPanelsModel)->getFillable();
-        unset($expectedHeaders[0]);
-        if ($headers !== $expectedHeaders) {
+        array_unshift($headers, "user_id");
+        // dd($expectedHeaders);
+        // dd($headers );
+        // dd($headers != $expectedHeaders);
+        if ($headers != $expectedHeaders) {
             return back()->with('error', 'CSV headers are not valid!');
         }
         foreach ($data as $row) {
             $rowData = [];
+            
+            unset($expectedHeaders[0]);
+            $expectedHeaders = array_values($expectedHeaders);
+            // dd($row);
+            // dd($expectedHeaders);
             foreach ($expectedHeaders as $index => $header) {
-                if ($header == 'user_id') {
-                    $rowData[$header] = Auth::id();
-                } else {
-                    $rowData[$header] = $row[$index];
-                }
+                
+                $rowData[$header] = $row[$index];
+                
             }
+            // dd($row);
             $newRequest = new Request($rowData);
             try {
                 $this->store($newRequest);
             } catch (\Exception $e) {
+                // dd($newRequest);
                 return back()->with('error', "Error processing row " . ($index + 1) . ": " . $e->getMessage());
             }
         }
