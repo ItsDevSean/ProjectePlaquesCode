@@ -3,41 +3,42 @@ document.getElementById('enviarLocal').addEventListener('click', function() {
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="font-size: 1.3em; color: #059669;"></i>';
 
-    // *** CORREGIDO: keyMap usa las claves REALES de localStorage ***
-    const keyMap = {
-        'user_1_nombre': 'nombre',
-        'user_1_email': 'email',
-        'user_1_telefono': 'telefono',
-        'user_1_direccion': 'direccion',
-        'user_1_ciudad': 'ciudad',
-        'user_1_codigo_postal': 'codigo_postal',
-        'user_1_nombre_proyecto': 'nombre_proyecto',
-        'user_1_descripcion_proyecto': 'descripcion_proyecto',
-        'user_1_estacionalidad': 'estacionalidad', // Esta clave ya estaba bien
-        'user_1_tipo_instalacion': 'tipo_instalacion',
-        'user_1_consumAnual': 'consum_anual',         // Corregido (era _consum_anual)
-        'user_1_facturaAnual': 'factura_anual',       // Corregido (era _factura_anual)
-        'user_1_tarifaAcces': 'tarifa_acces',         // Corregido (era _tarifa_acces)
-        'user_1_costeInstalacion': 'coste_instalacion', // Corregido (era _coste_instalacion)
-        'user_1_subvenciones': 'subvenciones',       // Corregido (era _subvenciones)
-        'user_1_precioExcedentes': 'precio_excedentes',  // Corregido (era _precio_excedentes)
-        'user_1_consumPattern': 'patro_consum',       // Corregido (era _patro_consum y nombre diferente)
-        'user_1_inclinacion': 'inclinacion',
-        'user_1_orientacion': 'orientacion',
-        'user_1_radiacion': 'radiacion_anual',         // Corregido (era _radiacion_anual y nombre diferente)
-        'user_1_maxPlacas': 'max_placas',           // Corregido (era _max_placas)
-        'user_1_placaCount': 'placa_count',         // Corregido (era _placa_count)
-        'user_1_panel_pot': 'panel_potencia',        // Corregido (era _panel_potencia y nombre diferente)
-        'user_1_panel_model': 'panel_modelo',        // Corregido (era _panel_modelo y nombre diferente)
-        'user_1_superficie': 'superficie',
-        'user_1_novaArea': 'nova_area',           // Corregido (era _nova_area)
-        'user_1_monthlyRadiation': 'monthly_radiation', // Corregido (era _monthly_radiation)
-        'user_1_produccionMensual': 'produccion_mensual',// Corregido (era _produccion_mensual)
-        'user_1_edificiData': 'edifici_data',        // Corregido (era _edifici_data)
-        'user_1_obstacles': 'obstacles',
-        'user_1_polygon': 'polygon',
-        'user_1_radiationCoords': 'radiation_coords'   // Corregido (era _radiation_coords)
-    };
+        // *** MODIFICADO: Las claves de localStorage ahora son dinámicas ***
+        const localStoragePrefix = `user_${userId}_`;
+        const keyMap = {
+            [`${localStoragePrefix}nombre`]: 'nombre',
+            [`${localStoragePrefix}email`]: 'email',
+            [`${localStoragePrefix}telefono`]: 'telefono',
+            [`${localStoragePrefix}direccion`]: 'direccion',
+            [`${localStoragePrefix}ciudad`]: 'ciudad',
+            [`${localStoragePrefix}codigo_postal`]: 'codigo_postal',
+            [`${localStoragePrefix}nombre_proyecto`]: 'nombre_proyecto',
+            [`${localStoragePrefix}descripcion_proyecto`]: 'descripcion_proyecto',
+            [`${localStoragePrefix}estacionalidad`]: 'estacionalidad',
+            [`${localStoragePrefix}tipo_instalacion`]: 'tipo_instalacion',
+            [`${localStoragePrefix}consumAnual`]: 'consum_anual',
+            [`${localStoragePrefix}facturaAnual`]: 'factura_anual',
+            [`${localStoragePrefix}tarifaAcces`]: 'tarifa_acces',
+            [`${localStoragePrefix}costeInstalacion`]: 'coste_instalacion',
+            [`${localStoragePrefix}subvenciones`]: 'subvenciones',
+            [`${localStoragePrefix}precioExcedentes`]: 'precio_excedentes',
+            [`${localStoragePrefix}consumPattern`]: 'patro_consum',
+            [`${localStoragePrefix}inclinacion`]: 'inclinacion',
+            [`${localStoragePrefix}orientacion`]: 'orientacion',
+            [`${localStoragePrefix}radiacion`]: 'radiacion_anual',
+            [`${localStoragePrefix}maxPlacas`]: 'max_placas',
+            [`${localStoragePrefix}placaCount`]: 'placa_count',
+            [`${localStoragePrefix}panel_pot`]: 'panel_potencia',
+            [`${localStoragePrefix}panel_model`]: 'panel_modelo',
+            [`${localStoragePrefix}superficie`]: 'superficie',
+            [`${localStoragePrefix}novaArea`]: 'nova_area',
+            [`${localStoragePrefix}monthlyRadiation`]: 'monthly_radiation',
+            [`${localStoragePrefix}produccionMensual`]: 'produccion_mensual',
+            [`${localStoragePrefix}edificiData`]: 'edifici_data',
+            [`${localStoragePrefix}obstacles`]: 'obstacles',
+            [`${localStoragePrefix}polygon`]: 'polygon',
+            [`${localStoragePrefix}radiationCoords`]: 'radiation_coords'
+        };
 
     // Identificar qué claves son JSON
     const jsonKeys = [
