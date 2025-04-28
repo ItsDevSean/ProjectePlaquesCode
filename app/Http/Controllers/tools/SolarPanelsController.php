@@ -130,6 +130,7 @@ class SolarPanelsController extends Controller
         }
         $headers = array_shift($data); 
         $expectedHeaders = (new SolarPanelsModel)->getFillable();
+        unset($expectedHeaders[0]);
         if ($headers !== $expectedHeaders) {
             return back()->with('error', 'CSV headers are not valid!');
         }
