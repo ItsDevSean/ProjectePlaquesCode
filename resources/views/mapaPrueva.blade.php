@@ -152,10 +152,11 @@
                 <div class="accordion-content bg-white">
                     <div class="p-4">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Selector de Orientación Visual -->
-                            <div class="flex flex-col items-center">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Orientació</label>
-                                <div class="orientation-dial w-44 h-44 cursor-grab active:cursor-grabbing relative">
+                            <!-- Selector de Orientación Visual - Modificado el contenedor -->
+                            <div class="flex flex-col items-center p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+                                <label class="block text-sm font-medium text-gray-700 mb-3">Orientació</label>
+                                <div class="orientation-dial w-44 h-44 cursor-grab active:cursor-grabbing relative mx-auto">
+                                    <!-- SVG original sin cambios -->
                                     <svg class="orientation-svg w-full h-full select-none touch-none" viewBox="0 0 200 200">
                                         <circle cx="100" cy="100" r="90" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
                                         
@@ -170,38 +171,37 @@
                                         <line x1="35" y1="100" x2="15" y2="100" stroke="#d1d5db" stroke-width="1.5"/>
     
                                         <line id="dial-line" x1="100" y1="100" x2="100" y2="30" stroke="#059669" stroke-width="3" stroke-linecap="round"/> 
-                                        <circle id="dial-handle" cx="100" cy="30" r="8" fill="#10b981" stroke="#047857" stroke-width="2" style="cursor: inherit;"/> 
+                                        <circle id="dial-handle" cx="100" cy="30" r="8" fill="#10b981" stroke="#047857" stroke-width="2.5" style="cursor: inherit;"/> 
                                     </svg>
                                 </div>
-    
-                                <div class="orientation-info text-center mt-2">
+                                <div class="orientation-info text-center mt-3">
                                     <span id="orientation-degree" class="block text-xl font-semibold text-emerald-700">180°</span>
                                     <span id="orientation-cardinal" class="block text-sm text-gray-600 capitalize">Sud</span>
                                     <input type="hidden" id="orientacion" name="orientacion" value="sur">
                                 </div>
                             </div>
                             
-                            <!-- Selector de Inclinación Visual -->
-                            <div class="flex flex-col items-center">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Inclinació</label>
-                                <div class="inclination-selector-container w-48 h-28 relative">
+                            <!-- Selector de Inclinación Visual - Modificado el contenedor -->
+                            <div class="flex flex-col items-center p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+                                <label class="block text-sm font-medium text-gray-700 mb-3">Inclinació</label>
+                                <div class="inclination-selector-container ml-10 mt-6 w-full max-w-[160px] h-[120px] relative mx-auto">
+                                    <!-- SVG original sin cambios -->
                                     <svg class="inclination-svg w-full h-full overflow-visible select-none touch-none cursor-grab active:cursor-grabbing" viewBox="0 0 160 90">
                                         <circle cx="80" cy="80" r="3" fill="#cbd5e1"/> 
                                         
-                                        <line x1="10" y1="80" x2="150" y2="80" stroke="#e2e8f0" stroke-width="2"/>
+                                        <line x1="10" y1="80" x2="78" y2="80" stroke="#e2e8f0" stroke-width="2"/>
                                         
                                         <path id="inclination-arc" d="M 10 80 A 70 70 0 0 1 80 10" stroke="#e2e8f0" stroke-width="2" fill="none"/> 
                                         
                                         <line id="inclination-line" x1="80" y1="80" x2="10" y2="80" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/> 
                                         
-                                        <circle id="inclination-handle" cx="10" cy="80" r="7" fill="#10b981" stroke="#047857" stroke-width="2" style="cursor: inherit;"/>
+                                        <circle id="inclination-handle" cx="10" cy="80" r="4" fill="#10b981" stroke="#047857" stroke-width="1.5" style="cursor: inherit;"/>
                             
                                         <text x="10" y="92" text-anchor="middle" font-size="10" fill="#64748b">0°</text>
-                                        <text x="80" y="7" text-anchor="middle" font-size="10" fill="#64748b">90°</text>
+                                        <text x="80" y="4" text-anchor="middle" font-size="10" fill="#64748b">90°</text>
                                     </svg>
                                 </div>
-                            
-                                <div class="inclination-info text-center mt-2">
+                                <div class="inclination-info text-center mt-3">
                                     <span id="inclination-degree" class="block text-xl font-semibold text-emerald-700">0°</span>
                                     <input type="hidden" id="inclinacion" name="inclinacion" value="0" required>
                                 </div>
@@ -327,6 +327,7 @@
     .inclination-svg {
         width: 100%;
         height: 100%;
+        transform: scale(1.5);
         user-select: none;
     }
 
