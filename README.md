@@ -77,3 +77,8 @@ En l'sprint 5 ens hem enfocat en desenvolupar l'app web per presentar-la tant a 
 
 [Snapshot5](docs/sprintSnapshot/Snapshot5.md)
 
+- **Sprint 7:** (7/4/25 - 25/4/25)
+En l'sprint 7 hem habilitat moltes funcionalitats, com ara, resultats finals en l'apartat de producció, gràfiques en l'apartat de consum, importacions, nous aspectes en plaques, bateries i inversors i més coses que detallarem en el snpashot.
+
+[Snapshot7](docs/sprintSnapshot/Snapshot7.md)
+
