@@ -46,7 +46,7 @@
                                         </svg>
                                         Importar Paneles
                                     </button>
-                                    <a href="#" class="text-sm text-emerald-600 dark:text-emerald-400 hover:underline">Descargar plantilla</a>
+                                    <a href="{{ route('file.download') }}" class="text-sm text-emerald-600 dark:text-emerald-400 hover:underline">Descargar plantilla</a>
                                 </div>
                             </form>
                             

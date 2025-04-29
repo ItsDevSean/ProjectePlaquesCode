@@ -68,8 +68,7 @@ class SolarPanelsController extends Controller
             'coeficiente_temp_pmax' => 'required|numeric|min:0|max:100',
             'coeficiente_temp_voc' => 'nullable|numeric|min:-100|max:100',
             'coeficiente_temp_isc' => 'nullable|numeric|min:-100|max:100',
-        ]);
-        
+        ]); 
 
         SolarPanelsModel::create($request->all() + ['user_id' => Auth::id()]);
 
@@ -147,15 +146,16 @@ class SolarPanelsController extends Controller
             // dd($expectedHeaders);
             foreach ($expectedHeaders as $index => $header) {
                 
-                $rowData[$header] = $row[$index];
+                $rowData[$header] = $row[$index] ?? null;
                 
             }
-            // dd($row);
+            // dd($rowData);
             $newRequest = new Request($rowData);
+            // dd($newRequest);
             try {
                 $this->store($newRequest);
             } catch (\Exception $e) {
-                // dd($newRequest);
+                //  dd($newRequest);
                 return back()->with('error', "Error processing row " . ($index + 1) . ": " . $e->getMessage());
             }
         }
