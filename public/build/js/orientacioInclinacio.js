@@ -266,7 +266,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Inicialitzar posició
         function initializeDial() {
             const storageKeyAngle = window.userId
-                ? `user_${window.userId}_orientacio_angle`
+                ? `user_${window.userId}_orientacion`
                 : "default_orientacio_angle";
             const savedAngle = localStorage.getItem(storageKeyAngle);
 
