@@ -254,7 +254,6 @@ function crearMarcador(map, latLng) {
 
 // Comienza la selección de puntos
 function iniciarSeleccio(map) {
-    guardarOrientacion();
     
     // Intenta cargar marcadores guardados
     const savedPolygon = localStorage.getItem(`user_${userId}_polygon`);
@@ -548,12 +547,7 @@ function calcularMaxPlacas(areaTotal) {
 
 const orientacion = document.getElementById('orientacion');
 
-function guardarOrientacion() {
-    const selectedOption = orientacion.options[orientacion.selectedIndex];
-    const orientacionValue = selectedOption.textContent.trim();
-    localStorage.setItem(`user_${userId}_orientacion`, orientacionValue);
-}
-orientacion.addEventListener('change', guardarOrientacion);
+
 
 let inclinacion = document.getElementById('inclinacion');
 

@@ -179,8 +179,8 @@
                                                 <div class="text-sm text-gray-500 truncate max-w-xs">{{ Str::limit($proyecto->descripcion_proyecto ?? 'Sin descripción', 50) }}</div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <span class="px-4 py-1 text-s rounded-full {{ $proyecto->estacionalitat === 'Alta' ? 'bg-green-100 text-green-800' : ($proyecto->estacionalitat === 'Media' ? 'bg-yellow-100 text-yellow-800' : 'bg-emerald-100 text-teal-600') }}">
-                                                    {{ $proyecto->estacionalitat }}
+                                                <span class="px-4 py-1 text-s rounded-full {{ $proyecto->estacionalidad === 'Alta' ? 'bg-green-100 text-green-800' : ($proyecto->estacionalidad === 'Media' ? 'bg-yellow-100 text-yellow-800' : 'bg-emerald-100 text-teal-600') }}">
+                                                    {{ $proyecto->estacionalidad }}
                                                 </span>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
@@ -310,113 +310,116 @@
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300"></div>
     
     <div id="sidePanel" class="fixed top-0 right-0 w-full sm:w-96 h-full bg-white dark:bg-gray-800 shadow-xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
-        <div class="p-6">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Detalles del Proyecto</h3>
-                <button onclick="closeSidePanel()" class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+
+    <div id="sidePanelLoading" class="text-center py-8 text-gray-600 dark:text-gray-300 hidden">Cargando detalles...</div>
+
+    <div id="sidePanelContent" class="p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Detalles del Proyecto</h3>
+            <button onclick="closeSidePanel()" class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="space-y-6">
+            <div>
+                <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Información básica</h4>
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">ID</p>
+                            <p id="projectId" class="text-sm font-medium text-gray-900 dark:text-white">-</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Estado</p>
+                            <p id="projectStatus" class="text-sm font-medium text-gray-900 dark:text-white">-</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Creado</p>
+                            <p id="projectCreated" class="text-sm font-medium text-gray-900 dark:text-white">-</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Actualizado</p>
+                            <p id="projectUpdated" class="text-sm font-medium text-gray-900 dark:text-white">-</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="space-y-6">
-                <div>
-                    <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Información básica</h4>
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">ID</p>
-                                <p id="projectId" class="text-sm font-medium text-gray-900 dark:text-white">-</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Estado</p>
-                                <p id="projectStatus" class="text-sm font-medium text-gray-900 dark:text-white">-</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Creado</p>
-                                <p id="projectCreated" class="text-sm font-medium text-gray-900 dark:text-white">-</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Actualizado</p>
-                                <p id="projectUpdated" class="text-sm font-medium text-gray-900 dark:text-white">-</p>
-                            </div>
+
+            <div>
+                <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Proyecto</h4>
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 space-y-3">
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Nombre</p>
+                        <p id="projectName" class="text-base font-medium text-gray-900 dark:text-white">-</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Descripción</p>
+                        <p id="descriptionProject" class="text-sm text-gray-900 dark:text-white">-</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Cliente</h4>
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 space-y-3">
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Nombre</p>
+                        <p id="clientName" class="text-base font-medium text-gray-900 dark:text-white">-</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Dirección</p>
+                            <p id="clientAddress" class="text-sm text-gray-900 dark:text-white">-</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Ciudad</p>
+                            <p id="clientCity" class="text-sm text-gray-900 dark:text-white">-</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Contacto</p>
+                        <p id="clientContact" class="text-sm text-gray-900 dark:text-white">-</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Responsable</h4>
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center">
+                            <span id="userInitial" class="text-green-600 font-medium">-</span>
+                        </div>
+                        <div>
+                            <p id="userName" class="text-sm font-medium text-gray-900 dark:text-white">-</p>
+                            <p id="userEmail" class="text-sm text-gray-500 dark:text-gray-400">-</p>
                         </div>
                     </div>
                 </div>
-                
-                <div>
-                    <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Proyecto</h4>
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 space-y-3">
-                        <div>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Nombre</p>
-                            <p id="projectName" class="text-base font-medium text-gray-900 dark:text-white">-</p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Descripción</p>
-                            <p id="descriptionProject" class="text-sm text-gray-900 dark:text-white">-</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Cliente</h4>
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 space-y-3">
-                        <div>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Nombre</p>
-                            <p id="clientName" class="text-base font-medium text-gray-900 dark:text-white">-</p>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Dirección</p>
-                                <p id="clientAddress" class="text-sm text-gray-900 dark:text-white">-</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Ciudad</p>
-                                <p id="clientCity" class="text-sm text-gray-900 dark:text-white">-</p>
-                            </div>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Contacto</p>
-                            <p id="clientContact" class="text-sm text-gray-900 dark:text-white">-</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Responsable</h4>
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <div class="flex items-center space-x-3">
-                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                                <span id="userInitial" class="text-green-600 font-medium">-</span>
-                            </div>
-                            <div>
-                                <p id="userName" class="text-sm font-medium text-gray-900 dark:text-white">-</p>
-                                <p id="userEmail" class="text-sm text-gray-500 dark:text-gray-400">-</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <div class="flex justify-between space-x-3">
-                        <a id="editProjectLink" href="#" class="flex-1 flex items-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white dark:bg-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                            </svg>
-                            Editar
-                        </a>
-                        <button id="deleteProjectButton" class="flex-1 flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                            Eliminar
-                        </button>
-                    </div>
+            </div>
+
+            <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
+                <div class="flex justify-between space-x-3">
+                    <a id="editProjectLink" href="#" class="flex-1 flex items-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white dark:bg-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                        Editar
+                    </a>
+                    <button id="deleteProjectButton" class="flex-1 flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                        Eliminar
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Modal de confirmación -->
     <div id="modal" class="fixed inset-0 z-50 hidden overflow-y-auto">

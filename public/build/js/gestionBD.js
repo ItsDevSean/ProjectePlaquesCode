@@ -1,16 +1,7 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const enviarLocalBtn = document.getElementById('enviarLocal');
-    const userId = window.userId; // Asegúrate de que 'window.userId' esté definido en tu vista con el ID del usuario autenticado
-
-    if (!userId) {
-        console.error('Usuario no autenticado. Asegúrate de que window.userId esté definido.');
-        return;
-    }
-
-    enviarLocalBtn.addEventListener('click', function() {
-        const btn = this;
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="font-size: 1.3em; color: #059669;"></i>';
+document.getElementById('enviarLocal').addEventListener('click', function() {
+    const btn = this;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="font-size: 1.3em; color: #059669;"></i>';
 
         // *** MODIFICADO: Las claves de localStorage ahora son dinámicas ***
         const localStoragePrefix = `user_${userId}_`;
@@ -49,89 +40,109 @@ document.addEventListener('DOMContentLoaded', function () {
             [`${localStoragePrefix}radiationCoords`]: 'radiation_coords'
         };
 
-        const jsonKeys = Object.keys(keyMap).filter(key => key.endsWith('monthlyRadiation') || key.endsWith('produccionMensual') || key.endsWith('edificiData') || key.endsWith('obstacles') || key.endsWith('polygon') || key.endsWith('radiationCoords'));
-        const numericKeys = Object.keys(keyMap).filter(key => key.endsWith('telefono') || key.endsWith('codigo_postal') || key.endsWith('consumAnual') || key.endsWith('facturaAnual') || key.endsWith('costeInstalacion') || key.endsWith('subvenciones') || key.endsWith('precioExcedentes') || key.endsWith('consumPattern') || key.endsWith('inclinacion') || key.endsWith('radiacion') || key.endsWith('maxPlacas') || key.endsWith('placaCount') || key.endsWith('panel_pot') || key.endsWith('superficie') || key.endsWith('novaArea'));
+    // Identificar qué claves son JSON
+    const jsonKeys = [
+        'user_1_monthlyRadiation', 'user_1_produccionMensual', 'user_1_edificiData',
+        'user_1_obstacles', 'user_1_polygon', 'user_1_radiationCoords'
+    ];
 
-        const data = { user_id: userId, estado_id: 1 };
+    // Identificar qué claves son numéricas (opcional, pero bueno para asegurar tipo)
+    const numericKeys = [
+        'user_1_telefono', 'user_1_codigo_postal', 'user_1_consumAnual', 'user_1_facturaAnual',
+        'user_1_costeInstalacion', 'user_1_subvenciones', 'user_1_precioExcedentes',
+        'user_1_consumPattern', 'user_1_inclinacion', 'user_1_radiacion', 'user_1_maxPlacas',
+        'user_1_placaCount', 'user_1_panel_pot', 'user_1_superficie', 'user_1_novaArea'
+    ];
 
-        Object.keys(keyMap).forEach(localKeyWithPrefix => {
-            const backendKey = keyMap[localKeyWithPrefix];
-            let value = localStorage.getItem(localKeyWithPrefix);
 
-            if (value === null) {
-                data[backendKey] = null;
-            } else if (jsonKeys.includes(localKeyWithPrefix)) {
-                try {
-                    data[backendKey] = JSON.parse(value);
-                } catch (e) {
-                    console.warn(`Error parseando JSON para ${localKeyWithPrefix}:`, value, e);
-                    data[backendKey] = null;
-                }
-            } else if (numericKeys.includes(localKeyWithPrefix)) {
-                const num = parseFloat(value);
-                data[backendKey] = isNaN(num) ? null : num;
-            } else {
-                data[backendKey] = value;
+    const data = { user_id: window.userId, estado_id: 1 };
+
+    // Recopilando y mapeando los datos
+    Object.keys(keyMap).forEach(localKey => {
+        const backendKey = keyMap[localKey];
+        let value = localStorage.getItem(localKey); // Obtener el valor (puede ser null si no existe)
+
+        if (value === null) {
+            // Si no existe en localStorage, asignar null al backendKey
+            data[backendKey] = null;
+        } else if (jsonKeys.includes(localKey)) {
+            // Si es una clave JSON, intentar parsear
+            try {
+                data[backendKey] = JSON.parse(value);
+            } catch (e) {
+                console.warn(`Error parseando JSON para ${localKey}:`, value, e);
+                data[backendKey] = null; // O manejar el error como prefieras
             }
-        });
+        } else if (numericKeys.includes(localKey)) {
+             // Si es una clave numérica, intentar convertir a número
+             const num = parseFloat(value);
+             // Asignar el número si es válido, sino null (o mantener string si prefieres)
+             data[backendKey] = isNaN(num) ? null : num;
+        } else {
+            // Si no es JSON ni numérico, es un string normal
+            data[backendKey] = value;
+        }
+    });
 
-        console.log("Enviando datos (con userId):", {
-            url: guardarDadesURL,
-            data: data,
-            csrf: document.querySelector('meta[name="csrf-token"]').content
-        });
+    console.log("Enviando datos (Corregido):", {
+        url: window.guardarDadesURL,
+        data: data,
+        csrf: document.querySelector('meta[name="csrf-token"]').content
+    });
 
-        fetch(guardarDadesURL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(async response => {
-            const contentType = response.headers.get('content-type');
-            if (!response.ok) {
-                const errorData = (contentType && contentType.includes('application/json'))
-                    ? await response.json()
-                    : await response.text();
-                throw new Error(`Error HTTP ${response.status}: ${JSON.stringify(errorData) || response.statusText}`);
-            }
-            if (!contentType || !contentType.includes('application/json')) {
-                const text = await response.text();
-                throw new Error(`Respuesta no JSON: ${text.substring(0, 100)}...`);
-            }
-            return response.json();
-        })
-        .then(responseData => {
-            if (responseData.success) {
-                alert("✅ Dades guardades correctament");
-                // *** MODIFICADO: Limpiar solo las claves del usuario actual ***
-                Object.keys(localStorage).forEach(key => {
-                    if (key.startsWith(localStoragePrefix)) {
-                        localStorage.removeItem(key);
-                    }
-                });
-                window.location.href = window.guardarProyectosURL
-            } else {
-                let errorMessage = responseData.message || 'Error desconegut al servidor.';
-                if (responseData.errors) {
-                    errorMessage += "\nDetalls:\n";
-                    for (const field in responseData.errors) {
-                        errorMessage += `- ${field}: ${responseData.errors[field].join(', ')}\n`;
-                    }
-                }
-                throw new Error(errorMessage);
-            }
-        })
-        .catch(error => {
-            console.error("Error en fetch:", error);
-            alert("Error al guardar: " + error.message);
-        })
-        .finally(() => {
-            btn.disabled = false;
-            btn.innerHTML = 'Enviar'; // Restaurar el texto del botón
-        });
+    // Enviar los datos al backend (Fetch se mantiene igual)
+    fetch(window.guardarDadesURL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content, // Mejor forma de obtener CSRF
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(data) // 'data' ya tiene los tipos correctos
+    })
+    .then(async response => {
+        const contentType = response.headers.get('content-type');
+        if (!response.ok) { // Capturar errores HTTP (4xx, 5xx)
+             const errorData = (contentType && contentType.includes('application/json'))
+                ? await response.json()
+                : await response.text();
+             // Lanzar un error que incluya detalles si están disponibles
+             throw new Error(`Error HTTP ${response.status}: ${JSON.stringify(errorData) || response.statusText}`);
+        }
+         if (!contentType || !contentType.includes('application/json')) {
+             const text = await response.text();
+             throw new Error(`Respuesta no JSON: ${text.substring(0, 100)}...`);
+         }
+         return response.json();
+    })
+    .then(responseData => {
+        if (responseData.success) {
+            alert("✅ Dades guardades correctament");
+            localStorage.clear()
+            // Object.keys(keyMap).forEach(localKey => localStorage.removeItem(localKey));
+            window.location.href = window.guardarProyectosURL;
+        } else {
+             let errorMessage = responseData.message || 'Error desconegut al servidor.';
+             if (responseData.errors) {
+                 errorMessage += "\nDetalls:\n";
+                 for (const field in responseData.errors) {
+                     errorMessage += `- ${field}: ${responseData.errors[field].join(', ')}\n`;
+                 }
+             }
+            throw new Error(errorMessage);
+        }
+    })
+    .catch(error => {
+    console.error("Error en fetch:", error);
+    alert("Error al guardar: " + error.message);
+    btn.disabled = true; // Deshabilitas el botón para indicar el error
+    btn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600 dark:text-gray-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a1 1 0 001-1V7l-3-4zM12 19a2 2 0 110-4 2 2 0 010 4zm4-10H8V5h8v4z" />
+        </svg>
+        `;
+    })
+    .finally(() => {
+        btn.disabled = false;
     });
 });

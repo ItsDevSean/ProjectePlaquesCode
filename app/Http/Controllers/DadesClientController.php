@@ -13,7 +13,7 @@ class DadesClientController extends Controller
     {
         $clientes = DadesClient::with(['user', 'estado'])
             ->where('user_id', Auth::id())
-            ->paginate(10);
+            ->paginate(5);
 
         return view('proyectos', compact('clientes'));
     }
@@ -83,7 +83,35 @@ class DadesClientController extends Controller
         ], 500);
     }
 }
-
+public function showDetails($id)
+{
+    try {
+        $project = DadesClient::with(['user', 'estado']) // Ajusta las relaciones según tu modelo
+            ->findOrFail($id);
+            
+        return response()->json([
+            'id' => $project->id,
+            'nombre_proyecto' => $project->nombre_proyecto,
+            'descripcion_proyecto' => $project->descripcion_proyecto,
+            'estado' => $project->estado->nombre, // Ajusta según tu relación
+            'created_at' => $project->created_at->format('d/m/Y H:i'),
+            'updated_at' => $project->updated_at->format('d/m/Y H:i'),
+            'client_name' => $project->nombre,
+            'client_address' => $project->direccion,
+            'client_city' => $project->ciudad,
+            'client_contact' => $project->telefono,
+            'user_name' => $project->user->name, // Ajusta según tu relación
+            'user_email' => $project->user->email,
+            // Añade más campos según necesites
+        ]);
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'No se pudo cargar el proyecto',
+            'message' => $e->getMessage()
+        ], 500);
+    }
+}
 
     public function details($id)
     {
