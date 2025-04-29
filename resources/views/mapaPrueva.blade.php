@@ -387,7 +387,7 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Funcionalidad del acordeón (existente)
+            // Funcionalitat del acordió
             const accordionButtons = document.querySelectorAll('.accordion-button');
             
             accordionButtons.forEach(button => {
@@ -405,10 +405,10 @@
                 });
             });
     
-            // Abrir la primera sección por defecto
+            // Obrir la primera secció per defecte
             document.querySelector('.accordion-section').classList.add('active');
     
-            // Selector de Inclinación
+            // Selector d'Inclinació
             const inclinationSVG = document.querySelector('.inclination-svg');
             const inclinationHandle = document.getElementById('inclination-handle');
             const inclinationLine = document.getElementById('inclination-line');
@@ -423,12 +423,59 @@
                 
                 let isDraggingInclination = false;
     
+                // Funció per actualitzar la visualització de la inclinació
+                function updateInclinationVisuals(inclination) {
+                    inclination = Math.max(minInclination, Math.min(maxInclination, inclination));
+                    
+                    // Convertir inclinació a angle SVG
+                    const svgAngleDeg = inclination + 180;
+                    const svgAngleRad = svgAngleDeg * (Math.PI / 180);
+    
+                    // Calcular nova posició del handle
+                    const hx = center.x + radius * Math.cos(svgAngleRad);
+                    const hy = center.y + radius * Math.sin(svgAngleRad);
+    
+                    // Actualitzar posició visual
+                    inclinationHandle.setAttribute('cx', hx);
+                    inclinationHandle.setAttribute('cy', hy);
+                    inclinationLine.setAttribute('x2', hx);
+                    inclinationLine.setAttribute('y2', hy);
+    
+                    // Actualitzar text
+                    inclinationDegreeDisplay.textContent = inclination + '°';
+    
+                    // Actualitzar input
+                    inclinationInput.value = inclination;
+                }
+    
+                // Funció per guardar la inclinació al localStorage
+                function saveInclinationToLocalStorage(value) {
+                    const storageKey = window.userId ? `user_${window.userId}_inclinacion` : 'default_inclinacion';
+                    localStorage.setItem(storageKey, value);
+                }
+    
+                // Funció per inicialitzar la inclinació
+                function initializeInclination() {
+                    const storageKey = window.userId ? `user_${window.userId}_inclinacion` : 'default_inclinacion';
+                    const savedInclination = localStorage.getItem(storageKey);
+                    
+                    let initialInclination = 0;
+                    
+                    if (savedInclination !== null && !isNaN(savedInclination)) {
+                        initialInclination = parseFloat(savedInclination);
+                    } else if (inclinationInput.value !== "" && !isNaN(inclinationInput.value)) {
+                        initialInclination = parseFloat(inclinationInput.value);
+                    }
+                    
+                    updateInclinationVisuals(Math.round(initialInclination));
+                }
+    
                 // Event Listeners
                 inclinationHandle.addEventListener('mousedown', startInclinationDrag);
                 inclinationSVG.addEventListener('mousemove', dragInclination);
                 document.addEventListener('mouseup', endInclinationDrag);
     
-                // Soporte táctil
+                // Suport tàctil
                 inclinationHandle.addEventListener('touchstart', startInclinationDrag, { passive: false });
                 inclinationSVG.addEventListener('touchmove', dragInclination, { passive: false });
                 document.addEventListener('touchend', endInclinationDrag);
@@ -445,13 +492,13 @@
     
                     const coords = getSVGCoordinates(e, inclinationSVG);
                     
-                    // Calcular ángulo
+                    // Calcular angle
                     const dx = coords.x - center.x;
                     const dy = coords.y - center.y;
                     let svgAngleRad = Math.atan2(dy, dx);
                     let svgAngleDeg = svgAngleRad * (180 / Math.PI);
     
-                    // Convertir ángulo SVG a inclinación (0-90)
+                    // Convertir angle SVG a inclinació (0-90)
                     let inclination = 0;
                     let normalizedSvgAngleDeg = ((svgAngleDeg % 360) + 360) % 360;
                     
@@ -463,7 +510,7 @@
                         inclination = 90;
                     }
     
-                    // Limitar y redondear
+                    // Limitar i arrodonir
                     inclination = Math.max(minInclination, Math.min(maxInclination, inclination));
                     updateInclinationVisuals(Math.round(inclination));
                 }
@@ -489,173 +536,149 @@
                     return { x: svgPoint.x, y: svgPoint.y };
                 }
     
-                function updateInclinationVisuals(inclination) {
-                    inclination = Math.max(minInclination, Math.min(maxInclination, inclination));
-                    
-                    // Convertir inclinación a ángulo SVG
-                    const svgAngleDeg = inclination + 180;
-                    const svgAngleRad = svgAngleDeg * (Math.PI / 180);
-    
-                    // Calcular nueva posición del handle
-                    const hx = center.x + radius * Math.cos(svgAngleRad);
-                    const hy = center.y + radius * Math.sin(svgAngleRad);
-    
-                    // Actualizar posición visual
-                    inclinationHandle.setAttribute('cx', hx);
-                    inclinationHandle.setAttribute('cy', hy);
-                    inclinationLine.setAttribute('x2', hx);
-                    inclinationLine.setAttribute('y2', hy);
-    
-                    // Actualizar texto
-                    inclinationDegreeDisplay.textContent = inclination + '°';
-    
-                    // Actualizar input
-                    inclinationInput.value = inclination;
-                }
-    
-                function saveInclinationToLocalStorage(value) {
-                    if (typeof userId !== 'undefined') {
-                        localStorage.setItem(`user_${userId}_inclinacion`, value);
-                    }
-                }
-    
-                // Inicialización
-                let initialInclination = 0;
-                if (typeof userId !== 'undefined') {
-                    const savedInclination = localStorage.getItem(`user_${userId}_inclinacion`);
-                    if (savedInclination !== null && !isNaN(savedInclination)) {
-                        initialInclination = parseFloat(savedInclination);
-                    } else if (inclinationInput.value !== "" && !isNaN(inclinationInput.value)) {
-                        initialInclination = parseFloat(inclinationInput.value);
-                    }
-                } else if (inclinationInput.value !== "" && !isNaN(inclinationInput.value)) {
-                    initialInclination = parseFloat(inclinationInput.value);
-                }
-    
-                updateInclinationVisuals(Math.round(initialInclination));
+                // Inicialització
+                initializeInclination();
             }
     
-            // Selector de Orientación
-            const orientationSVG = document.querySelector('.orientation-svg');
-            const orientationHandle = document.getElementById('dial-handle');
-            const orientationLine = document.getElementById('dial-line');
-            const orientationDegreeDisplay = document.getElementById('orientation-degree');
-            const orientationCardinalDisplay = document.getElementById('orientation-cardinal');
-            const orientationHiddenInput = document.getElementById('orientacion');
+            // Selector d'Orientació - Versió actualitzada per guardar grau exacte
+const orientationSVG = document.querySelector('.orientation-svg');
+const orientationHandle = document.getElementById('dial-handle');
+const orientationLine = document.getElementById('dial-line');
+const orientationDegreeDisplay = document.getElementById('orientation-degree');
+const orientationCardinalDisplay = document.getElementById('orientation-cardinal');
+const orientationHiddenInput = document.getElementById('orientacion');
+
+if (orientationSVG && orientationHandle && orientationLine && orientationDegreeDisplay && orientationCardinalDisplay && orientationHiddenInput) {
+    const center = {x: 100, y: 100};
+    const radius = 70;
+    
+    // Mapeig d'angles a direccions cardinals
+    const angleToCardinal = {
+        'norte': { min: 315, max: 45, value: 0, label: 'Nord' },
+        'este': { min: 45, max: 135, value: 90, label: 'Est' },
+        'sur': { min: 135, max: 225, value: 180, label: 'Sud' },
+        'oeste': { min: 225, max: 315, value: 270, label: 'Oest' }
+    };
+    
+    // Funció per actualitzar el dial
+    function updateDial(angle) {
+        // Convertir angle a radians (amb 0° a la part superior)
+        const radians = (angle - 90) * (Math.PI / 180);
+        
+        // Calcular nova posició del handle
+        const x = center.x + radius * Math.cos(radians);
+        const y = center.y + radius * Math.sin(radians);
+        
+        // Actualitzar posició visual
+        orientationHandle.setAttribute('cx', x);
+        orientationHandle.setAttribute('cy', y);
+        orientationLine.setAttribute('x2', x);
+        orientationLine.setAttribute('y2', y);
+        
+        // Arrodonir angle a múltiple de 5 per millor usabilitat
+        const roundedAngle = Math.round(angle / 5) * 5;
+        orientationDegreeDisplay.textContent = roundedAngle + '°';
+        
+        // Determinar direcció cardinal
+        let cardinalKey = 'sur'; // Valor per defecte
+        for (const [key, range] of Object.entries(angleToCardinal)) {
+            if ((angle >= range.min || angle < (range.min === 315 ? 45 : range.max)) && 
+                (angle < range.max || range.max === 45)) {
+                cardinalKey = key;
+                break;
+            }
+        }
+        
+        const cardinal = angleToCardinal[cardinalKey].label;
+        orientationCardinalDisplay.textContent = cardinal;
+        
+        // Actualitzar camp ocult
+        orientationHiddenInput.value = cardinalKey;
+        
+        // Guardar a localStorage (ara guardem tant l'angle com la direcció)
+        const storageKeyAngle = window.userId ? `user_${window.userId}_orientacio_angle` : 'default_orientacio_angle';
+        const storageKeyCardinal = window.userId ? `user_${window.userId}_orientacio_cardinal` : 'default_orientacio_cardinal';
+        
+        localStorage.setItem(storageKeyAngle, angle.toString());
+        localStorage.setItem(storageKeyCardinal, cardinalKey);
+    }
+    
+    // Inicialitzar posició
+    function initializeDial() {
+        const storageKeyAngle = window.userId ? `user_${window.userId}_orientacio_angle` : 'default_orientacio_angle';
+        const savedAngle = localStorage.getItem(storageKeyAngle);
+        
+        if (savedAngle !== null && !isNaN(savedAngle)) {
+            // Utilitzar angle exacte guardat
+            updateDial(parseFloat(savedAngle));
+        } else {
+            // Si no hi ha angle guardat, verificar si hi ha direcció cardinal
+            const storageKeyCardinal = window.userId ? `user_${window.userId}_orientacio_cardinal` : 'default_orientacio_cardinal';
+            const savedCardinal = localStorage.getItem(storageKeyCardinal);
             
-            if (orientationSVG && orientationHandle && orientationLine && orientationDegreeDisplay && orientationCardinalDisplay && orientationHiddenInput) {
-                const center = {x: 100, y: 100};
-                const radius = 70;
-                
-                // Mapeo de ángulos a direcciones cardinales
-                const angleToCardinal = {
-                    'norte': { min: 315, max: 45, value: 0, label: 'Nord' },
-                    'este': { min: 45, max: 135, value: 90, label: 'Est' },
-                    'sur': { min: 135, max: 225, value: 180, label: 'Sud' },
-                    'oeste': { min: 225, max: 315, value: 270, label: 'Oest' }
-                };
-                
-                // Inicializar posición (apuntando al Sur por defecto)
+            if (savedCardinal && angleToCardinal[savedCardinal]) {
+                // Utilitzar valor cardinal guardat
+                updateDial(angleToCardinal[savedCardinal].value);
+            } else if (orientationHiddenInput.value && angleToCardinal[orientationHiddenInput.value]) {
+                // Utilitzar valor de l'input ocult si existeix
+                updateDial(angleToCardinal[orientationHiddenInput.value].value);
+            } else {
+                // Valor per defecte (Sud)
                 updateDial(180);
-                
-                // Manejadores de eventos
-                let isDragging = false;
-                
-                orientationHandle.addEventListener('mousedown', startDrag);
-                orientationSVG.addEventListener('mousemove', drag);
-                document.addEventListener('mouseup', endDrag);
-                
-                // Soporte táctil
-                orientationHandle.addEventListener('touchstart', startDrag);
-                orientationSVG.addEventListener('touchmove', drag);
-                document.addEventListener('touchend', endDrag);
-                
-                function startDrag(e) {
-                    e.preventDefault();
-                    isDragging = true;
-                }
-                
-                function drag(e) {
-                    if (!isDragging) return;
-                    e.preventDefault();
-                    
-                    // Obtener posición del cursor/touch relativa al SVG
-                    const coords = getSVGCoordinates(e, orientationSVG);
-                    
-                    // Calcular ángulo
-                    const dx = coords.x - center.x;
-                    const dy = coords.y - center.y;
-                    let angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
-                    if (angle < 0) angle += 360;
-                    
-                    updateDial(angle);
-                }
-                
-                function endDrag() {
-                    isDragging = false;
-                }
-                
-                function updateDial(angle) {
-                    // Convertir ángulo a radianes (con 0° en la parte superior)
-                    const radians = (angle - 90) * (Math.PI / 180);
-                    
-                    // Calcular nueva posición del handle
-                    const x = center.x + radius * Math.cos(radians);
-                    const y = center.y + radius * Math.sin(radians);
-                    
-                    // Actualizar posición visual
-                    orientationHandle.setAttribute('cx', x);
-                    orientationHandle.setAttribute('cy', y);
-                    orientationLine.setAttribute('x2', x);
-                    orientationLine.setAttribute('y2', y);
-                    
-                    // Redondear ángulo a múltiplo de 5 para mejor usabilidad
-                    const roundedAngle = Math.round(angle / 5) * 5;
-                    orientationDegreeDisplay.textContent = roundedAngle + '°';
-                    
-                    // Determinar dirección cardinal
-                    let cardinalKey = 'sur'; // Valor por defecto
-                    for (const [key, range] of Object.entries(angleToCardinal)) {
-                        if ((angle >= range.min || angle < (range.min === 315 ? 45 : range.max)) && 
-                            (angle < range.max || range.max === 45)) {
-                            cardinalKey = key;
-                            break;
-                        }
-                    }
-                    
-                    const cardinal = angleToCardinal[cardinalKey].label;
-                    orientationCardinalDisplay.textContent = cardinal;
-                    
-                    // Actualizar campo oculto
-                    orientationHiddenInput.value = cardinalKey;
-                    
-                    // Guardar en localStorage
-                    if (typeof userId !== 'undefined') {
-                        localStorage.setItem(`user_${userId}_orientacion`, cardinalKey);
-                    }
-                }
-                
-                // Cargar valor guardado al iniciar
-                if (typeof userId !== 'undefined') {
-                    const savedOrientation = localStorage.getItem(`user_${userId}_orientacion`);
-                    if (savedOrientation && angleToCardinal[savedOrientation]) {
-                        updateDial(angleToCardinal[savedOrientation].value);
-                    }
-                }
-                
-                function getSVGCoordinates(e, svgElement) {
-                    const pt = svgElement.createSVGPoint();
-                    if (e.type.includes('touch')) {
-                        const touch = e.touches[0];
-                        pt.x = touch.clientX;
-                        pt.y = touch.clientY;
-                    } else {
-                        pt.x = e.clientX;
-                        pt.y = e.clientY;
-                    }
-                    return pt.matrixTransform(svgElement.getScreenCTM().inverse());
-                }
             }
+        }
+    }
+    
+    // Cridar a la inicialització
+    initializeDial();
+    
+    // Resta del codi (event listeners, etc.) es manté igual
+    let isDragging = false;
+    
+    orientationHandle.addEventListener('mousedown', startDrag);
+    orientationSVG.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', endDrag);
+    
+    // Suport tàctil
+    orientationHandle.addEventListener('touchstart', startDrag);
+    orientationSVG.addEventListener('touchmove', drag);
+    document.addEventListener('touchend', endDrag);
+    
+    function startDrag(e) {
+        e.preventDefault();
+        isDragging = true;
+    }
+    
+    function drag(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        
+        const coords = getSVGCoordinates(e, orientationSVG);
+        const dx = coords.x - center.x;
+        const dy = coords.y - center.y;
+        let angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+        if (angle < 0) angle += 360;
+        
+        updateDial(angle);
+    }
+
+    function endDrag() {
+        isDragging = false;
+    }
+    
+    function getSVGCoordinates(e, svgElement) {
+        const pt = svgElement.createSVGPoint();
+        if (e.type.includes('touch')) {
+            const touch = e.touches[0];
+            pt.x = touch.clientX;
+            pt.y = touch.clientY;
+        } else {
+            pt.x = e.clientX;
+            pt.y = e.clientY;
+        }
+        return pt.matrixTransform(svgElement.getScreenCTM().inverse());
+    }
+}
         });
     </script>
 
