@@ -318,11 +318,8 @@
 
                     <!-- Botons d'Exportació -->
                     <div class="flex justify-end space-x-3">
-                        <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                        <button id="export-pdf" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition">
                             <i class="fas fa-download mr-2"></i>Exportar PDF
-                        </button>
-                        <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
-                            <i class="fas fa-file-excel mr-2"></i>Exportar Excel
                         </button>
                         <button id="enviarLocal" class="btn btn-primary">Guardar datos locales</button>
 
@@ -333,11 +330,46 @@
     </x-app-layout>
     <script src="build/js/produccio.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('export-pdf').addEventListener('click', async function() {
+                // Ocultar elementos no deseados
+                const elementsToHide = document.querySelectorAll(
+                    '.fixed.inset-y-0.left-0, .fixed.inset-y-0.right-0, .progress-container, #export-pdf'
+                );
+                elementsToHide.forEach(el => el.style.visibility = 'hidden');
+    
+                // Capturar el contenido
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('p', 'mm', 'a4');
+                const element = document.getElementById('main-content');
+    
+                const canvas = await html2canvas(element, {
+                    scale: 2,
+                    logging: false,
+                    useCORS: true,
+                    scrollY: -window.scrollY,
+                });
+    
+                // Añadir al PDF
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = doc.internal.pageSize.getWidth() - 20;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                doc.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+                doc.save('informe-solar.pdf');
+    
+                // Restaurar elementos
+                elementsToHide.forEach(el => el.style.visibility = 'visible');
+            });
+        });
+    </script>
+    <script>
         window.userId = "{{ Auth::id() }}";
         window.guardarDadesURL = "{{ route('guardar.dades') }}";
         window.guardarProyectosURL = "{{ route('proyectos') }}";
     </script>
     <script src="build/js/gestionBD.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </body>
 </html>

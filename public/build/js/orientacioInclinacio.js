@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Guardar a localStorage (ara guardem tant l'angle com la direcció)
             const storageKeyAngle = window.userId
-                ? `user_${window.userId}_orientacio_angle`
+                ? `user_${window.userId}_orientacion`
                 : "default_orientacio_angle";
             const storageKeyCardinal = window.userId
                 ? `user_${window.userId}_orientacio_cardinal`
