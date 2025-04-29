@@ -189,5 +189,19 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.removeItem(`user_${userId}_tipo_instalacion`);
             localStorage.removeItem(`user_${userId}_estacionalidad`);
         });
+
+        // Inclinció teulada
+        const estaInclinat = document.getElementById("tipo_teulada");
+        estaInclinat.addEventListener('change', function() {
+            console.log(" no tinene nada " + estaInclinat.value);
+            if (estaInclinat.value == "si") {
+                document.getElementById("div_inclinacio").classList.remove('hidden');
+            } else {
+                document.getElementById("div_inclinacio").classList.add('hidden');
+            }
+        })
     }
+
+    
+
 });
