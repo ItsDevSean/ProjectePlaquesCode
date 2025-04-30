@@ -24,19 +24,19 @@
                         <!-- Importación de archivos -->
                         <div class="w-full md:w-1/2">
                             <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Importar paneles desde archivo</h3>
-                            <form action="{{ route('veureImport') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                            <form id="import_form" action="{{ route('veureImport') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                                 @csrf
                                 <div class="flex items-center gap-4">
                                     <label class="flex flex-col items-center justify-center w-full border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-300 p-4">
-                                        {{-- toDo: 1r. comprobar q funciona 2n. js q amaga aques apartat i mostra el nom del fitxer --}}
-                                        <div class="flex flex-col items-center justify-center">
+                                        
+                                        <div id="import_view" class="flex flex-col items-center justify-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                                             </svg>
-                                            <p class="text-sm text-gray-500 dark:text-gray-400">Arrastra tu archivo aquí o haz clic para seleccionar</p>
-                                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Formatos soportados: CSV, XLSX (MAX. 5MB)</p>
+                                            <p id="file-name" class="text-sm text-gray-500 dark:text-gray-400">Arrastra tu archivo aquí o haz clic para seleccionar</p>
+                                            <p id="file-instructions" class="text-xs text-gray-500 dark:text-gray-400 mt-1">Formatos soportados: CSV, XLSX (MAX. 5MB)</p>
                                         </div>
-                                        <input type="file" name="csv_file" class="hidden" accept=".csv,.xlsx,.xls">
+                                        <input id="csv_file" type="file" name="csv_file" class="hidden" accept=".csv,.xlsx,.xls">
                                     </label>
                                 </div>
                                 <div class="flex items-center gap-4">
