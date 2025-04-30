@@ -262,6 +262,27 @@
                             </select>
                             <span class="error-message absolute left-0 -bottom-5 text-red-500 text-xs hidden">Selecciona un tipus d'instal·lació.</span>
                         </div>
+
+                        <!-- Tipus de teulada -->
+                        <div class="space-y-1">
+                            <label for="tipo_teulada" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Teulada inclinada?</label>
+                            <select class="mt-1 block w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 appearance-none" 
+                                    id="tipo_teulada" name="tipo_teulada" required>
+                                <option value="" disabled selected>-- Tria una opció --</option>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                            <span class="error-message absolute left-0 -bottom-5 text-red-500 text-xs hidden">Selecciona un tipus d'instal·lació.</span>
+                        </div>
+
+                        <!-- Inclinació teulada -->
+                         <div id="div_inclinacio" class="space-y-1 hidden">
+                            <label for="inclinaci_teulada" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Inclinació Teulada (º)</label>
+                            <div class="relative">
+                                <input type="number" class="mt-1 block w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400 dark:placeholder-gray-400" 
+                                       id="inclinaci_teulada" name="inclinaci_teulada" placeholder="Exemple: 30"  required>
+                            </div>
+                        </div>
                     </div>
                 </div>            
             </form>
