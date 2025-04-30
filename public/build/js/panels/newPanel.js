@@ -93,3 +93,20 @@ document.addEventListener('DOMContentLoaded', function () {
 function toggleModal() {
     document.getElementById('modal').classList.toggle('hidden');
 }
+
+// Change the name in the import label
+const imortForm = document.getElementById("import_form");
+imortForm.addEventListener("change", function() {
+    const fileInput = document.getElementById('csv_file');
+    console.log(" nanan naanan nna " + fileInput);
+    const fileNameDisplay = document.getElementById('file-name');
+    console.log(" nanan " + fileNameDisplay);
+    const fileInstructions = document.getElementById('file-instructions');
+    console.log("tututuu " + fileInput.files.length);
+    if (fileInput.files.length > 0) {
+        // Show the selected file name
+        fileNameDisplay.textContent = `Archivo seleccionado: ${fileInput.files[0].name}`;
+        fileNameDisplay.classList.remove('hidden');
+        fileInstructions.textContent = 'Haz clic para cambiar de archivo';
+    }
+})
