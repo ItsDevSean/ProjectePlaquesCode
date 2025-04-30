@@ -99,378 +99,362 @@
         </div>
         
         <div class="fixed inset-y-0 right-0 flex items-center justify-center w-16 z-20 pr-10">
-            <button type="submit" form="consumForm" class="p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 group">
+            <button onclick="window.location.href='/mapa'" class="p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 group">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600 dark:text-gray-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
             </button>
         </div>
 
-       <!-- Contingut principal mejorado -->
-       <form id="consumForm" action="{{ isset($proyecto) ? route('proyecto.update.consum', $proyecto->id) : route('guardar.dades') }}" method="POST">
-            @csrf
-            @if(isset($proyecto))
-                @method('PUT')
-            @endif
-            
-            <div id="fomulariConsum" class="max-w-6xl mx-auto px-6 py-8 mt-6 bg-white rounded-xl shadow-lg dark:bg-gray-800 transition-all duration-300 hover:shadow-xl ">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 mb-8">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-                        <div>
-                            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Anàlisi del teu consum</h2>
-                            <p class="text-gray-600 dark:text-gray-300 mt-1">Introdueix les teves dades de consum per calcular el teu estalvi potencial</p>
-                        </div>
-                        <div class="mt-4 md:mt-0">
-                            <button id="help-button" class="flex items-center text-emerald-600 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
-                                </svg>
-                                Com funciona?
-                            </button>
-                        </div>
+        <!-- Contingut principal mejorado -->
+        <div id="fomulariConsum" class="max-w-6xl mx-auto px-6 py-8 mt-6 bg-white rounded-xl shadow-lg dark:bg-gray-800 transition-all duration-300 hover:shadow-xl ">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 mb-8">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Anàlisi del teu consum</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mt-1">Introdueix les teves dades de consum per calcular el teu estalvi potencial</p>
                     </div>
-                    
-                    <!-- Pestañas de opciones de entrada -->
-                    <div class="mb-8 border-b border-gray-200 dark:border-gray-700">
-                        <ul class="flex flex-wrap -mb-px" id="inputTabs" role="tablist">
-                            <li class="mr-2" role="presentation">
-                                <button class="inline-block p-4 border-b-2 rounded-t-lg active" id="manual-tab" data-tabs-target="#manual" type="button" role="tab" aria-controls="manual" aria-selected="true">Introducció Manual</button>
-                            </li>
-                            <li class="mr-2" role="presentation">
-                                <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="upload-tab" data-tabs-target="#upload" type="button" role="tab" aria-controls="upload" aria-selected="false">Pujar Fitxer</button>
-                            </li>
-                            <li class="mr-2" role="presentation">
-                                <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="link-tab" data-tabs-target="#link" type="button" role="tab" aria-controls="link" aria-selected="false">Enllaç amb Comercialitzadora</button>
-                            </li>
-                        </ul>
+                    <div class="mt-4 md:mt-0">
+                        <button id="help-button" class="flex items-center text-emerald-600 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                            </svg>
+                            Com funciona?
+                        </button>
                     </div>
-                    
-                    <!-- Contenido de las pestañas -->
-                    <div id="inputTabsContent">
-                        <!-- Pestaña Manual -->
-                        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700" id="manual" role="tabpanel" aria-labelledby="manual-tab">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <!-- Consum anual -->
-                                <div class="space-y-2">
-                                    <label for="consumAnual" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Consum anual (kWh/any)
-                                    </label>
+                </div>
+                
+                <!-- Pestañas de opciones de entrada -->
+                <div class="mb-8 border-b border-gray-200 dark:border-gray-700">
+                    <ul class="flex flex-wrap -mb-px" id="inputTabs" role="tablist">
+                        <li class="mr-2" role="presentation">
+                            <button class="inline-block p-4 border-b-2 rounded-t-lg active" id="manual-tab" data-tabs-target="#manual" type="button" role="tab" aria-controls="manual" aria-selected="true">Introducció Manual</button>
+                        </li>
+                        <li class="mr-2" role="presentation">
+                            <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="upload-tab" data-tabs-target="#upload" type="button" role="tab" aria-controls="upload" aria-selected="false">Pujar Fitxer</button>
+                        </li>
+                        <li class="mr-2" role="presentation">
+                            <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="link-tab" data-tabs-target="#link" type="button" role="tab" aria-controls="link" aria-selected="false">Enllaç amb Comercialitzadora</button>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Contenido de las pestañas -->
+                <div id="inputTabsContent">
+                    <!-- Pestaña Manual -->
+                    <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700" id="manual" role="tabpanel" aria-labelledby="manual-tab">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Consum anual -->
+                            <div class="space-y-2">
+                                <label for="consumAnual" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Consum anual (kWh/any)
+                                </label>
+                                <div class="relative">
+                                    <input type="number" id="consumAnual" name="consumAnual" 
+                                           class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                           placeholder="Introdueix el teu consum anual">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                        <span class="text-gray-500 dark:text-gray-400">kWh</span>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana espanyola: 3.250 kWh/any</p>
+                            </div>
+                            
+                            <!-- Factura anual -->
+                            <div class="space-y-2">
+                                <label for="facturaAnual" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Factura anual (€)
+                                </label>
+                                <div class="relative">
+                                    <input type="number" id="facturaAnual" name="facturaAnual" 
+                                           class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                           placeholder="Introdueix el teu consum anual">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                        <span class="text-gray-500 dark:text-gray-400">€</span>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana espanyola: 3.250 kWh/any</p>
+                            </div>
+                            
+                            <!-- Tarifa d'accés mejorada -->
+                            <div class="space-y-2">
+                                <label for="tarifa-acces" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Tarifa d'accés
+                                </label>
+                                <select id="tarifa-acces" name="tarifa-acces" 
+                                        class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500">
+                                    <option value="" disabled selected>Selecciona la teva tarifa</option>
+                                    <option value="2.0A">2.0A - Sense discriminació horària</option>
+                                    <option value="2.0DHA">2.0DHA - Discriminació horària</option>
+                                    <option value="2.0DHS">2.0DHS - Discriminació horària supervall</option>
+                                    <option value="2.1A">2.1A - Sense discriminació horària (major potència)</option>
+                                    <option value="2.1DHA">2.1DHA - Discriminació horària (major potència)</option>
+                                    <option value="2.1DHS">2.1DHS - Discriminació horària supervall (major potència)</option>
+                                    <option value="3.0A">3.0A - Tres períodes</option>
+                                    <option value="6.1A">6.1A - Sis períodes</option>
+                                </select>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Pots trobar aquesta informació a la teva factura</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <!-- Precios por periodo (solo para tarifas con discriminación horaria) -->
+                            <div id="precios-periodo-container" class="hidden space-y-2">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Preus per període (€/kWh)
+                                </label>
+                                <div class="grid grid-cols-3 gap-3">
                                     <div class="relative">
-                                        <input type="number" id="consumAnual" name="consumAnual" 
-                                               class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
-                                               placeholder="Introdueix el teu consum anual" value="{{ $proyecto->consumAnual ?? old('consumAnual') }}">
-                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                            <span class="text-gray-500 dark:text-gray-400">kWh</span>
+                                        <input type="number" step="0.001" id="precio-p1" name="precio-p1" 
+                                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                               placeholder="P1">
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                            <span class="text-xs text-gray-500 dark:text-gray-400">€</span>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana espanyola: 3.250 kWh/any</p>
+                                    <div class="relative">
+                                        <input type="number" step="0.001" id="precio-p2" name="precio-p2" 
+                                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                               placeholder="P2">
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                            <span class="text-xs text-gray-500 dark:text-gray-400">€</span>
+                                        </div>
+                                    </div>
+                                    <div class="relative">
+                                        <input type="number" step="0.001" id="precio-p3" name="precio-p3" 
+                                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                               placeholder="P3">
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                            <span class="text-xs text-gray-500 dark:text-gray-400">€</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                
-                                <!-- Factura anual -->
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Introdueix els preus de cada període segons la teva factura</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Sección de Costos e Incentivos -->
+                        <div class="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
+                            <h3 class="text-lg font-medium text-gray-800 dark:text-white mb-4">Costos i incentius</h3>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Coste total instalación -->
                                 <div class="space-y-2">
-                                    <label for="facturaAnual" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Factura anual (€)
+                                    <label for="costeInstalacion" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Cost total instal·lació
                                     </label>
                                     <div class="relative">
-                                        <input type="number" id="facturaAnual" name="facturaAnual" 
+                                        <input type="number" id="costeInstalacion" name="costeInstalacion" 
                                                class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
-                                               placeholder="Introdueix el teu consum anual" value="{{ $proyecto->facturaAnual ?? old('facturaAnual') }}">
+                                               placeholder="Ex: 6000">
                                         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                             <span class="text-gray-500 dark:text-gray-400">€</span>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana espanyola: 3.250 kWh/any</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana: 1.200-1.500 €/kWp</p>
                                 </div>
                                 
-                                <!-- Tarifa d'accés mejorada -->
+                                <!-- Subvenciones -->
                                 <div class="space-y-2">
-                                    <label for="tarifa-acces" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Tarifa d'accés
+                                    <label for="subvenciones" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Subvencions o bonificacions
                                     </label>
-                                    <select id="tarifa-acces" name="tarifa_acces" 
-                                            class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500">
-                                        <option value="" disabled selected>Selecciona la teva tarifa</option>
-                                        <option value="2.0A" {{ (isset($proyecto) && $proyecto->tarifa_acces) == '2.0A' ? 'selected' : '' }}>2.0A - Sense discriminació horària</option>
-                                        <option value="2.0DHA" {{ (isset($proyecto) && $proyecto->tarifa_acce) == '2.0DHA' ? 'selected' : '' }}>2.0DHA - Discriminació horària</option>
-                                        <option value="2.0DHS" {{ (isset($proyecto) && $proyecto->tarifa_acces) == '2.0DHS' ? 'selected' : '' }}>2.0DHS - Discriminació horària supervall</option>
-                                        <option value="2.1A" {{ (isset($proyecto) && $proyecto->tarifa_acces) == '2.1A' ? 'selected' : '' }}>2.1A - Sense discriminació horària (major potència)</option>
-                                        <option value="2.1DHA" {{ (isset($proyecto) && $proyecto->tarifa_acces) == '2.1DHA' ? 'selected' : '' }}>2.1DHA - Discriminació horària (major potència)</option>
-                                        <option value="2.1DHS" {{ (isset($proyecto) && $proyecto->tarifa_acces) == '2.1DHS' ? 'selected' : '' }}>2.1DHS - Discriminació horària supervall (major potència)</option>
-                                        <option value="3.0A" {{ (isset($proyecto) && $proyecto->tarifa_acces) == '3.0A' ? 'selected' : '' }}>3.0A - Tres períodes</option>
-                                        <option value="6.1A" {{ (isset($proyecto) && $proyecto->tarifa_acces) == '6.1A' ? 'selected' : '' }}>6.1A - Sis períodes</option>
-                                    </select>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">Pots trobar aquesta informació a la teva factura</p>
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                                <!-- Precios por periodo (solo para tarifas con discriminación horaria) -->
-                                <div id="precios-periodo-container" class="hidden space-y-2">
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Preus per període (€/kWh)
-                                    </label>
-                                    <div class="grid grid-cols-3 gap-3">
-                                        <div class="relative">
-                                            <input type="number" step="0.001" id="precio-p1" name="precio_p1" 
-                                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
-                                                   placeholder="P1" value="{{ $proyecto->precio_p1 ?? old('precio_p1') }}">
-                                            <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                <span class="text-xs text-gray-500 dark:text-gray-400">€</span>
-                                            </div>
-                                        </div>
-                                        <div class="relative">
-                                            <input type="number" step="0.001" id="precio-p2" name="precio_p2" 
-                                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
-                                                   placeholder="P2" value="{{ $proyecto->precio_p2 ?? old('precio_p2') }}">
-                                            <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                <span class="text-xs text-gray-500 dark:text-gray-400">€</span>
-                                            </div>
-                                        </div>
-                                        <div class="relative">
-                                            <input type="number" step="0.001" id="precio-p3" name="precio_p3" 
-                                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
-                                                   placeholder="P3" value="{{ $proyecto->precio_p3 ?? old('precio_p3') }}">
-                                            <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                <span class="text-xs text-gray-500 dark:text-gray-400">€</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">Introdueix els preus de cada període segons la teva factura</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Sección de Costos e Incentivos -->
-                            <div class="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
-                                <h3 class="text-lg font-medium text-gray-800 dark:text-white mb-4">Costos i incentius</h3>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <!-- Coste total instalación -->
-                                    <div class="space-y-2">
-                                        <label for="costeInstalacion" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                            Cost total instal·lació
-                                        </label>
-                                        <div class="relative">
-                                            <input type="number" id="costeInstalacion" name="costeInstalacion" 
-                                                   class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
-                                                   placeholder="Ex: 6000" value="{{ $proyecto->costeInstalacion ?? old('costeInstalacion') }}">
-                                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                                <span class="text-gray-500 dark:text-gray-400">€</span>
-                                            </div>
-                                        </div>
-                                        <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana: 1.200-1.500 €/kWp</p>
-                                    </div>
-                                    
-                                    <!-- Subvenciones -->
-                                    <div class="space-y-2">
-                                        <label for="subvenciones" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                            Subvencions o bonificacions
-                                        </label>
-                                        <div class="relative">
-                                            <input type="number" id="subvenciones" name="subvenciones" 
-                                                   class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
-                                                   placeholder="Ex: 1200" value="{{ $proyecto->subvenciones ?? old('subvenciones', 0) }}">
-                                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                                <span class="text-gray-500 dark:text-gray-400">€</span>
-                                            </div>
-                                        </div>
-                                        <p class="text-xs text-gray-500 dark:text-gray-400">Ajuts o deduccions aplicables</p>
-                                    </div>
-                                    
-                                    <!-- Precio de venta de excedentes -->
-                                    <div class="space-y-2">
-                                        <label for="precioExcedentes" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                            Preu de venda d'excedents
-                                        </label>
-                                        <div class="relative">
-                                            <input type="number" step="0.001" id="precioExcedentes" name="precioExcedentes" 
-                                                   class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
-                                                   placeholder="Ex: 0.08" value="{{ $proyecto->precioExcedentes ?? old('precioExcedentes') }}">
-                                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                                <span class="text-gray-500 dark:text-gray-400">€/kWh</span>
-                                            </div>
-                                        </div>
-                                        <p class="text-xs text-gray-500 dark:text-gray-400">Preu per l'energia injectada a la xarxa</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Patró de consum mejorado -->
-                            <div class="mt-6">
-                                <h3 class="text-lg font-medium text-gray-800 dark:text-white mb-3">Patró de consum</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Selecciona el patró que més s'ajusti al teu consum habitual</p>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <button id="button_diurn" type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
-                                        <div class="w-16 h-16 mb-2">
-                                            <canvas id="diurnalPatternChart"></canvas>
-                                        </div>
-                                        <span id="diurn" class="font-medium text-gray-700 dark:text-gray-200">Diürn</span>
-                                        <span class="text-xs text-gray-500 dark:text-gray-400">Major consum de dia</span>
-                                        <input type="radio" name="patroConsum" value="diurn" class="hidden" {{ (isset($proyecto) && $proyecto->patroConsum == 'diurn') ? 'checked' : '' }}>
-                                    </button>
-                                    
-                                    <button id="button_nocturn" type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
-                                        <div class="w-16 h-16 mb-2">
-                                            <canvas id="nocturnalPatternChart"></canvas>
-                                        </div>
-                                        <span id="nocturn" class="font-medium text-gray-700 dark:text-gray-200">Nocturn</span>
-                                        <span class="text-xs text-gray-500 dark:text-gray-400">Major consum de nit</span>
-                                        <input type="radio" name="patroConsum" value="nocturn" class="hidden" {{ (isset($proyecto) && $proyecto->patroConsum == 'nocturn') ? 'checked' : '' }}>
-                                    </button>
-                                    
-                                    <button id="button_mixt" type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
-                                        <div class="w-16 h-16 mb-2">
-                                            <canvas id="mixedPatternChart"></canvas>
-                                        </div>
-                                        <span id="mixt" class="font-medium text-gray-700 dark:text-gray-200">Mixt</span>
-                                        <span class="text-xs text-gray-500 dark:text-gray-400">Consum repartit</span>
-                                        <input type="radio" name="patroConsum" value="mixt" class="hidden" {{ (isset($proyecto) && $proyecto->patroConsum == 'mixt') ? 'checked' : '' }}>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>                  
-                        
-                        <!-- Pestaña Upload -->
-                        @include('fragments._pujarFitxer')
-                        
-                        <!-- Pestaña Link -->
-                        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-700" id="link" role="tabpanel" aria-labelledby="link-tab">
-                            <div class="max-w-2xl mx-auto">
-                                <div class="bg-emerald-50 border border-emerald-100 rounded-lg p-4 mb-6 dark:bg-gray-600 dark:border-gray-500">
-                                    <div class="flex">
-                                        <div class="flex-shrink-0">
-                                            <svg class="h-5 w-5 text-emerald-600 dark:text-emerald-400" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clip-rule="evenodd" />
-                                            </svg>
-                                        </div>
-                                        <div class="ml-3">
-                                            <h3 class="text-sm font-medium text-emerald-800 dark:text-emerald-200">
-                                                Accés segur
-                                            </h3>
-                                            <div class="mt-2 text-sm text-emerald-700 dark:text-emerald-300">
-                                                <p>
-                                                    Connectarem de forma segura amb la teva comercialitzadora per obtenir les teves dades de consum. No emmagatzemem credencials.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="space-y-4">
-                                    <div>
-                                        <label for="energy-provider" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                            Comercialitzadora
-                                        </label>
-                                        <select id="energy-provider" name="energy_provider" 
-                                                class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500">
-                                            <option value="" disabled selected>Selecciona la teva comercialitzadora</option>
-                                            <option value="Endesa" {{ (isset($proyecto) && $proyecto->energy_provider == 'Endesa') ? 'selected' : '' }}>Endesa</option>
-                                            <option value="Iberdrola" {{ (isset($proyecto) && $proyecto->energy_provider == 'Iberdrola') ? 'selected' : '' }}>Iberdrola</option>
-                                            <option value="Naturgy" {{ (isset($proyecto) && $proyecto->energy_provider == 'Naturgy') ? 'selected' : '' }}>Naturgy</option>
-                                            <option value="Repsol" {{ (isset($proyecto) && $proyecto->energy_provider == 'Repsol') ? 'selected' : '' }}>Repsol</option>
-                                            <option value="EDP" {{ (isset($proyecto) && $proyecto->energy_provider == 'EDP') ? 'selected' : '' }}>EDP</option>
-                                            <option value="TotalEnergies" {{ (isset($proyecto) && $proyecto->energy_provider == 'TotalEnergies') ? 'selected' : '' }}>TotalEnergies</option>
-                                            <option value="Holaluz" {{ (isset($proyecto) && $proyecto->energy_provider == 'Holaluz') ? 'selected' : '' }}>Holaluz</option>
-                                            <option value="other" {{ (isset($proyecto) && $proyecto->energy_provider == 'other') ? 'selected' : '' }}>Altres</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div>
-                                        <label for="cups-number" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                            Número CUPS
-                                        </label>
-                                        <input type="text" id="cups-number" name="cups_number" 
+                                    <div class="relative">
+                                        <input type="number" id="subvenciones" name="subvenciones" 
                                                class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
-                                               placeholder="ESXXXXXXX" value="{{ $proyecto->cups_number ?? old('cups_number') }}">
-                                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Pots trobar aquest número a qualsevol factura</p>
+                                               placeholder="Ex: 1200" value="0">
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <span class="text-gray-500 dark:text-gray-400">€</span>
+                                        </div>
                                     </div>
-                                    
-                                    <div class="pt-2">
-                                        <button type="button" class="w-full flex justify-center items-center px-4 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                            </svg>
-                                            Connectar amb Comercialitzadora
-                                        </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Ajuts o deduccions aplicables</p>
+                                </div>
+                                
+                                <!-- Precio de venta de excedentes -->
+                                <div class="space-y-2">
+                                    <label for="precioExcedentes" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Preu de venda d'excedents
+                                    </label>
+                                    <div class="relative">
+                                        <input type="number" step="0.001" id="precioExcedentes" name="precioExcedentes" 
+                                               class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                               placeholder="Ex: 0.08">
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <span class="text-gray-500 dark:text-gray-400">€/kWh</span>
+                                        </div>
                                     </div>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Preu per l'energia injectada a la xarxa</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Patró de consum mejorado -->
+                        <div class="mt-6">
+                            <h3 class="text-lg font-medium text-gray-800 dark:text-white mb-3">Patró de consum</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Selecciona el patró que més s'ajusti al teu consum habitual</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <button id="button_diurn" type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
+                                    <div class="w-16 h-16 mb-2">
+                                        <canvas id="diurnalPatternChart"></canvas>
+                                    </div>
+                                    <span  id="diurn" class="font-medium text-gray-700 dark:text-gray-200">Diürn</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">Major consum de dia</span>
+                                </button>
+                                
+                                <button id="button_nocturn" type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
+                                    <div class="w-16 h-16 mb-2">
+                                        <canvas id="nocturnalPatternChart"></canvas>
+                                    </div>
+                                    <span id="nocturn" class="font-medium text-gray-700 dark:text-gray-200">Nocturn</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">Major consum de nit</span>
+                                </button>
+                                
+                                <button id="button_mixt" type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
+                                    <div class="w-16 h-16 mb-2">
+                                        <canvas id="mixedPatternChart"></canvas>
+                                    </div>
+                                    <span id="mixt" class="font-medium text-gray-700 dark:text-gray-200">Mixt</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">Consum repartit</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>                  
+                    
+                    <!-- Pestaña Upload -->
+                    @include('fragments._pujarFitxer')
+                    
+                    <!-- Pestaña Link -->
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-700" id="link" role="tabpanel" aria-labelledby="link-tab">
+                        <div class="max-w-2xl mx-auto">
+                            <div class="bg-emerald-50 border border-emerald-100 rounded-lg p-4 mb-6 dark:bg-gray-600 dark:border-gray-500">
+                                <div class="flex">
+                                    <div class="flex-shrink-0">
+                                        <svg class="h-5 w-5 text-emerald-600 dark:text-emerald-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <h3 class="text-sm font-medium text-emerald-800 dark:text-emerald-200">
+                                            Accés segur
+                                        </h3>
+                                        <div class="mt-2 text-sm text-emerald-700 dark:text-emerald-300">
+                                            <p>
+                                                Connectarem de forma segura amb la teva comercialitzadora per obtenir les teves dades de consum. No emmagatzemem credencials.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="energy-provider" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Comercialitzadora
+                                    </label>
+                                    <select id="energy-provider" name="energy-provider" 
+                                            class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500">
+                                        <option value="" disabled selected>Selecciona la teva comercialitzadora</option>
+                                        <option value="Endesa">Endesa</option>
+                                        <option value="Iberdrola">Iberdrola</option>
+                                        <option value="Naturgy">Naturgy</option>
+                                        <option value="Repsol">Repsol</option>
+                                        <option value="EDP">EDP</option>
+                                        <option value="TotalEnergies">TotalEnergies</option>
+                                        <option value="Holaluz">Holaluz</option>
+                                        <option value="other">Altres</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label for="cups-number" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Número CUPS
+                                    </label>
+                                    <input type="text" id="cups-number" name="cups-number" 
+                                           class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
+                                           placeholder="ESXXXXXXX">
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Pots trobar aquest número a qualsevol factura</p>
+                                </div>
+                                
+                                <div class="pt-2">
+                                    <button type="button" class="w-full flex justify-center items-center px-4 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                        </svg>
+                                        Connectar amb Comercialitzadora
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Gráfico de consumo -->
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 mb-8">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Gràfic de consum</h3>
-                        <div class="mt-2 md:mt-0 flex space-x-2">
-                            <div id="chart-period" class=" px-3 py-1 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:border-gray-600"></div>
-                            <button id="export-chart" class="text-sm flex items-center text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200">
-                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                                </svg>
-                                Exportar
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="h-80">
-                        <canvas id="consumptionChart"></canvas>
-                    </div>
-                    
-                    <div class="mt-4 flex flex-wrap justify-center gap-2">
-                        <div class="flex items-center">
-                            <div class="w-3 h-3 rounded-full bg-emerald-500 mr-1"></div>
-                            <span class="text-xs text-gray-600 dark:text-gray-300">Consum actual</span>
-                        </div>
-                        <div class="flex items-center">
-                            <div class="w-3 h-3 rounded-full bg-blue-500 mr-1"></div>
-                            <span class="text-xs text-gray-600 dark:text-gray-300">Mitjana sectorial</span>
-                        </div>
-                        <div class="flex items-center">
-                            <div class="w-3 h-3 rounded-full bg-orange-500 mr-1"></div>
-                            <span class="text-xs text-gray-600 dark:text-gray-300">Consum ideal</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Resumen y siguiente paso -->
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div class="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg flex-1">
-                        <h4 class="text-sm font-medium text-blue-800 dark:text-blue-200 mb-1">Resum del teu consum</h4>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <p class="text-xs text-blue-600 dark:text-blue-300">Consum anual</p>
-                                <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">3,450 kWh</p>
-                            </div>
-                            <div>
-                                <p class="text-xs text-blue-600 dark:text-blue-300">Cost anual</p>
-                                <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">€890</p>
-                            </div>
-                            <div>
-                                <p class="text-xs text-blue-600 dark:text-blue-300">Patró dominant</p>
-                                <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">Mixt</p>
-                            </div>
-                            <div>
-                                <p class="text-xs text-blue-600 dark:text-blue-300">Potència</p>
-                                <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">4.6 kW</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="w-full md:w-auto px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors duration-300">
-                        Següent pas: Seleccionar Àrea
-                        <svg class="w-5 h-5 ml-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </button>
                 </div>
             </div>
-        </form>
+            
+            <!-- Gráfico de consumo -->
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 mb-8">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">Gràfic de consum</h3>
+                    <div class="mt-2 md:mt-0 flex space-x-2">
+                        <div id="chart-period" class=" px-3 py-1 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:border-gray-600"></div>
+                        <button id="export-chart" class="text-sm flex items-center text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Exportar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="h-80">
+                    <canvas id="consumptionChart"></canvas>
+                </div>
+                
+                <div class="mt-4 flex flex-wrap justify-center gap-2">
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 rounded-full bg-emerald-500 mr-1"></div>
+                        <span class="text-xs text-gray-600 dark:text-gray-300">Consum actual</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 rounded-full bg-blue-500 mr-1"></div>
+                        <span class="text-xs text-gray-600 dark:text-gray-300">Mitjana sectorial</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 rounded-full bg-orange-500 mr-1"></div>
+                        <span class="text-xs text-gray-600 dark:text-gray-300">Consum ideal</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Resumen y siguiente paso -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg flex-1">
+                    <h4 class="text-sm font-medium text-blue-800 dark:text-blue-200 mb-1">Resum del teu consum</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-xs text-blue-600 dark:text-blue-300">Consum anual</p>
+                            <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">3,450 kWh</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-blue-600 dark:text-blue-300">Cost anual</p>
+                            <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">€890</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-blue-600 dark:text-blue-300">Patró dominant</p>
+                            <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">Mixt</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-blue-600 dark:text-blue-300">Potència</p>
+                            <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">4.6 kW</p>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
             
         <script>
             window.userId = "{{ Auth::id() }}"
-            window.proyectoId = "{{ $proyecto->id ?? '' }}"
         </script>
         <script src="{{asset('build/js/consumTabFunctionality.js')}}"></script>
         <script src="{{asset('build/js/consum.js')}}"></script>
