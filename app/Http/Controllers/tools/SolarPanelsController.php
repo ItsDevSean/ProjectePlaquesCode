@@ -68,8 +68,7 @@ class SolarPanelsController extends Controller
             'coeficiente_temp_pmax' => 'required|numeric|min:0|max:100',
             'coeficiente_temp_voc' => 'nullable|numeric|min:-100|max:100',
             'coeficiente_temp_isc' => 'nullable|numeric|min:-100|max:100',
-        ]);
-        
+        ]); 
 
         SolarPanelsModel::create($request->all() + ['user_id' => Auth::id()]);
 
@@ -126,39 +125,71 @@ class SolarPanelsController extends Controller
             return back()->with('error', 'Invalid file!');
         }
         $data = array_map('str_getcsv', file($file->getRealPath()));
-        if (empty($data) || count($data) <= 1) {  
+        if (empty($data) || count($data) <= 1) { 
+            dd(count($data)); 
             return back()->with('error', 'CSV file is empty or invalid!');
         }
         $headers = array_shift($data); 
-        $expectedHeaders = (new SolarPanelsModel)->getFillable();
-        array_unshift($headers, "user_id");
-        // dd($expectedHeaders);
-        // dd($headers );
-        // dd($headers != $expectedHeaders);
+        $expectedHeaders = array_filter((new SolarPanelsModel)->getFillable(), fn($field) => $field !== 'user_id');
+        $expectedHeaders = array_values($expectedHeaders);
+        
         if ($headers != $expectedHeaders) {
             return back()->with('error', 'CSV headers are not valid!');
         }
-        foreach ($data as $row) {
-            $rowData = [];
-            
-            unset($expectedHeaders[0]);
-            $expectedHeaders = array_values($expectedHeaders);
-            // dd($row);
-            // dd($expectedHeaders);
-            foreach ($expectedHeaders as $index => $header) {
-                
-                $rowData[$header] = $row[$index];
-                
+        foreach ($data as $rowIndex => $row) {
+            if (empty(array_filter($row, fn($value) => $value !== null && $value !== ''))) {
+                continue;
             }
-            // dd($row);
-            $newRequest = new Request($rowData);
+
+            $rowData = [];
+            // dd($data);
+            // dd(count($data));
+            foreach ($headers as $index => $header) {
+                $rowData[$header] = $row[$index] ?? null;   
+            }
+            // dd($rowData);
             try {
-                $this->store($newRequest);
+                $this->validateAndStorePanel($rowData);
             } catch (\Exception $e) {
-                // dd($newRequest);
-                return back()->with('error', "Error processing row " . ($index + 1) . ": " . $e->getMessage());
+                return back()->with('error', "Error processing row " . ($rowIndex + 1) . ": " . $e->getMessage());
             }
         }
+    
         return $this->index();
+    }
+
+    private function validateAndStorePanel(array $data)
+    {
+        // dd($data);
+        $validated = validator($data, [
+            'panel_model' => 'required|string|min:2|max:100',
+            'fabricante_id' => 'required|integer',
+            'panel_type' => 'required|string|min:2|max:50',
+            'date_manufacturer' => 'required|date',
+            'panel_warranty' => 'nullable|integer',
+            'performance_warranty' => 'nullable|integer',
+            'longitud_v2' => 'required|numeric|min:0',
+            'anchura' => 'required|numeric|min:0',
+            'espesor' => 'required|numeric|min:0',
+            'peso' => 'required|numeric|min:0',
+            'superficie' => 'required|numeric|min:0',
+            'descripcion' => 'nullable|string',
+            'url_fabricante' => 'nullable|string',
+            'imagen_panel' => 'nullable|string',
+            'material_marco' => 'nullable|string',
+            'color_panel' => 'nullable|string',
+            'potencia_maxima' => 'required|numeric|min:0',
+            'tension_maxima_potencia' => 'nullable|numeric|min:0',
+            'corriente_punto_maxima_potencia' => 'nullable|numeric|min:0',
+            'tension_circuito_abierto' => 'nullable|numeric|min:0',
+            'corriente_cortocircuito' => 'nullable|numeric|min:0',
+            'eficencia_panel' => 'required|numeric|min:0|max:100',
+            'coeficiente_temp_pmax' => 'required|numeric|min:0|max:100',
+            'coeficiente_temp_voc' => 'nullable|numeric|min:-100|max:100',
+            'coeficiente_temp_isc' => 'nullable|numeric|min:-100|max:100',
+        ])->validate();
+
+        $validated['user_id'] = Auth::id();
+        SolarPanelsModel::create($validated);
     }
 }
