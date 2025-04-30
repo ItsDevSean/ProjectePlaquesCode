@@ -37,7 +37,9 @@ document.getElementById('enviarLocal').addEventListener('click', function() {
             [`${localStoragePrefix}edificiData`]: 'edifici_data',
             [`${localStoragePrefix}obstacles`]: 'obstacles',
             [`${localStoragePrefix}polygon`]: 'polygon',
-            [`${localStoragePrefix}radiationCoords`]: 'radiation_coords'
+            [`${localStoragePrefix}radiationCoords`]: 'radiation_coords',
+            [`${localStoragePrefix}prodAnual`]: 'prodAnual'
+
         };
 
     // Identificar qué claves son JSON
