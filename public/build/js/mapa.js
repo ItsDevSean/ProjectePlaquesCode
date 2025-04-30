@@ -11,11 +11,16 @@ window.initMap = function () {
         heading: 0,
     });
 
-    map.setOptions({ draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true });
+    map.setOptions({
+        draggable: false,
+        zoomControl: false,
+        scrollwheel: false,
+        disableDoubleClickZoom: true,
+    });
 
     // Inicialització de variables globals
-    window.obstacles = []; 
-    window.currentObstacle = null; 
+    window.obstacles = [];
+    window.currentObstacle = null;
     window.obstacleMarkers = [];
     window.obstaclePolygons = [];
     window.obstacleIdCounter = { value: 0 };
@@ -23,28 +28,32 @@ window.initMap = function () {
     // Crear el contador de IDs
     const obstacleIdCounter = { value: 0 };
 
-    if(!localStorage.getItem(`user_${userId}_direccion`)) {
+    if (!localStorage.getItem(`user_${userId}_direccion`)) {
         const autocomplete = initAutocomplete(map);
-        document.getElementById("buttonBuscar").addEventListener("click", () => geocodeAddress(map));
+        document
+            .getElementById("buttonBuscar")
+            .addEventListener("click", () => geocodeAddress(map));
     } else {
         const savedAddress = localStorage.getItem(`user_${userId}_direccion`);
         document.getElementById("address").value = savedAddress;
         geocodeAddress(map);
     }
-    
+
     const startSelectionButton = document.getElementById("startSelection");
     startSelectionButton.disabled = true;
-    
+
     if (localStorage.getItem(`user_${userId}_polygon`)) {
         startSelectionButton.textContent = "Reiniciar selecció";
         iniciarSeleccio(map);
-        
+
         cargarObstaculosDesdeLocalStorage(map).then(() => {
             // Asegurarnos de que el botón se crea incluso sin obstáculos
             crearBotonConfigurarPlaSiNoExiste();
-            
+
             // Recuperar el tipus de panell del localStorage
-            const savedPanelId = localStorage.getItem(`user_${userId}_panel_id`);
+            const savedPanelId = localStorage.getItem(
+                `user_${userId}_panel_id`
+            );
             if (savedPanelId) {
                 const selectPanel = document.getElementById("panel_model");
                 for (let i = 0; i < selectPanel.options.length; i++) {
@@ -53,45 +62,48 @@ window.initMap = function () {
                         break;
                     }
                 }
-                selectPanel.dispatchEvent(new Event('change'));
+                selectPanel.dispatchEvent(new Event("change"));
             }
         });
     } else {
         startSelectionButton.textContent = "Seleccionar area";
-    };
+    }
 
-    
-    
     document.getElementById("startSelection").addEventListener("click", () => {
         const button = document.getElementById("startSelection");
-    
+
         if (button.textContent === "Reiniciar selecció") {
-            button.textContent = "Seleccionar area"; 
+            button.textContent = "Seleccionar area";
             reiniciarEstado(map);
             const sidePanel = document.getElementById("sidePanel");
             sidePanel.classList.remove("open");
         } else {
             button.textContent = "Reiniciar selecció";
-            iniciarSeleccio(map); 
+            iniciarSeleccio(map);
         }
     });
 
-    
+    document
+        .getElementById("nouObstacleButton")
+        .addEventListener("click", () => {
+            const sidePanel = document.getElementById("sidePanel");
+            sidePanel.classList.remove("open");
 
-    document.getElementById("nouObstacleButton").addEventListener("click", () => {
-        const sidePanel = document.getElementById("sidePanel");
-        sidePanel.classList.remove("open");
+            const polygonPrincipal = window.selectedPolygon;
 
-        const polygonPrincipal = window.selectedPolygon;
+            if (
+                !polygonPrincipal ||
+                polygonPrincipal.getPath().getLength() < 3
+            ) {
+                alert(
+                    "Primer has de crear el polígon principal amb almenys 3 punts."
+                );
+                return;
+            }
 
-        if (!polygonPrincipal || polygonPrincipal.getPath().getLength() < 3) {
-            alert("Primer has de crear el polígon principal amb almenys 3 punts.");
-            return;
-        }
-
-        // Pasar el contador de IDs como parámetro
-        iniciarSeleccioObstacle(map, obstacleIdCounter);
-    });
+            // Pasar el contador de IDs como parámetro
+            iniciarSeleccioObstacle(map, obstacleIdCounter);
+        });
 };
 
 function crearBotonConfigurarPlaSiNoExiste() {
@@ -105,16 +117,19 @@ function crearBotonConfigurarPlaSiNoExiste() {
                 const sidePanel = document.getElementById("sidePanel");
                 sidePanel.classList.add("open");
                 guardarInclinacion();
-                
+
                 if (window.clickListener) {
                     google.maps.event.removeListener(window.clickListener);
                     window.clickListener = null;
                 }
 
                 // Rellenar el formulario con los datos guardados
-                const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`));
+                const edificiData = JSON.parse(
+                    localStorage.getItem(`user_${userId}_edificiData`)
+                );
                 if (edificiData) {
-                    document.getElementById("inclinacion").value = edificiData.inclinacion;
+                    document.getElementById("inclinacion").value =
+                        edificiData.inclinacion;
                     document.getElementById("area").value = edificiData.area;
                 }
                 guardarInclinacion();
@@ -128,39 +143,54 @@ function crearBotonConfigurarPlaSiNoExiste() {
 function geocodeAddress(map) {
     const address = document.getElementById("address").value;
     localStorage.setItem(`user_${userId}_direccion`, address);
-    
+
     if (address === "") {
         alert("Per favor, introduïu una adreça.");
         return;
     }
-    
+
     const geocoder = new google.maps.Geocoder();
-    
+
     geocoder.geocode({ address: address }, function (results, status) {
         if (status === "OK") {
             map.setCenter(results[0].geometry.location);
             crearMarcador(map, results[0].geometry.location);
-            
+
             // Cambiar el mapa a modo satélite, desactivar etiquetas y hacer zoom
             map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
-            map.setOptions({ styles: [{ featureType: "all", elementType: "labels", stylers: [{ visibility: "off" }] }] });
+            map.setOptions({
+                styles: [
+                    {
+                        featureType: "all",
+                        elementType: "labels",
+                        stylers: [{ visibility: "off" }],
+                    },
+                ],
+            });
             map.setZoom(18);
             const mapOverlay = document.getElementById("mapOverlay");
             mapOverlay.classList.add("hidden");
-            
+
             enableMapInteractions(map);
             // Habilitar el botón "Seleccionar área"
             document.getElementById("startSelection").disabled = false;
-            document.getElementById("startSelection").classList.remove("hidden");
-            getSolarData(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-            getMonthlySolarData(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-            
+            document
+                .getElementById("startSelection")
+                .classList.remove("hidden");
+            getSolarData(
+                results[0].geometry.location.lat(),
+                results[0].geometry.location.lng()
+            );
+            getMonthlySolarData(
+                results[0].geometry.location.lat(),
+                results[0].geometry.location.lng()
+            );
         } else {
             alert("No sa trobat la direcció, torna-ho a intentar.");
         }
     });
 }
-  
+
 function initAutocomplete(map) {
     const autocomplete = new google.maps.places.Autocomplete(
         document.getElementById("address"),
@@ -174,11 +204,9 @@ function initAutocomplete(map) {
             alert("No s'han trobat detalls per aquesta adreça.");
             return;
         }
-        
+
         const address = place.formatted_address;
         localStorage.setItem(`user_${userId}_direccion`, address);
-
-        
 
         // Obtener coordenadas
         const lat = place.geometry.location.lat();
@@ -189,15 +217,23 @@ function initAutocomplete(map) {
 
         // Cambiar el mapa a modo satélite y desactivar etiquetas
         map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
-        map.setOptions({ styles: [{ featureType: "all", elementType: "labels", stylers: [{ visibility: "off" }] }] });
+        map.setOptions({
+            styles: [
+                {
+                    featureType: "all",
+                    elementType: "labels",
+                    stylers: [{ visibility: "off" }],
+                },
+            ],
+        });
         map.setZoom(18);
         const mapOverlay = document.getElementById("mapOverlay");
         mapOverlay.classList.add("hidden");
         enableMapInteractions(map);
-        
+
         // Llamar a getSolarData con las coordenadas
         getSolarData(lat, lng);
-        getMonthlySolarData(lat, lng)
+        getMonthlySolarData(lat, lng);
 
         // Habilitar el botón "Seleccionar área"
         document.getElementById("startSelection").disabled = false;
@@ -217,31 +253,31 @@ function crearMarcador(map, latLng) {
     map.setCenter(latLng);
 
     const areaText = document.getElementById("areaResult").innerText;
-    const areaValue = areaText.replace("Àrea: ", "").replace(" m²", ""); 
+    const areaValue = areaText.replace("Àrea: ", "").replace(" m²", "");
     const estacio = localStorage.getItem(`user_${userId}_estacionalidad`);
 
     // Calcular la inclinació segons l'estacionalitat
-    
+
     const lat = latLng.lat();
     let inclinacion;
-    
-    if (estacio === 'Estiu') {
-        inclinacion = lat - 10;  
-    } else if (estacio === 'Hivern') {
-        inclinacion = lat + 10;  
-    } else if (estacio === 'any') {
+
+    if (estacio === "Estiu") {
+        inclinacion = lat - 10;
+    } else if (estacio === "Hivern") {
+        inclinacion = lat + 10;
+    } else if (estacio === "any") {
         inclinacion = lat;
     } else {
-        console.log('Estacionalitat no vàlida');
-        inclinacion = lat;       
+        console.log("Estacionalitat no vàlida");
+        inclinacion = lat;
     }
 
     const edifici = {
         id: window.edificis ? window.edificis.length + 1 : 1,
         lat: lat,
         lng: latLng.lng(),
-        inclinacion: inclinacion.toFixed(0),  // Arrodonim a 0 decimals
-        area: areaValue, 
+        inclinacion: inclinacion.toFixed(0), // Arrodonim a 0 decimals
+        area: areaValue,
     };
 
     if (!window.edificis) {
@@ -254,76 +290,76 @@ function crearMarcador(map, latLng) {
 
 // Comienza la selección de puntos
 function iniciarSeleccio(map) {
-    
     // Intenta cargar marcadores guardados
     const savedPolygon = localStorage.getItem(`user_${userId}_polygon`);
-    
+
     if (savedPolygon) {
-        
         const parsedPolygon = JSON.parse(savedPolygon);
         window.selectedMarkers = [];
-        
+
         // Recrear los marcadores desde el localStorage
-        parsedPolygon.forEach(coord => {
-            
+        parsedPolygon.forEach((coord) => {
             const latLng = new google.maps.LatLng(coord.lat, coord.lng);
             const marker = new google.maps.Marker({
                 position: latLng,
                 map: map,
                 icon: {
                     path: google.maps.SymbolPath.CIRCLE,
-                    scale: 8,  // Un poco más grande
-                    fillColor: "#4285F4",  // Azul de Google más profesional
+                    scale: 8, // Un poco más grande
+                    fillColor: "#4285F4", // Azul de Google más profesional
                     fillOpacity: 0.8,
-                    strokeColor: "#FFFFFF",  // Borde blanco para contraste
-                    strokeWeight: 2,  // Borde más grueso
+                    strokeColor: "#FFFFFF", // Borde blanco para contraste
+                    strokeWeight: 2, // Borde más grueso
                     strokeOpacity: 1,
-                    anchor: new google.maps.Point(0, 0)  // Mejor posicionamiento
+                    anchor: new google.maps.Point(0, 0), // Mejor posicionamiento
                 },
                 draggable: true,
             });
-            
+
             window.selectedMarkers.push(marker);
-            marker.addListener("dragend", function() {
+            marker.addListener("dragend", function () {
                 dibuixarPoligon(map); // Solo se ejecuta si se mueve un marcador
             });
         });
-        
+
         crearBotonConfigurarPlaSiNoExiste();
-        
+
         // Dibujar el polígono si hay suficientes puntos
         if (window.selectedMarkers.length >= 2) {
-            
-            const coordinates = window.selectedMarkers.map(marker => marker.getPosition());
-            
+            const coordinates = window.selectedMarkers.map((marker) =>
+                marker.getPosition()
+            );
+
             window.selectedPolygon = new google.maps.Polygon({
                 paths: coordinates,
-                strokeColor: "#1E88E5",  // Azul más profesional
+                strokeColor: "#1E88E5", // Azul más profesional
                 strokeOpacity: 0.9,
-                strokeWeight: 3,  // Línea un poco más gruesa
-                fillColor: "#42A5F5",  // Azul más claro para el relleno
-                fillOpacity: 0.3,  // Más transparente
+                strokeWeight: 3, // Línea un poco más gruesa
+                fillColor: "#42A5F5", // Azul más claro para el relleno
+                fillOpacity: 0.3, // Más transparente
                 map: map,
                 clickable: false,
-                zIndex: 1,  // Para asegurar que esté encima de otros elementos
-                strokeDashArray: [0, 0],  // Podrías usar [5, 5] para línea punteada si prefieres
-                editable: false  // Asegurar que no sea editable si no lo necesitas
-              });
-            
+                zIndex: 1, // Para asegurar que esté encima de otros elementos
+                strokeDashArray: [0, 0], // Podrías usar [5, 5] para línea punteada si prefieres
+                editable: false, // Asegurar que no sea editable si no lo necesitas
+            });
+
             // Obtener el área desde localStorage en lugar de recalcularla
-            const areaGuardada = localStorage.getItem(`user_${userId}_novaArea`);
+            const areaGuardada = localStorage.getItem(
+                `user_${userId}_novaArea`
+            );
             const areaLabel = document.getElementById("areaResult");
-            
+
             if (areaGuardada) {
-                console.log("loc")
-                areaLabel.innerText = `Àrea: ${parseFloat(areaGuardada).toFixed(2)} m²`;
-                
+                console.log("loc");
+                areaLabel.innerText = `Àrea: ${parseFloat(areaGuardada).toFixed(
+                    2
+                )} m²`;
             } else {
-                
                 // Si no hay área guardada, calcularla (por si acaso)
                 calcularArea(window.selectedPolygon);
             }
-            
+
             // Configurar el botón "Configurar pla" sin recalcular
             if (!document.querySelector(".configurar-pla-button")) {
                 const configurarPlaButton = document.createElement("button");
@@ -333,26 +369,31 @@ function iniciarSeleccio(map) {
                     const sidePanel = document.getElementById("sidePanel");
                     sidePanel.classList.add("open");
                     guardarInclinacion();
-                    
+
                     if (window.clickListener) {
                         google.maps.event.removeListener(window.clickListener);
                         window.clickListener = null;
                     }
 
                     // Rellenar el formulario con los datos guardados
-                    const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`));
+                    const edificiData = JSON.parse(
+                        localStorage.getItem(`user_${userId}_edificiData`)
+                    );
                     if (edificiData) {
-                        document.getElementById("inclinacion").value = edificiData.inclinacion;
-                        document.getElementById("area").value = edificiData.area;
+                        document.getElementById("inclinacion").value =
+                            edificiData.inclinacion;
+                        document.getElementById("area").value =
+                            edificiData.area;
                     }
                     guardarInclinacion();
                 });
 
-                areaLabel.insertAdjacentElement("afterend", configurarPlaButton);
+                areaLabel.insertAdjacentElement(
+                    "afterend",
+                    configurarPlaButton
+                );
             }
-            
         }
-        
     } else {
         // Si no hay polígono guardado, iniciar selección normal
         window.selectedMarkers = [];
@@ -378,7 +419,9 @@ function reiniciarEstado(map) {
     window.selectedMarkers = [];
     document.getElementById("areaResult").innerText = "";
 
-    const configurarPlaButton = document.querySelector(".configurar-pla-button");
+    const configurarPlaButton = document.querySelector(
+        ".configurar-pla-button"
+    );
     if (configurarPlaButton) {
         configurarPlaButton.remove();
     }
@@ -471,13 +514,13 @@ function seleccionarPunt(event, map) {
         map: map,
         icon: {
             path: google.maps.SymbolPath.CIRCLE,
-            scale: 8,  // Un poco más grande
-            fillColor: "#4285F4",  // Azul de Google más profesional
+            scale: 8, // Un poco más grande
+            fillColor: "#4285F4", // Azul de Google más profesional
             fillOpacity: 0.9,
-            strokeColor: "#FFFFFF",  // Borde blanco para contraste
-            strokeWeight: 2,  // Borde más grueso
+            strokeColor: "#FFFFFF", // Borde blanco para contraste
+            strokeWeight: 2, // Borde más grueso
             strokeOpacity: 1,
-            anchor: new google.maps.Point(0, 0)  // Mejor posicionamiento
+            anchor: new google.maps.Point(0, 0), // Mejor posicionamiento
         },
         draggable: true,
     });
@@ -486,7 +529,7 @@ function seleccionarPunt(event, map) {
     marker.addListener("dragend", function () {
         dibuixarPoligon(map);
     });
-    
+
     if (window.selectedMarkers.length >= 2) {
         dibuixarPoligon(map);
     }
@@ -496,89 +539,92 @@ function seleccionarPunt(event, map) {
 
 // Función para dibujar el polígono
 function dibuixarPoligon(map) {
-  // Elimina el polígono anterior si existe
-  if (window.selectedPolygon) {
-      window.selectedPolygon.setMap(null);
-  }
-  
-  const coordinates = window.selectedMarkers.map((marker) => marker.getPosition());
+    // Elimina el polígono anterior si existe
+    if (window.selectedPolygon) {
+        window.selectedPolygon.setMap(null);
+    }
 
-  // Només tanca el polígon si hi ha 3 punts o més
-  if (coordinates.length >= 3) {
-      coordinates.push(coordinates[0]); // Tanca només si hi ha 3 o més punts
-  }
-  
-  // Crea un nuevo polígono
-  window.selectedPolygon = new google.maps.Polygon({
-    paths: coordinates,
-    strokeColor: "#1E88E5",  // Azul más profesional
-    strokeOpacity: 0.9,
-    strokeWeight: 3,  // Línea un poco más gruesa
-    fillColor: "#42A5F5",  // Azul más claro para el relleno
-    fillOpacity: 0.3,  // Más transparente
-    map: map,
-    clickable: false,
-    zIndex: 1,  // Para asegurar que esté encima de otros elementos
-    strokeDashArray: [0, 0],  // Podrías usar [5, 5] para línea punteada si prefieres
-    editable: false  // Asegurar que no sea editable si no lo necesitas
-  });
-  
-  if (coordinates.length >= 3) {
-    calcularArea(window.selectedPolygon);
-  }
-  
-  guardarPoligonoEnLocalStorage();
+    const coordinates = window.selectedMarkers.map((marker) =>
+        marker.getPosition()
+    );
+
+    // Només tanca el polígon si hi ha 3 punts o més
+    if (coordinates.length >= 3) {
+        coordinates.push(coordinates[0]); // Tanca només si hi ha 3 o més punts
+    }
+
+    // Crea un nuevo polígono
+    window.selectedPolygon = new google.maps.Polygon({
+        paths: coordinates,
+        strokeColor: "#1E88E5", // Azul más profesional
+        strokeOpacity: 0.9,
+        strokeWeight: 3, // Línea un poco más gruesa
+        fillColor: "#42A5F5", // Azul más claro para el relleno
+        fillOpacity: 0.3, // Más transparente
+        map: map,
+        clickable: false,
+        zIndex: 1, // Para asegurar que esté encima de otros elementos
+        strokeDashArray: [0, 0], // Podrías usar [5, 5] para línea punteada si prefieres
+        editable: false, // Asegurar que no sea editable si no lo necesitas
+    });
+
+    if (coordinates.length >= 3) {
+        calcularArea(window.selectedPolygon);
+    }
+
+    guardarPoligonoEnLocalStorage();
 }
- 
+
 // Función para calcular el número máximo de placas
 function calcularMaxPlacas(areaTotal) {
-    const selectPanel = document.getElementById('panel_model');
+    const selectPanel = document.getElementById("panel_model");
     const selectedOption = selectPanel.options[selectPanel.selectedIndex];
-    const areaPlaca = parseFloat(selectedOption.getAttribute('data-surface'));
-    localStorage.setItem(`user_${userId}_superficie`, areaPlaca)
+    const areaPlaca = parseFloat(selectedOption.getAttribute("data-surface"));
+    localStorage.setItem(`user_${userId}_superficie`, areaPlaca);
 
     if (isNaN(areaPlaca) || areaPlaca <= 0) {
-        console.error('No se ha seleccionado un panel válido o la superficie no está definida.');
+        console.error(
+            "No se ha seleccionado un panel válido o la superficie no está definida."
+        );
         return 0;
     }
 
     return Math.floor(areaTotal / areaPlaca);
 }
 
-const orientacion = document.getElementById('orientacion');
+const orientacion = document.getElementById("orientacion");
 
-
-
-let inclinacion = document.getElementById('inclinacion');
+let inclinacion = document.getElementById("inclinacion");
 
 // Función que guarda el valor actual en localStorage
 function guardarInclinacion() {
     const inclinacionValue = inclinacion.value;
-    console.log(inclinacionValue)
+    console.log(inclinacionValue);
     localStorage.setItem(`user_${userId}_inclinacion`, inclinacionValue);
 }
 
 // Escuchar cambios y actualizar
-inclinacion.addEventListener('change', guardarInclinacion);
+inclinacion.addEventListener("change", guardarInclinacion);
 
 // Escuchar cambios en el select
-const selectPanel = document.getElementById('panel_model');
+const selectPanel = document.getElementById("panel_model");
 
-selectPanel.addEventListener('change', function () {
+selectPanel.addEventListener("change", function () {
     const selectedOption = selectPanel.options[selectPanel.selectedIndex];
     const panelModel = selectedOption.textContent.trim();
     const panelId = selectedOption.value;
-    const potenciaMaxima = selectedOption.getAttribute('data-potencia-maxima')
+    const potenciaMaxima = selectedOption.getAttribute("data-potencia-maxima");
     localStorage.setItem(`user_${userId}_panel_pot`, potenciaMaxima);
     localStorage.setItem(`user_${userId}_panel_model`, panelModel);
     localStorage.setItem(`user_${userId}_panel_id`, panelId);
-    
+
     // Obtener el área total desde localStorage o desde la función calcularArea
-    const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`)) || {};
+    const edificiData =
+        JSON.parse(localStorage.getItem(`user_${userId}_edificiData`)) || {};
     const areaTotal = parseFloat(edificiData.area);
 
     if (isNaN(areaTotal) || areaTotal <= 0) {
-        console.error('No se ha calculado un área válida.');
+        console.error("No se ha calculado un área válida.");
         return;
     }
 
@@ -593,20 +639,27 @@ selectPanel.addEventListener('change', function () {
 // Función para calcular el área del polígono
 function calcularArea(selectedPolygon) {
     const areaLabel = document.getElementById("areaResult");
-    
+
     if (selectedPolygon) {
-        const area = google.maps.geometry.spherical.computeArea(selectedPolygon.getPath());
-        localStorage.setItem(`user_${userId}_novaArea`, area)
+        const area = google.maps.geometry.spherical.computeArea(
+            selectedPolygon.getPath()
+        );
+        localStorage.setItem(`user_${userId}_novaArea`, area);
         areaLabel.innerText = `Àrea: ${area.toFixed(2)} m²`;
-        
+
         // Obtener los datos existentes de edificiData
-        const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`)) || {};
-        
+        const edificiData =
+            JSON.parse(localStorage.getItem(`user_${userId}_edificiData`)) ||
+            {};
+
         // Actualizar solo la propiedad 'area' sin sobrescribir las demás
         edificiData.area = area.toFixed(2);
 
         // Guardar el objeto actualizado en localStorage
-        localStorage.setItem(`user_${userId}_edificiData`, JSON.stringify(edificiData));
+        localStorage.setItem(
+            `user_${userId}_edificiData`,
+            JSON.stringify(edificiData)
+        );
         // Calcular el número máximo de placas con el área actual
         const maxPlacas = calcularMaxPlacas(area);
         actualizarSlider(maxPlacas);
@@ -626,15 +679,15 @@ function calcularArea(selectedPolygon) {
                     google.maps.event.removeListener(window.clickListener);
                     window.clickListener = null;
                 }
-                
-                
-
 
                 // Rellenar el formulario con los datos guardados
-                const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`));
+                const edificiData = JSON.parse(
+                    localStorage.getItem(`user_${userId}_edificiData`)
+                );
                 if (edificiData) {
                     // Asignar el valor de inclinacion al campo del formulario
-                    document.getElementById("inclinacion").value = edificiData.inclinacion;
+                    document.getElementById("inclinacion").value =
+                        edificiData.inclinacion;
                     document.getElementById("area").value = edificiData.area;
                 }
 
@@ -657,7 +710,8 @@ function actualizarSlider(maxPlacas) {
     placaCount.max = maxPlacas;
 
     // Cargar valor guardado o inicializar a 0
-    const savedPlacaCount = localStorage.getItem(`user_${userId}_placaCount`) || 0;
+    const savedPlacaCount =
+        localStorage.getItem(`user_${userId}_placaCount`) || 0;
     const initialValue = Math.min(parseInt(savedPlacaCount, 10), maxPlacas);
 
     // Establecer valores iniciales
@@ -667,15 +721,18 @@ function actualizarSlider(maxPlacas) {
     actualitzarFonsSlider();
 
     // Actualizar el input cuando se mueve el slider
-    slider.addEventListener("input", function() {
+    slider.addEventListener("input", function () {
         placaCount.value = this.value;
         actualizarEstiloSlider(this);
         localStorage.setItem(`user_${userId}_placaCount`, this.value);
     });
 
     // Actualizar el slider cuando el input manual cambia
-    placaCount.addEventListener("input", function() {
-        const newValue = Math.min(Math.max(parseInt(this.value, 10), 0), parseInt(this.max, 10));
+    placaCount.addEventListener("input", function () {
+        const newValue = Math.min(
+            Math.max(parseInt(this.value, 10), 0),
+            parseInt(this.max, 10)
+        );
         this.value = newValue;
         slider.value = newValue;
         actualizarEstiloSlider(slider);
@@ -683,8 +740,11 @@ function actualizarSlider(maxPlacas) {
     });
 
     // Manejar el evento 'change' para cuando se pierde el foco
-    placaCount.addEventListener("change", function() {
-        const newValue = Math.min(Math.max(parseInt(this.value, 10), 0), parseInt(this.max, 10));
+    placaCount.addEventListener("change", function () {
+        const newValue = Math.min(
+            Math.max(parseInt(this.value, 10), 0),
+            parseInt(this.max, 10)
+        );
         this.value = newValue;
         slider.value = newValue;
         actualizarEstiloSlider(slider);
@@ -692,10 +752,13 @@ function actualizarSlider(maxPlacas) {
     });
 
     // Manejar la tecla Enter
-    placaCount.addEventListener("keypress", function(e) {
+    placaCount.addEventListener("keypress", function (e) {
         if (e.key === "Enter") {
             e.preventDefault();
-            const newValue = Math.min(Math.max(parseInt(this.value, 10), 0), parseInt(this.max, 10));
+            const newValue = Math.min(
+                Math.max(parseInt(this.value, 10), 0),
+                parseInt(this.max, 10)
+            );
             this.value = newValue;
             slider.value = newValue;
             actualizarEstiloSlider(slider);
@@ -708,7 +771,10 @@ function actualizarSlider(maxPlacas) {
 
 // Función para actualizar el valor del slider
 function actualizarValorSlider(placaCount, slider) {
-    const newValue = Math.min(Math.max(parseInt(placaCount.value, 10), 0), parseInt(placaCount.max, 10));
+    const newValue = Math.min(
+        Math.max(parseInt(placaCount.value, 10), 0),
+        parseInt(placaCount.max, 10)
+    );
     placaCount.value = newValue; // Asegurarse de que el valor esté dentro del rango
     slider.value = newValue;
     actualizarEstiloSlider(slider); // Actualizar el estilo del slider
@@ -724,26 +790,26 @@ function actualizarEstiloSlider(slider) {
 
 const slider = document.getElementById("placaSlider");
 const placaCount = document.getElementById("placaCount");
-let value = 0
+let value = 0;
 // Funció per actualitzar el fons del slider
 function actualitzarFonsSlider() {
-    if (value === 0) {  
-        slider.style.background = '#e0e0e0';   
+    if (value === 0) {
+        slider.style.background = "#e0e0e0";
     } else {
         slider.style.background = `linear-gradient(to right, #49DBA3 ${value}%, #e0e0e0 ${value}%)`;
     }
-value = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+    value = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
 }
 
 // Inicialitza el fons del slider al carregar la pàgina
 window.addEventListener("load", function () {
-    placaCount.innerText = slider.value;  
-    actualitzarFonsSlider();  
+    placaCount.innerText = slider.value;
+    actualitzarFonsSlider();
 });
 
 // Actualitza el fons i el comptador quan es mou el slider
 slider.addEventListener("input", function () {
-    actualitzarFonsSlider();  
+    actualitzarFonsSlider();
     placaCount.innerText = this.value;
 });
 
@@ -757,7 +823,9 @@ document.getElementById("closePanelButton").addEventListener("click", () => {
 document.addEventListener("click", (event) => {
     const sidePanel = document.getElementById("sidePanel");
     const closePanelButton = document.getElementById("closePanelButton");
-    const configurarPlaButton = document.querySelector(".configurar-pla-button");
+    const configurarPlaButton = document.querySelector(
+        ".configurar-pla-button"
+    );
 
     // Verificar si el clic fue fuera del side panel y no en los botones relacionados
     if (
@@ -775,7 +843,12 @@ function estaPoligonDins(polygonPrincipal, polygonObstacle) {
     for (let i = 0; i < paths.getLength(); i++) {
         const path = paths.getAt(i);
         for (let j = 0; j < path.getLength(); j++) {
-            if (!google.maps.geometry.poly.containsLocation(path.getAt(j), polygonPrincipal)) {
+            if (
+                !google.maps.geometry.poly.containsLocation(
+                    path.getAt(j),
+                    polygonPrincipal
+                )
+            ) {
                 return false; // Si algun punt no està dins, retorna false
             }
         }
@@ -789,7 +862,7 @@ function iniciarSeleccioObstacle(map, obstacleIdCounter) {
     window.currentObstacle = {
         id: obstacleId, // Asignar el ID único
         markers: [], // Marcadors d'aquest obstacle
-        polygons: [] // Polígons d'aquest obstacle
+        polygons: [], // Polígons d'aquest obstacle
     };
 
     // Afegir l'obstacle actual a la llista global
@@ -810,10 +883,12 @@ function iniciarSeleccioObstacle(map, obstacleIdCounter) {
         tancarPoligonButton.removeEventListener("click", tancarPoligonHandler);
         if (window.currentObstacle.markers.length >= 3) {
             tancarPoligonButton.style.display = "none";
-    
-            const coordinates = window.currentObstacle.markers.map(marker => marker.getPosition());
+
+            const coordinates = window.currentObstacle.markers.map((marker) =>
+                marker.getPosition()
+            );
             coordinates.push(coordinates[0]); // Cerrar el polígono
-    
+
             const obstaclePolygon = new google.maps.Polygon({
                 paths: coordinates,
                 strokeColor: "#FF0000",
@@ -826,32 +901,40 @@ function iniciarSeleccioObstacle(map, obstacleIdCounter) {
 
             window.obstaclePolygons.push(obstaclePolygon);
             window.currentObstacle.polygons.push(obstaclePolygon);
-    
+
             if (estaPoligonDins(window.selectedPolygon, obstaclePolygon)) {
                 window.currentObstacle.polygons = [obstaclePolygon];
-                
+
                 // Calcular área
                 const areaObstacle = google.maps.geometry.spherical.computeArea(
                     obstaclePolygon.getPath()
                 );
-                
+
                 // Actualizar área principal
                 const areaLabel = document.getElementById("areaResult");
-                const areaPrincipal = parseFloat(areaLabel.innerText.replace("Àrea: ", "").replace(" m²", ""));
+                const areaPrincipal = parseFloat(
+                    areaLabel.innerText.replace("Àrea: ", "").replace(" m²", "")
+                );
                 const novaAreaTotal = areaPrincipal - areaObstacle;
-                
+
                 localStorage.setItem(`user_${userId}_novaArea`, novaAreaTotal);
                 areaLabel.innerText = `Àrea: ${novaAreaTotal.toFixed(2)} m²`;
-    
+
                 // Actualizar datos del edificio
-                const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`)) || {};
+                const edificiData =
+                    JSON.parse(
+                        localStorage.getItem(`user_${userId}_edificiData`)
+                    ) || {};
                 edificiData.area = novaAreaTotal.toFixed(2);
-                localStorage.setItem(`user_${userId}_edificiData`, JSON.stringify(edificiData));
-    
+                localStorage.setItem(
+                    `user_${userId}_edificiData`,
+                    JSON.stringify(edificiData)
+                );
+
                 // Actualizar slider
                 const maxPlacas = calcularMaxPlacas(novaAreaTotal);
                 actualizarSlider(maxPlacas);
-    
+
                 // Añadir a la lista
                 const obstaclesList = document.getElementById("obstaclesList");
                 const obstacleItem = document.createElement("div");
@@ -863,16 +946,17 @@ function iniciarSeleccioObstacle(map, obstacleIdCounter) {
                           data-id="${window.currentObstacle.id}">Eliminar</span>
                 `;
                 obstaclesList.appendChild(obstacleItem);
-    
+
                 // Guardar todos los obstáculos
                 guardarObstaculosEnLocalStorage();
             } else {
-                alert("L'obstacle ha d'estar completament dins del polígon principal.");
+                alert(
+                    "L'obstacle ha d'estar completament dins del polígon principal."
+                );
                 obstaclePolygon.setMap(null);
             }
         } else {
             alert("Necessiteu almenys 3 punts per tancar el polígon.");
-            
         }
     }
 
@@ -883,7 +967,12 @@ function iniciarSeleccioObstacle(map, obstacleIdCounter) {
             return;
         }
 
-        if (!google.maps.geometry.poly.containsLocation(event.latLng, window.selectedPolygon)) {
+        if (
+            !google.maps.geometry.poly.containsLocation(
+                event.latLng,
+                window.selectedPolygon
+            )
+        ) {
             alert("El punt ha d'estar dins del polígon principal.");
             return;
         }
@@ -910,21 +999,22 @@ function iniciarSeleccioObstacle(map, obstacleIdCounter) {
         }
     }
 
-    
-
     // Afegir el listener per seleccionar punts
     window.clickListener = map.addListener("click", seleccionarPuntObstacle);
-
 }
 
 // Funció per dibuixar el polígon de l'obstacle
 function dibuixarPoligonObstacle() {
     // Eliminar el polígon temporal anterior si existeix
     if (window.currentObstacle.polygons.length > 0) {
-        window.currentObstacle.polygons[window.currentObstacle.polygons.length - 1].setMap(null);
+        window.currentObstacle.polygons[
+            window.currentObstacle.polygons.length - 1
+        ].setMap(null);
     }
 
-    const coordinates = window.currentObstacle.markers.map((marker) => marker.getPosition());
+    const coordinates = window.currentObstacle.markers.map((marker) =>
+        marker.getPosition()
+    );
     if (coordinates.length >= 3) coordinates.push(coordinates[0]);
 
     // Crear un nou polígon temporal
@@ -940,67 +1030,85 @@ function dibuixarPoligonObstacle() {
 
     // Afegir el polígon temporal a l'obstacle actual
     window.currentObstacle.polygons.push(tempPolygon);
-    
 }
 
-document.getElementById("obstaclesList").addEventListener("click", function (event) {
-    if (event.target.classList.contains("delete-obstacle")) {
-        const obstacleItem = event.target.closest(".obstacle-item");
-        const obstacleId = parseInt(event.target.getAttribute("data-id"));
-        const areaObstacle = parseFloat(event.target.getAttribute("data-area"));
+document
+    .getElementById("obstaclesList")
+    .addEventListener("click", function (event) {
+        if (event.target.classList.contains("delete-obstacle")) {
+            const obstacleItem = event.target.closest(".obstacle-item");
+            const obstacleId = parseInt(event.target.getAttribute("data-id"));
+            const areaObstacle = parseFloat(
+                event.target.getAttribute("data-area")
+            );
 
-        // 1. Actualizar área total
-        const areaLabel = document.getElementById("areaResult");
-        const areaPrincipal = parseFloat(areaLabel.innerText.replace("Àrea: ", "").replace(" m²", ""));
-        const novaAreaTotal = areaPrincipal + areaObstacle;
-        localStorage.setItem(`user_${userId}_novaArea`, novaAreaTotal);
-        areaLabel.innerText = `Àrea: ${novaAreaTotal.toFixed(2)} m²`;
+            // 1. Actualizar área total
+            const areaLabel = document.getElementById("areaResult");
+            const areaPrincipal = parseFloat(
+                areaLabel.innerText.replace("Àrea: ", "").replace(" m²", "")
+            );
+            const novaAreaTotal = areaPrincipal + areaObstacle;
+            localStorage.setItem(`user_${userId}_novaArea`, novaAreaTotal);
+            areaLabel.innerText = `Àrea: ${novaAreaTotal.toFixed(2)} m²`;
 
-        // Actualizar datos del edificio
-        const edificiData = JSON.parse(localStorage.getItem(`user_${userId}_edificiData`)) || {};
-        edificiData.area = novaAreaTotal.toFixed(2);
-        localStorage.setItem(`user_${userId}_edificiData`, JSON.stringify(edificiData));
+            // Actualizar datos del edificio
+            const edificiData =
+                JSON.parse(
+                    localStorage.getItem(`user_${userId}_edificiData`)
+                ) || {};
+            edificiData.area = novaAreaTotal.toFixed(2);
+            localStorage.setItem(
+                `user_${userId}_edificiData`,
+                JSON.stringify(edificiData)
+            );
 
-        // Actualizar slider
-        const maxPlacas = calcularMaxPlacas(novaAreaTotal);
-        actualizarSlider(maxPlacas);
+            // Actualizar slider
+            const maxPlacas = calcularMaxPlacas(novaAreaTotal);
+            actualizarSlider(maxPlacas);
 
-        // 2. Buscar y eliminar el obstáculo
-        const obstacleIndex = window.obstacles.findIndex(obstacle => obstacle.id === obstacleId);
-        if (obstacleIndex !== -1) {
-            const obstacle = window.obstacles[obstacleIndex];
-            
-            // Eliminar todos los elementos gráficos asociados
-            eliminarElementosObstaculo(obstacle);
-            
-            // Eliminar de las listas globales
-            window.obstacles.splice(obstacleIndex, 1);
-            
-            // Si es el obstáculo actual, limpiarlo
-            if (window.currentObstacle && window.currentObstacle.id === obstacleId) {
-                window.currentObstacle = null;
+            // 2. Buscar y eliminar el obstáculo
+            const obstacleIndex = window.obstacles.findIndex(
+                (obstacle) => obstacle.id === obstacleId
+            );
+            if (obstacleIndex !== -1) {
+                const obstacle = window.obstacles[obstacleIndex];
+
+                // Eliminar todos los elementos gráficos asociados
+                eliminarElementosObstaculo(obstacle);
+
+                // Eliminar de las listas globales
+                window.obstacles.splice(obstacleIndex, 1);
+
+                // Si es el obstáculo actual, limpiarlo
+                if (
+                    window.currentObstacle &&
+                    window.currentObstacle.id === obstacleId
+                ) {
+                    window.currentObstacle = null;
+                }
             }
+
+            // 3. Actualizar localStorage
+            guardarObstaculosEnLocalStorage();
+
+            // 4. Eliminar de la interfaz
+            obstacleItem.remove();
         }
-
-        // 3. Actualizar localStorage
-        guardarObstaculosEnLocalStorage();
-
-        // 4. Eliminar de la interfaz
-        obstacleItem.remove();
-    }
-});
+    });
 
 // Función auxiliar para eliminar todos los elementos de un obstáculo
 function eliminarElementosObstaculo(obstacle) {
     // Eliminar marcadores
     if (obstacle.markers && obstacle.markers.length > 0) {
-        obstacle.markers.forEach(marker => {
+        obstacle.markers.forEach((marker) => {
             if (marker && marker.setMap) {
                 marker.setMap(null);
             }
             // Eliminar de obstacleMarkers si existe
             if (window.obstacleMarkers) {
-                const markerIndex = window.obstacleMarkers.findIndex(m => m === marker);
+                const markerIndex = window.obstacleMarkers.findIndex(
+                    (m) => m === marker
+                );
                 if (markerIndex !== -1) {
                     window.obstacleMarkers.splice(markerIndex, 1);
                 }
@@ -1010,13 +1118,15 @@ function eliminarElementosObstaculo(obstacle) {
 
     // Eliminar polígonos
     if (obstacle.polygons && obstacle.polygons.length > 0) {
-        obstacle.polygons.forEach(polygon => {
+        obstacle.polygons.forEach((polygon) => {
             if (polygon && polygon.setMap) {
                 polygon.setMap(null);
             }
             // Eliminar de obstaclePolygons si existe
             if (window.obstaclePolygons) {
-                const polygonIndex = window.obstaclePolygons.findIndex(p => p === polygon);
+                const polygonIndex = window.obstaclePolygons.findIndex(
+                    (p) => p === polygon
+                );
                 if (polygonIndex !== -1) {
                     window.obstaclePolygons.splice(polygonIndex, 1);
                 }
@@ -1026,7 +1136,12 @@ function eliminarElementosObstaculo(obstacle) {
 }
 
 function enableMapInteractions(map) {
-    map.setOptions({ draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false });
+    map.setOptions({
+        draggable: true,
+        zoomControl: true,
+        scrollwheel: true,
+        disableDoubleClickZoom: false,
+    });
 }
 
 function setupPlacaCountListener(placaCount, slider) {
@@ -1038,30 +1153,32 @@ function setupPlacaCountListener(placaCount, slider) {
         cantidadPlacas = placaCount.value || slider.value;
         localStorage.setItem(`user_${userId}_placaCount`, cantidadPlacas);
     };
-    
+
     // Configuramos los listeners
-    placaCount.addEventListener('input', actualizarPlacas);
-    slider.addEventListener('input', actualizarPlacas);
+    placaCount.addEventListener("input", actualizarPlacas);
+    slider.addEventListener("input", actualizarPlacas);
 
     // Mostramos el valor inicial
     actualizarPlacas();
 }
 
 async function getSolarData(lat, lon) {
-    
     const url = `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}&start_date=2024-01-01&end_date=2024-12-31&daily=shortwave_radiation_sum&timezone=auto`;
-  
+
     const response = await fetch(url);
     const data = await response.json();
-    
+
     // Suma total en Joules (convertir a kWh)
-    const annualRadiation_J = data.daily.shortwave_radiation_sum.reduce((a, b) => a + b, 0);
-    const annualRadiation_kWh = (annualRadiation_J / 3.6).toFixed(2); 
+    const annualRadiation_J = data.daily.shortwave_radiation_sum.reduce(
+        (a, b) => a + b,
+        0
+    );
+    const annualRadiation_kWh = (annualRadiation_J / 3.6).toFixed(2);
     localStorage.setItem(`user_${userId}_radiacion`, annualRadiation_kWh);
-  
+
     return annualRadiation_kWh;
 }
-  
+
 async function getMonthlySolarData(lat, lon) {
     const months = [
         { name: "Enero", start: "2024-01-01", end: "2024-01-31" },
@@ -1075,15 +1192,23 @@ async function getMonthlySolarData(lat, lon) {
         { name: "Septiembre", start: "2024-09-01", end: "2024-09-30" },
         { name: "Octubre", start: "2024-10-01", end: "2024-10-31" },
         { name: "Noviembre", start: "2024-11-01", end: "2024-11-30" },
-        { name: "Diciembre", start: "2024-12-01", end: "2024-12-31" }
+        { name: "Diciembre", start: "2024-12-01", end: "2024-12-31" },
     ];
 
     // Intentar cargar datos existentes del localStorage
-    let monthlyData = JSON.parse(localStorage.getItem(`user_${userId}_monthlyRadiation`)) || [];
-    
+    let monthlyData =
+        JSON.parse(localStorage.getItem(`user_${userId}_monthlyRadiation`)) ||
+        [];
+
     // Verificar si ya tenemos datos para estas coordenadas
-    const storedCoords = JSON.parse(localStorage.getItem(`user_${userId}_radiationCoords`)) || {};
-    if (storedCoords.lat === lat && storedCoords.lon === lon && monthlyData.length > 0) {
+    const storedCoords =
+        JSON.parse(localStorage.getItem(`user_${userId}_radiationCoords`)) ||
+        {};
+    if (
+        storedCoords.lat === lat &&
+        storedCoords.lon === lon &&
+        monthlyData.length > 0
+    ) {
         return monthlyData;
     }
 
@@ -1092,54 +1217,62 @@ async function getMonthlySolarData(lat, lon) {
 
     for (const month of months) {
         const url = `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}&start_date=${month.start}&end_date=${month.end}&daily=shortwave_radiation_sum&timezone=auto`;
-        
+
         try {
             const response = await fetch(url);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            
+            if (!response.ok)
+                throw new Error(`HTTP error! status: ${response.status}`);
+
             const data = await response.json();
-            
+
             // Suma total en Joules (convertir a kWh)
-            const monthlyRadiation_J = data.daily.shortwave_radiation_sum.reduce((a, b) => a + b, 0);
+            const monthlyRadiation_J =
+                data.daily.shortwave_radiation_sum.reduce((a, b) => a + b, 0);
             const monthlyRadiation_kWh = (monthlyRadiation_J / 3.6).toFixed(2);
-            
+
             monthlyData.push({
                 month: month.name,
-                radiation_kWh: parseFloat(monthlyRadiation_kWh) // Convertir a número
+                radiation_kWh: parseFloat(monthlyRadiation_kWh), // Convertir a número
             });
-
-
         } catch (error) {
             monthlyData.push({
                 month: month.name,
                 radiation_kWh: null,
-                error: error.message
+                error: error.message,
             });
         }
     }
 
     // Guardar en localStorage
-    localStorage.setItem(`user_${userId}_monthlyRadiation`, JSON.stringify(monthlyData));
-    localStorage.setItem(`user_${userId}_radiationCoords`, JSON.stringify({ lat, lon }));
-    
+    localStorage.setItem(
+        `user_${userId}_monthlyRadiation`,
+        JSON.stringify(monthlyData)
+    );
+    localStorage.setItem(
+        `user_${userId}_radiationCoords`,
+        JSON.stringify({ lat, lon })
+    );
+
     return monthlyData;
 }
 
 function guardarPoligonoEnLocalStorage() {
     if (window.selectedMarkers && window.selectedMarkers.length > 0) {
-        const coordsToSave = window.selectedMarkers.map(marker => {
+        const coordsToSave = window.selectedMarkers.map((marker) => {
             return {
                 lat: marker.getPosition().lat(),
-                lng: marker.getPosition().lng()
+                lng: marker.getPosition().lng(),
             };
         });
-        localStorage.setItem(`user_${userId}_polygon`, JSON.stringify(coordsToSave));
+        localStorage.setItem(
+            `user_${userId}_polygon`,
+            JSON.stringify(coordsToSave)
+        );
     }
 }
 
-
 function guardarObstaculosEnLocalStorage() {
-    const obstaclesToSave = window.obstacles.map(obstacle => {
+    const obstaclesToSave = window.obstacles.map((obstacle) => {
         let areaObstacle = 0;
         if (obstacle.polygons.length > 0) {
             try {
@@ -1150,18 +1283,21 @@ function guardarObstaculosEnLocalStorage() {
                 console.error("Error calculando área:", e);
             }
         }
-        
+
         return {
             id: obstacle.id,
-            markers: obstacle.markers.map(marker => ({
+            markers: obstacle.markers.map((marker) => ({
                 lat: marker.getPosition().lat(),
-                lng: marker.getPosition().lng()
+                lng: marker.getPosition().lng(),
             })),
-            area: areaObstacle
+            area: areaObstacle,
         };
     });
-    
-    localStorage.setItem(`user_${userId}_obstacles`, JSON.stringify(obstaclesToSave));
+
+    localStorage.setItem(
+        `user_${userId}_obstacles`,
+        JSON.stringify(obstaclesToSave)
+    );
 }
 
 function cargarObstaculosDesdeLocalStorage(map) {
@@ -1169,25 +1305,28 @@ function cargarObstaculosDesdeLocalStorage(map) {
         const savedObstacles = localStorage.getItem(`user_${userId}_obstacles`);
         if (savedObstacles) {
             const parsedObstacles = JSON.parse(savedObstacles);
-            
+
             // Reiniciar el contador de IDs
-            const maxId = parsedObstacles.reduce((max, obstacle) => Math.max(max, obstacle.id), 0);
+            const maxId = parsedObstacles.reduce(
+                (max, obstacle) => Math.max(max, obstacle.id),
+                0
+            );
             window.obstacleIdCounter = { value: maxId + 1 };
-            
+
             // Limpiar obstáculos existentes
             window.obstacles = [];
             document.getElementById("obstaclesList").innerHTML = "";
-            
+
             // Recrear cada obstáculo
-            parsedObstacles.forEach(obstacleData => {
+            parsedObstacles.forEach((obstacleData) => {
                 const obstacle = {
                     id: obstacleData.id,
                     markers: [],
-                    polygons: []
+                    polygons: [],
                 };
-                
+
                 // Crear marcadores
-                obstacleData.markers.forEach(coord => {
+                obstacleData.markers.forEach((coord) => {
                     const latLng = new google.maps.LatLng(coord.lat, coord.lng);
                     const marker = new google.maps.Marker({
                         position: latLng,
@@ -1203,12 +1342,14 @@ function cargarObstaculosDesdeLocalStorage(map) {
                     });
                     obstacle.markers.push(marker);
                 });
-                
+
                 // Crear polígono si hay suficientes marcadores
                 if (obstacle.markers.length >= 3) {
-                    const coordinates = obstacle.markers.map(marker => marker.getPosition());
+                    const coordinates = obstacle.markers.map((marker) =>
+                        marker.getPosition()
+                    );
                     coordinates.push(coordinates[0]);
-                    
+
                     const obstaclePolygon = new google.maps.Polygon({
                         paths: coordinates,
                         strokeColor: "#FF0000",
@@ -1220,17 +1361,21 @@ function cargarObstaculosDesdeLocalStorage(map) {
                     });
                     obstacle.polygons.push(obstaclePolygon);
                 }
-                
+
                 window.obstacles.push(obstacle);
-                
+
                 // Mostrar en la interfaz
                 const obstaclesList = document.getElementById("obstaclesList");
                 const obstacleItem = document.createElement("div");
                 obstacleItem.className = "obstacle-item";
                 obstacleItem.innerHTML = `
                     <div>Obstacle ${obstacle.id}</div>
-                    <div>Àrea: ${obstacleData.area?.toFixed(2) || "0.00"} m²</div>
-                    <span class="delete-obstacle" data-area="${obstacleData.area || 0}" 
+                    <div>Àrea: ${
+                        obstacleData.area?.toFixed(2) || "0.00"
+                    } m²</div>
+                    <span class="delete-obstacle" data-area="${
+                        obstacleData.area || 0
+                    }" 
                           data-id="${obstacle.id}">Eliminar</span>
                 `;
                 obstaclesList.appendChild(obstacleItem);

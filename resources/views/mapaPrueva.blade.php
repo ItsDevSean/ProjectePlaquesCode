@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscador de Direcció</title>
     <link rel="stylesheet" href="build/css/styleMapa.css">
+    <link rel="stylesheet" href="build/css/orientacioInclinacio.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -152,10 +153,11 @@
                 <div class="accordion-content bg-white">
                     <div class="p-4">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Selector de Orientación Visual -->
-                            <div class="flex flex-col items-center">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Orientació</label>
-                                <div class="orientation-dial w-44 h-44 cursor-grab active:cursor-grabbing relative">
+                            <!-- Selector de Orientación Visual - Modificado el contenedor -->
+                            <div class="flex flex-col items-center p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+                                <label class="block text-sm font-medium text-gray-700 mb-3">Orientació</label>
+                                <div class="orientation-dial w-44 h-44 cursor-grab active:cursor-grabbing relative mx-auto">
+                                    <!-- SVG original sin cambios -->
                                     <svg class="orientation-svg w-full h-full select-none touch-none" viewBox="0 0 200 200">
                                         <circle cx="100" cy="100" r="90" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
                                         
@@ -170,38 +172,37 @@
                                         <line x1="35" y1="100" x2="15" y2="100" stroke="#d1d5db" stroke-width="1.5"/>
     
                                         <line id="dial-line" x1="100" y1="100" x2="100" y2="30" stroke="#059669" stroke-width="3" stroke-linecap="round"/> 
-                                        <circle id="dial-handle" cx="100" cy="30" r="8" fill="#10b981" stroke="#047857" stroke-width="2" style="cursor: inherit;"/> 
+                                        <circle id="dial-handle" cx="100" cy="30" r="8" fill="#10b981" stroke="#047857" stroke-width="2.5" style="cursor: inherit;"/> 
                                     </svg>
                                 </div>
-    
-                                <div class="orientation-info text-center mt-2">
+                                <div class="orientation-info text-center mt-3">
                                     <span id="orientation-degree" class="block text-xl font-semibold text-emerald-700">180°</span>
                                     <span id="orientation-cardinal" class="block text-sm text-gray-600 capitalize">Sud</span>
                                     <input type="hidden" id="orientacion" name="orientacion" value="sur">
                                 </div>
                             </div>
                             
-                            <!-- Selector de Inclinación Visual -->
-                            <div class="flex flex-col items-center">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Inclinació</label>
-                                <div class="inclination-selector-container w-48 h-28 relative">
+                            <!-- Selector de Inclinación Visual - Modificado el contenedor -->
+                            <div class="flex flex-col items-center p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+                                <label class="block text-sm font-medium text-gray-700 mb-3">Inclinació</label>
+                                <div class="inclination-selector-container ml-10 mt-6 w-full max-w-[160px] h-[120px] relative mx-auto">
+                                    <!-- SVG original sin cambios -->
                                     <svg class="inclination-svg w-full h-full overflow-visible select-none touch-none cursor-grab active:cursor-grabbing" viewBox="0 0 160 90">
                                         <circle cx="80" cy="80" r="3" fill="#cbd5e1"/> 
                                         
-                                        <line x1="10" y1="80" x2="150" y2="80" stroke="#e2e8f0" stroke-width="2"/>
+                                        <line x1="10" y1="80" x2="78" y2="80" stroke="#e2e8f0" stroke-width="2"/>
                                         
                                         <path id="inclination-arc" d="M 10 80 A 70 70 0 0 1 80 10" stroke="#e2e8f0" stroke-width="2" fill="none"/> 
                                         
                                         <line id="inclination-line" x1="80" y1="80" x2="10" y2="80" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/> 
                                         
-                                        <circle id="inclination-handle" cx="10" cy="80" r="7" fill="#10b981" stroke="#047857" stroke-width="2" style="cursor: inherit;"/>
+                                        <circle id="inclination-handle" cx="10" cy="80" r="4" fill="#10b981" stroke="#047857" stroke-width="1.5" style="cursor: inherit;"/>
                             
                                         <text x="10" y="92" text-anchor="middle" font-size="10" fill="#64748b">0°</text>
-                                        <text x="80" y="7" text-anchor="middle" font-size="10" fill="#64748b">90°</text>
+                                        <text x="80" y="4" text-anchor="middle" font-size="10" fill="#64748b">90°</text>
                                     </svg>
                                 </div>
-                            
-                                <div class="inclination-info text-center mt-2">
+                                <div class="inclination-info text-center mt-3">
                                     <span id="inclination-degree" class="block text-xl font-semibold text-emerald-700">0°</span>
                                     <input type="hidden" id="inclinacion" name="inclinacion" value="0" required>
                                 </div>
@@ -285,386 +286,14 @@
                 </div>
             </div>
         </div>
-    </div>
-    
-    <style>
-    /* Estilos para los selectores visuales */
-    .orientation-dial {
-        width: 150px;
-        height: 150px;
-        cursor: grab;
-        touch-action: none;
-    }
-
-    .orientation-svg {
-        width: 100%;
-        height: 100%;
-        user-select: none;
-    }
-
-    .orientation-info {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #orientation-degree {
-        font-size: 1.25rem;
-        font-weight: bold;
-        color: #065f46;
-    }
-
-    #orientation-cardinal {
-        font-size: 0.875rem;
-        color: #64748b;
-    }
-
-    .inclination-selector-container {
-        width: 160px;
-        height: 120px;
-    }
-
-    .inclination-svg {
-        width: 100%;
-        height: 100%;
-        user-select: none;
-    }
-
-    #inclination-degree {
-        font-size: 1.25rem;
-        font-weight: bold;
-        color: #065f46;
-    }
-
-    /* Ajustes responsivos */
-    @media (max-width: 767px) {
-        .orientation-dial {
-            width: 130px;
-            height: 130px;
-        }
-        
-        .inclination-selector-container {
-            width: 140px;
-            height: 100px;
-        }
-    }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-    
-        .accordion-section.active .accordion-content {
-            max-height: 1000px;
-            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-    
-        .accordion-section.active .accordion-icon {
-            transform: rotate(180deg);
-        }
-    
-        .close-panel-button {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: all 0.2s ease;
-        }
-    
-        input:focus, select:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(73, 219, 163, 0.3);
-        }
-    </style>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Funcionalidad del acordeón (existente)
-            const accordionButtons = document.querySelectorAll('.accordion-button');
-            
-            accordionButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const section = this.parentElement;
-                    section.classList.toggle('active');
-                    
-                    if (section.classList.contains('active')) {
-                        document.querySelectorAll('.accordion-section').forEach(s => {
-                            if (s !== section && s.classList.contains('active')) {
-                                s.classList.remove('active');
-                            }
-                        });
-                    }
-                });
-            });
-    
-            // Abrir la primera sección por defecto
-            document.querySelector('.accordion-section').classList.add('active');
-    
-            // Selector de Inclinación
-            const inclinationSVG = document.querySelector('.inclination-svg');
-            const inclinationHandle = document.getElementById('inclination-handle');
-            const inclinationLine = document.getElementById('inclination-line');
-            const inclinationDegreeDisplay = document.getElementById('inclination-degree');
-            const inclinationInput = document.getElementById('inclinacion');
-    
-            if (inclinationSVG && inclinationHandle && inclinationLine && inclinationDegreeDisplay && inclinationInput) {
-                const center = { x: 80, y: 80 };
-                const radius = 70;
-                const minInclination = 0;
-                const maxInclination = 90;
-                
-                let isDraggingInclination = false;
-    
-                // Event Listeners
-                inclinationHandle.addEventListener('mousedown', startInclinationDrag);
-                inclinationSVG.addEventListener('mousemove', dragInclination);
-                document.addEventListener('mouseup', endInclinationDrag);
-    
-                // Soporte táctil
-                inclinationHandle.addEventListener('touchstart', startInclinationDrag, { passive: false });
-                inclinationSVG.addEventListener('touchmove', dragInclination, { passive: false });
-                document.addEventListener('touchend', endInclinationDrag);
-    
-                function startInclinationDrag(e) {
-                    e.preventDefault();
-                    isDraggingInclination = true;
-                    inclinationSVG.style.cursor = 'grabbing';
-                }
-    
-                function dragInclination(e) {
-                    if (!isDraggingInclination) return;
-                    e.preventDefault();
-    
-                    const coords = getSVGCoordinates(e, inclinationSVG);
-                    
-                    // Calcular ángulo
-                    const dx = coords.x - center.x;
-                    const dy = coords.y - center.y;
-                    let svgAngleRad = Math.atan2(dy, dx);
-                    let svgAngleDeg = svgAngleRad * (180 / Math.PI);
-    
-                    // Convertir ángulo SVG a inclinación (0-90)
-                    let inclination = 0;
-                    let normalizedSvgAngleDeg = ((svgAngleDeg % 360) + 360) % 360;
-                    
-                    if (normalizedSvgAngleDeg >= 90 && normalizedSvgAngleDeg <= 180) {
-                        inclination = 0;
-                    } else if (normalizedSvgAngleDeg > 180 && normalizedSvgAngleDeg <= 270) {
-                        inclination = normalizedSvgAngleDeg - 180;
-                    } else {
-                        inclination = 90;
-                    }
-    
-                    // Limitar y redondear
-                    inclination = Math.max(minInclination, Math.min(maxInclination, inclination));
-                    updateInclinationVisuals(Math.round(inclination));
-                }
-    
-                function endInclinationDrag() {
-                    if (isDraggingInclination) {
-                        isDraggingInclination = false;
-                        inclinationSVG.style.cursor = 'grab';
-                        saveInclinationToLocalStorage(Math.round(parseFloat(inclinationInput.value)));
-                    }
-                }
-    
-                function getSVGCoordinates(e, svgElement) {
-                    const pt = svgElement.createSVGPoint();
-                    if (e.type.includes('touch')) {
-                        pt.x = e.touches[0].clientX;
-                        pt.y = e.touches[0].clientY;
-                    } else {
-                        pt.x = e.clientX;
-                        pt.y = e.clientY;
-                    }
-                    const svgPoint = pt.matrixTransform(svgElement.getScreenCTM().inverse());
-                    return { x: svgPoint.x, y: svgPoint.y };
-                }
-    
-                function updateInclinationVisuals(inclination) {
-                    inclination = Math.max(minInclination, Math.min(maxInclination, inclination));
-                    
-                    // Convertir inclinación a ángulo SVG
-                    const svgAngleDeg = inclination + 180;
-                    const svgAngleRad = svgAngleDeg * (Math.PI / 180);
-    
-                    // Calcular nueva posición del handle
-                    const hx = center.x + radius * Math.cos(svgAngleRad);
-                    const hy = center.y + radius * Math.sin(svgAngleRad);
-    
-                    // Actualizar posición visual
-                    inclinationHandle.setAttribute('cx', hx);
-                    inclinationHandle.setAttribute('cy', hy);
-                    inclinationLine.setAttribute('x2', hx);
-                    inclinationLine.setAttribute('y2', hy);
-    
-                    // Actualizar texto
-                    inclinationDegreeDisplay.textContent = inclination + '°';
-    
-                    // Actualizar input
-                    inclinationInput.value = inclination;
-                }
-    
-                function saveInclinationToLocalStorage(value) {
-                    if (typeof userId !== 'undefined') {
-                        localStorage.setItem(`user_${userId}_inclinacion`, value);
-                    }
-                }
-    
-                // Inicialización
-                let initialInclination = 0;
-                if (typeof userId !== 'undefined') {
-                    const savedInclination = localStorage.getItem(`user_${userId}_inclinacion`);
-                    if (savedInclination !== null && !isNaN(savedInclination)) {
-                        initialInclination = parseFloat(savedInclination);
-                    } else if (inclinationInput.value !== "" && !isNaN(inclinationInput.value)) {
-                        initialInclination = parseFloat(inclinationInput.value);
-                    }
-                } else if (inclinationInput.value !== "" && !isNaN(inclinationInput.value)) {
-                    initialInclination = parseFloat(inclinationInput.value);
-                }
-    
-                updateInclinationVisuals(Math.round(initialInclination));
-            }
-    
-            // Selector de Orientación
-            const orientationSVG = document.querySelector('.orientation-svg');
-            const orientationHandle = document.getElementById('dial-handle');
-            const orientationLine = document.getElementById('dial-line');
-            const orientationDegreeDisplay = document.getElementById('orientation-degree');
-            const orientationCardinalDisplay = document.getElementById('orientation-cardinal');
-            const orientationHiddenInput = document.getElementById('orientacion');
-            
-            if (orientationSVG && orientationHandle && orientationLine && orientationDegreeDisplay && orientationCardinalDisplay && orientationHiddenInput) {
-                const center = {x: 100, y: 100};
-                const radius = 70;
-                
-                // Mapeo de ángulos a direcciones cardinales
-                const angleToCardinal = {
-                    'norte': { min: 315, max: 45, value: 0, label: 'Nord' },
-                    'este': { min: 45, max: 135, value: 90, label: 'Est' },
-                    'sur': { min: 135, max: 225, value: 180, label: 'Sud' },
-                    'oeste': { min: 225, max: 315, value: 270, label: 'Oest' }
-                };
-                
-                // Inicializar posición (apuntando al Sur por defecto)
-                updateDial(180);
-                
-                // Manejadores de eventos
-                let isDragging = false;
-                
-                orientationHandle.addEventListener('mousedown', startDrag);
-                orientationSVG.addEventListener('mousemove', drag);
-                document.addEventListener('mouseup', endDrag);
-                
-                // Soporte táctil
-                orientationHandle.addEventListener('touchstart', startDrag);
-                orientationSVG.addEventListener('touchmove', drag);
-                document.addEventListener('touchend', endDrag);
-                
-                function startDrag(e) {
-                    e.preventDefault();
-                    isDragging = true;
-                }
-                
-                function drag(e) {
-                    if (!isDragging) return;
-                    e.preventDefault();
-                    
-                    // Obtener posición del cursor/touch relativa al SVG
-                    const coords = getSVGCoordinates(e, orientationSVG);
-                    
-                    // Calcular ángulo
-                    const dx = coords.x - center.x;
-                    const dy = coords.y - center.y;
-                    let angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
-                    if (angle < 0) angle += 360;
-                    
-                    updateDial(angle);
-                }
-                
-                function endDrag() {
-                    isDragging = false;
-                }
-                
-                function updateDial(angle) {
-                    // Convertir ángulo a radianes (con 0° en la parte superior)
-                    const radians = (angle - 90) * (Math.PI / 180);
-                    
-                    // Calcular nueva posición del handle
-                    const x = center.x + radius * Math.cos(radians);
-                    const y = center.y + radius * Math.sin(radians);
-                    
-                    // Actualizar posición visual
-                    orientationHandle.setAttribute('cx', x);
-                    orientationHandle.setAttribute('cy', y);
-                    orientationLine.setAttribute('x2', x);
-                    orientationLine.setAttribute('y2', y);
-                    
-                    // Redondear ángulo a múltiplo de 5 para mejor usabilidad
-                    const roundedAngle = Math.round(angle / 5) * 5;
-                    orientationDegreeDisplay.textContent = roundedAngle + '°';
-                    
-                    // Determinar dirección cardinal
-                    let cardinalKey = 'sur'; // Valor por defecto
-                    for (const [key, range] of Object.entries(angleToCardinal)) {
-                        if ((angle >= range.min || angle < (range.min === 315 ? 45 : range.max)) && 
-                            (angle < range.max || range.max === 45)) {
-                            cardinalKey = key;
-                            break;
-                        }
-                    }
-                    
-                    const cardinal = angleToCardinal[cardinalKey].label;
-                    orientationCardinalDisplay.textContent = cardinal;
-                    
-                    // Actualizar campo oculto
-                    orientationHiddenInput.value = cardinalKey;
-                    
-                    // Guardar en localStorage
-                    if (typeof userId !== 'undefined') {
-                        localStorage.setItem(`user_${userId}_orientacion`, cardinalKey);
-                    }
-                }
-                
-                // Cargar valor guardado al iniciar
-                if (typeof userId !== 'undefined') {
-                    const savedOrientation = localStorage.getItem(`user_${userId}_orientacion`);
-                    if (savedOrientation && angleToCardinal[savedOrientation]) {
-                        updateDial(angleToCardinal[savedOrientation].value);
-                    }
-                }
-                
-                function getSVGCoordinates(e, svgElement) {
-                    const pt = svgElement.createSVGPoint();
-                    if (e.type.includes('touch')) {
-                        const touch = e.touches[0];
-                        pt.x = touch.clientX;
-                        pt.y = touch.clientY;
-                    } else {
-                        pt.x = e.clientX;
-                        pt.y = e.clientY;
-                    }
-                    return pt.matrixTransform(svgElement.getScreenCTM().inverse());
-                }
-            }
-        });
-    </script>
-
- 
+    </div> 
 </x-app-layout>
     
     <script>
     window.userId = "{{ Auth::id() }}";
     </script>
     
+    <script src="build/js/orientacioInclinacio.js"></script>
     <script src="build/js/mapa.js"></script>
     <script src="build/js/formulariSidePanel.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9dnmay3GsjXeiIqbmYoJ3FJ95rDo6hoY&libraries=places&callback=initMap"></script>

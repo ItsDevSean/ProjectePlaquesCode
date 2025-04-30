@@ -1,0 +1,97 @@
+/* Estilos para los selectores visuales */
+.orientation-dial {
+    width: 150px;
+    height: 150px;
+    cursor: grab;
+    touch-action: none;
+}
+
+.orientation-svg {
+    padding-right: 20%;
+    width: 100%;
+    height: 100%;
+    user-select: none;
+}
+
+.orientation-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#orientation-degree {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #065f46;
+}
+
+#orientation-cardinal {
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+.inclination-selector-container {
+    width: 160px;
+    height: 120px;
+}
+
+.inclination-svg {
+    width: 100%;
+    height: 100%;
+    transform: scale(1.5);
+    user-select: none;
+}
+
+#inclination-degree {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #065f46;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 767px) {
+    .orientation-dial {
+        width: 130px;
+        height: 130px;
+    }
+
+    .inclination-selector-container {
+        width: 140px;
+        height: 100px;
+    }
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion-section.active .accordion-content {
+    max-height: 1000px;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion-section.active .accordion-icon {
+    transform: rotate(180deg);
+}
+
+.close-panel-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(73, 219, 163, 0.3);
+}
