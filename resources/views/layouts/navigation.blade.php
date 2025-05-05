@@ -12,7 +12,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('welcome') }}" class="flex items-center">
-                        <img id="logo" src="{{ asset('img/logo.png')}}" alt="Logo" class="h-8 w-auto">
+                        <img id="logo" src="{{ asset('img/logo.png')}}" alt="Logo" class="h-12 w-auto">
                     </a>
                 </div>
 
