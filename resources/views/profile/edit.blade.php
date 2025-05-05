@@ -1,6 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <link rel="stylesheet" href="build/css/styles.css">
+        {{-- Keep your existing link tag if needed --}}
+        {{-- <link rel="stylesheet" href="build/css/styles.css"> --}}
 
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Profile') }}
@@ -9,18 +10,28 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            {{-- Update Profile Information Form --}}
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     @include('profile.partials.update-profile-information-form')
                 </div>
             </div>
 
+            {{-- Update Profile Photo Form (NEW SECTION) --}}
+            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                <div class="max-w-xl">
+                    @include('profile.partials.update-profile-photo-form')
+                </div>
+            </div>
+
+            {{-- Update Password Form --}}
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     @include('profile.partials.update-password-form')
                 </div>
             </div>
 
+             {{-- Delete User Form --}}
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     @include('profile.partials.delete-user-form')

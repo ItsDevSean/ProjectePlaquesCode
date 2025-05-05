@@ -126,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Solo ejecutar el resto si estamos en la página de dades (con el formulario)
     if (form) {
+        
         const inputs = form.querySelectorAll('input, textarea, select');
         
         // Configurar eventos para los selects
@@ -192,16 +193,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Inclinció teulada
         const estaInclinat = document.getElementById("tipo_teulada");
+        if (estaInclinat.value == "si") {
+            document.getElementById("div_inclinacio").classList.remove('hidden');
+        }
         estaInclinat.addEventListener('change', function() {
-            console.log(" no tinene nada " + estaInclinat.value);
             if (estaInclinat.value == "si") {
                 document.getElementById("div_inclinacio").classList.remove('hidden');
             } else {
                 document.getElementById("div_inclinacio").classList.add('hidden');
             }
         })
-    }
-
-    
+    }    
 
 });

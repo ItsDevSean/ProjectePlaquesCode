@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
@@ -27,13 +27,43 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        
+        // Validar la imagen si se sube
+        $request->validate([
+            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Actualizar los datos básicos del perfil
+        $user->fill($request->validated());
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        // Manejar la imagen de perfil
+        if ($request->hasFile('profile_photo')) {
+            // Eliminar la imagen anterior si existe
+            if ($user->profile_photo_path) {
+                $oldImagePath = public_path($user->profile_photo_path);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+
+            $image = $request->file('profile_photo');
+            $extension = $image->getClientOriginalExtension();
+            $safeName = Str::slug(pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME));
+            $imageName = time() . '_' . $safeName . '.' . $extension;
+            
+            // Mover la imagen al directorio de fotos de perfil
+            $image->move(public_path('storage/profilePhoto'), $imageName);
+            
+            // Guardar la ruta en la base de datos
+            $user->profile_photo_path = 'storage/profilePhoto/' . $imageName;
+        }
+
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
@@ -49,6 +79,14 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
+        // Eliminar la foto de perfil si existe
+        if ($user->profile_photo_path) {
+            $oldImagePath = public_path($user->profile_photo_path);
+            if (file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
+        }
+
         Auth::logout();
 
         $user->delete();
@@ -58,4 +96,37 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function updatePhoto(Request $request): RedirectResponse
+{
+    $request->validate([
+        'profile_photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+    ]);
+
+    $user = $request->user();
+
+    if ($request->hasFile('profile_photo')) {
+        // Eliminar la imagen anterior si existe
+        if ($user->profile_photo_path) {
+            $oldImagePath = public_path($user->profile_photo_path);
+            if (file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
+        }
+
+        $image = $request->file('profile_photo');
+        $extension = $image->getClientOriginalExtension();
+        $safeName = Str::slug(pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME));
+        $imageName = time() . '_' . $safeName . '.' . $extension;
+        
+        // Mover la imagen al directorio de fotos de perfil
+        $image->move(public_path('storage/profilePhoto'), $imageName);
+        
+        // Guardar la ruta en la base de datos
+        $user->profile_photo_path = 'storage/profilePhoto/' . $imageName;
+        $user->save();
+    }
+
+    return back()->with('status', 'profile-photo-updated');
+}
 }

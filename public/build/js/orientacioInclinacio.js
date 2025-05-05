@@ -80,6 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Funció per inicialitzar la inclinació
         function initializeInclination() {
+            
             const storageKey = window.userId
                 ? `user_${window.userId}_inclinacion`
                 : "default_inclinacion";
@@ -265,6 +266,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Inicialitzar posició
         function initializeDial() {
+            
             const storageKeyAngle = window.userId
                 ? `user_${window.userId}_orientacion`
                 : "default_orientacio_angle";

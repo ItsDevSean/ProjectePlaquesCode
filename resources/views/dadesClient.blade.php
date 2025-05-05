@@ -280,7 +280,7 @@
                             <label for="inclinaci_teulada" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Inclinació Teulada (º)</label>
                             <div class="relative">
                                 <input type="number" class="mt-1 block w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400 dark:placeholder-gray-400" 
-                                       id="inclinaci_teulada" name="inclinaci_teulada" placeholder="Exemple: 30"  required>
+                                       id="inclinacio_teulada" name="inclinacio_teulada" placeholder="Exemple: 30"  required>
                             </div>
                         </div>
                     </div>

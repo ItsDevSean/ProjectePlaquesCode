@@ -70,9 +70,21 @@ async function showProjectDetails(projectId) {
         // Datos del usuario - USAR LAS CLAVES user_name, user_email
         document.getElementById('userName').textContent = projectData.user_name || 'Sin nombre';
         document.getElementById('userEmail').textContent = projectData.user_email || 'Sin email';
-        // Para la inicial, usar el nombre del usuario
-        document.getElementById('userInitial').textContent = projectData.user_name ? projectData.user_name.charAt(0) : '?';
-
+        document.getElementById('userPhotoContainer').textContent = projectData.profile_photo_path || 'Sin foto';
+        
+        // Gestión de la foto de perfil
+        const userPhotoContainer = document.getElementById('userPhotoContainer');
+        if (projectData.user_photo_path) {
+            userPhotoContainer.innerHTML = `
+                <img src="${projectData.user_photo_path}" 
+                     alt="${projectData.user_name || 'Usuario'}" 
+                     class="h-full w-full object-cover">`;
+        } else {
+            // Mostrar inicial si no hay foto
+            const initial = projectData.user_name ? projectData.user_name.charAt(0).toUpperCase() : '?';
+            userPhotoContainer.innerHTML = `
+                <span class="text-emerald-600 font-medium">${initial}</span>`;
+        }
         // Configurar acciones - usar projectData.id y projectData.nombre_proyecto
         const editLink = document.getElementById('editProjectLink');
         if(editLink) { // Verificar si el elemento existe
