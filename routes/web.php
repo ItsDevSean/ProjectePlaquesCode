@@ -137,3 +137,7 @@ Route::post('/proyectos/estado/{id}', [DadesClientController::class, 'updateEsta
 Route::get('/infoProject', function(){
     return view('infoProject');
 });
+
+Route::get('/panelPlantilla', [App\Http\Controllers\PanelPlantilla::class, 'download'])->name('file.download');
+
+
