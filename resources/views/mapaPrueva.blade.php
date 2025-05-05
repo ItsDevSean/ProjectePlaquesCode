@@ -232,7 +232,7 @@
                             <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition" id="panel_model" name="panel_model" required>
                                 <option value="">-- Selecciona un modelo --</option>
                                 @foreach($panels as $panel)
-                                    <option value="{{ $panel->id }}" data-surface="{{ $panel->superficie }}" data-potencia-maxima="{{ $panel->potencia_maxima }}">{{ $panel->panel_model }}</option>
+                                    <option value="{{ $panel->id }}" data-surface="{{ $panel->superficie }}" data-potencia-maxima="{{ $panel->potencia_maxima }}" data-anchura="{{ $panel->anchura }}" data-longitud="{{ $panel->longitud_v2 }}">{{ $panel->panel_model }}</option>
                                 @endforeach
                             </select>
                         </div>
