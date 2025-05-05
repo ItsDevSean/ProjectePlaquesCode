@@ -392,66 +392,75 @@
     
                         // Crear contenedor para la foto/iniciales en la cabecera
                         const photoContainer = document.createElement('div');
-                        const photoSize = 60; // Tamaño del círculo para la foto
+                        const photoSize = 80; // Tamaño del círculo para la foto
                         Object.assign(photoContainer.style, {
-                            position: 'absolute',
-                            top: `${(headerHeight - photoSize) / 2}px`, // Centrado verticalmente
-                            right: '20px', // Pegado a la derecha
-                            width: `${photoSize}px`,
-                            height: `${photoSize}px`,
-                            borderRadius: '50%', // Círculo perfecto
-                            backgroundColor: '#ffffff', // Fondo blanco para la foto/inicial
-                            border: `2px solid ${accentColor}`, // Borde con el color principal
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            overflow: 'hidden', // Para que la imagen no se salga del círculo
-                            zIndex: '2' // Encima de las rayas
-                        });
+                            position: 'absolute',
+                            top: `${(headerHeight - photoSize) / 2}px`, // Sigue centrado verticalmente
+                            right: '30px', // Aumentado de 20px para más margen
+                            width: `${photoSize}px`,
+                            height: `${photoSize}px`,
+                            borderRadius: '50%',
+                            backgroundColor: '#ffffff',
+                            border: `3px solid ${accentColor}`, // Borde un poco más grueso
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            overflow: 'hidden',
+                            zIndex: '2',
+                            boxShadow: '0 2px 10px rgba(0,0,0,0.1)' // Sutil sombra para dar profundidad
+                        });
     
-                        // --- MODIFICACIÓN: Buscar y usar la imagen existente o usar el fallback ---
+                        const existingImg = document.getElementById("imgid"); // Busca el elemento con el ID "imgid"
     
-                        const existingImg = document.getElementById("imgid"); // Busca el elemento con el ID "imgid"
-    
-                        if (existingImg) {
-                            // Si se encuentra el elemento imgid
-                            const imgClone = existingImg.cloneNode(true); // Clona la imagen existente
-                            // Aplica los estilos necesarios al clon para que encaje en el contenedor circular
-                            Object.assign(imgClone.style, {
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'cover', // Asegura que la imagen cubra el círculo sin distorsión
-                                // Opcional: resetear estilos de posicionamiento que pudieran venir del original
-                                position: '',
-                                top: '', left: '', right: '', bottom: '',
-                                margin: '', padding: ''
-                            });
-                            photoContainer.appendChild(imgClone); // Añade el clon al contenedor
-                        } else {
-                            // Si no se encuentra imgid, usa la lógica original (URL de projectData o iniciales)
-                            console.warn("Elemento con id 'imgid' no encontrado. Usando projectData.user_photo_path o iniciales.");
-                            if (projectData && projectData.user_photo_path) {
-                                const img = document.createElement('img');
-                                img.src = projectData.user_photo_path;
-                                img.alt = projectData.user_name || 'Usuario';
-                                Object.assign(img.style, {
-                                    width: '100%',
-                                    height: '100%',
-                                    objectFit: 'cover'
-                                });
-                                photoContainer.appendChild(img);
-                            } else {
-                                const initial = (projectData && projectData.user_name) ? projectData.user_name.charAt(0).toUpperCase() : '?';
-                                const initialSpan = document.createElement('span');
-                                initialSpan.textContent = initial;
-                                Object.assign(initialSpan.style, {
-                                    color: accentColor,
-                                    fontSize: `${photoSize * 0.5}px`,
-                                    fontWeight: 'bold'
-                                });
-                                photoContainer.appendChild(initialSpan);
-                            }
-                        }
+                        if (existingImg) {
+                            // Si se encuentra el elemento imgid
+                            const imgClone = existingImg.cloneNode(true); // Clona la imagen existente
+                            
+                            // Mejoras para visualización perfecta en círculo:
+                            Object.assign(imgClone.style, {
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                objectPosition: 'center center',  // Asegura que el centro sea el punto focal
+                                aspectRatio: '1/1',              // Fuerza relación cuadrada
+                                transform: 'translateZ(0)',      // Optimización para renderizado
+                                backfaceVisibility: 'hidden',    // Mejora visual en algunos navegadores
+                                // Reset de estilos como en tu versión original:
+                                position: '',
+                                top: '', left: '', right: '', bottom: '',
+                                margin: '', padding: ''
+                            });
+                            
+                            // Añadimos un pequeño delay para asegurar que la imagen está lista
+                            setTimeout(() => {
+                                photoContainer.appendChild(imgClone);
+                            }, 50);
+                            
+                        } else {
+                            // (MANTENEMOS EXACTAMENTE TU LÓGICA ORIGINAL PARA LOS OTROS CASOS)
+                            console.warn("Elemento con id 'imgid' no encontrado. Usando projectData.user_photo_path o iniciales.");
+                            if (projectData && projectData.user_photo_path) {
+                                const img = document.createElement('img');
+                                img.src = projectData.user_photo_path;
+                                img.alt = projectData.user_name || 'Usuario';
+                                Object.assign(img.style, {
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover'
+                                });
+                                photoContainer.appendChild(img);
+                            } else {
+                                const initial = (projectData && projectData.user_name) ? projectData.user_name.charAt(0).toUpperCase() : '?';
+                                const initialSpan = document.createElement('span');
+                                initialSpan.textContent = initial;
+                                Object.assign(initialSpan.style, {
+                                    color: accentColor,
+                                    fontSize: `${photoSize * 0.5}px`,
+                                    fontWeight: 'bold'
+                                });
+                                photoContainer.appendChild(initialSpan);
+                            }
+                        }
     
                         // --- FIN MODIFICACIÓN ---
     
