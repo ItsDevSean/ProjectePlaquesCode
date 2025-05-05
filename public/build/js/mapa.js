@@ -600,6 +600,7 @@ function calcularMaxPlacas(areaTotal) {
     return Math.floor(areaTotal / areaPlacaSombra);
 }
 
+// Función que calcula la distancia minima entre placas.
 function calcularSombra() {
     let disMin = 0;
 
@@ -612,15 +613,18 @@ function calcularSombra() {
 
     const inclinacionRad = inclinacion * (Math.PI * 180);
     console.log("lo que queriamos mirarinclinacion " + inclinacionRad);
-    const co = longitud * Math.sin(inclinacionRad);
-    console.log("co " + co);
-    const cc = longitud * Math.cos(inclinacionRad);
-    const tgH = co / cc;
-    disMin = longitud * Math.cos(inclinacionRad) * ((longitud * Math.sin(inclinacionRad)) / tgH);
+    const inclinacioSol = 0;
+    console.log(`Still haben found what I'm loking fooor: ${inclinacioSol.toFixed(2)}°`);
+    const tgH = Math.tan(inclinacioSol);
+    const costatA = longitud * Math.cos(inclinacionRad);
+    const costatB = (longitud * Math.sin(inclinacionRad)) / tgH  
+    disMin =  costatA + costatB;
 
     console.log("por era tatno valor " + disMin);
     return disMin;
 }
+
+
 
 const orientacion = document.getElementById("orientacion");
 
@@ -665,6 +669,8 @@ selectPanel.addEventListener("change", function () {
     // Actualizar el slider (si es necesario)
     actualizarSlider(maxPlacas);
 });
+
+
 
 // Función para calcular el área del polígono
 function calcularArea(selectedPolygon) {

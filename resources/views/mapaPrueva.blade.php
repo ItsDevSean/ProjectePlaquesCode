@@ -291,11 +291,53 @@
     
     <script>
     window.userId = "{{ Auth::id() }}";
-    </script>
     
+    </script>
+   <script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.min.js"></script>
+   <script>
+       // Espera a que el DOM esté completamente cargado
+       document.addEventListener("DOMContentLoaded", function() {
+           const selectPanel = document.getElementById("panel_model");
+           
+           if (!selectPanel) {
+               console.error("Elemento panel_model no encontrado");
+               return;
+           }
+           
+           console.log("not going back");
+           selectPanel.addEventListener("change", function() {
+               console.log("Raimon es menja una barreta energetica...");
+               
+            //    // Verifica si autocomplete y getPlace están definidos
+            //    if (!window.autocomplete || !autocomplete.getPlace) {
+            //        console.error("Autocomplete no está inicializado correctamente");
+            //        return;
+            //    }
+                const autocomplete = new google.maps.places.Autocomplete(
+                    document.getElementById("address"),
+                    { types: ["geocode"] }
+                );
+
+               const place = autocomplete.getPlace();
+               
+               // Verifica si el lugar tiene geometría
+            //    if (!place || !place.geometry || !place.geometry.location) {
+            //        console.error("Lugar no válido o sin geometría");
+            //        return;
+            //    }
+               
+               const lat = place.geometry.location.lat();
+               const lng = place.geometry.location.lng();
+               const position = SunCalc.getPosition(new Date(), lat, lng);
+               const solarElevationDegrees = position.altitude * (180 / Math.PI);
+               console.log(`I see seven towers but ...: ${solarElevationDegrees.toFixed(2)}°`);
+           });
+       });
+   </script>
     <script src="build/js/orientacioInclinacio.js"></script>
     <script src="build/js/mapa.js"></script>
     <script src="build/js/formulariSidePanel.js"></script>
+    <script src="build/js/calcularInclinacionSol.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9dnmay3GsjXeiIqbmYoJ3FJ95rDo6hoY&libraries=places&callback=initMap"></script>
     <script src="https://solar.googleapis.com/v1/buildingInsights:findClosest?key=AIzaSyB9dnmay3GsjXeiIqbmYoJ3FJ95rDo6hoY"></script>
 </body>
