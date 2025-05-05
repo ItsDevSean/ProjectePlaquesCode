@@ -288,7 +288,7 @@
                     </div>
 
                     <!-- Taula de Dades Detallades -->
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden card cursor-pointer accordion-card">
+                    <div hidden class="bg-white rounded-xl shadow-md overflow-hidden card cursor-pointer accordion-card">
                         <div class="p-6">
                             <div class="flex justify-between items-center accordion-toggle">
                                 <h2 class="text-xl font-semibold text-gray-800 mb-4">Dades Detallades</h2>
@@ -329,45 +329,229 @@
         </div>
     </x-app-layout>
     <script src="build/js/produccio.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('export-pdf').addEventListener('click', async function() {
-                // Ocultar elementos no deseados
-                const elementsToHide = document.querySelectorAll(
-                    '.fixed.inset-y-0.left-0, .fixed.inset-y-0.right-0, .progress-container, #export-pdf'
-                );
-                elementsToHide.forEach(el => el.style.visibility = 'hidden');
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const exportButton = document.getElementById('export-pdf');
+            const mainContentElement = document.getElementById('main-content'); // Elemento principal a capturar
     
-                // Capturar el contenido
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF('p', 'mm', 'a4');
-                const element = document.getElementById('main-content');
+            // Datos de ejemplo para el proyecto, puedes cargarlos dinámicamente
+            const projectData = {
+                 user_photo_path: 'URL_A_TU_IMAGEN_DE_PERFIL.jpg', // Esta URL solo se usará si imgid no existe
+                // user_photo_path: null, // Descomenta para probar sin foto ni imgid
+                user_name: 'Nombre Usuario' // Se usa para las iniciales si no hay foto
+                // Agrega otros datos que puedas necesitar
+            };
     
-                const canvas = await html2canvas(element, {
-                    scale: 2,
-                    logging: false,
-                    useCORS: true,
-                    scrollY: -window.scrollY,
-                });
     
-                // Añadir al PDF
-                const imgData = canvas.toDataURL('image/png');
-                const imgWidth = doc.internal.pageSize.getWidth() - 20;
-                const imgHeight = (canvas.height * imgWidth) / canvas.width;
-                
-                doc.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
-                doc.save('informe-solar.pdf');
+            if (exportButton && mainContentElement) {
+                exportButton.addEventListener('click', async function() {
+                    // Elementos a ocultar antes de la captura para el PDF
+                    const elementsToHide = document.querySelectorAll(
+                        '.fixed.inset-y-0.left-0, .fixed.inset-y-0.right-0, .progress-container, #export-pdf'
+                    );
+                    let pdfHeaderElement = null; // Para guardar referencia al header temporal
     
-                // Restaurar elementos
-                elementsToHide.forEach(el => el.style.visibility = 'visible');
-            });
-        });
+                    try {
+                        // 1. Ocultar elementos no deseados en la página antes de la captura
+                        elementsToHide.forEach(el => el.style.visibility = 'hidden');
+    
+                        // --- 2. Crear y añadir la cabecera profesional temporal ---
+                        pdfHeaderElement = document.createElement('div');
+                        pdfHeaderElement.setAttribute('id', 'pdf-temp-header'); // ID para fácil remoción
+                        const accentColor = '#10b981'; // Color principal (Ej: verde esmeralda) - ¡Personaliza!
+                        const headerHeight = 80; // Altura de la cabecera en píxeles
+    
+                        // Estilos básicos de la cabecera
+                        Object.assign(pdfHeaderElement.style, {
+                            height: `${headerHeight}px`,
+                            position: 'relative', // Necesario para posicionar elementos internos absolutamente
+                            marginBottom: '20px', // Espacio antes del contenido principal
+                            overflow: 'hidden', // Para que las rayas no se salgan si son muy grandes
+                            backgroundColor: '#f8fafc', // Un fondo claro para la cabecera (opcional)
+                            borderBottom: `1px solid ${accentColor}` // Línea inferior sutil
+                        });
+    
+                        // Crear las rayas diagonales decorativas
+                        for (let i = 0; i < 2; i++) {
+                            const stripe = document.createElement('div');
+                            Object.assign(stripe.style, {
+                                position: 'absolute',
+                                height: `${headerHeight * 2}px`, // Más altas que la cabecera para cubrir la diagonal
+                                width: '30px', // Ancho de la raya
+                                backgroundColor: accentColor,
+                                opacity: '0.6', // Un poco transparentes
+                                transform: 'rotate(-45deg)', // Rotación diagonal
+                                zIndex: '1', // Detrás de la foto/texto
+                                top: `-${headerHeight / 2}px`, // Posicionamiento inicial para rotar desde el centro aprox.
+                                left: `${20 + i * 40}px` // Posición horizontal (ajusta según necesites)
+                            });
+                            pdfHeaderElement.appendChild(stripe);
+                        }
+    
+                        // Crear contenedor para la foto/iniciales en la cabecera
+                        const photoContainer = document.createElement('div');
+                        const photoSize = 60; // Tamaño del círculo para la foto
+                        Object.assign(photoContainer.style, {
+                            position: 'absolute',
+                            top: `${(headerHeight - photoSize) / 2}px`, // Centrado verticalmente
+                            right: '20px', // Pegado a la derecha
+                            width: `${photoSize}px`,
+                            height: `${photoSize}px`,
+                            borderRadius: '50%', // Círculo perfecto
+                            backgroundColor: '#ffffff', // Fondo blanco para la foto/inicial
+                            border: `2px solid ${accentColor}`, // Borde con el color principal
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            overflow: 'hidden', // Para que la imagen no se salga del círculo
+                            zIndex: '2' // Encima de las rayas
+                        });
+    
+                        // --- MODIFICACIÓN: Buscar y usar la imagen existente o usar el fallback ---
+    
+                        const existingImg = document.getElementById("imgid"); // Busca el elemento con el ID "imgid"
+    
+                        if (existingImg) {
+                            // Si se encuentra el elemento imgid
+                            const imgClone = existingImg.cloneNode(true); // Clona la imagen existente
+                            // Aplica los estilos necesarios al clon para que encaje en el contenedor circular
+                            Object.assign(imgClone.style, {
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover', // Asegura que la imagen cubra el círculo sin distorsión
+                                // Opcional: resetear estilos de posicionamiento que pudieran venir del original
+                                position: '',
+                                top: '', left: '', right: '', bottom: '',
+                                margin: '', padding: ''
+                            });
+                            photoContainer.appendChild(imgClone); // Añade el clon al contenedor
+                        } else {
+                            // Si no se encuentra imgid, usa la lógica original (URL de projectData o iniciales)
+                            console.warn("Elemento con id 'imgid' no encontrado. Usando projectData.user_photo_path o iniciales.");
+                            if (projectData && projectData.user_photo_path) {
+                                const img = document.createElement('img');
+                                img.src = projectData.user_photo_path;
+                                img.alt = projectData.user_name || 'Usuario';
+                                Object.assign(img.style, {
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover'
+                                });
+                                photoContainer.appendChild(img);
+                            } else {
+                                const initial = (projectData && projectData.user_name) ? projectData.user_name.charAt(0).toUpperCase() : '?';
+                                const initialSpan = document.createElement('span');
+                                initialSpan.textContent = initial;
+                                Object.assign(initialSpan.style, {
+                                    color: accentColor,
+                                    fontSize: `${photoSize * 0.5}px`,
+                                    fontWeight: 'bold'
+                                });
+                                photoContainer.appendChild(initialSpan);
+                            }
+                        }
+    
+                        // --- FIN MODIFICACIÓN ---
+    
+                        // Añade el contenedor de la foto/iniciales a la cabecera
+                        pdfHeaderElement.appendChild(photoContainer);
+    
+                        // Añadir título (opcional) a la cabecera
+                        const titleElement = document.createElement('h2');
+                         titleElement.textContent = 'Informe Solar'; // O usa projectData.nombre_proyecto si existe
+                        Object.assign(titleElement.style, {
+                            position: 'absolute',
+                            left: '100px', // Ajusta para que no choque con las rayas
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            margin: '0',
+                            color: '#334155', // Color oscuro para el texto
+                             fontSize: '24px',
+                             fontWeight: '600',
+                             zIndex: '2'
+                        });
+                        pdfHeaderElement.appendChild(titleElement);
+    
+    
+                        // Añadir la cabecera temporal al PRINCIPIO del contenido a capturar
+                        mainContentElement.prepend(pdfHeaderElement);
+                        // --- Fin creación cabecera ---
+    
+    
+                        // 3. Capturar el contenido (incluyendo la nueva cabecera temporal) usando html2canvas
+                        // Esperar un instante para asegurar que el DOM se actualice (opcional pero a veces útil)
+                        await new Promise(resolve => setTimeout(resolve, 100)); 
+    
+                        const { jsPDF } = window.jspdf;
+                        const doc = new jsPDF('p', 'mm', 'a4');
+    
+                        // Ajustar calidad y evitar problemas de CORS si las imágenes son externas
+                        const canvas = await html2canvas(mainContentElement, {
+                            scale: 2, // Aumenta la resolución de la captura para mejor calidad en el PDF
+                            logging: false, // Desactiva logs en consola de html2canvas
+                            useCORS: true, // Intenta usar CORS para cargar imágenes de otros dominios
+                            scrollY: -window.scrollY, // Captura desde el inicio del scroll
+                            // Asegúrate que el fondo sea blanco si hay transparencias inesperadas
+                            backgroundColor: '#ffffff' 
+                        });
+    
+                        // 4. Añadir el contenido capturado (como imagen) al PDF
+                        const imgData = canvas.toDataURL('image/png');
+                        const pdfWidth = doc.internal.pageSize.getWidth();
+                        const pdfHeight = doc.internal.pageSize.getHeight();
+                        const margin = 7; // Margen en mm
+    
+                        // Dimensiones útiles por página (considerando márgenes)
+                        const usableWidth = pdfWidth - (margin * 2);
+                        const usableHeight = pdfHeight - (margin * 2);
+    
+                        // Calcular dimensiones de la imagen del canvas en mm manteniendo la proporción
+                        const imgProps = doc.getImageProperties(imgData); // Obtener dimensiones intrínsecas del canvas
+                        const imgWidth = usableWidth; // Ajustar al ancho útil del PDF
+                        const imgHeight = (imgProps.height * imgWidth) / imgProps.width; // Calcular altura proporcional
+    
+                        let position = margin; // Posición Y inicial (para la primera página o la única)
+                        let heightLeft = imgHeight; // Altura total de la imagen a colocar (puede ocupar varias páginas)
+    
+                        // --- Lógica de paginación ---
+                        // Añadir la primera "página" de la imagen al PDF
+                        doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+                        heightLeft -= usableHeight; // Restar la altura de la primera página útil
+    
+                        
+    
+                        // 5. Guardar el PDF con un nombre de archivo
+                        doc.save('informe-solar-profesional.pdf');
+    
+                    } catch (error) {
+                        console.error("Error al generar el PDF:", error);
+                        alert("Hubo un error al generar el PDF. Revisa la consola para más detalles.");
+                    } finally {
+                        // 6. Limpieza: Restaurar elementos ocultos y eliminar cabecera temporal
+                        // Esto eliminará la cabecera temporal y el clon de la imagen que se añadió
+                        elementsToHide.forEach(el => el.style.visibility = 'visible');
+                        if (pdfHeaderElement && pdfHeaderElement.parentNode) {
+                           pdfHeaderElement.parentNode.removeChild(pdfHeaderElement);
+                       }
+                        // Opcional: Restaurar la posición del scroll si fue afectada
+                        // window.scrollTo(0, 0); 
+                    }
+                });
+            } else {
+                // Mensajes de error si no se encuentran los elementos necesarios al cargar la página
+                if (!exportButton) console.error("No se encontró el botón con id 'export-pdf'. Asegúrate de que el script se carga después del botón.");
+                if (!mainContentElement) console.error("No se encontró el elemento con id 'main-content'. Asegúrate de que el script se carga después de este elemento.");
+            }
+        });
     </script>
-    <script>
-        window.userId = "{{ Auth::id() }}";
-        window.guardarDadesURL = "{{ route('guardar.dades') }}";
-        window.guardarProyectosURL = "{{ route('proyectos') }}";
-    </script>
+
+<script>
+    window.userId = "{{ Auth::id() }}";
+    window.guardarDadesURL = "{{ route('guardar.dades') }}";
+    window.guardarProyectosURL = "{{ route('proyectos') }}";
+</script>
     <script src="build/js/gestionBD.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>

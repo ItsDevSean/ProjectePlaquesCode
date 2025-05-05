@@ -97,7 +97,7 @@
                                 <span class="sr-only">Open user menu</span>
                                 <div class="text-white font-medium mr-2">{{ Auth::user()->name }}</div>
                                 @if(Auth::user()->profile_photo_path)
-                                    <img src="{{ asset(Auth::user()->profile_photo_path) }}" 
+                                    <img id="imgid" src="{{ asset(Auth::user()->profile_photo_path) }}" 
                                         alt="{{ Auth::user()->name }}" 
                                         class="h-8 w-8 rounded-full object-cover border-2 border-emerald-400">
                                 @else
