@@ -595,11 +595,7 @@ function calcularMaxPlacas(areaTotal) {
 
     const disMin = calcularSombra();
     const anchuraPlaca =  selectedOption.getAttribute("data-anchura");
-
-    const areaPlacaSombra = disMin * anchuraPlaca;
-
-    console.log("COn ese valor q vas hace? " + areaPlacaSombra);
-    console.log("En grieta " + areaPlaca);
+    const areaPlacaSombra = (disMin / 1000) * (anchuraPlaca / 1000);
 
     return Math.floor(areaTotal / areaPlacaSombra);
 }
@@ -612,21 +608,14 @@ function calcularSombra() {
     const selectedOption = selectPanel.options[selectPanel.selectedIndex];
     const longitud = selectedOption.getAttribute("data-longitud");
     const inclinacion = localStorage.getItem(`user_${userId}_inclinacion`);
-
-    console.log(" l " + longitud + " i " + inclinacion);
-
-    const inclinacionRad = inclinacion * (Math.PI * 180);
-    console.log("lo que queriamos mirarinclinacion " + inclinacionRad);
-
-    
+    const inclinacionRad = inclinacion * (Math.PI / 180);
     const inclinacioSol = localStorage.getItem(`user_${userId}_inclinacionSolar`);
-    console.log(`Still haben found what I'm loking fooor: ${inclinacioSol}°`);
-    const tgH = Math.tan(inclinacioSol);
+    const inclinacioSolarRad = inclinacioSol * (Math.PI / 180);
+    const tgH = Math.tan(inclinacioSolarRad);
     const costatA = longitud * Math.cos(inclinacionRad);
     const costatB = (longitud * Math.sin(inclinacionRad)) / tgH  
     disMin =  costatA + costatB;
 
-    console.log("por era tatno valor " + disMin);
     return disMin;
 }
 
