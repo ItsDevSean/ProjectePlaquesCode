@@ -15,6 +15,13 @@ class FabricanteController extends Controller
         return view('inversores', compact('fabricantes'));
     }
 
+    public function getFabricate($id) {
+        $fabricante = Fabricante::where('user_id', Auth::id())
+        ->where("id", $id)
+        ->get();
+        return view('panels.detail', compact('fabricante'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
