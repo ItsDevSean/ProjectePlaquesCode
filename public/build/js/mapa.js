@@ -713,8 +713,15 @@ selectPanel.addEventListener("change", function () {
 
     // Actualizar el slider (si es necesario)
     actualizarSlider(maxPlacas);
+
+    // Actualizar el detalle de la placa
+    actualizarDetallePlaca()
 });
 
+function actualizarDetallePlaca() {
+    const areaPlaca = localStorage.getItem(`user_${userId}_superficie`);
+    document.getElementById("areaPlaca").textContent = areaPlaca / 1000 ; // Convert mm to m
+}
 
 
 // Función para calcular el área del polígono

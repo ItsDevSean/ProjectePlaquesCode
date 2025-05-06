@@ -245,6 +245,7 @@
                         </div>
     
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Area de la placa: <span id="areaPlaca"></span> m²</label>
                             <label for="placaSlider" class="block text-sm font-medium text-gray-700 mb-2">Nombre de plaques:</label>
                             <div class="flex items-center gap-4">
                                 <input type="range" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-emerald-500" id="placaSlider" min="0" max="1" step="1">
