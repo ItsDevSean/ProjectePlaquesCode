@@ -231,9 +231,13 @@ function initAutocomplete(map) {
         mapOverlay.classList.add("hidden");
         enableMapInteractions(map);
 
-        // Llamar a getSolarData con las coordenadas
+        // Llamada a las diferentes funciones que requieren la latitud 
+        // para aconseguir datos del sol
         getSolarData(lat, lng);
         getMonthlySolarData(lat, lng);
+        const now = new Date(); 
+        const incliacionSolar = getSolarElevationAngle(now, lat, lng)
+        localStorage.setItem(`user_${userId}_inclinacionSolar`, incliacionSolar); 
 
         // Habilitar el botón "Seleccionar área"
         document.getElementById("startSelection").disabled = false;
@@ -613,8 +617,10 @@ function calcularSombra() {
 
     const inclinacionRad = inclinacion * (Math.PI * 180);
     console.log("lo que queriamos mirarinclinacion " + inclinacionRad);
-    const inclinacioSol = 0;
-    console.log(`Still haben found what I'm loking fooor: ${inclinacioSol.toFixed(2)}°`);
+
+    
+    const inclinacioSol = localStorage.getItem(`user_${userId}_inclinacionSolar`);
+    console.log(`Still haben found what I'm loking fooor: ${inclinacioSol}°`);
     const tgH = Math.tan(inclinacioSol);
     const costatA = longitud * Math.cos(inclinacionRad);
     const costatB = (longitud * Math.sin(inclinacionRad)) / tgH  
@@ -624,7 +630,50 @@ function calcularSombra() {
     return disMin;
 }
 
+function getSolarElevationAngle(date, latitude, longitude) {
+    const rad = Math.PI / 180;
+    const deg = 180 / Math.PI;
 
+    // 1. Convert time to UTC
+    const utcDate = new Date(date.toUTCString());
+
+    // 2. Day of the year
+    const start = new Date(Date.UTC(utcDate.getUTCFullYear(), 0, 0));
+    const diff = (utcDate - start) + ((start.getTimezoneOffset() - utcDate.getTimezoneOffset()) * 60 * 1000);
+    const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    // 3. Fractional year (γ) in radians
+    const gamma = 2 * Math.PI / 365 * (dayOfYear - 1 + 
+        (utcDate.getUTCHours() - 12) / 24);
+
+    // 4. Solar declination (δ) in radians
+    const decl = 0.006918 - 0.399912 * Math.cos(gamma) + 
+                 0.070257 * Math.sin(gamma) - 0.006758 * Math.cos(2 * gamma) + 
+                 0.000907 * Math.sin(2 * gamma) - 0.002697 * Math.cos(3 * gamma) + 
+                 0.00148 * Math.sin(3 * gamma);
+
+    // 5. Time offset (in minutes)
+    const eqTime = 229.18 * (0.000075 + 0.001868 * Math.cos(gamma)
+        - 0.032077 * Math.sin(gamma) - 0.014615 * Math.cos(2 * gamma)
+        - 0.040849 * Math.sin(2 * gamma));
+
+    const solarTimeFix = eqTime + 4 * longitude;
+    const trueSolarTime = utcDate.getUTCHours() * 60 + utcDate.getUTCMinutes() + utcDate.getUTCSeconds() / 60 + solarTimeFix;
+
+    // 6. Hour angle (HRA) in degrees
+    let hourAngle = (trueSolarTime / 4) - 180;
+    if (hourAngle < -180) hourAngle += 360;
+
+    // 7. Convert hour angle to radians
+    const haRad = hourAngle * rad;
+
+    // 8. Elevation angle
+    const latRad = latitude * rad;
+    const elevation = Math.asin(Math.sin(latRad) * Math.sin(decl) + 
+                        Math.cos(latRad) * Math.cos(decl) * Math.cos(haRad));
+
+    return elevation * deg; // in degrees
+}
 
 const orientacion = document.getElementById("orientacion");
 

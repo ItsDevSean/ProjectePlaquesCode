@@ -116,8 +116,6 @@
         </button>
     </div>
 
-    
-
     <div id="sidePanel" class="side-panel bg-white shadow-lg rounded-lg overflow-hidden">
         <button id="closePanelButton" class="close-panel-button bg-emerald-500 hover:bg-emerald-600 text-white">×</button>
         <div class="space-y-2 divide-y divide-gray-200">
