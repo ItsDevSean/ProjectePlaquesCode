@@ -596,8 +596,15 @@ function calcularMaxPlacas(areaTotal) {
     const disMin = calcularSombra();
     const anchuraPlaca =  selectedOption.getAttribute("data-anchura");
     const areaPlacaSombra = (disMin / 1000) * (anchuraPlaca / 1000);
-
+    localStorage.setItem(`user_${userId}_areaPlacaSombra`, areaPlacaSombra);
+    console.log("quan tens rao tens rao " + areaTotal);
+    console.log("captura y mandalo al Jaume " + areaPlacaSombra);
+    console.log("Haz un triangulo no? " + Math.floor(areaTotal / areaPlacaSombra))
     return Math.floor(areaTotal / areaPlacaSombra);
+}
+
+function calcularEspacioRestante(numPlacas, areaTotal, areaPlacaSombra) {
+    return Math.abs((areaPlacaSombra * numPlacas) - areaTotal).toFixed(2);
 }
 
 // Función que calcula la distancia minima entre placas.
@@ -778,6 +785,9 @@ function calcularArea(selectedPolygon) {
 function actualizarSlider(maxPlacas) {
     const slider = document.getElementById("placaSlider");
     const placaCount = document.getElementById("placaCount");
+    const areaRestatnte = document.getElementById("espacioRestante")
+    const areaTotal = localStorage.getItem(`user_${userId}_novaArea`);
+    const areaPlacaSombra = localStorage.getItem(`user_${userId}_areaPlacaSombra`);
 
     // Actualizar el rango del slider y el input
     slider.max = maxPlacas;
@@ -799,6 +809,7 @@ function actualizarSlider(maxPlacas) {
         placaCount.value = this.value;
         actualizarEstiloSlider(this);
         localStorage.setItem(`user_${userId}_placaCount`, this.value);
+        areaRestatnte.textContent = calcularEspacioRestante(this.value, areaTotal, areaPlacaSombra);
     });
 
     // Actualizar el slider cuando el input manual cambia
@@ -860,6 +871,7 @@ function actualizarEstiloSlider(slider) {
     const max = parseInt(slider.max) || 1;
     const progress = (value / max) * 100 + "%"; // Calcular el porcentaje de progreso
     slider.style.background = `linear-gradient(to right, #49DBA3 ${progress}, #e0e0e0 ${progress})`; // Actualizar el fondo del slider
+    
 }
 
 const slider = document.getElementById("placaSlider");

@@ -250,6 +250,7 @@
                                 <input type="range" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-emerald-500" id="placaSlider" min="0" max="1" step="1">
                                 <input type="number" id="placaCount" class="w-20 px-3 py-2 text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition">
                             </div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Espacio restante: <span id="espacioRestante"></span> m²</label>
                         </div>
                     </form>
                 </div>
