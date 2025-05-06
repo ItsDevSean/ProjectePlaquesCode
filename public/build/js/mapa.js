@@ -271,6 +271,7 @@ function crearMarcador(map, latLng) {
         console.log("Estacionalitat no vàlida");
         inclinacion = lat;
     }
+    localStorage.setItem(`user_${userId}_lat`, inclinacion)
 
     const edifici = {
         id: window.edificis ? window.edificis.length + 1 : 1,
