@@ -48,10 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div style="background:linear-gradient(135deg, #0d9488 0%, #047857 100%);padding:24px 32px;position:relative;">
                         <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.05) 100%);"></div>
                         <h3 style="color:white;margin:0;font-size:1.375rem;font-weight:600;font-family:'Segoe UI', Roboto, -apple-system, sans-serif;position:relative;">Proyecto activo detectado</h3>
-                        <svg id="closeModal" style="position:absolute;top:24px;right:24px;cursor:pointer;transition:transform 0.2s ease;" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18 6L6 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M6 6L18 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        
                     </div>
                     <div style="padding:32px;">
                         <div style="margin-bottom:24px;">
