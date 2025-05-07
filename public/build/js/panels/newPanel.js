@@ -17,7 +17,7 @@ function formSubmit(event) {
     // Calculate the area
     const longitud = parseFloat(longitudInput.value) || 0;
     const anchura = parseFloat(anchuraInput.value) || 0;
-    const area = ((longitud / 1000) * (anchura / 1000)) // convert mm to m
+    const area = (longitud  * anchura ) / 1000 // convert mm to m
     superficieInput.value = area
     //Now submit the form after updating the input
     form.submit();

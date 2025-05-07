@@ -116,8 +116,6 @@
         </button>
     </div>
 
-    
-
     <div id="sidePanel" class="side-panel bg-white shadow-lg rounded-lg overflow-hidden">
         <button id="closePanelButton" class="close-panel-button bg-emerald-500 hover:bg-emerald-600 text-white">×</button>
         <div class="space-y-2 divide-y divide-gray-200">
@@ -232,7 +230,7 @@
                             <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition" id="panel_model" name="panel_model" required>
                                 <option value="">-- Selecciona un modelo --</option>
                                 @foreach($panels as $panel)
-                                    <option value="{{ $panel->id }}" data-surface="{{ $panel->superficie }}" data-potencia-maxima="{{ $panel->potencia_maxima }}">{{ $panel->panel_model }}</option>
+                                    <option value="{{ $panel->id }}" data-surface="{{ $panel->superficie }}" data-potencia-maxima="{{ $panel->potencia_maxima }}" data-anchura="{{ $panel->anchura }}" data-longitud="{{ $panel->longitud_v2 }}">{{ $panel->panel_model }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -247,11 +245,15 @@
                         </div>
     
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Area de la placa: <span id="areaPlaca"></span> m²</label>
                             <label for="placaSlider" class="block text-sm font-medium text-gray-700 mb-2">Nombre de plaques:</label>
                             <div class="flex items-center gap-4">
                                 <input type="range" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-emerald-500" id="placaSlider" min="0" max="1" step="1">
                                 <input type="number" id="placaCount" class="w-20 px-3 py-2 text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition">
                             </div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Espacio restante: <span id="espacioRestante"></span> m²</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Numero de placas por columna: <span id="numPlacasColumna"></span></label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Numero de placas por fila: <span id="numPlacasFila"></span></label>
                         </div>
                     </form>
                 </div>
@@ -291,11 +293,53 @@
     
     <script>
     window.userId = "{{ Auth::id() }}";
-    </script>
     
+    </script>
+   <script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.min.js"></script>
+   <script>
+       // Espera a que el DOM esté completamente cargado
+       document.addEventListener("DOMContentLoaded", function() {
+           const selectPanel = document.getElementById("panel_model");
+           
+           if (!selectPanel) {
+               console.error("Elemento panel_model no encontrado");
+               return;
+           }
+           
+           console.log("not going back");
+           selectPanel.addEventListener("change", function() {
+               console.log("Raimon es menja una barreta energetica...");
+               
+            //    // Verifica si autocomplete y getPlace están definidos
+            //    if (!window.autocomplete || !autocomplete.getPlace) {
+            //        console.error("Autocomplete no está inicializado correctamente");
+            //        return;
+            //    }
+                const autocomplete = new google.maps.places.Autocomplete(
+                    document.getElementById("address"),
+                    { types: ["geocode"] }
+                );
+
+               const place = autocomplete.getPlace();
+               
+               // Verifica si el lugar tiene geometría
+            //    if (!place || !place.geometry || !place.geometry.location) {
+            //        console.error("Lugar no válido o sin geometría");
+            //        return;
+            //    }
+               
+               const lat = place.geometry.location.lat();
+               const lng = place.geometry.location.lng();
+               const position = SunCalc.getPosition(new Date(), lat, lng);
+               const solarElevationDegrees = position.altitude * (180 / Math.PI);
+               console.log(`I see seven towers but ...: ${solarElevationDegrees.toFixed(2)}°`);
+           });
+       });
+   </script>
     <script src="build/js/orientacioInclinacio.js"></script>
     <script src="build/js/mapa.js"></script>
     <script src="build/js/formulariSidePanel.js"></script>
+    <script src="build/js/calcularInclinacionSol.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9dnmay3GsjXeiIqbmYoJ3FJ95rDo6hoY&libraries=places&callback=initMap"></script>
     <script src="https://solar.googleapis.com/v1/buildingInsights:findClosest?key=AIzaSyB9dnmay3GsjXeiIqbmYoJ3FJ95rDo6hoY"></script>
 </body>
