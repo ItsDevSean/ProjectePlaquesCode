@@ -261,11 +261,11 @@ function crearMarcador(map, latLng) {
     const lat = latLng.lat();
     let inclinacion;
 
-    if (estacio === "Estiu") {
+    if (estacio === "Verano") {
         inclinacion = lat - 10;
-    } else if (estacio === "Hivern") {
+    } else if (estacio === "Invierno") {
         inclinacion = lat + 10;
-    } else if (estacio === "any") {
+    } else if (estacio === "Anual") {
         inclinacion = lat;
     } else {
         console.log("Estacionalitat no vàlida");

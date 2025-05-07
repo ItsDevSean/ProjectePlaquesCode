@@ -29,9 +29,10 @@
 
                     <div class="flex flex-col sm:flex-row items-center gap-8">
                         <div class="shrink-0 relative">
-                            @if (Auth::user()->profile_photo_path)
-                                <img src="{{ asset(Auth::user()->profile_photo_path) }}" alt="{{ Auth::user()->name }}" 
-                                    class="w-24 h-24 rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-lg">
+                            {{-- AQUÍ ESTÁ EL CAMBIO --}}
+                            @if (Auth::user()->photo)
+                                <img src="{{ asset(Auth::user()->photo) }}" alt="{{ Auth::user()->name }}" 
+                                     class="w-24 h-24 rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-lg">
                             @else
                                 <div class="w-24 h-24 rounded-full bg-gray-200 dark:bg-gray-700 border-4 border-white dark:border-gray-800 shadow-lg flex items-center justify-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -77,7 +78,7 @@
 
                     <div class="flex items-center justify-end pt-6 mt-6 border-t border-gray-200 dark:border-gray-700">
                         <button type="submit" 
-                            class="inline-flex items-center px-4 py-2.5 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 dark:focus:ring-offset-gray-800 transition-colors duration-200">
+                                class="inline-flex items-center px-4 py-2.5 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 dark:focus:ring-offset-gray-800 transition-colors duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                             </svg>

@@ -14,10 +14,10 @@
         <div class="progress-container mx-auto max-w-5xl px-4 mt-12" x-data="{
             currentStep: 2, // Ara estem al pas 2 (Consum)
             steps: [
-                {id: 1, name: 'Dades del Client', completed: true, path: 'dades'},
-                {id: 2, name: 'Consum', completed: false, path: 'consum'},
-                {id: 3, name: 'Seleccionar Àrea', completed: false, path: 'mapa'},
-                {id: 4, name: 'Producció', completed: false, path: 'produccio'}
+                {id: 1, name: 'Datos del Cliente', completed: true, path: 'dades'},
+                {id: 2, name: 'Consumo', completed: false, path: 'consum'},
+                {id: 3, name: 'Seleccionar Área', completed: false, path: 'mapa'},
+                {id: 4, name: 'Producción', completed: false, path: 'produccio'}
             ],
             getProgressWidth() {
                 // 33% perquè hem completat 1 de 3 passos (el primer)
@@ -111,15 +111,15 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 mb-8">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
                     <div>
-                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Anàlisi del teu consum</h2>
-                        <p class="text-gray-600 dark:text-gray-300 mt-1">Introdueix les teves dades de consum per calcular el teu estalvi potencial</p>
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Análisis de tu consumo</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mt-1">Introduce tus datos de consumo para calcular tu ahorro potencial.</p>
                     </div>
                     <div class="mt-4 md:mt-0">
                         <button id="help-button" class="flex items-center text-emerald-600 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
                             </svg>
-                            Com funciona?
+                            Como funciona?
                         </button>
                     </div>
                 </div>
@@ -128,13 +128,13 @@
                 <div class="mb-8 border-b border-gray-200 dark:border-gray-700">
                     <ul class="flex flex-wrap -mb-px" id="inputTabs" role="tablist">
                         <li class="mr-2" role="presentation">
-                            <button class="inline-block p-4 border-b-2 rounded-t-lg active" id="manual-tab" data-tabs-target="#manual" type="button" role="tab" aria-controls="manual" aria-selected="true">Introducció Manual</button>
+                            <button class="inline-block p-4 border-b-2 rounded-t-lg active" id="manual-tab" data-tabs-target="#manual" type="button" role="tab" aria-controls="manual" aria-selected="true">Introducción Manual</button>
                         </li>
                         <li class="mr-2" role="presentation">
-                            <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="upload-tab" data-tabs-target="#upload" type="button" role="tab" aria-controls="upload" aria-selected="false">Pujar Fitxer</button>
+                            <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="upload-tab" data-tabs-target="#upload" type="button" role="tab" aria-controls="upload" aria-selected="false">Subir Fitxero</button>
                         </li>
                         <li class="mr-2" role="presentation">
-                            <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="link-tab" data-tabs-target="#link" type="button" role="tab" aria-controls="link" aria-selected="false">Enllaç amb Comercialitzadora</button>
+                            <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="link-tab" data-tabs-target="#link" type="button" role="tab" aria-controls="link" aria-selected="false">Enllace con Comercializadora</button>
                         </li>
                     </ul>
                 </div>
@@ -147,7 +147,7 @@
                             <!-- Consum anual -->
                             <div class="space-y-2">
                                 <label for="consumAnual" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    Consum anual (kWh/any)
+                                    Consumo anual (kWh/any)
                                 </label>
                                 <div class="relative">
                                     <input type="number" id="consumAnual" name="consumAnual" 
@@ -157,7 +157,7 @@
                                         <span class="text-gray-500 dark:text-gray-400">kWh</span>
                                     </div>
                                 </div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana espanyola: 3.250 kWh/any</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Media española: 3.250 kWh/any</p>
                             </div>
                             
                             <!-- Factura anual -->
@@ -173,7 +173,7 @@
                                         <span class="text-gray-500 dark:text-gray-400">€</span>
                                     </div>
                                 </div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana espanyola: 3.250 kWh/any</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Media espanyola: 3.250 kWh/any</p>
                             </div>
                             
                             <!-- Tarifa d'accés mejorada -->
@@ -183,17 +183,17 @@
                                 </label>
                                 <select id="tarifa-acces" name="tarifa-acces" 
                                         class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500">
-                                    <option value="" disabled selected>Selecciona la teva tarifa</option>
-                                    <option value="2.0A">2.0A - Sense discriminació horària</option>
-                                    <option value="2.0DHA">2.0DHA - Discriminació horària</option>
-                                    <option value="2.0DHS">2.0DHS - Discriminació horària supervall</option>
-                                    <option value="2.1A">2.1A - Sense discriminació horària (major potència)</option>
-                                    <option value="2.1DHA">2.1DHA - Discriminació horària (major potència)</option>
-                                    <option value="2.1DHS">2.1DHS - Discriminació horària supervall (major potència)</option>
-                                    <option value="3.0A">3.0A - Tres períodes</option>
-                                    <option value="6.1A">6.1A - Sis períodes</option>
+                                    <option value="" disabled selected>Selecciona tu tarifa</option>
+                                    <option value="2.0A">2.0A - Sin discriminación horaria</option>
+                                    <option value="2.0DHA">2.0DHA - Discriminación horaria</option>
+                                    <option value="2.0DHS">2.0DHS - Discriminación horaria supervalle</option>
+                                    <option value="2.1A">2.1A - Sin discriminación horaria (mayor potencia)</option>
+                                    <option value="2.1DHA">2.1DHA - Discriminación horaria (mayor potencia)</option>
+                                    <option value="2.1DHS">2.1DHS - Discriminación horaria supervalle (mayor potencia)</option>
+                                    <option value="3.0A">3.0A - Tres periodos</option>
+                                    <option value="6.1A">6.1A - Seis periodos</option>
                                 </select>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Pots trobar aquesta informació a la teva factura</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Puedes encontrar esta información en tu factura</p>
                             </div>
                         </div>
 
@@ -201,7 +201,7 @@
                             <!-- Precios por periodo (solo para tarifas con discriminación horaria) -->
                             <div id="precios-periodo-container" class="hidden space-y-2">
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    Preus per període (€/kWh)
+                                    Precio por periodo (€/kWh)
                                 </label>
                                 <div class="grid grid-cols-3 gap-3">
                                     <div class="relative">
@@ -229,19 +229,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Introdueix els preus de cada període segons la teva factura</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Introduce los precios de cada periodo segun tu factura</p>
                             </div>
                         </div>
                         
                         <!-- Sección de Costos e Incentivos -->
                         <div class="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
-                            <h3 class="text-lg font-medium text-gray-800 dark:text-white mb-4">Costos i incentius</h3>
+                            <h3 class="text-lg font-medium text-gray-800 dark:text-white mb-4">Costes e incentivos</h3>
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <!-- Coste total instalación -->
                                 <div class="space-y-2">
                                     <label for="costeInstalacion" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Cost total instal·lació
+                                        Coste total instal·lación
                                     </label>
                                     <div class="relative">
                                         <input type="number" id="costeInstalacion" name="costeInstalacion" 
@@ -251,13 +251,13 @@
                                             <span class="text-gray-500 dark:text-gray-400">€</span>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">Mitjana: 1.200-1.500 €/kWp</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Mediana: 1.200-1.500 €/kWp</p>
                                 </div>
                                 
                                 <!-- Subvenciones -->
                                 <div class="space-y-2">
                                     <label for="subvenciones" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Subvencions o bonificacions
+                                        Subvenciones o bonificaciones
                                     </label>
                                     <div class="relative">
                                         <input type="number" id="subvenciones" name="subvenciones" 
@@ -267,13 +267,13 @@
                                             <span class="text-gray-500 dark:text-gray-400">€</span>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">Ajuts o deduccions aplicables</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Ayudas o deducciones aplicables</p>
                                 </div>
                                 
                                 <!-- Precio de venta de excedentes -->
                                 <div class="space-y-2">
                                     <label for="precioExcedentes" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Preu de venda d'excedents
+                                        Precio de venta de excedentes
                                     </label>
                                     <div class="relative">
                                         <input type="number" step="0.001" id="precioExcedentes" name="precioExcedentes" 
@@ -283,39 +283,39 @@
                                             <span class="text-gray-500 dark:text-gray-400">€/kWh</span>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">Preu per l'energia injectada a la xarxa</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Precio por la energía inyectada a la red</p>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- Patró de consum mejorado -->
                         <div class="mt-6">
-                            <h3 class="text-lg font-medium text-gray-800 dark:text-white mb-3">Patró de consum</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Selecciona el patró que més s'ajusti al teu consum habitual</p>
+                            <h3 class="text-lg font-medium text-gray-800 dark:text-white mb-3">Patron de consumo</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Selecciona el patron que mas se ajuste a tu consumo habitual</p>
                             
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <button id="button_diurn" type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
                                     <div class="w-16 h-16 mb-2">
                                         <canvas id="diurnalPatternChart"></canvas>
                                     </div>
-                                    <span  id="diurn" class="font-medium text-gray-700 dark:text-gray-200">Diürn</span>
-                                    <span class="text-xs text-gray-500 dark:text-gray-400">Major consum de dia</span>
+                                    <span  id="diurn" class="font-medium text-gray-700 dark:text-gray-200">Diurno</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">Mayor consumo de dia</span>
                                 </button>
                                 
                                 <button id="button_nocturn" type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
                                     <div class="w-16 h-16 mb-2">
                                         <canvas id="nocturnalPatternChart"></canvas>
                                     </div>
-                                    <span id="nocturn" class="font-medium text-gray-700 dark:text-gray-200">Nocturn</span>
-                                    <span class="text-xs text-gray-500 dark:text-gray-400">Major consum de nit</span>
+                                    <span id="nocturn" class="font-medium text-gray-700 dark:text-gray-200">Nocturno</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">Mayor consumo de noche</span>
                                 </button>
                                 
                                 <button id="button_mixt" type="button" class="consum-pattern-btn flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-emerald-400 dark:border-gray-600 dark:hover:border-emerald-400 transition-colors">
                                     <div class="w-16 h-16 mb-2">
                                         <canvas id="mixedPatternChart"></canvas>
                                     </div>
-                                    <span id="mixt" class="font-medium text-gray-700 dark:text-gray-200">Mixt</span>
-                                    <span class="text-xs text-gray-500 dark:text-gray-400">Consum repartit</span>
+                                    <span id="mixt" class="font-medium text-gray-700 dark:text-gray-200">Mixto</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">Consumo repartido</span>
                                 </button>
                             </div>
                         </div>
@@ -340,7 +340,7 @@
                                         </h3>
                                         <div class="mt-2 text-sm text-emerald-700 dark:text-emerald-300">
                                             <p>
-                                                Connectarem de forma segura amb la teva comercialitzadora per obtenir les teves dades de consum. No emmagatzemem credencials.
+                                                Nos conectaremos de forma segura con tu comercializadora para obtener tus datos de consumo. No almacenamos credenciales.
                                             </p>
                                         </div>
                                     </div>
@@ -350,11 +350,11 @@
                             <div class="space-y-4">
                                 <div>
                                     <label for="energy-provider" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                        Comercialitzadora
+                                        Comercializadora
                                     </label>
                                     <select id="energy-provider" name="energy-provider" 
                                             class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500">
-                                        <option value="" disabled selected>Selecciona la teva comercialitzadora</option>
+                                        <option value="" disabled selected>Selecciona tu comercializadora</option>
                                         <option value="Endesa">Endesa</option>
                                         <option value="Iberdrola">Iberdrola</option>
                                         <option value="Naturgy">Naturgy</option>
@@ -373,7 +373,7 @@
                                     <input type="text" id="cups-number" name="cups-number" 
                                            class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500" 
                                            placeholder="ESXXXXXXX">
-                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Pots trobar aquest número a qualsevol factura</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Puedes encontrar este número en cualquier factura</p>
                                 </div>
                                 
                                 <div class="pt-2">
@@ -381,7 +381,7 @@
                                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                                         </svg>
-                                        Connectar amb Comercialitzadora
+                                        Conectar con Comercializadora
                                     </button>
                                 </div>
                             </div>
@@ -412,15 +412,15 @@
                 <div class="mt-4 flex flex-wrap justify-center gap-2">
                     <div class="flex items-center">
                         <div class="w-3 h-3 rounded-full bg-emerald-500 mr-1"></div>
-                        <span class="text-xs text-gray-600 dark:text-gray-300">Consum actual</span>
+                        <span class="text-xs text-gray-600 dark:text-gray-300">Consumo actual</span>
                     </div>
                     <div class="flex items-center">
                         <div class="w-3 h-3 rounded-full bg-blue-500 mr-1"></div>
-                        <span class="text-xs text-gray-600 dark:text-gray-300">Mitjana sectorial</span>
+                        <span class="text-xs text-gray-600 dark:text-gray-300">Mediana sectorial</span>
                     </div>
                     <div class="flex items-center">
                         <div class="w-3 h-3 rounded-full bg-orange-500 mr-1"></div>
-                        <span class="text-xs text-gray-600 dark:text-gray-300">Consum ideal</span>
+                        <span class="text-xs text-gray-600 dark:text-gray-300">Consumo ideal</span>
                     </div>
                 </div>
             </div>
@@ -428,19 +428,19 @@
             <!-- Resumen y siguiente paso -->
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div class="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg flex-1">
-                    <h4 class="text-sm font-medium text-blue-800 dark:text-blue-200 mb-1">Resum del teu consum</h4>
+                    <h4 class="text-sm font-medium text-blue-800 dark:text-blue-200 mb-1">Resumen de tu consumo</h4>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <p class="text-xs text-blue-600 dark:text-blue-300">Consum anual</p>
+                            <p class="text-xs text-blue-600 dark:text-blue-300">Consumo anual</p>
                             <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">3,450 kWh</p>
                         </div>
                         <div>
-                            <p class="text-xs text-blue-600 dark:text-blue-300">Cost anual</p>
+                            <p class="text-xs text-blue-600 dark:text-blue-300">Coste anual</p>
                             <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">€890</p>
                         </div>
                         <div>
-                            <p class="text-xs text-blue-600 dark:text-blue-300">Patró dominant</p>
-                            <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">Mixt</p>
+                            <p class="text-xs text-blue-600 dark:text-blue-300">Patron dominante</p>
+                            <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">Mixto</p>
                         </div>
                         <div>
                             <p class="text-xs text-blue-600 dark:text-blue-300">Potència</p>
