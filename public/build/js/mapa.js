@@ -543,6 +543,7 @@ function seleccionarPunt(event, map) {
 
 // Función para dibujar el polígono
 function dibuixarPoligon(map) {
+    
     // Elimina el polígono anterior si existe
     if (window.selectedPolygon) {
         window.selectedPolygon.setMap(null);
@@ -554,7 +555,7 @@ function dibuixarPoligon(map) {
 
     // Només tanca el polígon si hi ha 3 punts o més
     if (coordinates.length >= 3) {
-        coordinates.push(coordinates[0]); // Tanca només si hi ha 3 o més punts
+        coordinates.push(coordinates[0]); 
     }
 
     // Crea un nuevo polígono
@@ -574,9 +575,29 @@ function dibuixarPoligon(map) {
 
     if (coordinates.length >= 3) {
         calcularArea(window.selectedPolygon);
+        calcularAltura(window.selectedPolygon);
     }
 
     guardarPoligonoEnLocalStorage();
+}
+
+// Función que calcula la altura del poligono selectionado 
+function calcularAltura(polygon) {
+    const path = polygon.getPath();
+    let minLat = 90;
+    let maxLat = -90;
+
+    path.forEach(point => {
+        const lat = point.lat();
+        if (lat < minLat) minLat = lat;
+        if (lat > maxLat) maxLat = lat;
+    });
+
+    const south = new google.maps.LatLng(minLat, 0);
+    const north = new google.maps.LatLng(maxLat, 0);
+
+    console.log("this is not america " + google.maps.geometry.spherical.computeDistanceBetween(south, north));
+    return google.maps.geometry.spherical.computeDistanceBetween(south, north);
 }
 
 // Función para calcular el número máximo de placas
@@ -788,11 +809,15 @@ function calcularArea(selectedPolygon) {
     }
 }
 
+
+
 // Función para actualizar el slider y el input de número de placas
 function actualizarSlider(maxPlacas) {
     const slider = document.getElementById("placaSlider");
     const placaCount = document.getElementById("placaCount");
     const areaRestatnte = document.getElementById("espacioRestante")
+    const placaPorColumna = document.getElementById("numPlacasColumna");
+    const placaPorFila = document.getElementById("numPlacasFila");
     const areaTotal = localStorage.getItem(`user_${userId}_novaArea`);
     const areaPlacaSombra = localStorage.getItem(`user_${userId}_areaPlacaSombra`);
 
@@ -817,6 +842,7 @@ function actualizarSlider(maxPlacas) {
         actualizarEstiloSlider(this);
         localStorage.setItem(`user_${userId}_placaCount`, this.value);
         areaRestatnte.textContent = calcularEspacioRestante(this.value, areaTotal, areaPlacaSombra);
+        placaPorColumna.textContent = calcularNumPlacasPorColumna(this.value, alturaArea, alturaAreaPlacaSombra);
     });
 
     // Actualizar el slider cuando el input manual cambia
@@ -829,6 +855,7 @@ function actualizarSlider(maxPlacas) {
         slider.value = newValue;
         actualizarEstiloSlider(slider);
         localStorage.setItem(`user_${userId}_placaCount`, newValue);
+        areaRestatnte.textContent = calcularEspacioRestante(this.value, areaTotal, areaPlacaSombra);
     });
 
     // Manejar el evento 'change' para cuando se pierde el foco

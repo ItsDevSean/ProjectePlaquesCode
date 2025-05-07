@@ -252,6 +252,8 @@
                                 <input type="number" id="placaCount" class="w-20 px-3 py-2 text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition">
                             </div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Espacio restante: <span id="espacioRestante"></span> m²</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Numero de placas por columna: <span id="numPlacasColumna"></span></label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Numero de placas por fila: <span id="numPlacasFila"></span></label>
                         </div>
                     </form>
                 </div>
