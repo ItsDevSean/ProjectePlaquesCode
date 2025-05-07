@@ -133,8 +133,8 @@
                                         <tr class="project-row hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150" data-id="{{ $proyecto->id }}" onclick="showProjectDetails({{ $proyecto->id }})">
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex items-center">
-                                                    @if($proyecto->user?->profile_photo_path)
-                                                        <img src="{{ asset($proyecto->user->profile_photo_path) }}" 
+                                                    @if($proyecto->user?->photo)
+                                                        <img src="{{ asset($proyecto->user->photo) }}" 
                                                             alt="{{ $proyecto->user->name }}" 
                                                             class="h-10 w-10 rounded-full object-cover border-2 border-emerald-400">
                                                     @else
