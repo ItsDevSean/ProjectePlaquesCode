@@ -12,7 +12,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('welcome') }}" class="flex items-center">
-                        <img id="logo" src="{{ asset('img/logo.png')}}" alt="Logo" class="h-8 w-auto">
+                        <img id="logo" src="{{ asset('img/logo.png')}}" alt="Logo" class="h-12 w-auto">
                     </a>
                 </div>
 
@@ -94,11 +94,17 @@
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="flex items-center max-w-xs rounded-full text-sm  transition-all duration-200">
-                                <span class="sr-only">Open user menu</span>
+                                <span class="sr-only">Abrir menú de usuario</span>
                                 <div class="text-white font-medium mr-2">{{ Auth::user()->name }}</div>
-                                <div class="h-8 w-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
-                                    <i class="fas fa-user"></i>
-                                </div>
+                                @if(Auth::user()->photo)
+                                    <img id="imgid" src="{{ asset(Auth::user()->photo) }}" 
+                                        alt="{{ Auth::user()->name }}" 
+                                        class="h-8 w-8 rounded-full object-cover border-2 border-emerald-400">
+                                @else
+                                    <div class="h-8 w-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                @endif
                             </button>
                         </x-slot>
 
@@ -121,7 +127,7 @@
                 <!-- Mobile menu button -->
                 <div class="md:hidden flex items-center ml-2">
                     <button @click="open = !open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-white hover:bg-[#2C3E50] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-emerald-500">
-                        <span class="sr-only">Open main menu</span>
+                        <span class="sr-only">Abrir menú principal</span>
                         <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>

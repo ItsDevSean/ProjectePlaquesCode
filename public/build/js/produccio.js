@@ -17,6 +17,23 @@ document.addEventListener('DOMContentLoaded', function() {
         `user_${window.userId}_costeInstalacion`,
         `user_${window.userId}_subvenciones`
     ];
+
+    const fieldTranslations = {
+        'monthlyRadiation': 'Radiación mensual',
+        'placaCount': 'Número total de placas instaladas',
+        'panel_pot': 'Potencia del panel',
+        'direccion': 'Dirección',
+        'panel_model': 'Modelo del panel',
+        'orientacion': 'Orientación',
+        'inclinacion': 'Inclinación',
+        'tipo_instalacion': 'Tipo de instalación',
+        'consumPattern': 'Patrón de consumo',
+        'consumAnual': 'Consumo anual',
+        'facturaAnual': 'Factura anual',
+        'precioExcedentes': 'Precio de excedentes',
+        'costeInstalacion': 'Coste de instalación',
+        'subvenciones': 'Subvenciones'
+    };
     
     // Verificar si todos los campos requeridos están presentes
     const missingFields = requiredFields.filter(field => !localStorage.getItem(field));
@@ -37,9 +54,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Mostrar mensaje de campos faltantes
         missingDataMessage.classList.remove('hidden');
         
-        // Mostrar lista de campos faltantes
+        // Mostrar lista de campos faltantes con nombres descriptivos
         missingFields.forEach(field => {
-            const fieldName = field.replace(`user_${window.userId}_`, '').replace(/_/g, ' ');
+            const fieldKey = field.replace(`user_${window.userId}_`, '');
+            const fieldName = fieldTranslations[fieldKey] || fieldKey.replace(/_/g, ' ');
             const listItem = document.createElement('li');
             listItem.className = 'missing-data-item';
             listItem.textContent = fieldName;

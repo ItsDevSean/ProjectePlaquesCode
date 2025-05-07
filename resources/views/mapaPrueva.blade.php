@@ -17,10 +17,10 @@
         <div class="progress-bar-container mt-4 px-4 bg-white rounded-xl pr-6 pb-1 pl-11 bg-opacity-80" x-data="{
             currentStep: 3, // Pas actual (Seleccionar Àrea)
             steps: [
-                {id: 1, name: 'Dades del Client', completed: true, path: '{{ route('dades') }}'},
-                {id: 2, name: 'Consum', completed: true, path: '{{ route('consum') }}'},
-                {id: 3, name: 'Seleccionar Àrea', completed: false, path: '{{ route('map') }}'}, 
-                {id: 4, name: 'Producció', completed: false, path: '{{ route('produccio') }}'}
+                {id: 1, name: 'Datos del Cliente', completed: true, path: '{{ route('dades') }}'},
+                {id: 2, name: 'Consump', completed: true, path: '{{ route('consum') }}'},
+                {id: 3, name: 'Seleccionar Área', completed: false, path: '{{ route('map') }}'}, 
+                {id: 4, name: 'Producción', completed: false, path: '{{ route('produccio') }}'}
             ],
             getProgressWidth() {
                 const completedSteps = this.steps.filter(step => step.completed).length;
@@ -102,7 +102,7 @@
             <div class="search-container">
                 <input type="text" id="address" placeholder="Escriu la teva direcció" autocomplete="off">
                 <button id="buttonBuscar">Buscar</button>              
-                <button id="startSelection" disabled class="hidden">Seleccionar area</button>
+                <button id="startSelection" disabled class="hidden">Seleccionar área</button>
                 <span id="areaResult" style="display: none;"></span>
                 <button id="saveAreaButton" style="display: none;">Guardar Área</button>
             </div>
@@ -112,7 +112,7 @@
         
         <!-- Botó "Tancar polígon" -->
         <button id="tancarPoligonButton" class="tancar-poligon-button">
-            Tancar polígon
+            Cerrar polígono
         </button>
     </div>
 
@@ -127,7 +127,7 @@
                     </div>
                 
                     <h3 class="text-lg font-semibold text-gray-800 flex-shrink-0">
-                        Dades de la superficie
+                        Datos de la superficie
                     </h3>
                 
                     <div class="flex items-center gap-0.5 ml-auto pr-3"> 
@@ -153,7 +153,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- Selector de Orientación Visual - Modificado el contenedor -->
                             <div class="flex flex-col items-center p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                                <label class="block text-sm font-medium text-gray-700 mb-3">Orientació</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-3">Orientación</label>
                                 <div class="orientation-dial w-44 h-44 cursor-grab active:cursor-grabbing relative mx-auto">
                                     <!-- SVG original sin cambios -->
                                     <svg class="orientation-svg w-full h-full select-none touch-none" viewBox="0 0 200 200">
@@ -182,7 +182,7 @@
                             
                             <!-- Selector de Inclinación Visual - Modificado el contenedor -->
                             <div class="flex flex-col items-center p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                                <label class="block text-sm font-medium text-gray-700 mb-3">Inclinació</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-3">Inclinación</label>
                                 <div class="inclination-selector-container ml-10 mt-6 w-full max-w-[160px] h-[120px] relative mx-auto">
                                     <!-- SVG original sin cambios -->
                                     <svg class="inclination-svg w-full h-full overflow-visible select-none touch-none cursor-grab active:cursor-grabbing" viewBox="0 0 160 90">
@@ -216,7 +216,7 @@
                     <div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100 text-emerald-600">
                         <img src="/img/panelSolar2.png" alt="Plaques" class="w-6 h-6">
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-800 flex-1">Selecció de plaques</h3>
+                    <h3 class="text-lg font-semibold text-gray-800 flex-1">Selección de placas</h3>
                     <span class="accordion-icon transform transition-transform duration-300 text-emerald-500">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -265,7 +265,7 @@
                     <div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100 text-emerald-600">
                         <img src="/img/iconObstaculo.png" alt="Obstacles" class="w-6 h-6">
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-800 flex-1">Selecció de obstacles</h3>
+                    <h3 class="text-lg font-semibold text-gray-800 flex-1">Selección de obstaculos</h3>
                     <span class="accordion-icon transform transition-transform duration-300 text-emerald-500">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -282,7 +282,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
                             </svg>
-                            Nou obstacle
+                            Crear Obstaculo
                         </button>
                     </div>
                 </div>

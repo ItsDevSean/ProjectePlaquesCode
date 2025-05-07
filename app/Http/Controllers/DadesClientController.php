@@ -102,7 +102,7 @@ public function showDetails($id)
             'client_contact' => $project->telefono,
             'user_name' => $project->user->name, // Ajusta según tu relación
             'user_email' => $project->user->email,
-            // Añade más campos según necesites
+            'user_photo_path' => $project->user->profile_photo_path,
         ]);
         
     } catch (\Exception $e) {

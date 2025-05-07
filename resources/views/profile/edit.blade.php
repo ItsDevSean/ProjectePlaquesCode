@@ -1,31 +1,26 @@
 <x-app-layout>
     <x-slot name="header">
-        <link rel="stylesheet" href="build/css/styles.css">
-
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Profile') }}
-        </h2>
+        <div class="flex items-center justify-between">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                {{ __('Configuración de Perfil') }}
+            </h2>
+            
+        </div>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
+    <div class="py-8">
+        <div class="max-w-5xl mx-auto space-y-8">
+            <!-- Sección de Información del Perfil -->
+            @include('profile.partials.update-profile-information-form')
 
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
+            <!-- Sección de Foto de Perfil -->
+            @include('profile.partials.update-profile-photo-form')
 
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
+            <!-- Sección de Seguridad -->
+            @include('profile.partials.update-password-form')
+
+            <!-- Sección de Eliminación de Cuenta -->
+            @include('profile.partials.delete-user-form')
         </div>
     </div>
 </x-app-layout>

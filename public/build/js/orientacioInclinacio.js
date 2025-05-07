@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    
     // Funcionalitat del acordió
     const accordionButtons = document.querySelectorAll(".accordion-button");
 
@@ -48,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 minInclination,
                 Math.min(maxInclination, inclination)
             );
-
+            const inc = localStorage.getItem(`user_${window.userId}_lat`)
             // Convertir inclinació a angle SVG
             const svgAngleDeg = inclination + 180;
             const svgAngleRad = svgAngleDeg * (Math.PI / 180);
@@ -64,7 +65,9 @@ document.addEventListener("DOMContentLoaded", function () {
             inclinationLine.setAttribute("y2", hy);
 
             // Actualitzar text
+            console.log("jjjjjjj")
             inclinationDegreeDisplay.textContent = inclination + "°";
+            
 
             // Actualitzar input
             inclinationInput.value = inclination;
@@ -80,12 +83,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Funció per inicialitzar la inclinació
         function initializeInclination() {
+            
             const storageKey = window.userId
                 ? `user_${window.userId}_inclinacion`
                 : "default_inclinacion";
             const savedInclination = localStorage.getItem(storageKey);
 
-            let initialInclination = 0;
+            let initialInclination = localStorage.getItem(`user_${userId}_lat`);
 
             if (savedInclination !== null && !isNaN(savedInclination)) {
                 initialInclination = parseFloat(savedInclination);
@@ -265,6 +269,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Inicialitzar posició
         function initializeDial() {
+            
             const storageKeyAngle = window.userId
                 ? `user_${window.userId}_orientacion`
                 : "default_orientacio_angle";

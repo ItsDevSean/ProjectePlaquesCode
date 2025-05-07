@@ -133,9 +133,15 @@
                                         <tr class="project-row hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150" data-id="{{ $proyecto->id }}" onclick="showProjectDetails({{ $proyecto->id }})">
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex items-center">
-                                                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                                                        <span class="text-teal-600 font-medium">{{ substr($proyecto->user?->name ?? 'U', 0, 1) }}</span>
-                                                    </div>
+                                                    @if($proyecto->user?->photo)
+                                                        <img src="{{ asset($proyecto->user->photo) }}" 
+                                                            alt="{{ $proyecto->user->name }}" 
+                                                            class="h-10 w-10 rounded-full object-cover border-2 border-emerald-400">
+                                                    @else
+                                                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center">
+                                                            <span class="text-teal-600 font-medium">{{ substr($proyecto->user?->name ?? 'U', 0, 1) }}</span>
+                                                        </div>
+                                                    @endif
                                                     <div class="ml-4">
                                                         <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $proyecto->user?->name ?? 'Usuario no disponible' }}</div>
                                                         <div class="text-sm text-gray-500">{{ $proyecto->user?->email ?? '' }}</div>
@@ -390,8 +396,8 @@
                 <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Responsable</h4>
                 <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                     <div class="flex items-center space-x-3">
-                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                            <span id="userInitial" class="text-green-600 font-medium">-</span>
+                        
+                        <div id="userPhotoContainer" class="flex-shrink-0 h-10 w-10 rounded-full border-2 border-emerald-400 flex items-center justify-center overflow-hidden">
                         </div>
                         <div>
                             <p id="userName" class="text-sm font-medium text-gray-900 dark:text-white">-</p>

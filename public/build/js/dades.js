@@ -47,29 +47,26 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div style="background:#ffffff;padding:0;border-radius:16px;max-width:560px;width:90%;overflow:hidden;box-shadow:0 12px 32px rgba(0,0,0,0.25);transform:translateY(20px);transition:transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
                     <div style="background:linear-gradient(135deg, #0d9488 0%, #047857 100%);padding:24px 32px;position:relative;">
                         <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.05) 100%);"></div>
-                        <h3 style="color:white;margin:0;font-size:1.375rem;font-weight:600;font-family:'Segoe UI', Roboto, -apple-system, sans-serif;position:relative;">Projecte actiu detectat</h3>
-                        <svg id="closeModal" style="position:absolute;top:24px;right:24px;cursor:pointer;transition:transform 0.2s ease;" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18 6L6 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M6 6L18 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        <h3 style="color:white;margin:0;font-size:1.375rem;font-weight:600;font-family:'Segoe UI', Roboto, -apple-system, sans-serif;position:relative;">Proyecto activo detectado</h3>
+                        
                     </div>
                     <div style="padding:32px;">
                         <div style="margin-bottom:24px;">
                             <p style="color:#4b5563;margin-bottom:16px;line-height:1.6;font-size:1rem;font-family:'Segoe UI', Roboto, -apple-system, sans-serif;">
-                                S'ha detectat un projecte en curs. Selecciona una de les següents opcions:
+                                Se ha detectado un proyecto en curso. Selecciona una de las siguientes opciones:
                             </p>
                             <ul style="color:#4b5563;margin-bottom:24px;padding-left:20px;line-height:1.8;font-size:0.95rem;font-family:'Segoe UI', Roboto, -apple-system, sans-serif;">
-                                <li>- Continuar treballant amb el projecte existent</li>
-                                <li>- Iniciar un nou projecte (es perdran les dades no guardades)</li>
+                                <li>- Continuar trabajando con el proyecto existente</li>
+                                <li>- Iniciar un nuevo proyecto (se perderán los datos no guardados)</li>
                             </ul>
                         </div>
                         <div style="display:flex;justify-content:space-between;gap:16px;">
                             <button id="continueProject" style="padding:12px 24px;background:linear-gradient(135deg, #0d9488 0%, #047857 100%);color:white;border:none;border-radius:8px;cursor:pointer;flex:1;transition:all 0.3s ease;font-weight:500;font-family:'Segoe UI', Roboto, -apple-system, sans-serif;box-shadow:0 4px 6px rgba(5, 122, 103, 0.2);position:relative;overflow:hidden;">
-                                <span style="position:relative;z-index:1;">Continuar projecte</span>
+                                <span style="position:relative;z-index:1;">Continuar proyecto</span>
                                 <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.05) 100%);"></div>
                             </button>
                             <button id="newProject" style="padding:12px 24px;background:linear-gradient(135deg, #ef4444 0%, #dc2626 100%);color:white;border:none;border-radius:8px;cursor:pointer;flex:1;transition:all 0.3s ease;font-weight:500;font-family:'Segoe UI', Roboto, -apple-system, sans-serif;box-shadow:0 4px 6px rgba(220, 38, 38, 0.2);position:relative;overflow:hidden;">
-                                <span style="position:relative;z-index:1;">Nou projecte</span>
+                                <span style="position:relative;z-index:1;">Nuevo proyecto</span>
                                 <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.05) 100%);"></div>
                             </button>
                         </div>
@@ -126,6 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Solo ejecutar el resto si estamos en la página de dades (con el formulario)
     if (form) {
+        
         const inputs = form.querySelectorAll('input, textarea, select');
         
         // Configurar eventos para los selects
@@ -192,16 +190,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Inclinció teulada
         const estaInclinat = document.getElementById("tipo_teulada");
+        if (estaInclinat.value == "si") {
+            document.getElementById("div_inclinacio").classList.remove('hidden');
+        }
         estaInclinat.addEventListener('change', function() {
-            console.log(" no tinene nada " + estaInclinat.value);
             if (estaInclinat.value == "si") {
                 document.getElementById("div_inclinacio").classList.remove('hidden');
             } else {
                 document.getElementById("div_inclinacio").classList.add('hidden');
             }
         })
-    }
-
-    
+    }    
 
 });
