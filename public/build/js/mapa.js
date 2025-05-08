@@ -816,6 +816,7 @@ function calcularArea(selectedPolygon) {
 function actualizarSlider(maxPlacas) {
     const slider = document.getElementById("placaSlider");
     const placaCount = document.getElementById("placaCount");
+    const placaCount2 = document.getElementById("placaCountDisplay")
     const areaRestatnte = document.getElementById("espacioRestante")
     const placaPorColumna = document.getElementById("numPlacasColumna");
     const placaPorFila = document.getElementById("numPlacasFila");
@@ -834,16 +835,22 @@ function actualizarSlider(maxPlacas) {
     // Establecer valores iniciales
     slider.value = initialValue;
     placaCount.value = initialValue;
+    placaCount2.textContent = initialValue;
     actualizarEstiloSlider(slider);
     actualitzarFonsSlider();
 
     // Actualizar el input cuando se mueve el slider
     slider.addEventListener("input", function () {
         placaCount.value = this.value;
+        placaCount2.textContent = this.value;
         actualizarEstiloSlider(this);
         localStorage.setItem(`user_${userId}_placaCount`, this.value);
         areaRestatnte.textContent = calcularEspacioRestante(this.value, areaTotal, areaPlacaSombra);
         placaPorColumna.textContent = calcularNumPlacasPorColumna(this.value, alturaArea, alturaAreaPlacaSombra);
+    });
+
+    placaCount.addEventListener("change", function () {
+        placaCount2.textContent = placaCount.value;
     });
 
     // Actualizar el slider cuando el input manual cambia
@@ -1505,3 +1512,4 @@ function cargarObstaculosDesdeLocalStorage(map) {
         resolve();
     });
 }
+

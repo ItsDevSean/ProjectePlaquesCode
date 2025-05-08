@@ -211,49 +211,100 @@
             </div>
     
             <!-- Sección 2: Selecció de plaques -->
-            <div class="accordion-section rounded-lg overflow-hidden border border-gray-200">
+            <div class="accordion-section rounded-lg overflow-hidden border border-gray-200 bg-white shadow-sm">
                 <button class="accordion-button flex items-center gap-3 w-full text-left p-4 bg-gradient-to-r from-emerald-50 to-white hover:from-emerald-100 transition-all duration-200">
                     <div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100 text-emerald-600">
-                        <img src="/img/panelSolar2.png" alt="Plaques" class="w-6 h-6">
+                        <img src="/img/panelSolar2.png" alt="Paneles solares" class="w-6 h-6">
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-800 flex-1">Selección de placas</h3>
+                    <h3 class="text-lg font-semibold text-gray-800 flex-1">Configuración de Paneles Solares</h3>
                     <span class="accordion-icon transform transition-transform duration-300 text-emerald-500">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
                     </span>
                 </button>
-                <div class="accordion-content bg-white">
-                    <form action="" class="form-container p-4 space-y-4">
-                        <div>
-                            <label for="panel_model" class="block text-sm font-medium text-gray-700 mb-1">Selecciona Panel</label>
-                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition" id="panel_model" name="panel_model" required>
-                                <option value="">-- Selecciona un modelo --</option>
-                                @foreach($panels as $panel)
-                                    <option value="{{ $panel->id }}" data-surface="{{ $panel->superficie }}" data-potencia-maxima="{{ $panel->potencia_maxima }}" data-anchura="{{ $panel->anchura }}" data-longitud="{{ $panel->longitud_v2 }}">{{ $panel->panel_model }}</option>
-                                @endforeach
-                            </select>
+                <div class="accordion-content">
+                    <form action="" class="form-container p-6 space-y-6">
+                        <!-- Panel Selection -->
+                        <div class="space-y-1">
+                            <label for="panel_model" class="block text-sm font-medium text-gray-700">Modelo de Panel</label>
+                            <div class="relative">
+                                <select class="w-full pl-3 pr-10 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition appearance-none bg-white" id="panel_model" name="panel_model" required>
+                                    <option value="">Seleccione un modelo de panel</option>
+                                    @foreach($panels as $panel)
+                                        <option value="{{ $panel->id }}" data-surface="{{ $panel->superficie }}" data-potencia-maxima="{{ $panel->potencia_maxima }}" data-anchura="{{ $panel->anchura }}" data-longitud="{{ $panel->longitud_v2 }}">{{ $panel->panel_model }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
-    
-                        <div class="text-center">
-                            <a href="{{ route('panels') }}" class="inline-flex items-center text-emerald-600 hover:text-emerald-800 font-medium transition">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+            
+                        <!-- Metrics Grid -->
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
+                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Área por panel</p>
+                                <div class="flex items-baseline">
+                                    <span id="areaPlaca" class="text-xl font-semibold text-gray-800">0</span>
+                                    <span class="text-sm text-gray-500 ml-1">m²</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
+                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Espacio disponible</p>
+                                <div class="flex items-baseline">
+                                    <span id="espacioRestante" class="text-xl font-semibold text-gray-800">0</span>
+                                    <span class="text-sm text-gray-500 ml-1">m²</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
+                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Total paneles</p>
+                                <div class="flex items-baseline">
+                                    <span id="placaCountDisplay" class="text-xl font-semibold text-gray-800">0</span>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Slider Section -->
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <label for="placaSlider" class="block text-sm font-medium text-gray-700">Cantidad de paneles</label>
+                                <div class="w-20">
+                                    <input type="number" id="placaCount" 
+                                           class="w-full px-3 py-2 text-sm text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition bg-white"
+                                           min="0" max="100" step="1">
+                                </div>
+                            </div>
+                            <input type="range" 
+                                   class="w-full h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer accent-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+                                   id="placaSlider" min="0" max="100" step="1">
+                        </div>
+            
+                        <!-- Distribution Grid -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
+                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Paneles por columna</p>
+                                <span id="numPlacasColumna" class="text-lg font-semibold text-gray-800">0</span>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
+                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Paneles por fila</p>
+                                <span id="numPlacasFila" class="text-lg font-semibold text-gray-800">0</span>
+                            </div>
+                        </div>
+            
+                        <!-- Add Panel Button -->
+                        <div class="pt-2">
+                            <a href="{{ route('panels') }}" class="inline-flex items-center text-emerald-600 hover:text-emerald-800 text-sm font-medium transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
                                 </svg>
-                                Nuevo panel
+                                Añadir nuevo modelo de panel
                             </a>
-                        </div>
-    
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Area de la placa: <span id="areaPlaca"></span> m²</label>
-                            <label for="placaSlider" class="block text-sm font-medium text-gray-700 mb-2">Nombre de plaques:</label>
-                            <div class="flex items-center gap-4">
-                                <input type="range" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-emerald-500" id="placaSlider" min="0" max="1" step="1">
-                                <input type="number" id="placaCount" class="w-20 px-3 py-2 text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition">
-                            </div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Espacio restante: <span id="espacioRestante"></span> m²</label>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Numero de placas por columna: <span id="numPlacasColumna"></span></label>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Numero de placas por fila: <span id="numPlacasFila"></span></label>
                         </div>
                     </form>
                 </div>
