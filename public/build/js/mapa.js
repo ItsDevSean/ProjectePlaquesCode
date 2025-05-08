@@ -231,9 +231,13 @@ function initAutocomplete(map) {
         mapOverlay.classList.add("hidden");
         enableMapInteractions(map);
 
-        // Llamar a getSolarData con las coordenadas
+        // Llamada a las diferentes funciones que requieren la latitud 
+        // para aconseguir datos del sol
         getSolarData(lat, lng);
         getMonthlySolarData(lat, lng);
+        const now = new Date(); 
+        const incliacionSolar = getSolarElevationAngle(now, lat, lng)
+        localStorage.setItem(`user_${userId}_inclinacionSolar`, incliacionSolar); 
 
         // Habilitar el botón "Seleccionar área"
         document.getElementById("startSelection").disabled = false;
@@ -540,6 +544,7 @@ function seleccionarPunt(event, map) {
 
 // Función para dibujar el polígono
 function dibuixarPoligon(map) {
+    
     // Elimina el polígono anterior si existe
     if (window.selectedPolygon) {
         window.selectedPolygon.setMap(null);
@@ -551,7 +556,7 @@ function dibuixarPoligon(map) {
 
     // Només tanca el polígon si hi ha 3 punts o més
     if (coordinates.length >= 3) {
-        coordinates.push(coordinates[0]); // Tanca només si hi ha 3 o més punts
+        coordinates.push(coordinates[0]); 
     }
 
     // Crea un nuevo polígono
@@ -571,9 +576,29 @@ function dibuixarPoligon(map) {
 
     if (coordinates.length >= 3) {
         calcularArea(window.selectedPolygon);
+        calcularAltura(window.selectedPolygon);
     }
 
     guardarPoligonoEnLocalStorage();
+}
+
+// Función que calcula la altura del poligono selectionado 
+function calcularAltura(polygon) {
+    const path = polygon.getPath();
+    let minLat = 90;
+    let maxLat = -90;
+
+    path.forEach(point => {
+        const lat = point.lat();
+        if (lat < minLat) minLat = lat;
+        if (lat > maxLat) maxLat = lat;
+    });
+
+    const south = new google.maps.LatLng(minLat, 0);
+    const north = new google.maps.LatLng(maxLat, 0);
+
+    console.log("this is not america " + google.maps.geometry.spherical.computeDistanceBetween(south, north));
+    return google.maps.geometry.spherical.computeDistanceBetween(south, north);
 }
 
 // Función para calcular el número máximo de placas
@@ -590,7 +615,82 @@ function calcularMaxPlacas(areaTotal) {
         return 0;
     }
 
-    return Math.floor(areaTotal / areaPlaca);
+    const disMin = calcularSombra();
+    const anchuraPlaca =  selectedOption.getAttribute("data-anchura");
+    const areaPlacaSombra = (disMin / 1000) * (anchuraPlaca / 1000);
+    localStorage.setItem(`user_${userId}_areaPlacaSombra`, areaPlacaSombra);
+    console.log("quan tens rao tens rao " + areaTotal);
+    console.log("captura y mandalo al Jaume " + areaPlacaSombra);
+    console.log("Haz un triangulo no? " + Math.floor(areaTotal / areaPlacaSombra))
+    return Math.floor(areaTotal / areaPlacaSombra);
+}
+
+function calcularEspacioRestante(numPlacas, areaTotal, areaPlacaSombra) {
+    return Math.abs((areaPlacaSombra * numPlacas) - areaTotal).toFixed(2);
+}
+
+// Función que calcula la distancia minima entre placas.
+function calcularSombra() {
+    let disMin = 0;
+
+    const selectPanel = document.getElementById("panel_model");
+    const selectedOption = selectPanel.options[selectPanel.selectedIndex];
+    const longitud = selectedOption.getAttribute("data-longitud");
+    const inclinacion = localStorage.getItem(`user_${userId}_inclinacion`);
+    const inclinacionRad = inclinacion * (Math.PI / 180);
+    const inclinacioSol = localStorage.getItem(`user_${userId}_inclinacionSolar`);
+    const inclinacioSolarRad = inclinacioSol * (Math.PI / 180);
+    const tgH = Math.tan(inclinacioSolarRad);
+    const costatA = longitud * Math.cos(inclinacionRad);
+    const costatB = (longitud * Math.sin(inclinacionRad)) / tgH  
+    disMin =  costatA + costatB;
+
+    return disMin;
+}
+
+function getSolarElevationAngle(date, latitude, longitude) {
+    const rad = Math.PI / 180;
+    const deg = 180 / Math.PI;
+
+    // 1. Convert time to UTC
+    const utcDate = new Date(date.toUTCString());
+
+    // 2. Day of the year
+    const start = new Date(Date.UTC(utcDate.getUTCFullYear(), 0, 0));
+    const diff = (utcDate - start) + ((start.getTimezoneOffset() - utcDate.getTimezoneOffset()) * 60 * 1000);
+    const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    // 3. Fractional year (γ) in radians
+    const gamma = 2 * Math.PI / 365 * (dayOfYear - 1 + 
+        (utcDate.getUTCHours() - 12) / 24);
+
+    // 4. Solar declination (δ) in radians
+    const decl = 0.006918 - 0.399912 * Math.cos(gamma) + 
+                 0.070257 * Math.sin(gamma) - 0.006758 * Math.cos(2 * gamma) + 
+                 0.000907 * Math.sin(2 * gamma) - 0.002697 * Math.cos(3 * gamma) + 
+                 0.00148 * Math.sin(3 * gamma);
+
+    // 5. Time offset (in minutes)
+    const eqTime = 229.18 * (0.000075 + 0.001868 * Math.cos(gamma)
+        - 0.032077 * Math.sin(gamma) - 0.014615 * Math.cos(2 * gamma)
+        - 0.040849 * Math.sin(2 * gamma));
+
+    const solarTimeFix = eqTime + 4 * longitude;
+    const trueSolarTime = utcDate.getUTCHours() * 60 + utcDate.getUTCMinutes() + utcDate.getUTCSeconds() / 60 + solarTimeFix;
+
+    // 6. Hour angle (HRA) in degrees
+    let hourAngle = (trueSolarTime / 4) - 180;
+    if (hourAngle < -180) hourAngle += 360;
+
+    // 7. Convert hour angle to radians
+    const haRad = hourAngle * rad;
+
+    // 8. Elevation angle
+    const latRad = latitude * rad;
+    const elevation = Math.asin(Math.sin(latRad) * Math.sin(decl) + 
+                        Math.cos(latRad) * Math.cos(decl) * Math.cos(haRad));
+
+    return elevation * deg; // in degrees
 }
 
 const orientacion = document.getElementById("orientacion");
@@ -635,7 +735,16 @@ selectPanel.addEventListener("change", function () {
 
     // Actualizar el slider (si es necesario)
     actualizarSlider(maxPlacas);
+
+    // Actualizar el detalle de la placa
+    actualizarDetallePlaca()
 });
+
+function actualizarDetallePlaca() {
+    const areaPlaca = localStorage.getItem(`user_${userId}_superficie`);
+    document.getElementById("areaPlaca").textContent = areaPlaca / 1000 ; // Convert mm to m
+}
+
 
 // Función para calcular el área del polígono
 function calcularArea(selectedPolygon) {
@@ -701,10 +810,17 @@ function calcularArea(selectedPolygon) {
     }
 }
 
+
+
 // Función para actualizar el slider y el input de número de placas
 function actualizarSlider(maxPlacas) {
     const slider = document.getElementById("placaSlider");
     const placaCount = document.getElementById("placaCount");
+    const areaRestatnte = document.getElementById("espacioRestante")
+    const placaPorColumna = document.getElementById("numPlacasColumna");
+    const placaPorFila = document.getElementById("numPlacasFila");
+    const areaTotal = localStorage.getItem(`user_${userId}_novaArea`);
+    const areaPlacaSombra = localStorage.getItem(`user_${userId}_areaPlacaSombra`);
 
     // Actualizar el rango del slider y el input
     slider.max = maxPlacas;
@@ -726,6 +842,8 @@ function actualizarSlider(maxPlacas) {
         placaCount.value = this.value;
         actualizarEstiloSlider(this);
         localStorage.setItem(`user_${userId}_placaCount`, this.value);
+        areaRestatnte.textContent = calcularEspacioRestante(this.value, areaTotal, areaPlacaSombra);
+        placaPorColumna.textContent = calcularNumPlacasPorColumna(this.value, alturaArea, alturaAreaPlacaSombra);
     });
 
     // Actualizar el slider cuando el input manual cambia
@@ -738,6 +856,7 @@ function actualizarSlider(maxPlacas) {
         slider.value = newValue;
         actualizarEstiloSlider(slider);
         localStorage.setItem(`user_${userId}_placaCount`, newValue);
+        areaRestatnte.textContent = calcularEspacioRestante(this.value, areaTotal, areaPlacaSombra);
     });
 
     // Manejar el evento 'change' para cuando se pierde el foco
@@ -787,6 +906,7 @@ function actualizarEstiloSlider(slider) {
     const max = parseInt(slider.max) || 1;
     const progress = (value / max) * 100 + "%"; // Calcular el porcentaje de progreso
     slider.style.background = `linear-gradient(to right, #49DBA3 ${progress}, #e0e0e0 ${progress})`; // Actualizar el fondo del slider
+    
 }
 
 const slider = document.getElementById("placaSlider");

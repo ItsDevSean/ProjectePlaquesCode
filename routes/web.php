@@ -69,6 +69,8 @@ Route::get('/herramientas/cositas', [SolarPanelsController::class, 'showForm'])-
 
 Route::post('/herramientas/cositas', [SolarPanelsController::class, 'import'])->name('veureImport');
 
+Route::post('/herramientas/paneles/fabricantes/{id}', [SolarPanelsController::class, 'getFabricate'])->name('veureFabricante');
+
 Route::resource('baterias',BateriasController::class);
 
 Route::resource('inversores', InversoresController::class);

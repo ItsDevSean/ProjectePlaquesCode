@@ -153,12 +153,6 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <div class="flex items-center justify-end space-x-3">
-                                                    {{-- <button onclick="openDetail({{ $p }}, {{ json_encode($nameAtributes) }})" class="text-blue-600 hover:text-blue-800 transition-colors p-1.5 rounded-full hover:bg-blue-50 dark:hover:bg-gray-700" title="Ver detalles">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                                        </svg>
-                                                    </button> --}}
                                                     <button onclick="event.stopPropagation(); openEditModal({{ json_encode($p) }})" class="text-emerald-600 hover:text-teal-700 transition-colors p-1.5 rounded-full hover:bg-emerald-50 dark:hover:bg-gray-700" title="Editar">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -181,6 +175,8 @@
         
                 </div>
             </div>
+
+            
 
             <!-- Modal para crear/editar panel -->
             <div id="modal" class="fixed inset-0 z-50 flex pt-10 p-4 items-center justify-center bg-black bg-opacity-70 hidden backdrop-blur-sm transition-opacity duration-300">
@@ -216,6 +212,7 @@
                                   
                                     <!-- Fabricante -->
                                     <div>
+                                        <input id="fabricantes_values" class="hidden" value="{{$fabricantes}}"></input>
                                         <label id="nomManudfacturer" for="fabricante_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Fabricante</label>
                                         <div class="flex gap-3">
                                             <select name="fabricante_id" id="fabricante_id" class="flex-1 px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 appearance-none "required>
@@ -457,7 +454,7 @@
                                     </div>
                                     <div class="ml-4">
                                         <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Fabricante</h3>
-                                        <p id="detail_manufacturer" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
+                                        <p id="detail_fabricante_id" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
                                     </div>
                                 </div>
 
@@ -519,7 +516,7 @@
                                         </svg>
                                     </div>
                                     <div class="ml-4">
-                                        <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Superficie (m)</h3>
+                                        <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Superficie (m²)</h3>
                                         <p id="detail_superficie" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
                                     </div>
                                 </div>
