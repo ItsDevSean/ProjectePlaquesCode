@@ -19,12 +19,142 @@
             </h2>
         </x-slot>
 
+        <div id="batteryListContainer" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 hidden backdrop-blur-sm transition-opacity duration-300 p-4">
+            <div class="bg-white mt-20 dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden transform transition-all duration-300 scale-95 opacity-0 modal-content max-h-[80vh] overflow-y-auto border border-gray-200 dark:border-gray-700">
+                <div class="bg-gradient-to-r from-emerald-600 to-teal-700 px-6 py-4 sticky top-0 z-10 border-b border-teal-800 dark:border-teal-600">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-xl font-bold text-white">Selecciona una Batería Común</h2>
+                        <button type="button" id="closeMostUsedModal" class="text-white hover:text-gray-200 transition-colors duration-200 focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="p-6 space-y-6 mt-4">
+                    <p class="text-sm text-gray-700 dark:text-gray-300 mb-4">Haz clic para seleccionar una batería común y pre-rellenar el formulario:</p>
+        
+                    <div class="battery-item grid grid-cols-1 md:grid-cols-3 gap-4 p-3 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors items-center"
+                         data-battery-type="LiFePO4"
+                         data-battery-name="Example LiFePO4 5kWh"
+                         data-battery-capacity="5.0"
+                         data-battery-cost="1500"
+                         data-battery-manufacturer-id="1"
+                         data-battery-manufacturer-name="Fabricante Popular Litio"
+                         data-battery-material-warranty="10"
+                         data-battery-fabricante-warranty="10"
+                         data-battery-description="Batería LiFePO4 muy segura y con larga vida útil. Ideal para autoconsumo residencial."
+                         data-battery-image-url="https://via.placeholder.com/100x100?text=LiFePO4">
+                        <div class="col-span-1 flex justify-center">
+                             <img src="build/img/bateriaLitio.png" alt="Imatge Bateria LiFePO4" class="w-24 h-24 object-contain rounded">
+                        </div>
+                        <div class="col-span-2">
+                            <h5 class="text-lg font-bold text-emerald-600 dark:text-teal-500">Litio Ferrofosfato (LiFePO4)</h5>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Fabricante Popular Litio</p>
+                            <p class="text-sm text-gray-700 dark:text-gray-300 mt-1">Batería LiFePO4 muy segura y con larga vida útil. Ideal para autoconsumo residencial.</p>
+                            <div class="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-gray-500 dark:text-gray-400 mt-3">
+                                <span><span class="font-semibold">Capacidad:</span> 5.0 kWh</span>
+                                <span><span class="font-semibold">Coste Estimado:</span> 1500 €</span>
+                                <span><span class="font-semibold">Garantía Material:</span> 10 años</span>
+                                <span><span class="font-semibold">Garantía Fabricante:</span> 10 años</span>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="battery-item grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors items-center"
+                         data-battery-type="Li-ion (NMC)"
+                         data-battery-name="Example Li-ion NMC 10kWh"
+                         data-battery-capacity="10.0"
+                         data-battery-cost="3000"
+                         data-battery-manufacturer-id="2"
+                         data-battery-manufacturer-name="Fabricante Innovador"
+                         data-battery-material-warranty="10"
+                         data-battery-fabricante-warranty="10"
+                         data-battery-description="Batería de Ion de Litio con alta densidad energética. Diseño compacto y moderno."
+                         data-battery-image-url="https://via.placeholder.com/100x100?text=Li-ion+NMC">
+                         <div class="col-span-1 flex justify-center">
+                            <img src="build/img/bateriaIon.png" alt="Imatge Bateria Li-ion NMC" class="w-24 h-24 object-contain rounded">
+                         </div>
+                         <div class="col-span-2">
+                            <h5 class="text-lg font-bold text-emerald-600 dark:text-teal-500">Ion de Litio (otras químicas como NMC)</h5>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Fabricante Innovador</p>
+                            <p class="text-sm text-gray-700 dark:text-gray-300 mt-1">Batería de Ion de Litio con alta densidad energética. Diseño compacto y moderno.</p>
+                            <div class="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-gray-500 dark:text-gray-400 mt-3">
+                                <span><span class="font-semibold">Capacidad:</span> 10.0 kWh</span>
+                                <span><span class="font-semibold">Coste Estimado:</span> 3000 €</span>
+                                <span><span class="font-semibold">Garantía Material:</span> 10 años</span>
+                                <span><span class="font-semibold">Garantía Fabricante:</span> 10 años</span>
+                            </div>
+                         </div>
+                    </div>
+        
+                    <div class="battery-item grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors items-center"
+                         data-battery-type="Plom-Àcid"
+                         data-battery-name="Example Plom-Àcid 20kWh"
+                         data-battery-capacity="20.0"
+                         data-battery-cost="2500"
+                         data-battery-manufacturer-id="3"
+                         data-battery-manufacturer-name="Fabricante Tradicional"
+                         data-battery-material-warranty="5"
+                         data-battery-fabricante-warranty="2"
+                         data-battery-description="Tecnología fiable y de menor coste inicial. Requiere ventilación y mantenimiento."
+                         data-battery-image-url="https://via.placeholder.com/100x100?text=Plom-Acid">
+                         <div class="col-span-1 flex justify-center">
+                            <img src="build/img/bateriaAmg.png" alt="Imatge Bateria Plom-Àcid" class="w-24 h-24 object-contain rounded">
+                         </div>
+                         <div class="col-span-2">
+                            <h5 class="text-lg font-bold text-emerald-600 dark:text-teal-500">Plomo-Ácido (GEL/AGM)</h5>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Fabricante Tradicional</p>
+                            <p class="text-sm text-gray-700 dark:text-gray-300 mt-1">Tecnología fiable y de menor coste inicial. Requiere ventilación y mantenimiento.</p>
+                            <div class="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-gray-500 dark:text-gray-400 mt-3">
+                                <span><span class="font-semibold">Capacidad:</span> 20.0 kWh</span>
+                                <span><span class="font-semibold">Coste Estimado:</span> 2500 €</span>
+                                <span><span class="font-semibold">Garantía Material:</span> 5 años</span>
+                                <span><span class="font-semibold">Garantía Fabricante:</span> 2 años</span>
+                            </div>
+                         </div>
+                    </div>
+        
+                    <div class="battery-item grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors items-center"
+                        data-battery-type="LiFePO4 Residencial"
+                        data-battery-name="Bateria Litio Residencial 5kWh"
+                        data-battery-capacity="5.0"
+                        data-battery-cost="3000" {{-- Coste típico estimado para 5kWh LiFePO4 --}}
+                        data-battery-manufacturer-id="5" {{-- Nuevo ID genérico --}}
+                        data-battery-manufacturer-name="Fabricante de Baterías Residenciales"
+                        data-battery-material-warranty="10" {{-- Garantía típica para Litio residencial --}}
+                        data-battery-fabricante-warranty="10" {{-- Garantía típica para Litio residencial --}}
+                        data-battery-description="Batería de Litio (LiFePO4) compacta y segura, ideal para sistemas de autoconsumo en tejados. Larga vida útil."
+                        data-battery-image-url="https://solarbex.com/wp-content/uploads/2022/07/BATERIA-LITIO-5KW-VOLTEM-PARED-scaled.jpg"> {{-- Mantengo la imagen residencial --}}
+                        <div class="col-span-1 flex justify-center">
+                            <img src="build/img/bateria4.png" alt="Imagen Batería Litio Residencial" class="w-24 h-24 object-contain rounded"> {{-- Mantengo la imagen residencial --}}
+                        </div>
+                        <div class="col-span-2">
+                            <h5 class="text-lg font-bold text-emerald-600 dark:text-teal-500">Litio (LiFePO4) Residencial</h5>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Fabricante de Baterías Residenciales</p>
+                            <p class="text-sm text-gray-700 dark:text-gray-300 mt-1">Batería de Litio (LiFePO4) compacta y segura, ideal para sistemas de autoconsumo en tejados. Larga vida útil.</p>
+                            <div class="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-gray-500 dark:text-gray-400 mt-3">
+                                <span><span class="font-semibold">Capacidad:</span> 5.0 kWh</span>
+                                <span><span class="font-semibold">Coste Estimado:</span> 3000 €</span>
+                                <span><span class="font-semibold">Garantía Material:</span> 10 años</span>
+                                <span><span class="font-semibold">Garantía Fabricante:</span> 10 años</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="py-12 m-10">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div class="p-6 text-gray-900 dark:text-gray-100 flex justify-between">
                         <button id="openModal" class="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg shadow-lg hover:bg-[#36B89A] transition-all duration-300">
                             <i class="fas fa-plus"></i> Crear Bateria
+                        </button>
+                        <button id="loadBatteriesButton" class="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg shadow-lg hover:bg-[#36B89A] transition-all duration-300">
+                            <i class="fas fa-cloud"></i> Cargar Baterias
                         </button>
                     </div>
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -487,6 +617,71 @@
             window.routeCrearFabricante = "{{ route('fabricantes.store') }}";
             window.csrfToken = "{{ csrf_token() }}";
             window.bateriasStoreRoute = "{{ route('baterias.store') }}";
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                // Obtenim referències als elements
+                const loadButton = document.getElementById('loadBatteriesButton');
+                const batteryListContainer = document.getElementById('batteryListContainer');
+                const closeMostUsedModal = document.getElementById('closeMostUsedModal');
+                const batteryItems = document.querySelectorAll('.battery-item');
+                
+                // Funció per mostrar el modal
+                function showBatteryList() {
+                    batteryListContainer.classList.remove('hidden');
+                    
+                    // Forcem un repintat per assegurar que les transicions funcionin
+                    void batteryListContainer.offsetWidth;
+                    
+                    // Seleccionem el contingut del modal
+                    const modalContent = batteryListContainer.querySelector('.modal-content');
+                    
+                    // Eliminem les classes d'animació inicial
+                    modalContent.classList.remove('scale-95', 'opacity-0');
+                    modalContent.classList.add('scale-100', 'opacity-100');
+                }
+                
+                // Funció per amagar el modal
+                function hideBatteryList() {
+                    const modalContent = batteryListContainer.querySelector('.modal-content');
+                    
+                    // Afegim les classes d'animació per sortida
+                    modalContent.classList.remove('scale-100', 'opacity-100');
+                    modalContent.classList.add('scale-95', 'opacity-0');
+                    
+                    // Esperem que acabi la transició abans d'afegir hidden
+                    setTimeout(() => {
+                        batteryListContainer.classList.add('hidden');
+                    }, 300); // Ajusta aquest temps segons la durada de la teva transició
+                }
+                
+                // Event listener per al botó d'obrir
+                if (loadButton) {
+                    loadButton.addEventListener('click', showBatteryList);
+                }
+                
+                // Event listener per al botó de tancar
+                if (closeMostUsedModal) {
+                    closeMostUsedModal.addEventListener('click', hideBatteryList);
+                }
+                
+                // Event listener per tancar fent clic fora del contingut
+                if (batteryListContainer) {
+                    batteryListContainer.addEventListener('click', (e) => {
+                        if (e.target === batteryListContainer) {
+                            hideBatteryList();
+                        }
+                    });
+                }
+                
+                // Event listeners per als items de bateria
+                batteryItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        // Aquí pots afegir la lògica per omplir el formulari amb les dades de la bateria seleccionada
+                        hideBatteryList();
+                    });
+                });
+            });
         </script>
         <script src="{{ asset('build/js/baterias/modalFabricante.js') }}"></script>
         <script src="build/js/baterias/modalbaterias.js"></script>
