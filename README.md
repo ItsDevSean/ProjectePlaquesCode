@@ -82,3 +82,7 @@ En l'sprint 7 hem habilitat moltes funcionalitats, com ara, resultats finals en 
 
 [Snapshot7](docs/sprintSnapshot/Snapshot7.md)
 
+- **Sprint 8:** (28/4/25 - 09/5/25)
+Sprint 8, l'últim de tots, hem acabat de perfilar uns quants detalls, com ara la vista de mapa i de producció del projecte i alguns detalls més.
+
+[Snapshot8](docs/sprintSnapshot/Snapshot8.md)
