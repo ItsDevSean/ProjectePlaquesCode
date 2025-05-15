@@ -604,6 +604,8 @@ function calcularMaxPlacas(areaTotal) {
     const anchuraPlaca =  selectedOption.getAttribute("data-anchura");
     localStorage.setItem(`user_${userId}_anchuraPlaca`, anchuraPlaca)
     const areaPlacaSombra = (disMin / 1000) * (anchuraPlaca / 1000);
+    console.log("Por Queeee " + disMin);
+    console.log("Charly Parcker " + anchuraPlaca);
     localStorage.setItem(`user_${userId}_areaPlacaSombra`, areaPlacaSombra);
     console.log("quan tens rao tens rao " + areaTotal);
     console.log("captura y mandalo al Jaume " + areaPlacaSombra);
@@ -640,7 +642,7 @@ function getSolarElevationAngle(date, latitude, longitude) {
     const deg = 180 / Math.PI;
 
     // 1. Convert time to UTC
-    const utcDate = new Date(date.toUTCString());
+    const utcDate = getNoonUTCDate();
 
     // 2. Day of the year
     const start = new Date(Date.UTC(utcDate.getUTCFullYear(), 0, 0));
@@ -679,6 +681,18 @@ function getSolarElevationAngle(date, latitude, longitude) {
 
     return elevation * deg; // in degrees
 }
+
+function getNoonUTCDate() {
+    const now = new Date();
+    const year = now.getUTCFullYear();
+    const month = now.getUTCMonth(); // 0-indexed
+    const day = now.getUTCDate();
+  
+    // Crear fecha con hora 12:00 UTC
+    const noonUTC = new Date(Date.UTC(year, month, day, 12, 0, 0));
+  
+    return noonUTC;
+  }
 
 const orientacion = document.getElementById("orientacion");
 
