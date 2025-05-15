@@ -600,7 +600,9 @@ function calcularMaxPlacas(areaTotal) {
     }
 
     const disMin = calcularSombra();
+    localStorage.setItem(`user_${userId}_disMin`, disMin);
     const anchuraPlaca =  selectedOption.getAttribute("data-anchura");
+    localStorage.setItem(`user_${userId}_anchuraPlaca`, anchuraPlaca)
     const areaPlacaSombra = (disMin / 1000) * (anchuraPlaca / 1000);
     localStorage.setItem(`user_${userId}_areaPlacaSombra`, areaPlacaSombra);
     console.log("quan tens rao tens rao " + areaTotal);
@@ -620,6 +622,7 @@ function calcularSombra() {
     const selectPanel = document.getElementById("panel_model");
     const selectedOption = selectPanel.options[selectPanel.selectedIndex];
     const longitud = selectedOption.getAttribute("data-longitud");
+    console.log("You'd Ve so Nice to Come Home To " + longitud);
     const inclinacion = localStorage.getItem(`user_${userId}_inclinacion`);
     const inclinacionRad = inclinacion * (Math.PI / 180);
     const inclinacioSol = localStorage.getItem(`user_${userId}_inclinacionSolar`);
@@ -806,8 +809,8 @@ function actualizarSlider(maxPlacas) {
     const placaPorFila = document.getElementById("numPlacasFila");
     const areaTotal = localStorage.getItem(`user_${userId}_novaArea`);
     const areaPlacaSombra = localStorage.getItem(`user_${userId}_areaPlacaSombra`);
-    const anchuraPlaca = localStorage.getItem(`user_${userId}_anchuraPlaca`);
-    const alturaPlaca = localStorage.getItem(`user_${userId}_disMin`);
+    const anchuraPentagono = localStorage.getItem(`user_${userId}_anchuraArea`);
+    const alturaPentagono = localStorage.getItem(`user_${userId}_alturaArea`);
 
     // Actualizar el rango del slider y el input
     slider.max = maxPlacas;
@@ -832,7 +835,7 @@ function actualizarSlider(maxPlacas) {
         actualizarEstiloSlider(this);
         localStorage.setItem(`user_${userId}_placaCount`, this.value);
         areaRestatnte.textContent = calcularEspacioRestante(this.value, areaTotal, areaPlacaSombra);
-        const placasFilaColumna = calcularFilasColumnas(this.value, anchuraPlaca, alturaPlaca);
+        const placasFilaColumna = calcularFilasColumnas(this.value, anchuraPentagono, alturaPentagono);
         placaPorColumna.innerText = placasFilaColumna.column;
         placaPorFila.innerText = placasFilaColumna.row;
     });
@@ -905,6 +908,7 @@ function calcularFilasColumnas(maxPanels, anchuraPoligono, alturaPoligono) {
             }
         }
     }
+    console.log("It never entered my mynd " + maxPlacasAltura);
     console.log("Chez le photographe du motel " + maxPlacasAnchura);
     console.log("Favela " + actualNumPlacaAltura);
     console.log("by Ike Quebec " + actualNumPlacaAnchura);
@@ -923,6 +927,8 @@ function calcularMaxPlacaAnchura(anchuraPoligono) {
 
 function calcularMaxPlacasAltura(alturaPoligono) {
     const alturaPlaca = localStorage.getItem(`user_${userId}_disMin`) / 1000; // mm to m
+    console.log("by Coleman hokings " + alturaPoligono);
+    console.log("and Ben Webster " + alturaPlaca);
     return Math.floor(alturaPoligono / alturaPlaca);
 }
 
