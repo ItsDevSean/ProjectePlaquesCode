@@ -244,27 +244,30 @@
                         </div>
             
                         <!-- Metrics Grid -->
-                        <div class="grid grid-cols-3 gap-4">
-                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
-                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Área por panel</p>
-                                <div class="flex items-baseline">
-                                    <span id="areaPlaca" class="text-xl font-semibold text-gray-800">0</span>
-                                    <span class="text-sm text-gray-500 ml-1">m²</span>
+                        <div class="grid grid-cols-3 gap-0.5 bg-neutral-950 p-0.5 rounded-lg">
+                            <!-- Área por panel -->
+                            <div class="bg-neutral-900 p-4 rounded">
+                                <p class="text-neutral-200 text-[0.6rem] uppercase tracking-widest mb-2">Área/Panel</p>
+                                <div class="flex items-end">
+                                    <span id="areaPlaca" class="text-white text-2xl font-light">0</span>
+                                    <span class="text-neutral-600 text-xs mb-0.5 ml-0.5">m²</span>
                                 </div>
                             </div>
-                            
-                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
-                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Espacio disponible</p>
-                                <div class="flex items-baseline">
-                                    <span id="espacioRestante" class="text-xl font-semibold text-gray-800">0</span>
-                                    <span class="text-sm text-gray-500 ml-1">m²</span>
+                        
+                            <!-- Espacio disponible -->
+                            <div class="bg-neutral-900 p-4 rounded">
+                                <p class="text-neutral-200 text-[0.6rem] uppercase tracking-widest mb-2">Espacio</p>
+                                <div class="flex items-end">
+                                    <span id="espacioRestante" class="text-white text-2xl font-light">0</span>
+                                    <span class="text-neutral-300 text-xs mb-0.5 ml-0.5">m²</span>
                                 </div>
                             </div>
-                            
-                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
-                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Total paneles</p>
-                                <div class="flex items-baseline">
-                                    <span id="placaCountDisplay" class="text-xl font-semibold text-gray-800">0</span>
+                        
+                            <!-- Total paneles -->
+                            <div class="bg-neutral-900 p-4 rounded">
+                                <p class="text-neutral-200 text-[0.6rem] uppercase tracking-widest mb-2">Paneles</p>
+                                <div class="flex items-end">
+                                    <span id="placaCountDisplay" class="text-white text-2xl font-light">0</span>
                                 </div>
                             </div>
                         </div>
@@ -286,14 +289,40 @@
             
                         <!-- Distribution Grid -->
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
-                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Paneles por columna</p>
-                                <span id="numPlacasColumna" class="text-lg font-semibold text-gray-800">0</span>
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 flex items-center space-x-3 hover:shadow-md transition-shadow duration-150">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-10 w-10 text-sky-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 3v18" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 3v18" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 3v18" />
+                                        <rect x="5" y="5" width="2" height="14" fill="currentColor" stroke-width="0"/>
+                                        <rect x="11" y="5" width="2" height="14" fill="currentColor" stroke-width="0"/>
+                                        <rect x="17" y="5" width="2" height="14" fill="currentColor" stroke-width="0"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-0.5">Panells per columna</p>
+                                    <span id="numPlacasColumna" class="text-xl font-semibold text-gray-800">0</span>
+                                </div>
                             </div>
-                            
-                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
-                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Paneles por fila</p>
-                                <span id="numPlacasFila" class="text-lg font-semibold text-gray-800">0</span>
+                        
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 flex items-center space-x-3 hover:shadow-md transition-shadow duration-150">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-10 w-10 text-emerald-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h18v18" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 9h18" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 15h18" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18" />
+                                        <rect x="5" y="5" width="14" height="2" fill="currentColor" stroke-width="0"/>
+                                        <rect x="5" y="11" width="14" height="2" fill="currentColor" stroke-width="0"/>
+                                        <rect x="5" y="17" width="14" height="2" fill="currentColor" stroke-width="0"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-0.5">Panells per fila</p>
+                                    <span id="numPlacasFila" class="text-xl font-semibold text-gray-800">0</span>
+                                </div>
                             </div>
                         </div>
             
