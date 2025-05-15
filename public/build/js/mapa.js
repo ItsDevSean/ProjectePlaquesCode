@@ -577,29 +577,13 @@ function dibuixarPoligon(map) {
     if (coordinates.length >= 3) {
         calcularArea(window.selectedPolygon);
         calcularAltura(window.selectedPolygon);
+        calcularAnchuraPentagono(window.selectedPolygon);
     }
 
     guardarPoligonoEnLocalStorage();
 }
 
-// Función que calcula la altura del poligono selectionado 
-function calcularAltura(polygon) {
-    const path = polygon.getPath();
-    let minLat = 90;
-    let maxLat = -90;
 
-    path.forEach(point => {
-        const lat = point.lat();
-        if (lat < minLat) minLat = lat;
-        if (lat > maxLat) maxLat = lat;
-    });
-
-    const south = new google.maps.LatLng(minLat, 0);
-    const north = new google.maps.LatLng(maxLat, 0);
-
-    console.log("this is not america " + google.maps.geometry.spherical.computeDistanceBetween(south, north));
-    return google.maps.geometry.spherical.computeDistanceBetween(south, north);
-}
 
 // Función para calcular el número máximo de placas
 function calcularMaxPlacas(areaTotal) {
@@ -822,6 +806,8 @@ function actualizarSlider(maxPlacas) {
     const placaPorFila = document.getElementById("numPlacasFila");
     const areaTotal = localStorage.getItem(`user_${userId}_novaArea`);
     const areaPlacaSombra = localStorage.getItem(`user_${userId}_areaPlacaSombra`);
+    const anchuraPlaca = localStorage.getItem(`user_${userId}_anchuraPlaca`);
+    const alturaPlaca = localStorage.getItem(`user_${userId}_disMin`);
 
     // Actualizar el rango del slider y el input
     slider.max = maxPlacas;
@@ -846,7 +832,9 @@ function actualizarSlider(maxPlacas) {
         actualizarEstiloSlider(this);
         localStorage.setItem(`user_${userId}_placaCount`, this.value);
         areaRestatnte.textContent = calcularEspacioRestante(this.value, areaTotal, areaPlacaSombra);
-        placaPorColumna.textContent = calcularNumPlacasPorColumna(this.value, alturaArea, alturaAreaPlacaSombra);
+        const placasFilaColumna = calcularFilasColumnas(this.value, anchuraPlaca, alturaPlaca);
+        placaPorColumna.innerText = placasFilaColumna.column;
+        placaPorFila.innerText = placasFilaColumna.row;
     });
 
     placaCount.addEventListener("change", function () {
@@ -864,6 +852,7 @@ function actualizarSlider(maxPlacas) {
         actualizarEstiloSlider(slider);
         localStorage.setItem(`user_${userId}_placaCount`, newValue);
         areaRestatnte.textContent = calcularEspacioRestante(this.value, areaTotal, areaPlacaSombra);
+        const placasFilaColumna = calcularFilasColumnas()
     });
 
     // Manejar el evento 'change' para cuando se pierde el foco
@@ -894,6 +883,96 @@ function actualizarSlider(maxPlacas) {
     });
 
     setupPlacaCountListener(placaCount, slider);
+}
+
+function calcularFilasColumnas(maxPanels, anchuraPoligono, alturaPoligono) {
+    const maxPlacasAnchura = calcularMaxPlacaAnchura(anchuraPoligono) ;
+    const maxPlacasAltura = calcularMaxPlacasAltura(alturaPoligono) / 2;
+
+    let actualNumPlacaAnchura = 0;
+    let actualNumPlacaAltura = 1;
+    for (let actualPanel = 1; actualPanel <= maxPanels; actualPanel++) {
+        if (actualPanel <= maxPlacasAnchura) { // toDo: he de ver por q no llega asta 20...
+            actualNumPlacaAnchura += 1;
+        }
+        else {
+            if (actualNumPlacaAltura < maxPlacasAltura) {
+                const placasSeguentFila = Math.abs((actualNumPlacaAnchura * (actualNumPlacaAltura)) - actualPanel);
+                console.log("by Mile Devis " + placasSeguentFila);
+                if (placasSeguentFila == maxPlacasAnchura) {
+                    actualNumPlacaAltura += 1;
+                }
+            }
+        }
+    }
+    console.log("Chez le photographe du motel " + maxPlacasAnchura);
+    console.log("Favela " + actualNumPlacaAltura);
+    console.log("by Ike Quebec " + actualNumPlacaAnchura);
+    return {
+        row: actualNumPlacaAnchura,
+        column: actualNumPlacaAltura
+    }
+}
+
+function calcularMaxPlacaAnchura(anchuraPoligono) {
+    const anchuraPlaca = localStorage.getItem(`user_${userId}_anchuraPlaca`) / 1000; // mm to m
+    console.log("Nan nanawn an " + anchuraPlaca );
+    console.log("All of me " + Math.floor(anchuraPoligono / anchuraPlaca))
+    return Math.floor(anchuraPoligono / anchuraPlaca);
+}
+
+function calcularMaxPlacasAltura(alturaPoligono) {
+    const alturaPlaca = localStorage.getItem(`user_${userId}_disMin`) / 1000; // mm to m
+    return Math.floor(alturaPoligono / alturaPlaca);
+}
+
+// Función que calcula la altura del poligono selectionado 
+function calcularAltura(polygon) {
+    const path = polygon.getPath();
+    let minLat = 90;
+    let maxLat = -90;
+    let avgLng = 0;
+
+    path.forEach(point => {
+        const lat = point.lat();
+        const lng = point.lng();
+        if (lat < minLat) minLat = lat;
+        if (lat > maxLat) maxLat = lat;
+        avgLng += lng;
+    });
+
+    avgLng /= path.getLength(); // average longitude
+
+    const south = new google.maps.LatLng(minLat, avgLng);
+    const north = new google.maps.LatLng(maxLat, avgLng);
+
+    const alturaPoligono = google.maps.geometry.spherical.computeDistanceBetween(south, north);
+    console.log("Altura pio " + alturaPoligono);
+    localStorage.setItem(`user_${userId}_alturaArea`, alturaPoligono);
+}
+
+function calcularAnchuraPentagono(polygon) {
+    const path = polygon.getPath();
+    let minLng = 180;
+    let maxLng = -180;
+    let avgLat = 0;
+
+    path.forEach(point => {
+        const lng = point.lng();
+        const lat = point.lat();
+        if (lng < minLng) minLng = lng;
+        if (lng > maxLng) maxLng = lng;
+        avgLat += lat;
+    });
+
+    avgLat /= path.getLength(); // average latitude for more accurate distance calc
+
+    const west = new google.maps.LatLng(avgLat, minLng);
+    const east = new google.maps.LatLng(avgLat, maxLng);
+
+    const anchuraPoligono = google.maps.geometry.spherical.computeDistanceBetween(west, east);
+    localStorage.setItem(`user_${userId}_anchuraArea`, anchuraPoligono);
+    console.log("Ancura pio " + anchuraPoligono);
 }
 
 // Función para actualizar el valor del slider
