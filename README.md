@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/img/fotoboltaica_feleiz.jpeg" alt="Banner" width="600" />
+  <img src="images/reunioLenium.png" alt="Banner" width="600" />
 </p>
 <p align="center">
 	 Fotovoltaica fàcil!
@@ -15,28 +15,26 @@
 |[![Seán](https://github.com/SeanITB.png?size=30)](https://github.com/SeanITB)| Seán Costelloe Cacho |[@SeanITB](https://github.com/SeanITB)|
 
 # 📂 Estructura del repositiori
+En el següent diagrama, mostrem quines són les carpetes que hem utilitzat, la resta són directoris de configuració o que ja venien per defecte.
 ```sh
-└── docs/
-    └── img/ # imatges de la documentació.
-    └── actesDialys/ # Actes de les reunions diàries.
-    └── sprintSnapshot/ # Review del treball fet a cada sprint.
-└── aprenentatge/ # Cada carpeta conte l'aprenentatge que està fent cadascun sobre Laravel, PHP, Vue.
-    └── Ana/
-    └── Marc/ 
-    └── Miguel/
-    └── Sean/
-    └── Teo/ 
-    └── Thalia/ 
+├── app
+│   ├── Http
+│   │   ├── Controllers # La lógica del Back-end.
+│   ├── Imports # Classes per fer les importacions dels diferents objectes.
+│   ├── Models # Tots els models de tots els objectes, són com la definició.
+├── database
+│   └── migrations # La definició de totes les migration, són les estructures de les taules que aniran a la BD.
+├── public
+│   ├── build
+│   │   ├── api # Logica de l'api
+│   │   ├── css # Els fulls d'estils
+│   │   └── js # Tota la llogica del Front-end
+├── resources
+│   ├── css # Els fulls d'estils
+│   ├── js # Tota la llogica del Front-end
+│   └── views # Totes les vistes del Front-end
+└── routes
 ```
 
-# 📑 Documentació Scrum
-
-
-## Actes dailys
-
-
-## Retrospectives dels sprints
-
-
-## Sprints Snapshots
+# De que va l'apilcació
 
