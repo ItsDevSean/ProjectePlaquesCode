@@ -4,7 +4,10 @@
 <p align="center">
 	 Fotovoltaica fàcil!
  </p>
- 
+
+# 🗃️ Contingut de la branca master
+En aquest branca només tenim documentació i actes sobre la metodologia Scrum. Si voleu veure el codi font de l'aplicació web està en la branca `ProjectePlacas`.
+
 # 👥 Fotovoltaica
 
 || Nom | User |
