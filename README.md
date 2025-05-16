@@ -42,4 +42,15 @@ L'objectiu de la nostra aplicació web, és oferir una solucio definitiva per in
 
 ![home]()
 
+La pàgina d'inici amb totes les opcions del projecta bisibles i els projectes llistats.
+
+![llistat]()
+
+Els diferents formularis del projecte, amb el mapa per poder selectionar un pentagon on es selecionararn les plaques.
+
+![mapa]()
+
+Les vistes d'eines on es poden crear plaques, bateries i inversors.
+
+![tools]()
 
