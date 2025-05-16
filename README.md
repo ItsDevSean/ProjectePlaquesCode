@@ -40,17 +40,17 @@ En el següent diagrama, mostrem quines són les carpetes que hem utilitzat, la 
 
 L'objectiu de la nostra aplicació web, és oferir una solucio definitiva per ingeniers i empresas especialitzades, per disenyar, alalitzar i simular instalacions fotovoltaiques amb la maxima presició.
 
-![home]()
+![home](images/home.png)
 
 La pàgina d'inici amb totes les opcions del projecta bisibles i els projectes llistats.
 
-![llistat]()
+![llistat](images/llistatProjectes.png)
 
 Els diferents formularis del projecte, amb el mapa per poder selectionar un pentagon on es selecionararn les plaques.
 
-![mapa]()
+![mapa](images/mapa.png)
 
 Les vistes d'eines on es poden crear plaques, bateries i inversors.
 
-![tools]()
+![tools](images/tools.png)
 
