@@ -36,5 +36,10 @@ En el següent diagrama, mostrem quines són les carpetes que hem utilitzat, la 
 └── routes
 ```
 
-# De que va l'apilcació
+# De què va l'aplicació
+
+L'objectiu de la nostra aplicació web, és oferir una solucio definitiva per ingeniers i empresas especialitzades, per disenyar, alalitzar i simular instalacions fotovoltaiques amb la maxima presició.
+
+![home]()
+
 
