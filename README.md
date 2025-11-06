@@ -17,7 +17,7 @@ En aquest branca només tenim documentació i actes sobre la metodologia Scrum. 
 [![Thalia Bravo](https://github.com/DevThalia.png?size=30)](https://github.com/DevThalia) | Thalia Bravo |[@devThalia](https://github.com/DevThalia)|
 [![Miguel](https://github.com/GarzonMiguelA.png?size=30)](https://github.com/GarzonMiguelA) | Miguel Angel Garzón Huerta |[@GarzonMiguelA](https://github.com/GarzonMiguelA)|
 [![Teo](https://github.com/TeoCastellvi.png?size=30)]() | Teo Castellví Montañés |[@TeoCastellvi](https://github.com/TeoCastellvi)||
-|[![Seán](https://github.com/SeanITB.png?size=30)](https://github.com/SeanITB)| Seán Costelloe Cacho |[@SeanITB](https://github.com/SeanITB)|
+|[![Seán](https://github.com/ItsDevSean.png?size=30)](https://github.com/SeanITB)| Seán Costelloe Cacho |[@ItsDevSean](https://github.com/SeanITB)|
 
 # 📂 Estructura del repositiori
 ```sh
