@@ -12,7 +12,7 @@
 |--|--|--|
 |[![Marc](https://github.com/marcSantolayaSanchez.png?size=30)](https://github.com/marcSantolayaSanchez) | Marc Santolaya Sànchez |[@marcSantolayaSanchez](https://github.com/marcSantolayaSanchez)||
 [![Teo](https://github.com/TeoCastellvi.png?size=30)]() | Teo Castellví Montañés |[@TeoCastellvi](https://github.com/TeoCastellvi)||
-|[![Seán](https://github.com/SeanITB.png?size=30)](https://github.com/SeanITB)| Seán Costelloe Cacho |[@SeanITB](https://github.com/SeanITB)|
+|[![Seán](https://github.com/ItsDevSean.png?size=30)](https://github.com/ItsDevSean)| Seán Costelloe Cacho |[@ItsDevSean](https://github.com/ItsDevSean)|
 
 # 📂 Estructura del repositiori
 En el següent diagrama, mostrem quines són les carpetes que hem utilitzat, la resta són directoris de configuració o que ja venien per defecte.
@@ -53,4 +53,8 @@ Els diferents formularis del projecte, amb el mapa per poder selectionar un pent
 Les vistes d'eines on es poden crear plaques, bateries i inversors.
 
 ![tools](images/tools.png)
+
+# Nota Final
+
+Per porta aquest projecte endavant ho hem fet gracies a la metodologia agil **SCRUM**. Si voleu consultar tota la documentaciò, i procces d'aquesta, ho podreu veure en la branca **master**. 
 
