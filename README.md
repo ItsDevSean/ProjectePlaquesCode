@@ -14,6 +14,14 @@
 [![Teo](https://github.com/TeoCastellvi.png?size=30)]() | Teo Castellví Montañés |[@TeoCastellvi](https://github.com/TeoCastellvi)||
 |[![Seán](https://github.com/ItsDevSean.png?size=30)](https://github.com/ItsDevSean)| Seán Costelloe Cacho |[@ItsDevSean](https://github.com/ItsDevSean)|
 
+# Important Disclosure
+This project was originally developed at  <img
+  src="images/itb.gif"
+  alt="ITB Logo"
+  width="20"
+/> **Institut Tecnològic de Barcelona**, using GitHub Classroom.
+This repository is a personal copy published for portfolio purposes.
+
 # 📂 Estructura del repositiori
 En el següent diagrama, mostrem quines són les carpetes que hem utilitzat, la resta són directoris de configuració o que ja venien per defecte.
 ```sh
